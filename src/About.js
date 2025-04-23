@@ -5,6 +5,7 @@ import { projects } from './data/projects';
 const About = () => {
   const [activeProject, setActiveProject] = useState(1);
   const [visibleSection, setVisibleSection] = useState('');
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const sectionRefs = {
     mission: useRef(null),
     values: useRef(null),
@@ -16,7 +17,7 @@ const About = () => {
   
   // Counter animation for statistics
   const [counters, setCounters] = useState({
-    clients: 20,
+    clients: 25,
     projects: 100,
     awards: 3,
     years: 7
@@ -28,6 +29,18 @@ const About = () => {
     awards: 17,
     years: 6
   };
+  
+  // Handle window resize for responsive design
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   
   // Intersection observer for scroll animations
   useEffect(() => {
@@ -43,7 +56,7 @@ const About = () => {
           setVisibleSection(entry.target.id);
           
           // Start counter animation when stats section is visible
-          if (entry.target.id === 'stats' && counters.clients === 0) {
+          if (entry.target.id === 'stats' && counters.clients === 25) {
             animateCounters();
           }
         }
@@ -76,7 +89,8 @@ const About = () => {
     let step = 0;
     const timer = setInterval(() => {
       step++;
-      const progress = Math.easeOutQuad(step / steps);
+      // Using the easeOutQuad function
+      const progress = step / steps * (2 - step / steps);
       
       setCounters({
         clients: Math.floor(progress * statsTarget.clients),
@@ -92,26 +106,39 @@ const About = () => {
     }, interval);
   };
   
-  // Easing function for smoother animation
-  Math.easeOutQuad = (t) => t * (2 - t);
-  
   // Project showcase navigation
   const handleProjectChange = (id) => {
     setActiveProject(id);
   };
 
+  // Define hover state handling functions
+  const [hoveredElement, setHoveredElement] = useState(null);
+  
+  const handleMouseEnter = (element) => {
+    setHoveredElement(element);
+  };
+  
+  const handleMouseLeave = () => {
+    setHoveredElement(null);
+  };
+
+  // Responsive styles
+  const isMobile = windowWidth <= 768;
+  const isTablet = windowWidth > 768 && windowWidth <= 1024;
+  
   const styles = {
     about: {
       backgroundColor: '#FFFFFF',
       position: 'relative',
       overflow: 'hidden',
+      padding: isMobile ? '3rem 0' : '5rem 0',
     },
     aboutPattern: {
       position: 'absolute',
       bottom: 0,
       right: 0,
-      width: '300px',
-      height: '300px',
+      width: isMobile ? '150px' : '300px',
+      height: isMobile ? '150px' : '300px',
       background: 'radial-gradient(circle at center, #EBF8FF 0%, transparent 70%)',
       opacity: 0.6,
       borderRadius: '50%',
@@ -119,46 +146,48 @@ const About = () => {
     },
     aboutGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(2, 1fr)',
-      gap: '4rem',
+      gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr 1fr' : 'repeat(2, 1fr)',
+      gap: isMobile ? '2rem' : '4rem',
       position: 'relative',
       zIndex: 1,
-      marginBottom: '4rem',
+      marginBottom: isMobile ? '2rem' : '4rem',
     },
     aboutContent: {
       textAlign: 'left',
+      padding: isMobile ? '0 1rem' : '0',
     },
     aboutImageContainer: {
-        position: 'relative',
-        height: '110%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
+      position: 'relative',
+      height: isMobile ? 'auto' : '110%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: isMobile ? '0 1rem' : '0',
+    },
     aboutImage: {
-        width: '100%',
-        height: 'auto',
-        borderRadius: '12px',
-        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-        transform: 'perspective(1000px) rotateY(-5deg)',
-        transition: 'all 0.5s ease',
-        position: 'relative',     // Add position relative to work with the pattern
-        zIndex: 1,                // Ensure image is above the pattern
-        },      
+      width: '100%',
+      height: 'auto',
+      borderRadius: '12px',
+      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+      transform: isMobile ? 'none' : 'perspective(1000px) rotateY(-5deg)',
+      transition: 'all 0.5s ease',
+      position: 'relative',
+      zIndex: 1,
+    },      
     aboutImagePattern: {
-        position: 'absolute',
-        width: '100%',            // Match the image width
-        height: '100%',           // Match the image height
-        top: '15px',              // Offset to create the frame effect
-        left: '15px',             // Offset to create the frame effect
-        background: 'linear-gradient(135deg, #4299E1 0%, #1A365D 100%)',
-        borderRadius: '12px',     // Match the image border radius
-        zIndex: -1,
-        transform: 'perspective(1000px) rotateY(-5deg)',
-        transition: 'all 0.5s ease',
-      },      
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      top: '15px',
+      left: '15px',
+      background: 'linear-gradient(135deg, #4299E1 0%, #1A365D 100%)',
+      borderRadius: '12px',
+      zIndex: -1,
+      transform: isMobile ? 'none' : 'perspective(1000px) rotateY(-5deg)',
+      transition: 'all 0.5s ease',
+    },      
     aboutTitle: {
-      fontSize: '2.25rem',
+      fontSize: isMobile ? '1.75rem' : '2.25rem',
       marginBottom: '1.5rem',
       color: '#1A365D',
       fontWeight: 700,
@@ -169,7 +198,7 @@ const About = () => {
       position: 'absolute',
       bottom: '-5px',
       left: '0',
-      width: '60px',
+      width: isMobile ? '40px' : '60px',
       height: '3px',
       background: 'linear-gradient(90deg, #4299E1 0%, #1A365D 100%)',
       borderRadius: '2px',
@@ -178,18 +207,19 @@ const About = () => {
       marginBottom: '1.5rem',
       color: '#2D3748',
       lineHeight: 1.8,
-      fontSize: '1.1rem',
+      fontSize: isMobile ? '1rem' : '1.1rem',
     },
     valuesGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(2, 1fr)',
-      gap: '1.5rem',
-      marginTop: '3rem',
-      marginBottom: '4rem',
+      gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(2, 1fr)',
+      gap: isMobile ? '1rem' : '1.5rem',
+      marginTop: isMobile ? '2rem' : '3rem',
+      marginBottom: isMobile ? '2rem' : '4rem',
+      padding: isMobile ? '0 1rem' : '0',
     },
     valueCard: {
       backgroundColor: '#F7FAFC',
-      padding: '1.75rem',
+      padding: isMobile ? '1.25rem' : '1.75rem',
       borderRadius: '12px',
       transition: 'all 0.3s ease',
       boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
@@ -210,8 +240,8 @@ const About = () => {
       background: 'linear-gradient(135deg, #F7FAFC 0%, #EBF8FF 100%)',
     },
     valueIconContainer: {
-      width: '70px',
-      height: '70px',
+      width: isMobile ? '50px' : '70px',
+      height: isMobile ? '50px' : '70px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -224,11 +254,11 @@ const About = () => {
     },
     valueIcon: {
       color: '#FFFFFF',
-      fontSize: '2.25rem',
+      fontSize: isMobile ? '1.75rem' : '2.25rem',
       fontWeight: 700,
     },
     valueTitle: {
-      fontSize: '1.35rem',
+      fontSize: isMobile ? '1.2rem' : '1.35rem',
       marginBottom: '0.75rem',
       color: '#1A365D',
       fontWeight: 700,
@@ -236,13 +266,14 @@ const About = () => {
     
     // Stats Section
     statsSection: {
-      marginTop: '2rem',
-      marginBottom: '5rem',
-      padding: '4rem 0',
+      marginTop: isMobile ? '1rem' : '2rem',
+      marginBottom: isMobile ? '3rem' : '5rem',
+      padding: isMobile ? '2rem 1rem' : '4rem 0',
       background: 'linear-gradient(135deg, #F0F9FF 0%, #E6F6FF 100%)',
-      borderRadius: '16px',
+      borderRadius: isMobile ? '12px' : '16px',
       position: 'relative',
       overflow: 'hidden',
+      margin: isMobile ? '1rem' : '2rem 0 5rem 0',
     },
     statsPattern: {
       position: 'absolute',
@@ -257,17 +288,17 @@ const About = () => {
     },
     statsGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(4, 1fr)',
-      gap: '2rem',
+      gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : isTablet ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+      gap: isMobile ? '1.5rem' : '2rem',
       position: 'relative',
       zIndex: 1,
     },
     statItem: {
       textAlign: 'center',
-      padding: '1.5rem',
+      padding: isMobile ? '0.75rem' : '1.5rem',
     },
     statNumber: {
-      fontSize: '3.5rem',
+      fontSize: isMobile ? '2.5rem' : '3.5rem',
       fontWeight: 800,
       color: '#1A365D',
       marginBottom: '0.75rem',
@@ -277,25 +308,26 @@ const About = () => {
       display: 'inline-block',
     },
     statTitle: {
-      fontSize: '1.25rem',
+      fontSize: isMobile ? '1rem' : '1.25rem',
       color: '#2D3748',
       fontWeight: 600,
     },
     statDescription: {
-      fontSize: '1rem',
+      fontSize: isMobile ? '0.85rem' : '1rem',
       color: '#4A5568',
       marginTop: '0.5rem',
     },
     
     // History Timeline Section
     historySection: {
-      marginBottom: '5rem',
+      marginBottom: isMobile ? '3rem' : '5rem',
       position: 'relative',
+      padding: isMobile ? '0 1rem' : '0',
     },
     timelineContainer: {
       position: 'relative',
-      marginTop: '3rem',
-      paddingLeft: '2rem',
+      marginTop: isMobile ? '2rem' : '3rem',
+      paddingLeft: isMobile ? '1.5rem' : '2rem',
     },
     timelineLine: {
       position: 'absolute',
@@ -308,15 +340,15 @@ const About = () => {
     },
     timelineItem: {
       position: 'relative',
-      marginBottom: '3rem',
-      paddingLeft: '2rem',
+      marginBottom: isMobile ? '2rem' : '3rem',
+      paddingLeft: isMobile ? '1.5rem' : '2rem',
     },
     timelineDot: {
       position: 'absolute',
       left: '-10px',
       top: '6px',
-      width: '20px',
-      height: '20px',
+      width: isMobile ? '16px' : '20px',
+      height: isMobile ? '16px' : '20px',
       backgroundColor: '#4299E1',
       borderRadius: '50%',
       border: '3px solid white',
@@ -324,35 +356,36 @@ const About = () => {
     },
     timelineYear: {
       display: 'inline-block',
-      padding: '0.4rem 1rem',
+      padding: isMobile ? '0.3rem 0.8rem' : '0.4rem 1rem',
       backgroundColor: '#4299E1',
       color: 'white',
       borderRadius: '20px',
       fontWeight: 600,
-      fontSize: '1rem',
+      fontSize: isMobile ? '0.9rem' : '1rem',
       marginBottom: '1rem',
     },
     timelineTitle: {
-      fontSize: '1.5rem',
+      fontSize: isMobile ? '1.3rem' : '1.5rem',
       color: '#1A365D',
       fontWeight: 700,
       marginBottom: '0.75rem',
     },
     timelineDescription: {
-      fontSize: '1.1rem',
+      fontSize: isMobile ? '1rem' : '1.1rem',
       color: '#2D3748',
       lineHeight: 1.7,
     },
     
     // Team Section
     teamSection: {
-      marginBottom: '5rem',
+      marginBottom: isMobile ? '3rem' : '5rem',
+      padding: isMobile ? '0 1rem' : '0',
     },
     teamGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(3, 1fr)',
-      gap: '2.5rem',
-      marginTop: '3rem',
+      gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+      gap: isMobile ? '1.5rem' : '2.5rem',
+      marginTop: isMobile ? '2rem' : '3rem',
     },
     teamMember: {
       backgroundColor: '#FFFFFF',
@@ -369,26 +402,26 @@ const About = () => {
     },
     teamMemberImage: {
       width: '100%',
-      height: '280px',
+      height: isMobile ? '220px' : '280px',
       objectFit: 'cover',
     },
     teamMemberInfo: {
-      padding: '1.5rem',
+      padding: isMobile ? '1.25rem' : '1.5rem',
     },
     teamMemberName: {
-      fontSize: '1.5rem',
+      fontSize: isMobile ? '1.3rem' : '1.5rem',
       fontWeight: 700,
       color: '#1A365D',
       marginBottom: '0.5rem',
     },
     teamMemberRole: {
-      fontSize: '1rem',
+      fontSize: isMobile ? '0.9rem' : '1rem',
       color: '#4299E1',
       fontWeight: 600,
       marginBottom: '1rem',
     },
     teamMemberBio: {
-      fontSize: '1rem',
+      fontSize: isMobile ? '0.9rem' : '1rem',
       color: '#2D3748',
       lineHeight: 1.6,
       marginBottom: '1.25rem',
@@ -398,8 +431,8 @@ const About = () => {
       gap: '0.75rem',
     },
     socialLink: {
-      width: '36px',
-      height: '36px',
+      width: isMobile ? '32px' : '36px',
+      height: isMobile ? '32px' : '36px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -416,13 +449,14 @@ const About = () => {
     
     // Project Showcase styles
     projectShowcase: {
-      marginBottom: '5rem',
+      marginBottom: isMobile ? '3rem' : '5rem',
       position: 'relative',
       zIndex: 1,
+      padding: isMobile ? '0 1rem' : '0',
     },
     projectShowcaseTitle: {
-      fontSize: '2.25rem',
-      marginBottom: '2.5rem',
+      fontSize: isMobile ? '1.75rem' : '2.25rem',
+      marginBottom: isMobile ? '1.5rem' : '2.5rem',
       color: '#1A365D',
       fontWeight: 700,
       textAlign: 'center',
@@ -430,12 +464,13 @@ const About = () => {
     projectTabs: {
       display: 'flex',
       justifyContent: 'center',
-      gap: '1rem',
-      marginBottom: '3rem',
+      gap: isMobile ? '0.5rem' : '1rem',
+      marginBottom: isMobile ? '2rem' : '3rem',
       flexWrap: 'wrap',
+      padding: isMobile ? '0 0.5rem' : '0',
     },
     projectTab: {
-      padding: '0.85rem 1.75rem',
+      padding: isMobile ? '0.6rem 1rem' : '0.85rem 1.75rem',
       backgroundColor: '#F7FAFC',
       color: '#2D3748',
       borderRadius: '8px',
@@ -444,6 +479,8 @@ const About = () => {
       fontWeight: 600,
       border: '1px solid #EDF2F7',
       boxShadow: '0 2px 5px rgba(0, 0, 0, 0.05)',
+      fontSize: isMobile ? '0.85rem' : '1rem',
+      marginBottom: isMobile ? '0.5rem' : '0',
     },
     projectTabActive: {
       backgroundColor: '#1A365D',
@@ -458,11 +495,11 @@ const About = () => {
     },
     projectContent: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(2, 1fr)',
-      gap: '3rem',
+      gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(2, 1fr)',
+      gap: isMobile ? '2rem' : '3rem',
       alignItems: 'center',
       backgroundColor: '#F7FAFC',
-      padding: '3rem',
+      padding: isMobile ? '1.5rem' : '3rem',
       borderRadius: '16px',
       boxShadow: '0 15px 30px rgba(0, 0, 0, 0.1)',
       position: 'relative',
@@ -472,8 +509,8 @@ const About = () => {
       position: 'absolute',
       top: 0,
       right: 0,
-      width: '150px',
-      height: '150px',
+      width: isMobile ? '80px' : '150px',
+      height: isMobile ? '80px' : '150px',
       background: 'radial-gradient(circle at center, rgba(66, 153, 225, 0.1) 0%, transparent 70%)',
       borderRadius: '50%',
       zIndex: 0,
@@ -484,7 +521,7 @@ const About = () => {
       borderRadius: '12px',
       boxShadow: '0 15px 30px rgba(0, 0, 0, 0.15)',
       transition: 'all 0.4s ease',
-      transform: 'rotate(-2deg)',
+      transform: isMobile ? 'none' : 'rotate(-2deg)',
       zIndex: 1,
       position: 'relative',
     },
@@ -498,53 +535,57 @@ const About = () => {
       zIndex: 1,
     },
     projectTitle: {
-      fontSize: '2rem',
-      marginBottom: '1.25rem',
+      fontSize: isMobile ? '1.5rem' : '2rem',
+      marginBottom: isMobile ? '1rem' : '1.25rem',
       color: '#1A365D',
       fontWeight: 700,
     },
     projectDescription: {
-      fontSize: '1.1rem',
+      fontSize: isMobile ? '1rem' : '1.1rem',
       color: '#2D3748',
       lineHeight: 1.8,
-      marginBottom: '1.75rem',
+      marginBottom: isMobile ? '1.25rem' : '1.75rem',
     },
     projectStats: {
       display: 'flex',
       justifyContent: 'space-between',
-      marginBottom: '1.75rem',
+      marginBottom: isMobile ? '1.25rem' : '1.75rem',
       backgroundColor: 'rgba(255, 255, 255, 0.7)',
-      padding: '1.25rem',
+      padding: isMobile ? '1rem' : '1.25rem',
       borderRadius: '10px',
       boxShadow: '0 5px 15px rgba(0, 0, 0, 0.05)',
+      flexWrap: isMobile ? 'wrap' : 'nowrap',
+      gap: isMobile ? '0.5rem' : '0',
     },
     projectStat: {
       textAlign: 'center',
       flex: 1,
+      minWidth: isMobile ? '45%' : 'auto',
+      marginBottom: isMobile ? '0.5rem' : '0',
     },
     projectStatNumber: {
-      fontSize: '1.75rem',
+      fontSize: isMobile ? '1.5rem' : '1.75rem',
       fontWeight: 800,
       color: '#4299E1',
       marginBottom: '0.5rem',
     },
     projectStatLabel: {
       color: '#2D3748',
-      fontSize: '0.95rem',
+      fontSize: isMobile ? '0.85rem' : '0.95rem',
       fontWeight: 500,
     },
     projectTech: {
       display: 'flex',
       flexWrap: 'wrap',
-      gap: '0.75rem',
-      marginBottom: '1.75rem',
+      gap: isMobile ? '0.5rem' : '0.75rem',
+      marginBottom: isMobile ? '1.25rem' : '1.75rem',
     },
     techTag: {
       backgroundColor: 'rgba(66, 153, 225, 0.1)',
       color: '#4299E1',
-      padding: '0.5rem 1rem',
+      padding: isMobile ? '0.4rem 0.75rem' : '0.5rem 1rem',
       borderRadius: '8px',
-      fontSize: '0.95rem',
+      fontSize: isMobile ? '0.85rem' : '0.95rem',
       fontWeight: 600,
       border: '1px solid rgba(66, 153, 225, 0.2)',
       transition: 'all 0.2s ease',
@@ -557,13 +598,14 @@ const About = () => {
       display: 'inline-block',
       backgroundColor: '#4299E1',
       color: '#FFFFFF',
-      padding: '0.85rem 1.75rem',
+      padding: isMobile ? '0.75rem 1.5rem' : '0.85rem 1.75rem',
       borderRadius: '8px',
       fontWeight: 600,
       transition: 'all 0.3s ease',
       boxShadow: '0 4px 6px rgba(66, 153, 225, 0.3)',
       cursor: 'pointer',
       textDecoration: 'none',
+      fontSize: isMobile ? '0.9rem' : '1rem',
     },
     projectCtaHover: {
       backgroundColor: '#2B6CB0',
@@ -573,19 +615,20 @@ const About = () => {
     
     // Testimonials Section
     testimonialsSection: {
-      marginBottom: '5rem',
+      marginBottom: isMobile ? '3rem' : '5rem',
       position: 'relative',
+      padding: isMobile ? '0 1rem' : '0',
     },
     testimonialGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(2, 1fr)',
-      gap: '2.5rem',
-      marginTop: '3rem',
+      gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(2, 1fr)',
+      gap: isMobile ? '1.5rem' : '2.5rem',
+      marginTop: isMobile ? '2rem' : '3rem',
     },
     testimonialCard: {
       backgroundColor: '#FFFFFF',
-      padding: '2.5rem',
-      borderRadius: '16px',
+      padding: isMobile ? '1.5rem' : '2.5rem',
+      borderRadius: isMobile ? '12px' : '16px',
       boxShadow: '0 10px 25px rgba(0, 0, 0, 0.05)',
       border: '1px solid #EDF2F7',
       position: 'relative',
@@ -597,19 +640,19 @@ const About = () => {
       borderColor: '#4299E1',
     },
     testimonialQuote: {
-      fontSize: '3rem',
+      fontSize: isMobile ? '2.5rem' : '3rem',
       color: '#4299E1',
       opacity: 0.2,
       position: 'absolute',
-      top: '20px',
-      right: '25px',
+      top: isMobile ? '15px' : '20px',
+      right: isMobile ? '15px' : '25px',
       fontFamily: 'Georgia, serif',
     },
     testimonialText: {
-      fontSize: '1.15rem',
+      fontSize: isMobile ? '1rem' : '1.15rem',
       color: '#2D3748',
       lineHeight: 1.8,
-      marginBottom: '2rem',
+      marginBottom: isMobile ? '1.5rem' : '2rem',
       fontStyle: 'italic',
     },
     testimonialAuthor: {
@@ -617,8 +660,8 @@ const About = () => {
       alignItems: 'center',
     },
     testimonialImage: {
-      width: '60px',
-      height: '60px',
+      width: isMobile ? '50px' : '60px',
+      height: isMobile ? '50px' : '60px',
       borderRadius: '50%',
       objectFit: 'cover',
       marginRight: '1rem',
@@ -628,43 +671,21 @@ const About = () => {
       flex: 1,
     },
     testimonialName: {
-      fontSize: '1.25rem',
+      fontSize: isMobile ? '1.1rem' : '1.25rem',
       fontWeight: 700,
       color: '#1A365D',
       marginBottom: '0.25rem',
     },
     testimonialRole: {
-      fontSize: '0.95rem',
+      fontSize: isMobile ? '0.85rem' : '0.95rem',
       color: '#4A5568',
     },
     testimonialCompany: {
-      fontSize: '0.95rem',
+      fontSize: isMobile ? '0.85rem' : '0.95rem',
       color: '#4299E1',
       fontWeight: 600,
     },
   };
-
-  // Define hover state handling functions
-  const [hoveredElement, setHoveredElement] = useState(null);
-  
-  const handleMouseEnter = (element) => {
-    setHoveredElement(element);
-  };
-  
-  const handleMouseLeave = () => {
-    setHoveredElement(null);
-  };
-  
-  // Media query styles
-  const isMobile = window.innerWidth <= 768;
-  if (isMobile) {
-    styles.aboutGrid.gridTemplateColumns = '1fr';
-    styles.valuesGrid.gridTemplateColumns = '1fr';
-    styles.projectContent.gridTemplateColumns = '1fr';
-    styles.teamGrid.gridTemplateColumns = '1fr';
-    styles.statsGrid.gridTemplateColumns = 'repeat(2, 1fr)';
-    styles.testimonialGrid.gridTemplateColumns = '1fr';
-  }
 
   // Get the active project
   const currentProject = projects.find(project => project.id === activeProject);
@@ -735,47 +756,62 @@ const About = () => {
   const testimonials = [
     {
       id: 1,
-      text: "Le Duc Systems transformed our outdated infrastructure into a modern, scalable platform that reduced our operational costs by 40% while increasing system reliability. Their team's expertise and dedication to our success was evident throughout the entire engagement.",
-      name: "Jennifer Hale",
-      role: "CIO",
-      company: "NexGen Retail",
-      image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+      text: "We initially hired Le Duc Systems to fix our customer portal issues. Despite some initial timeline challenges, they delivered a solution that cut our server costs by 32% and reduced page load times from 6 seconds to under 1.5.",
+      name: "Home Builder Client",
+      role: "IT Director",
+      company: "Fulton Homes",
+      image: null
     },
     {
       id: 2,
-      text: "Working with Le Duc Systems allowed us to accelerate our digital transformation by at least 18 months. Their CloudScale platform integrated perfectly with our existing systems while providing the advanced capabilities we needed to stay competitive in our market.",
-      name: "Robert Chen",
-      role: "VP of Technology",
-      company: "Meridian Financial",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+      text: "After recurring security breaches, we implemented their SecureEdge system. The onboarding took longer than planned but the results speak for themselves - zero incidents in 14 months and our compliance audits are finally passing.",
+      name: "Financial Services Client",
+      role: "",
+      company: "",
+      image: null
     },
     {
       id: 3,
-      text: "The security expertise at Le Duc Systems is unmatched. They identified vulnerabilities in our infrastructure that other consultants missed and implemented a comprehensive security strategy that has kept us protected against emerging threats.",
-      name: "Sarah Johnson",
-      role: "CISO",
-      company: "HealthTech Innovations",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+      text: "I was skeptical about moving our legacy healthcare systems to CloudScale. The transition had some disruptions, but our processing time dropped from 4 hours to 20 minutes, transforming our business.",
+      name: "Healthcare Technology Client",
+      role: "",
+      company: "",
+      image: null
     },
     {
       id: 4,
-      text: "As a rapidly growing startup, we needed a technology partner who could scale with us. Le Duc Systems not only built a robust foundation for our infrastructure but continues to provide strategic guidance as we expand into new markets.",
-      name: "Michael Thompson",
-      role: "Founder & CEO",
-      company: "Elevate Logistics",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+      text: "As a small construction firm, Le Duc's modular approach let us implement just what we needed within budget. Their project management tool eliminated double-bookings and material shortages that were costing us thousands monthly.",
+      name: "Small Business Client",
+      role: "",
+      company: "",
+      image: null
     }
   ];
 
   return (
     <section id="about" style={{...styles.about, ...commonStyles.section}}>
       <div style={styles.aboutPattern}></div>
-      <div style={commonStyles.container}>
-        <h2 style={commonStyles.sectionTitle}>
+      <div style={{
+        ...commonStyles.container,
+        maxWidth: isMobile ? '100%' : '1200px',
+        padding: isMobile ? '0 1rem' : '0 2rem'
+      }}>
+        <h2 style={{
+          ...commonStyles.sectionTitle,
+          fontSize: isMobile ? '2rem' : '2.5rem',
+          marginBottom: isMobile ? '1rem' : '1.5rem'
+        }}>
           About <span style={commonStyles.sectionHighlight}>Le Duc Systems</span>
         </h2>
-        <div style={commonStyles.sectionTitleLine}></div>
-        <p style={commonStyles.sectionIntro}>
+        <div style={{
+          ...commonStyles.sectionTitleLine,
+          width: isMobile ? '60px' : '80px'
+        }}></div>
+        <p style={{
+          ...commonStyles.sectionIntro,
+          fontSize: isMobile ? '1.1rem' : '1.25rem',
+          marginBottom: isMobile ? '2rem' : '3rem'
+        }}>
           Delivering transformative technology solutions that drive measurable business outcomes since 2018
         </p>
         
@@ -798,7 +834,9 @@ const About = () => {
             <div 
               style={{
                 ...styles.aboutImagePattern, 
-                ...(hoveredElement === 'aboutImage' ? styles.aboutImagePattern['&:hover'] : {})
+                ...(hoveredElement === 'aboutImage' ? {
+                  transform: isMobile ? 'translateY(-5px)' : 'perspective(1000px) rotateY(-2deg) translateY(-5px)'
+                } : {})
               }}
             ></div>
             <img 
@@ -806,7 +844,9 @@ const About = () => {
               alt="Le Duc Systems Team" 
               style={{
                 ...styles.aboutImage, 
-                ...(hoveredElement === 'aboutImage' ? styles.aboutImage['&:hover'] : {})
+                ...(hoveredElement === 'aboutImage' ? {
+                  transform: isMobile ? 'translateY(-5px)' : 'perspective(1000px) rotateY(-2deg) translateY(-5px)'
+                } : {})
               }}
               onMouseEnter={() => handleMouseEnter('aboutImage')}
               onMouseLeave={handleMouseLeave}
@@ -845,40 +885,55 @@ const About = () => {
         </div>
         
         {/* Testimonials Section */}
-        {/* <div style={styles.testimonialsSection} ref={sectionRefs.testimonials} id="testimonials">
-          <h3 style={{...styles.aboutTitle, textAlign: 'center', display: 'block', marginBottom: '2.5rem'}}>
-            What Our Clients Say
-            <div style={{...styles.aboutTitleUnderline, left: '50%', transform: 'translateX(-50%)'}}></div>
+        <div style={styles.testimonialsSection} ref={sectionRefs.testimonials} id="testimonials">
+          <h3 style={{
+            ...styles.aboutTitle, 
+            textAlign: 'center', 
+            display: 'block', 
+            marginBottom: isMobile ? '1.5rem' : '2.5rem'
+          }}>
+            Client Feedback
+            <div style={{
+              ...styles.aboutTitleUnderline, 
+              left: '50%', 
+              transform: 'translateX(-50%)'
+            }}></div>
           </h3>
           
           <div style={styles.testimonialGrid}>
-            {testimonials.map((testimonial) => (
+            {testimonials.slice(0, isMobile ? 2 : 4).map((testimonial) => (
               <div 
                 key={testimonial.id} 
                 style={{
-                  ...styles.testimonialCard
+                  ...styles.testimonialCard,
+                  ...(hoveredElement === `testimonial${testimonial.id}` ? styles.testimonialCardHover : {})
                 }}
                 onMouseEnter={() => handleMouseEnter(`testimonial${testimonial.id}`)}
                 onMouseLeave={handleMouseLeave}
               >
                 <div style={styles.testimonialQuote}>"</div>
                 <p style={styles.testimonialText}>{testimonial.text}</p>
-                <div style={styles.testimonialAuthor}>
-                  <img 
-                    src={testimonial.image} 
-                    alt={testimonial.name} 
-                    style={styles.testimonialImage} 
-                  />
-                  <div style={styles.testimonialInfo}>
-                    <div style={styles.testimonialName}>{testimonial.name}</div>
-                    <div style={styles.testimonialRole}>{testimonial.role}</div>
-                    <div style={styles.testimonialCompany}>{testimonial.company}</div>
+                <div style={{
+                  padding: '0.5rem 0.75rem',
+                  backgroundColor: 'rgba(66, 153, 225, 0.1)',
+                  borderRadius: '4px',
+                  display: 'inline-block',
+                  marginTop: '0.5rem'
+                }}>
+                  <div style={{
+                    fontSize: isMobile ? '0.9rem' : '1rem',
+                    fontWeight: 600,
+                    color: '#2B6CB0'
+                  }}>
+                    {testimonial.name}
+                    {testimonial.role && ` • ${testimonial.role}`}
+                    {testimonial.company && ` • ${testimonial.company}`}
                   </div>
                 </div>
               </div>
             ))}
           </div>
-        </div> */}
+        </div>
       </div>
     </section>
   );

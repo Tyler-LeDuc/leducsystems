@@ -5,7 +5,7 @@ export const commonStyles = {
       padding: '0 2rem',
     },
     section: {
-      padding: '6rem 0',
+      padding: '2rem 0',
     },
     sectionTitle: {
       fontSize: '3rem',
