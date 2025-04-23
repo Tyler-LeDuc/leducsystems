@@ -6,10 +6,13 @@ import About from './About';
 import Services from './Services';
 import Contact from './Contact';
 import Footer from './Footer';
+import { initEmailService } from './emailService';
+import emailjs from '@emailjs/browser';
 
 function App() {
   const [scrolled, setScrolled] = useState(false);
-  
+  initEmailService('HIVHympEPP7sMQ_Pl');
+  emailjs.init("HIVHympEPP7sMQ_Pl");
   // Handle scroll effect for header
   useEffect(() => {
     const handleScroll = () => {
