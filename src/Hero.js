@@ -1,54 +1,42 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { commonStyles } from './utils/styles';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import ContactForm from './ContactForm'; // Import the ContactForm component
+import ContactForm from './ContactForm';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   // State for animations and responsive design
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [activeFeature, setActiveFeature] = useState(0);
+  const [currentWord, setCurrentWord] = useState(0);
   const heroRef = useRef(null);
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, -150]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
   
   // State for contact form
   const [contactFormOpen, setContactFormOpen] = useState(false);
-  const [buttonHover, setButtonHover] = useState(false);
 
-  // Features for automatic rotation
-  const features = [
-    { icon: "⚡", label: "Custom Software", color: "#38BDF8" },
-    { icon: "📱", label: "Mobile Apps", color: "#818CF8" },
-    { icon: "🏢", label: "Enterprise Solutions", color: "#6366F1" },
-    { icon: "🔄", label: "Digital Transformation", color: "#8B5CF6" }
-  ];
+  const rotatingWords = ['Innovation', 'Excellence', 'Solutions', 'Growth'];
 
-  // Handle responsive design and animations
+  // Rotate through words
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentWord((prev) => (prev + 1) % rotatingWords.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Handle responsive design
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
     
-    // Set initial states
     handleResize();
     setIsLoaded(true);
-    
-    // Add event listeners
     window.addEventListener('resize', handleResize);
     
-    // Feature rotation interval
-    const interval = setInterval(() => {
-      setActiveFeature((prev) => (prev + 1) % features.length);
-    }, 3000);
-    
-    // Clean up
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      clearInterval(interval);
-    };
-  }, [features.length]);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Toggle contact form modal
   const toggleContactForm = () => {
@@ -57,706 +45,396 @@ const Hero = () => {
 
   const styles = {
     hero: {
-      marginTop: '110px',
+      paddingTop: '150px',
       minHeight: '100vh',
       display: 'flex',
       alignItems: 'center',
-      background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
+      justifyContent: 'center',
+      background: '#000000',
       position: 'relative',
       overflow: 'hidden',
-      color: '#F8FAFC',
+      color: '#FFFFFF',
     },
-    heroContent: {
-      width: isMobile ? '100%' : '50%',
-      paddingRight: isMobile ? '0' : '2rem',
+    animatedBackground: {
+      position: 'absolute',
+      inset: 0,
+      background: `
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 128, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 60% 60%, rgba(34, 211, 238, 0.1) 0%, transparent 40%)
+      `,
+    },
+    gridOverlay: {
+      position: 'absolute',
+      inset: 0,
+      backgroundImage: `
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px)
+      `,
+      backgroundSize: '50px 50px',
+    },
+    glowOrb1: {
+      position: 'absolute',
+      top: '10%',
+      left: '10%',
+      width: '500px',
+      height: '500px',
+      background: 'radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 60%)',
+      borderRadius: '50%',
+      filter: 'blur(80px)',
+      animation: 'float1 20s ease-in-out infinite',
+    },
+    glowOrb2: {
+      position: 'absolute',
+      bottom: '10%',
+      right: '10%',
+      width: '600px',
+      height: '600px',
+      background: 'radial-gradient(circle, rgba(34, 211, 238, 0.3) 0%, transparent 60%)',
+      borderRadius: '50%',
+      filter: 'blur(100px)',
+      animation: 'float2 25s ease-in-out infinite',
+    },
+    content: {
       position: 'relative',
       zIndex: 10,
-      opacity: isLoaded ? 1 : 0,
-      transform: isLoaded ? 'translateY(0)' : 'translateY(20px)',
-      transition: 'opacity 0.8s ease-out, transform 0.8s ease-out',
-    },
-    heroVisual: {
-      width: isMobile ? '100%' : '50%',
-      marginTop: isMobile ? '3rem' : 0,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      position: 'relative',
-      opacity: isLoaded ? 1 : 0,
-      transform: isLoaded ? 'translateY(0)' : 'translateY(20px)',
-      transition: 'opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s',
-    },
-    glowOrb: {
-      position: 'absolute',
-      right: '-10%',
-      top: '-15%',
-      width: '70%',
-      height: '70%',
-      borderRadius: '50%',
-      background: 'radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(56, 189, 248, 0) 70%)',
-      filter: 'blur(60px)',
-      zIndex: 1,
-    },
-    secondaryGlowOrb: {
-      position: 'absolute',
-      left: '-10%',
-      bottom: '-10%',
-      width: '50%',
-      height: '50%',
-      borderRadius: '50%',
-      background: 'radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0) 70%)',
-      filter: 'blur(60px)',
-      zIndex: 1,
-    },
-    heroBgPattern: {
-      position: 'absolute',
-      right: 0,
-      top: 0,
+      textAlign: 'center',
+      maxWidth: '1200px',
       width: '100%',
-      height: '100%',
-      opacity: 0.04,
-      backgroundImage: 'radial-gradient(rgba(56, 189, 248, 0.8) 1px, transparent 1px)',
-      backgroundSize: '30px 30px',
-      zIndex: 1,
+      padding: '0 2rem',
     },
-    codeLines: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      backgroundImage: `linear-gradient(to bottom, transparent 49%, rgba(56, 189, 248, 0.05) 50%, transparent 51%)`,
-      backgroundSize: '100% 8px',
-      opacity: 0.1,
-      zIndex: 1,
-    },
-    heroTitle: {
-      fontSize: isMobile ? '2.75rem' : '4.5rem',
-      marginBottom: '1.5rem',
-      fontWeight: 800,
-      lineHeight: 1.1,
-      position: 'relative',
-      textShadow: '0 0 40px rgba(56, 189, 248, 0.3)',
-    },
-    heroHighlight: {
-      background: 'linear-gradient(90deg, #38BDF8, #818CF8)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      position: 'relative',
-      display: 'inline-block',
-    },
-    gradientText: {
-      background: 'linear-gradient(90deg, #38BDF8, #818CF8)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-    },
-    highlightUnderline: {
-      position: 'absolute',
-      bottom: '0px',
-      left: '0',
-      width: '100%',
-      height: '8px',
-      background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.7) 0%, rgba(129, 140, 248, 0.7) 100%)',
-      borderRadius: '4px',
-      zIndex: -1,
-    },
-    heroTagline: {
-      fontSize: '1.4rem',
-      marginBottom: '2.5rem',
-      color: '#94A3B8',
-      lineHeight: 1.6,
-      maxWidth: '600px',
-      position: 'relative',
-    },
-    ctaButton: {
-      ...commonStyles.ctaButton,
-      background: 'linear-gradient(90deg, #38BDF8 0%, #818CF8 100%)',
-      padding: '1.2rem 2.5rem',
-      fontSize: '1.2rem',
-      fontWeight: 600,
-      borderRadius: '12px',
-      color: '#0F172A',
-      border: 'none',
-      cursor: 'pointer',
-      transition: 'all 0.3s ease',
-      position: 'relative',
-      overflow: 'hidden',
-      zIndex: 1,
-      boxShadow: '0 10px 25px -5px rgba(14, 165, 233, 0.3)',
-    },
-    ctaButtonHover: {
-      transform: 'translateY(-3px)',
-      boxShadow: '0 20px 35px -10px rgba(14, 165, 233, 0.5)',
-    },
-    secondaryCta: {
-      background: 'transparent',
-      border: '2px solid rgba(56, 189, 248, 0.5)',
-      color: '#F8FAFC',
-      marginLeft: '1rem',
-      padding: '1.15rem 2rem',
-      borderRadius: '12px',
-      fontSize: '1.2rem',
-      fontWeight: 600,
-      cursor: 'pointer',
-      transition: 'all 0.3s ease',
-    },
-    ctaWrapper: {
-      position: 'relative',
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: '1rem',
-    },
-    buttonGlow: {
-      position: 'absolute',
-      width: '200%',
-      height: '100%',
-      background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)',
-      transform: 'translateX(-100%)',
-    },
-    featuresRow: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: '1rem',
-      marginTop: '2.5rem',
-    },
-    featureBadge: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '0.6rem 1.2rem',
-      backgroundColor: 'rgba(15, 23, 42, 0.5)',
-      borderRadius: '10px',
+    eyebrow: {
       fontSize: '1rem',
       fontWeight: '500',
-      border: '1px solid rgba(56, 189, 248, 0.3)',
-      color: '#E2E8F0',
-      transition: 'all 0.3s ease',
-      backdropFilter: 'blur(10px)',
+      color: '#3B82F6',
+      marginBottom: '1rem',
+      letterSpacing: '0.1em',
+      textTransform: 'uppercase',
     },
-    activeFeature: {
-      backgroundColor: 'rgba(56, 189, 248, 0.15)',
-      transform: 'translateY(-3px)',
-      border: '1px solid rgba(56, 189, 248, 0.7)',
-      boxShadow: '0 10px 25px -5px rgba(14, 165, 233, 0.2)',
+    mainTitle: {
+      fontSize: isMobile ? '2.5rem' : '4.5rem',
+      fontWeight: '800',
+      lineHeight: '1.1',
+      marginBottom: '2rem',
+      letterSpacing: '-0.02em',
+    },
+    titleGradient: {
+      background: 'linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text',
+    },
+    rotatingWord: {
+      display: 'inline-block',
+      background: 'linear-gradient(135deg, #F59E0B 0%, #EF4444 50%, #8B5CF6 100%)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text',
+      position: 'relative',
+    },
+    subtitle: {
+      fontSize: isMobile ? '1.125rem' : '1.375rem',
+      color: '#94A3B8',
+      maxWidth: '700px',
+      margin: '0 auto 3rem',
+      lineHeight: '1.6',
+      fontWeight: '400',
+    },
+    ctaContainer: {
+      display: 'flex',
+      gap: '1.5rem',
+      justifyContent: 'center',
+      flexWrap: 'wrap',
+      marginBottom: '5rem',
+    },
+    primaryCta: {
+      position: 'relative',
+      padding: '1rem 2.5rem',
+      fontSize: '1.125rem',
+      fontWeight: '600',
+      color: '#000000',
+      background: 'linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%)',
+      border: 'none',
+      borderRadius: '8px',
+      cursor: 'pointer',
+      overflow: 'hidden',
+      transition: 'all 0.3s ease',
+      textDecoration: 'none',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '0.5rem',
+      boxShadow: '0 10px 25px rgba(251, 191, 36, 0.3)',
+    },
+    secondaryCta: {
+      padding: '1rem 2.5rem',
+      fontSize: '1.125rem',
+      fontWeight: '600',
+      color: '#FFFFFF',
+      background: 'transparent',
+      border: '2px solid #334155',
+      borderRadius: '8px',
+      cursor: 'pointer',
+      transition: 'all 0.3s ease',
+      textDecoration: 'none',
+      display: 'inline-block',
+    },
+    featuresContainer: {
+      display: 'grid',
+      gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+      gap: '2rem',
+      maxWidth: '1000px',
+      margin: '0 auto',
+    },
+    featureCard: {
+      background: 'rgba(30, 41, 59, 0.5)',
+      border: '1px solid #334155',
+      borderRadius: '12px',
+      padding: '2rem',
+      textAlign: 'left',
+      backdropFilter: 'blur(10px)',
+      transition: 'all 0.3s ease',
     },
     featureIcon: {
-      marginRight: '0.5rem',
-      opacity: 0.8,
-    },
-    stats: {
+      width: '48px',
+      height: '48px',
+      background: 'rgba(59, 130, 246, 0.1)',
+      borderRadius: '8px',
       display: 'flex',
-      flexWrap: 'wrap',
-      marginTop: '3rem',
-      gap: '2rem',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '1.5rem',
+      marginBottom: '1rem',
+      color: '#3B82F6',
     },
-    statItem: {
-      flex: '1',
-      minWidth: '100px',
+    featureTitle: {
+      fontSize: '1.25rem',
+      fontWeight: '700',
+      marginBottom: '0.5rem',
+      color: '#F8FAFC',
+    },
+    featureDescription: {
+      fontSize: '0.875rem',
+      color: '#94A3B8',
+      lineHeight: '1.6',
+    },
+    statsRow: {
+      display: 'flex',
+      justifyContent: 'center',
+      gap: '4rem',
+      marginTop: '4rem',
+      flexWrap: 'wrap',
+    },
+    stat: {
+      textAlign: 'center',
     },
     statNumber: {
       fontSize: '2.5rem',
       fontWeight: '800',
-      marginBottom: '0.5rem',
-      background: 'linear-gradient(90deg, #38BDF8, #818CF8)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
+      color: '#3B82F6',
+      marginBottom: '0.25rem',
     },
     statLabel: {
-      fontSize: '1rem',
-      color: '#94A3B8',
+      fontSize: '0.875rem',
+      color: '#64748B',
+      textTransform: 'uppercase',
+      letterSpacing: '0.05em',
     },
-    scrollIndicator: {
-      position: 'absolute',
-      bottom: '10%',
-      left: '50%',
-      transform: 'translateX(-50%)',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      color: '#E2E8F0',
-      zIndex: 10,
-    },
-    scrollText: {
-      fontSize: '0.9rem',
-      marginBottom: '0.5rem',
-      opacity: 0.7,
-    },
-    scrollArrows: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    svgContainer: {
-      position: 'relative',
-      width: '100%',
-      height: '100%',
-      maxWidth: '600px',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }
   };
+
+  const features = [
+    {
+      icon: '⚡',
+      title: 'Swift as a Duck',
+      description: 'From concept to deployment in weeks, not months. We glide through development with agile precision.',
+    },
+    {
+      icon: '🧠',
+      title: 'Smart Navigation',
+      description: 'Leverage cutting-edge AI to chart new courses and streamline your digital journey.',
+    },
+    {
+      icon: '🔒',
+      title: 'Watertight Security',
+      description: 'Bank-level protection with SOC2 compliance keeps your data safe above and below the surface.',
+    },
+  ];
 
   return (
     <>
-      <section id="home" style={styles.hero} ref={heroRef}>
-        {/* Background elements */}
-        <div style={styles.heroBgPattern}></div>
-        <div style={styles.codeLines}></div>
-        <div style={styles.glowOrb}></div>
-        <div style={styles.secondaryGlowOrb}></div>
+      <motion.section 
+        id="home" 
+        style={styles.hero} 
+        ref={heroRef}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        {/* Animated gradient background */}
+        <div style={styles.animatedBackground} />
         
-        <div style={commonStyles.container}>
-          <div style={{display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-            <motion.div 
-              style={styles.heroContent}
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+        {/* Grid overlay */}
+        <div style={styles.gridOverlay} />
+        
+        {/* Floating orbs */}
+        <motion.div 
+          style={styles.glowOrb1}
+          animate={{ 
+            x: [0, 100, 0],
+            y: [0, -50, 0],
+          }}
+          transition={{ 
+            duration: 20,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+        <motion.div 
+          style={styles.glowOrb2}
+          animate={{ 
+            x: [0, -80, 0],
+            y: [0, 60, 0],
+          }}
+          transition={{ 
+            duration: 25,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+        
+        {/* Main content */}
+        <motion.div 
+          style={styles.content}
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          {/* Eyebrow text */}
+          <motion.p 
+            style={styles.eyebrow}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            Leading the Flock in Custom Software
+          </motion.p>
+          
+          {/* Main title */}
+          <motion.h1 
+            style={styles.mainTitle}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <span style={styles.titleGradient}>Navigate Your Way to</span>
+            <br />
+            <span>Digital </span>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={currentWord}
+                style={styles.rotatingWord}
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -20, opacity: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                {rotatingWords[currentWord]}
+              </motion.span>
+            </AnimatePresence>
+          </motion.h1>
+          
+          {/* Subtitle */}
+          <motion.p 
+            style={styles.subtitle}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            We help ambitious companies paddle forward with custom software solutions 
+            that transform businesses and guide teams to smoother waters.
+          </motion.p>
+          
+          {/* CTA buttons */}
+          <motion.div 
+            style={styles.ctaContainer}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <motion.button 
+              style={styles.primaryCta}
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: '0 20px 40px rgba(251, 191, 36, 0.4)',
+                background: 'linear-gradient(135deg, #FCD34D 0%, #FBBF24 100%)',
+              }}
+              whileTap={{ scale: 0.98 }}
+              onClick={toggleContactForm}
             >
+              Take Flight Today
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M7 10H13M13 10L10 7M13 10L10 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </motion.button>
+          </motion.div>
+          
+          {/* Feature cards */}
+          <motion.div 
+            style={styles.featuresContainer}
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            {features.map((feature, index) => (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                <h1 style={styles.heroTitle}>
-                  Craft Your
-                  <br />
-                  <span style={styles.heroHighlight}>
-                    Digital Future
-                    <motion.div 
-                      style={styles.highlightUnderline}
-                      initial={{ width: 0 }}
-                      animate={{ width: '100%' }}
-                      transition={{ duration: 0.8, delay: 1 }}
-                    ></motion.div>
-                  </span>
-                </h1>
-              </motion.div>
-              
-              <motion.p 
-                style={styles.heroTagline}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-              >
-                Technology Tailored To Your Vision
-              </motion.p>
-              
-              <motion.div 
-                style={styles.ctaWrapper}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-              >
-                <motion.button 
-                  style={styles.ctaButton}
-                  whileHover={{
-                    y: -3,
-                    boxShadow: '0 20px 35px -10px rgba(14, 165, 233, 0.5)'
-                  }}
-                  onClick={toggleContactForm}
-                >
-                  <motion.div 
-                    style={styles.buttonGlow}
-                    animate={{ x: ['100%', '-100%'] }}
-                    transition={{ 
-                      duration: 2, 
-                      repeat: Infinity, 
-                      repeatType: 'loop',
-                      ease: 'linear',
-                      repeatDelay: 1
-                    }}
-                  ></motion.div>
-                  Start Your Project
-                </motion.button>
-              </motion.div>
-              
-              <motion.div 
-                style={styles.featuresRow}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-              >
-                {features.map((feature, index) => (
-                  <motion.div 
-                    key={feature.label}
-                    style={{
-                      ...styles.featureBadge,
-                      ...(index === activeFeature ? styles.activeFeature : {}),
-                      borderColor: index === activeFeature ? feature.color : 'rgba(56, 189, 248, 0.3)'
-                    }}
-                    animate={index === activeFeature ? {
-                      y: -5,
-                      backgroundColor: 'rgba(56, 189, 248, 0.15)',
-                      transition: { duration: 0.3 }
-                    } : {
-                      y: 0,
-                      backgroundColor: 'rgba(15, 23, 42, 0.5)',
-                      transition: { duration: 0.3 }
-                    }}
-                  >
-                    <span style={styles.featureIcon}>{feature.icon}</span>
-                    {feature.label}
-                  </motion.div>
-                ))}
-              </motion.div>
-              
-              <motion.div 
-                style={styles.stats}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1 }}
-              >
-                <div style={styles.statItem}>
-                  <motion.div 
-                    style={styles.statNumber}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1.5, delay: 1.2 }}
-                  >
-                    250+
-                  </motion.div>
-                  <div style={styles.statLabel}>Projects Completed</div>
-                </div>
-                <div style={styles.statItem}>
-                  <motion.div 
-                    style={styles.statNumber}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1.5, delay: 1.4 }}
-                  >
-                    98%
-                  </motion.div>
-                  <div style={styles.statLabel}>Client Satisfaction</div>
-                </div>
-                <div style={styles.statItem}>
-                  <motion.div 
-                    style={styles.statNumber}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1.5, delay: 1.6 }}
-                  >
-                    7+
-                  </motion.div>
-                  <div style={styles.statLabel}>Years Experience</div>
-                </div>
-              </motion.div>
-            </motion.div>
-            
-            <motion.div 
-              style={styles.heroVisual}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <motion.div 
-                style={styles.svgContainer}
-                animate={{ y: [0, -10, 0] }}
-                transition={{ 
-                  duration: 4, 
-                  repeat: Infinity, 
-                  repeatType: 'loop', 
-                  ease: 'easeInOut' 
+                key={feature.title}
+                style={styles.featureCard}
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
+                whileHover={{ 
+                  y: -5,
+                  borderColor: '#3B82F6',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
                 }}
               >
-                {/* SVG Animation for Custom Software Development */}
-                <svg width="100%" height="100%" viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  {/* Code grid background */}
-                  <motion.rect 
-                    x="0" y="0" width="600" height="500" 
-                    fill="url(#codeGridPattern)" 
-                    opacity="0.06"
-                    initial={{ opacity: 0.02 }}
-                    animate={{ opacity: 0.06 }}
-                    transition={{ duration: 3, repeat: Infinity, repeatType: 'reverse' }}
-                  />
-                  
-                  {/* Main application frame */}
-                  <motion.rect 
-                    x="150" y="80" width="300" height="340"
-                    rx="10" ry="10"
-                    stroke="url(#blueGradient)" 
-                    strokeWidth="2" 
-                    fill="rgba(15, 23, 42, 0.5)"
-                    initial={{ y: 80 }}
-                    animate={{ y: 75 }}
-                    transition={{ duration: 3, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
-                  />
-                  
-                  {/* App header bar */}
-                  <rect x="150" y="80" width="300" height="40" rx="10" ry="10" fill="url(#darkBlueGradient)" />
-                  <circle cx="170" cy="100" r="5" fill="#FF5F57" />
-                  <circle cx="190" cy="100" r="5" fill="#FEBC2E" />
-                  <circle cx="210" cy="100" r="5" fill="#28C840" />
-                  
-                  {/* App title */}
-                  <text x="245" y="105" fontFamily="monospace" fontSize="12" fill="#E2E8F0">Custom App</text>
-                  
-                  {/* Function component */}
-                  <motion.g
-                    initial={{ y: 0 }}
-                    animate={{ y: -8 }}
-                    transition={{ duration: 2, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut', delay: 0.5 }}
-                  >
-                    <rect x="170" y="140" width="260" height="80" rx="5" fill="rgba(99, 102, 241, 0.1)" stroke="#6366F1" strokeWidth="1.5" strokeDasharray="2,2" />
-                    <text x="180" y="160" fontFamily="monospace" fontSize="12" fill="#818CF8">function Component() &#123;</text>
-                    <text x="190" y="180" fontFamily="monospace" fontSize="12" fill="#E2E8F0">return (</text>
-                    <text x="210" y="200" fontFamily="monospace" fontSize="12" fill="#38BDF8">&lt;CustomModule /&gt;</text>
-                    <text x="180" y="215" fontFamily="monospace" fontSize="12" fill="#E2E8F0">)&#123;</text>
-                  </motion.g>
-                  
-                  {/* API connection */}
-                  <motion.g
-                    initial={{ y: 0 }}
-                    animate={{ y: 8 }}
-                    transition={{ duration: 2.5, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut', delay: 0.8 }}
-                  >
-                    <rect x="170" y="240" width="260" height="60" rx="5" fill="rgba(56, 189, 248, 0.1)" stroke="#38BDF8" strokeWidth="1.5" />
-                    <text x="180" y="260" fontFamily="monospace" fontSize="12" fill="#38BDF8">async function getData() &#123;</text>
-                    <text x="190" y="280" fontFamily="monospace" fontSize="12" fill="#94A3B8">const response = await API.get();</text>
-                    <text x="180" y="295" fontFamily="monospace" fontSize="12" fill="#38BDF8">&#123;</text>
-                  </motion.g>
-                  
-                  {/* Database */}
-                  <motion.g
-                    initial={{ y: 0 }}
-                    animate={{ y: 6 }}
-                    transition={{ duration: 3, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut', delay: 1 }}
-                  >
-                    <rect x="170" y="320" width="260" height="40" rx="5" fill="rgba(139, 92, 246, 0.1)" stroke="#8B5CF6" strokeWidth="1.5" />
-                    <text x="180" y="345" fontFamily="monospace" fontSize="12" fill="#8B5CF6">Database.connect()</text>
-                  </motion.g>
-                  
-                  {/* Server node */}
-                  <motion.circle 
-                    cx="100" cy="250" r="40" 
-                    fill="rgba(15, 23, 42, 0.7)"
-                    stroke="url(#indigoGradient)" 
-                    strokeWidth="2"
-                    initial={{ scale: 1 }}
-                    animate={{ scale: 1.05 }}
-                    transition={{ duration: 2, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
-                  />
-                  <text x="79" y="255" fontFamily="monospace" fontSize="12" fill="#E2E8F0">Server</text>
-                  
-                  {/* Client node */}
-                  <motion.circle 
-                    cx="500" cy="250" r="40" 
-                    fill="rgba(15, 23, 42, 0.7)"
-                    stroke="url(#blueGradient)" 
-                    strokeWidth="2"
-                    initial={{ scale: 1 }}
-                    animate={{ scale: 1.05 }}
-                    transition={{ duration: 2.2, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut', delay: 0.3 }}
-                  />
-                  <text x="483" y="255" fontFamily="monospace" fontSize="12" fill="#E2E8F0">Client</text>
-                  
-                  {/* Cloud services node */}
-                  <motion.circle 
-                    cx="300" cy="50" r="30" 
-                    fill="rgba(15, 23, 42, 0.7)"
-                    stroke="url(#purpleGradient)" 
-                    strokeWidth="2"
-                    initial={{ scale: 1 }}
-                    animate={{ scale: 1.1 }}
-                    transition={{ duration: 2.5, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut', delay: 0.6 }}
-                  />
-                  <text x="277" y="53" fontFamily="monospace" fontSize="10" fill="#E2E8F0">Cloud</text>
-                  
-                  {/* Database node */}
-                  <motion.circle 
-                    cx="300" cy="450" r="30" 
-                    fill="rgba(15, 23, 42, 0.7)"
-                    stroke="#38BDF8" 
-                    strokeWidth="2"
-                    initial={{ scale: 1 }}
-                    animate={{ scale: 1.1 }}
-                    transition={{ duration: 2.8, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut', delay: 0.9 }}
-                  />
-                  <text x="278" y="453" fontFamily="monospace" fontSize="10" fill="#E2E8F0">Data</text>
-                  
-                  {/* Connection lines with animated data packets */}
-                  <line x1="100" y1="250" x2="150" y2="250" stroke="#6366F1" strokeWidth="2" strokeDasharray="4,4" />
-                  <line x1="450" y1="250" x2="500" y2="250" stroke="#38BDF8" strokeWidth="2" strokeDasharray="4,4" />
-                  <line x1="300" y1="80" x2="300" y2="50" stroke="#8B5CF6" strokeWidth="2" strokeDasharray="4,4" />
-                  <line x1="300" y1="420" x2="300" y2="450" stroke="#38BDF8" strokeWidth="2" strokeDasharray="4,4" />
-                  
-                  {/* Animated data packets */}
-                  <motion.circle 
-                    cx="125" cy="250" r="4" 
-                    fill="#6366F1"
-                    initial={{ x: 0 }}
-                    animate={{ x: 25 }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                  />
-                  
-                  <motion.circle 
-                    cx="475" cy="250" r="4" 
-                    fill="#38BDF8"
-                    initial={{ x: 0 }}
-                    animate={{ x: -25 }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
-                  />
-                  
-                  <motion.circle 
-                    cx="300" cy="65" r="4" 
-                    fill="#8B5CF6"
-                    initial={{ y: 0 }}
-                    animate={{ y: 15 }}
-                    transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
-                  />
-                  
-                  <motion.circle 
-                    cx="300" cy="435" r="4" 
-                    fill="#38BDF8"
-                    initial={{ y: 0 }}
-                    animate={{ y: -15 }}
-                    transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
-                  />
-                  
-                  {/* Code symbols flowing around */}
-                  <motion.text 
-                    x="230" y="190" 
-                    fill="#38BDF8" 
-                    fontFamily="monospace" 
-                    fontSize="14"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 2, repeat: Infinity, repeatType: 'reverse' }}
-                  >
-                    &lt;/&gt;
-                  </motion.text>
-                  
-                  <motion.text 
-                    x="370" y="280" 
-                    fill="#8B5CF6" 
-                    fontFamily="monospace" 
-                    fontSize="14"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 2, repeat: Infinity, repeatType: 'reverse', delay: 0.5 }}
-                  >
-                    { }
-                  </motion.text>
-                  
-                  <motion.text 
-                    x="180" y="330" 
-                    fill="#38BDF8" 
-                    fontFamily="monospace" 
-                    fontSize="14"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 2, repeat: Infinity, repeatType: 'reverse', delay: 1 }}
-                  >
-                    ()=&gt;
-                  </motion.text>
-                  
-                  {/* Gear icons representing software processes */}
-                  <motion.g
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
-                    style={{ transformOrigin: '80px 180px' }}
-                  >
-                    <path d="M80 165 L85 165 L87 155 L95 158 L100 150 L92 145 L95 137 L105 140 L110 130 L100 128 L100 118 L110 115 L105 105 L95 110 L90 102 L98 95 L90 90 L80 95 L75 87 L82 80 L73 75 L65 85 L57 80 L60 70 L50 65 L45 75 L35 72 L40 62 L30 60 L25 70 L15 68 L20 78 L10 85 L18 90 L15 100 L5 97 L10 107 L2 115 L12 120 L12 130 L2 132 L7 142 L17 137 L22 147 L12 150 L20 160 L30 153 L38 160 L35 170 L45 172 L50 162 L60 165 L57 175 L68 177 L75 168 L80 165" fill="url(#indigoGradient)" opacity="0.7"/>
-                    <circle cx="80" cy="180" r="10" fill="#0F172A" />
-                  </motion.g>
-                  
-                  <motion.g
-                    animate={{ rotate: -360 }}
-                    transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-                    style={{ transformOrigin: '520px 180px' }}
-                  >
-                    <path d="M520 165 L525 165 L527 155 L535 158 L540 150 L532 145 L535 137 L545 140 L550 130 L540 128 L540 118 L550 115 L545 105 L535 110 L530 102 L538 95 L530 90 L520 95 L515 87 L522 80 L513 75 L505 85 L497 80 L500 70 L490 65 L485 75 L475 72 L480 62 L470 60 L465 70 L455 68 L460 78 L450 85 L458 90 L455 100 L445 97 L450 107 L442 115 L452 120 L452 130 L442 132 L447 142 L457 137 L462 147 L452 150 L460 160 L470 153 L478 160 L475 170 L485 172 L490 162 L500 165 L497 175 L508 177 L515 168 L520 165" fill="url(#blueGradient)" opacity="0.7"/>
-                    <circle cx="520" cy="180" r="10" fill="#0F172A" />
-                  </motion.g>
-                  
-                  {/* Radial pulses */}
-                  <motion.circle 
-                    cx="300" cy="250" r="100" 
-                    stroke="url(#blueGradient)" 
-                    strokeWidth="1" 
-                    fill="none"
-                    initial={{ r: 100, opacity: 1 }}
-                    animate={{ r: 200, opacity: 0 }}
-                    transition={{ duration: 4, repeat: Infinity, ease: 'easeOut' }}
-                  />
-                  
-                  <motion.circle 
-                    cx="300" cy="250" r="100" 
-                    stroke="url(#indigoGradient)" 
-                    strokeWidth="1" 
-                    fill="none"
-                    initial={{ r: 100, opacity: 1 }}
-                    animate={{ r: 200, opacity: 0 }}
-                    transition={{ duration: 4, repeat: Infinity, ease: 'easeOut', delay: 1 }}
-                  />
-                  
-                  {/* Definitions for gradients and patterns */}
-                  <defs>
-                    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#38BDF8" />
-                      <stop offset="100%" stopColor="#0EA5E9" />
-                    </linearGradient>
-                    
-                    <linearGradient id="indigoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#818CF8" />
-                      <stop offset="100%" stopColor="#6366F1" />
-                    </linearGradient>
-                    
-                    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#8B5CF6" />
-                      <stop offset="100%" stopColor="#7C3AED" />
-                    </linearGradient>
-                    
-                    <linearGradient id="darkBlueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#1E293B" />
-                      <stop offset="100%" stopColor="#0F172A" />
-                    </linearGradient>
-                    
-                    <pattern id="codeGridPattern" patternUnits="userSpaceOnUse" width="50" height="50">
-                      <rect width="50" height="50" fill="none" />
-                      <text x="5" y="20" fontFamily="monospace" fontSize="8" fill="#38BDF8">import</text>
-                      <text x="15" y="40" fontFamily="monospace" fontSize="8" fill="#8B5CF6">export</text>
-                      <text x="30" y="10" fontFamily="monospace" fontSize="8" fill="#6366F1">const</text>
-                      <text x="0" y="50" fontFamily="monospace" fontSize="8" fill="#38BDF8">{`{}`}</text>
-                      <text x="40" y="30" fontFamily="monospace" fontSize="8" fill="#8B5CF6">( )</text>
-                    </pattern>
-                  </defs>
-                </svg>
+                <div style={styles.featureIcon}>
+                  {feature.icon}
+                </div>
+                <h3 style={styles.featureTitle}>{feature.title}</h3>
+                <p style={styles.featureDescription}>{feature.description}</p>
               </motion.div>
-            </motion.div>
-          </div>
-        </div>
-        
-        {/* Scroll indicator */}
-        <motion.div 
-          style={styles.scrollIndicator}
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <div style={styles.scrollText}>Scroll to Explore</div>
-          <div style={styles.scrollArrows}>
-            <motion.svg 
-              width="24" 
-              height="24" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              xmlns="http://www.w3.org/2000/svg"
-              animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 1, delay: 0.5, repeat: Infinity }}
-            >
-              <path d="M7 13L12 18L17 13" stroke="#38BDF8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </motion.svg>
-          </div>
+            ))}
+          </motion.div>
+
+          {/* Stats row */}
+          <motion.div 
+            style={styles.statsRow}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+          >
+            <div style={styles.stat}>
+              <div style={styles.statNumber}>15+</div>
+              <div style={styles.statLabel}>Years Experience</div>
+            </div>
+            <div style={styles.stat}>
+              <div style={styles.statNumber}>50+</div>
+              <div style={styles.statLabel}>AI Solutions Deployed</div>
+            </div>
+            <div style={styles.stat}>
+              <div style={styles.statNumber}>98%</div>
+              <div style={styles.statLabel}>Client Satisfaction</div>
+            </div>
+          </motion.div>
         </motion.div>
-      </section>
+      </motion.section>
 
       {/* Integrated ContactForm Component */}
       <ContactForm 
         isOpen={contactFormOpen} 
         onClose={toggleContactForm}
-        recipientEmail="Tyler.a.leduc@gmail.com"
+        recipientEmail="leducsystems@gmail.com"
       />
     </>
   );

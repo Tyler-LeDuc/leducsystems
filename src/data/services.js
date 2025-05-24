@@ -1,55 +1,92 @@
 export const services = [
-    {
-      id: 1,
-      title: 'Custom Software Development',
-      description: 'Enterprise-grade software solutions tailored to your unique business challenges, built using cutting-edge technologies and battle-tested methodologies.',
-      icon: '💻',
-      bgPattern: 'linear-gradient(120deg, #3182CE 0%, #2C5282 100%)',
-      features: [
-        'Scalable full-stack application development',
-        'API design and third-party system integration',
-        'High-performance database architecture',
-        'Legacy system modernization'
-      ]
-    },
-    {
-      id: 2,
-      title: 'Web & Mobile Applications',
-      description: 'Engaging, responsive applications that deliver exceptional user experiences across all devices, from smartphones to desktops.',
-      icon: '📱',
-      bgPattern: 'linear-gradient(120deg, #4299E1 0%, #3182CE 100%)',
-      features: [
-        'Progressive Web Apps (PWA) development',
-        'Native iOS and Android applications',
-        'Cross-platform solutions with React Native',
-        'UI/UX design and prototyping'
-      ]
-    },
-    {
-      id: 3,
-      title: 'Cloud & DevOps Excellence',
-      description: 'Robust cloud infrastructure and streamlined development operations ensuring scalability, security, and continuous delivery of your applications.',
-      icon: '☁️',
-      bgPattern: 'linear-gradient(120deg, #2B6CB0 0%, #1A365D 100%)',
-      features: [
-        'Multi-cloud architecture (AWS/Azure/GCP)',
-        'CI/CD pipeline implementation',
-        'Infrastructure as Code (Terraform/CloudFormation)',
-        'Containerization and orchestration (Docker/Kubernetes)'
-      ]
-    },
-    {
-      id: 4,
-      title: 'Technology Consulting',
-      description: 'Strategic technology guidance to help you navigate the digital landscape, optimize your tech stack, and create a roadmap for sustainable growth.',
-      icon: '🔍',
-      bgPattern: 'linear-gradient(120deg, #1A365D 0%, #2C5282 100%)',
-      features: [
-        'Technology stack assessment and optimization',
-        'Digital transformation strategy',
-        'Technical debt reduction planning',
-        'Security and compliance auditing'
-      ]
-    }
-  ];
-  
+  {
+    id: 1,
+    title: 'AI Integration',
+    subtitle: 'Intelligent Automation',
+    description: 'Deploy AI agents that navigate complex processes with superhuman accuracy, keeping your operations afloat 24/7.',
+    detailedDescription: 'Our AI systems intelligently adapt and optimize your workflows, seamlessly gliding through tasks. These digital employees stay afloat 24/7, processing tasks with perfect accuracy while ducking complexity.',
+    icon: '🤖',
+    gradient: 'linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)',
+    features: ['Autonomous AI Agents', 'Process Intelligence', 'Real-time Decisions'],
+    keyMetric: { number: '85%', label: 'Work Automation' },
+    technologies: ['GPT-4 Turbo', 'Claude 3.5 Sonnet', 'LangChain', 'Vector Databases', 'RAG Systems', 'Multi-Agent Frameworks'],
+    useCases: ['Contract Intelligence', 'Document Processing', 'Customer Support Automation', 'Business Process Optimization'],
+    timeline: '3-6 weeks',
+    startingPrice: 'From $18K'
+  },
+  {
+    id: 2,
+    title: 'AI-Enhanced Software',
+    subtitle: 'Intelligence-First Development',
+    description: 'Build smart applications with embedded AI that learns and adapts, creating smooth sailing for your users.',
+    detailedDescription: 'Every application includes AI features that help your software navigate changing requirements over time, from predictive UIs to intelligent data processing that stays afloat in any data stream.',
+    icon: '💻',
+    gradient: 'linear-gradient(135deg, #0EA5E9 0%, #0369A1 100%)',
+    features: ['AI-Powered Features', 'Smart Interfaces', 'Predictive Analytics'],
+    keyMetric: { number: '75%', label: 'User Efficiency' },
+    technologies: ['React', 'Node.js', 'Python', 'TensorFlow', 'Kubernetes', 'AI Model Integration'],
+    useCases: ['Intelligent Dashboards', 'Smart CRM Systems', 'Predictive Business Tools', 'AI-Enhanced Workflows'],
+    timeline: '6-12 weeks',
+    startingPrice: 'From $28K'
+  },
+  {
+    id: 3,
+    title: 'Content Generation AI',
+    subtitle: 'Scale Creative Output',
+    description: 'Generate high-quality content and marketing materials that help your brand message stay afloat in crowded markets.',
+    detailedDescription: 'Our content AI learns your brand\'s voice to generate compelling marketing materials and creative assets that smoothly navigate market dynamics and make waves with your audience.',
+    icon: '✨',
+    gradient: 'linear-gradient(135deg, #EC4899 0%, #BE185D 100%)',
+    features: ['Brand-Tuned Models', 'Multi-Format Output', 'Performance Tracking'],
+    keyMetric: { number: '15x', label: 'Content Velocity' },
+    technologies: ['Custom GPT Models', 'Brand Fine-tuning', 'DALL-E 3', 'Claude 3', 'Content Optimization', 'A/B Testing AI'],
+    useCases: ['Marketing Campaigns', 'Product Documentation', 'Social Media Content', 'Sales Materials'],
+    timeline: '4-8 weeks',
+    startingPrice: 'From $22K'
+  },
+  {
+    id: 4,
+    title: 'Computer Vision',
+    subtitle: 'Visual Intelligence',
+    description: 'Process visual data in real-time to detect patterns and anomalies, keeping a watchful eye on smooth operations.',
+    detailedDescription: 'Transform any camera into an intelligent sensor that helps you navigate visual data streams 24/7, ducking quality issues before they surface and maintaining seamless monitoring.',
+    icon: '👁️',
+    gradient: 'linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%)',
+    features: ['Real-time Analysis', 'Anomaly Detection', 'Visual Intelligence'],
+    keyMetric: { number: '99.8%', label: 'Detection Accuracy' },
+    technologies: ['YOLOv8', 'SAM', 'OpenCV', 'Edge Computing', 'Custom Vision Models', 'Real-time Processing'],
+    useCases: ['Quality Control', 'Security Systems', 'Inventory Tracking', 'Process Monitoring'],
+    timeline: '6-10 weeks',
+    startingPrice: 'From $32K'
+  },
+  {
+    id: 5,
+    title: 'Predictive Analytics',
+    subtitle: 'Future Intelligence',
+    description: 'Forecast trends and predict customer behavior to help your business navigate future waters ahead of competition.',
+    detailedDescription: 'Analyze historical patterns to chart your course through future outcomes with high accuracy, enabling proactive decision-making that keeps you afloat in changing markets.',
+    icon: '📊',
+    gradient: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+    features: ['Advanced Forecasting', 'Behavior Prediction', 'Risk Assessment'],
+    keyMetric: { number: '96%', label: 'Prediction Accuracy' },
+    technologies: ['XGBoost', 'Neural Networks', 'Time Series Analysis', 'Feature Engineering', 'Model Ensembles'],
+    useCases: ['Sales Forecasting', 'Customer Churn Prediction', 'Risk Analysis', 'Market Trend Analysis'],
+    timeline: '5-8 weeks',
+    startingPrice: 'From $20K'
+  },
+  {
+    id: 6,
+    title: 'AI Cloud Infrastructure',
+    subtitle: 'Intelligent Scaling',
+    description: 'Deploy AI workloads on optimized cloud infrastructure that scales seamlessly to keep your operations afloat.',
+    detailedDescription: 'Build cloud infrastructure designed for smooth sailing of AI applications—from model training to real-time inference that navigates any scale of demand without ruffling feathers.',
+    icon: '☁️',
+    gradient: 'linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)',
+    features: ['AI Architecture', 'Model Deployment', 'Auto-Scaling'],
+    keyMetric: { number: '99.99%', label: 'AI Uptime' },
+    technologies: ['AWS SageMaker', 'Azure ML', 'Google AI Platform', 'Kubernetes', 'GPU Clusters', 'Model Serving'],
+    useCases: ['AI Model Deployment', 'ML Pipeline Automation', 'Real-time Inference', 'AI Workload Optimization'],
+    timeline: '6-12 weeks',
+    startingPrice: 'From $25K'
+  }
+];

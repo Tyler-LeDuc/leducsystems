@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { commonStyles } from './utils/styles';
-import ContactForm from './ContactForm'; // Import the ContactForm component
+import ContactForm from './ContactForm';
 
 const Header = ({ scrolled: propScrolled }) => {
   // State for menu, form, scroll position
@@ -10,6 +11,18 @@ const Header = ({ scrolled: propScrolled }) => {
   const [activeLink, setActiveLink] = useState('home');
   const [hoverLink, setHoverLink] = useState(null);
   const [buttonHover, setButtonHover] = useState(false);
+  
+  const location = useLocation();
+
+  // Set active link based on current path
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setActiveLink('home');
+    } else {
+      const path = location.pathname.substring(1).split('/')[0];
+      setActiveLink(path);
+    }
+  }, [location]);
 
   // Handle scroll events
   useEffect(() => {
@@ -43,16 +56,24 @@ const Header = ({ scrolled: propScrolled }) => {
 
   // Check viewport width
   const [isMobile, setIsMobile] = useState(false);
+  const [isNarrowScreen, setIsNarrowScreen] = useState(false);
   
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
+      setIsNarrowScreen(window.innerWidth <= 600); // For full-width mobile menu
+      
+      // Close mobile menu when resizing to desktop
+      if (window.innerWidth > 768 && menuOpen) {
+        setMenuOpen(false);
+        document.body.style.overflow = 'auto';
+      }
     };
     
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  }, [menuOpen]);
 
   // Inline styles with modern design
   const styles = {
@@ -80,7 +101,7 @@ const Header = ({ scrolled: propScrolled }) => {
       gap: '0.5rem',
       textDecoration: 'none',
       position: 'relative',
-      zIndex: 101,
+      zIndex: menuOpen && isNarrowScreen ? 96 : 101, // Lower z-index when menu is open on narrow screens
     },
     logoWrapper: {
       position: 'relative',
@@ -89,8 +110,6 @@ const Header = ({ scrolled: propScrolled }) => {
       justifyContent: 'center',
     },
     logoImage: {
-      height: scrolled ? '60px' : '80px',
-      width: scrolled ? '120px' : '160px',
       transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
       opacity: 0.95,
     },
@@ -112,7 +131,7 @@ const Header = ({ scrolled: propScrolled }) => {
       gap: '2.8rem',
     },
     navLink: {
-      color: '#1E293B', // Darker blue-gray for better contrast
+      color: '#334155', // Darker slate for better contrast
       textDecoration: 'none',
       fontWeight: 500,
       fontSize: '0.95rem',
@@ -124,7 +143,7 @@ const Header = ({ scrolled: propScrolled }) => {
     },
     navLinkHover: {
       opacity: 1,
-      color: '#0EA5E9', // Bright blue accent
+      color: '#3B82F6', // Primary blue accent
       transform: 'translateY(-2px)', // Subtle lift effect
     },
     navLinkIndicator: {
@@ -133,15 +152,15 @@ const Header = ({ scrolled: propScrolled }) => {
       left: '0',
       width: '100%',
       height: '2px',
-      background: 'linear-gradient(90deg, #0EA5E9 0%, #38BDF8 100%)',
+      background: 'linear-gradient(90deg, #3B82F6 0%, #0EA5E9 100%)',
       transform: 'scaleX(0)',
       transformOrigin: 'left',
       transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
       borderRadius: '1px',
-      boxShadow: '0 0 8px rgba(14, 165, 233, 0.5)',
+      boxShadow: '0 0 8px rgba(59, 130, 246, 0.5)',
     },
     activeNavLink: {
-      color: '#0EA5E9', // Bright blue accent
+      color: '#3B82F6', // Primary blue accent
       opacity: 1,
     },
     activeIndicator: {
@@ -154,13 +173,13 @@ const Header = ({ scrolled: propScrolled }) => {
       width: '30px',
       height: '20px',
       cursor: 'pointer',
-      zIndex: 101,
+      zIndex: 103, // Always higher than mobile menu
       position: 'relative',
     },
     hamburgerLine: {
       height: '2px',
       width: '100%',
-      backgroundColor: '#1E293B', // Dark blue for hamburger lines
+      backgroundColor: '#334155', // Slate for hamburger lines
       borderRadius: '2px',
       transition: 'all 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6)',
     },
@@ -180,42 +199,48 @@ const Header = ({ scrolled: propScrolled }) => {
     mobileMenu: {
       position: 'fixed',
       top: 0,
-      right: menuOpen ? '0%' : '-100%',
-      width: '80%',
+      right: 0,
+      transform: menuOpen ? 'translateX(0)' : 'translateX(100%)',
+      width: '280px',
+      maxWidth: '85%',
       height: '100vh',
       background: '#FFFFFF',
       borderLeft: '1px solid rgba(14, 165, 233, 0.2)',
       display: 'flex',
       flexDirection: 'column',
-      padding: '5rem 2rem 2rem',
-      zIndex: 95,
-      transition: 'right 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
+      padding: '4rem 1.5rem 2rem',
+      zIndex: 102, // Higher z-index to cover header logo when needed
+      transition: 'transform 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
       boxShadow: '-10px 0 30px rgba(0, 0, 0, 0.15)',
+      overflowY: 'auto',
+      overflowX: 'hidden',
+      visibility: menuOpen ? 'visible' : 'hidden',
     },
     mobileNavLink: {
       display: 'block',
-      margin: '0.9rem 0',
-      fontSize: '1.4rem',
-      color: '#1E293B',
+      margin: '0.6rem 0',
+      fontSize: '1.1rem',
+      color: '#334155',
       textDecoration: 'none',
       opacity: 0.85,
       transition: 'all 0.25s ease',
       position: 'relative',
-      paddingLeft: '15px',
+      textAlign: 'left',
+      padding: '0.4rem 0',
     },
     mobileActiveLinkIndicator: {
       position: 'absolute',
-      left: '0',
+      left: '-10px',
       top: '50%',
       transform: 'translateY(-50%)',
-      width: '4px',
-      height: '22px',
-      background: 'linear-gradient(180deg, #0EA5E9 0%, #38BDF8 100%)',
+      width: '3px',
+      height: '18px',
+      background: 'linear-gradient(180deg, #3B82F6 0%, #0EA5E9 100%)',
       borderRadius: '2px',
-      boxShadow: '0 0 8px rgba(14, 165, 233, 0.5)',
+      boxShadow: '0 0 8px rgba(59, 130, 246, 0.5)',
     },
     mobileActiveLinkText: {
-      color: '#0EA5E9',
+      color: '#3B82F6',
       opacity: 1,
     },
     mobilePattern: {
@@ -233,7 +258,7 @@ const Header = ({ scrolled: propScrolled }) => {
     },
     transformedBurger1: {
       transform: menuOpen ? 'rotate(45deg) translate(4px, 8px)' : 'none',
-      backgroundColor: menuOpen ? '#0EA5E9' : '#1E293B',
+      backgroundColor: menuOpen ? '#3B82F6' : '#334155',
     },
     transformedBurger2: {
       opacity: menuOpen ? 0 : 1,
@@ -241,7 +266,7 @@ const Header = ({ scrolled: propScrolled }) => {
     },
     transformedBurger3: {
       transform: menuOpen ? 'rotate(-45deg) translate(4px, -8px)' : 'none',
-      backgroundColor: menuOpen ? '#0EA5E9' : '#1E293B',
+      backgroundColor: menuOpen ? '#3B82F6' : '#334155',
     },
     ctaButton: {
       display: isMobile ? 'none' : 'flex',
@@ -249,8 +274,8 @@ const Header = ({ scrolled: propScrolled }) => {
       justifyContent: 'center',
       padding: '0.65rem 1.5rem',
       background: buttonHover 
-        ? 'linear-gradient(135deg, #0EA5E9 0%, #06B6D4 100%)' 
-        : 'linear-gradient(135deg, #06B6D4 0%, #0EA5E9 100%)',
+        ? 'linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%)' 
+        : 'linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%)',
       color: '#FFFFFF',
       borderRadius: '6px',
       fontWeight: 600,
@@ -259,8 +284,8 @@ const Header = ({ scrolled: propScrolled }) => {
       border: 'none',
       transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
       boxShadow: buttonHover 
-        ? '0 8px 20px rgba(14, 165, 233, 0.4), 0 0 10px rgba(14, 165, 233, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)'
-        : '0 4px 15px rgba(14, 165, 233, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+        ? '0 8px 20px rgba(59, 130, 246, 0.4), 0 0 10px rgba(59, 130, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)'
+        : '0 4px 15px rgba(59, 130, 246, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
       cursor: 'pointer',
       textDecoration: 'none',
       position: 'relative',
@@ -284,19 +309,28 @@ const Header = ({ scrolled: propScrolled }) => {
     mobileCta: {
       display: 'block',
       textAlign: 'center',
-      padding: '1.1rem',
-      margin: '2rem 0 0',
-      background: 'linear-gradient(135deg, #06B6D4 0%, #0EA5E9 100%)',
+      padding: '0.8rem',
+      margin: '1.5rem 0 0',
+      background: 'linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%)',
       color: '#FFFFFF',
       borderRadius: '6px',
       fontWeight: 600,
-      fontSize: '1.1rem',
+      fontSize: '0.95rem',
       transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-      boxShadow: '0 6px 15px rgba(14, 165, 233, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+      boxShadow: '0 6px 15px rgba(59, 130, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
       textDecoration: 'none',
       position: 'relative',
       overflow: 'hidden',
       textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
+    },
+    mobileLogoContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      marginBottom: '1.5rem',
+      borderBottom: '1px solid rgba(14, 165, 233, 0.1)',
+      paddingBottom: '1rem',
+      width: '100%',
     }
   };
 
@@ -306,49 +340,70 @@ const Header = ({ scrolled: propScrolled }) => {
     styles.hamburger.display = 'flex';
   }
 
+  // Navigation links definition
+  const navLinks = [
+    { id: 'home', path: '/', label: 'Home' },
+    { id: 'services', path: '/services', label: 'Services' },
+    { id: 'pricing', path: '/pricing', label: 'Pricing' },
+    { id: 'careers', path: '/careers', label: 'Careers' },
+    { id: 'about', path: '/about', label: 'About' },
+    { id: 'contact', path: '/contact', label: 'Contact' }
+  ];
+
   return (
     <>
       <header style={styles.header}>
         <div style={{...commonStyles.container, ...styles.headerContainer}}>
-          <a href="#home" style={styles.logoContainer} onClick={() => handleLinkClick('home')}>
+          <Link to="/" style={styles.logoContainer} onClick={() => handleLinkClick('home')}>
             <div style={styles.logoWrapper}>
               <div style={styles.logoGlow}></div>
-              <img 
-                src="/duck-logo.png" 
-                alt="Le Duc Systems Logo" 
-                style={styles.logoImage} 
-              />
+              <div style={{display: 'flex', alignItems: 'center'}}>
+                <img 
+                  src="/duck-icon.png" 
+                  alt="Le Duc Systems Duck Icon" 
+                  style={{height: scrolled ? '80px' : '100px', width: 'auto', marginRight: '-20px'}} 
+                />
+                <div style={{
+                  fontWeight: 700, 
+                  color: '#1A365D',
+                  fontSize: scrolled ? '1.5rem' : '1.8rem',
+                  letterSpacing: '0.5px',
+                  lineHeight: 1.1
+                }}>
+                  <div>Le Duc</div>
+                  <div>Systems</div>
+                </div>
+              </div>
             </div>
-          </a>
+          </Link>
           
           <div style={{display: 'flex', alignItems: 'center'}}>
             <nav style={styles.nav}>
-              {['home', 'services', 'about', 'contact'].map(section => (
-                <a 
-                  key={section}
-                  href={`#${section}`} 
+              {navLinks.map(link => (
+                <Link 
+                  key={link.id}
+                  to={link.path}
                   style={{
                     ...styles.navLink,
-                    ...(activeLink === section ? styles.activeNavLink : {}),
-                    ...(hoverLink === section ? styles.navLinkHover : {})
+                    ...(activeLink === link.id ? styles.activeNavLink : {}),
+                    ...(hoverLink === link.id ? styles.navLinkHover : {})
                   }}
-                  onClick={() => handleLinkClick(section)}
-                  onMouseEnter={() => setHoverLink(section)}
+                  onClick={() => handleLinkClick(link.id)}
+                  onMouseEnter={() => setHoverLink(link.id)}
                   onMouseLeave={() => setHoverLink(null)}
                 >
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
+                  {link.label}
                   <div 
                     style={{
                       ...styles.navLinkIndicator,
-                      ...(activeLink === section || hoverLink === section ? styles.activeIndicator : {})
+                      ...(activeLink === link.id || hoverLink === link.id ? styles.activeIndicator : {})
                     }}
                   ></div>
-                </a>
+                </Link>
               ))}
             </nav>
             
-            <a 
-              href="#" 
+            <button 
               style={styles.ctaButton}
               onClick={(e) => {
                 e.preventDefault();
@@ -359,7 +414,7 @@ const Header = ({ scrolled: propScrolled }) => {
             >
               <div style={styles.ctaButtonShimmer}></div>
               Get Started
-            </a>
+            </button>
             
             <div 
               style={{...styles.hamburger, ...(isMobile ? styles.hamburgerVisible : {})}} 
@@ -376,23 +431,40 @@ const Header = ({ scrolled: propScrolled }) => {
           <div style={styles.mobileMenu}>
             <div style={styles.mobilePattern}></div>
             
-            {['home', 'about', 'services', 'contact'].map(section => (
-              <a 
-                key={section}
-                href={`#${section}`} 
+            <div style={styles.mobileLogoContainer}>
+              <img 
+                src="/duck-icon.png" 
+                alt="Le Duc Systems Duck Icon" 
+                style={{height: '50px', width: 'auto', marginRight: '8px'}} 
+              />
+              <div style={{
+                fontWeight: 700, 
+                color: '#1A365D',
+                fontSize: '1.2rem',
+                letterSpacing: '0.3px',
+                lineHeight: 1.1
+              }}>
+                <div>Le Duc</div>
+                <div>Systems</div>
+              </div>
+            </div>
+            
+            {navLinks.map(link => (
+              <Link 
+                key={link.id}
+                to={link.path}
                 style={{
                   ...styles.mobileNavLink,
-                  ...(activeLink === section ? styles.mobileActiveLinkText : {})
+                  ...(activeLink === link.id ? styles.mobileActiveLinkText : {})
                 }}
-                onClick={() => handleLinkClick(section)}
+                onClick={() => handleLinkClick(link.id)}
               >
-                {activeLink === section && <div style={styles.mobileActiveLinkIndicator}></div>}
-                {section.charAt(0).toUpperCase() + section.slice(1)}
-              </a>
+                {activeLink === link.id && <div style={styles.mobileActiveLinkIndicator}></div>}
+                {link.label}
+              </Link>
             ))}
             
-            <a 
-              href="#" 
+            <button 
               style={styles.mobileCta} 
               onClick={(e) => {
                 e.preventDefault();
@@ -401,7 +473,7 @@ const Header = ({ scrolled: propScrolled }) => {
               }}
             >
               Get Started
-            </a>
+            </button>
           </div>
         </div>
       </header>
@@ -410,7 +482,7 @@ const Header = ({ scrolled: propScrolled }) => {
       <ContactForm 
         isOpen={contactFormOpen} 
         onClose={toggleContactForm}
-        recipientEmail="Tyler.a.leduc@gmail.com"
+        recipientEmail="leducsystems@gmail.com"
       />
     </>
   );

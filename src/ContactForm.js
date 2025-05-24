@@ -1,9 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 
 // Contact Form Component that can be imported and used anywhere
-const ContactForm = ({ isOpen, onClose, recipientEmail = 'Tyler.a.leduc@gmail.com' }) => {
+const ContactForm = ({ 
+  isOpen, 
+  onClose, 
+  recipientEmail = 'leducsystems@gmail.com', 
+  embedded = false, 
+  isJobApplication = false 
+}) => {
+  // Form ref for handling file uploads
+  const formRef = useRef(null);
+  
   // State for form data
   const [formData, setFormData] = useState({
     name: '',
@@ -11,24 +20,53 @@ const ContactForm = ({ isOpen, onClose, recipientEmail = 'Tyler.a.leduc@gmail.co
     employees: '',
     requirements: '',
     email: '',
-    phone: ''
+    phone: '',
+    position: isJobApplication ? 'General Application' : ''
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const [fileAttachment, setFileAttachment] = useState(null);
 
-  // Update body overflow when form is opened/closed
+  // Update body overflow when form is opened/closed (only in modal mode)
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : 'auto';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isOpen]);
+    if (!embedded) {
+      document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+      return () => {
+        document.body.style.overflow = 'auto';
+      };
+    }
+  }, [isOpen, embedded]);
 
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+  
+  // Handle file input change
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Check if file size is more than 5MB (safely under common 10MB email limit)
+      if (file.size > 5 * 1024 * 1024) {
+        setError("File size exceeds 5MB. Please choose a smaller file or send a link to your resume in the message.");
+        e.target.value = '';
+        return;
+      }
+      setFileAttachment(file);
+      setError(null);
+    }
+  };
+
+  // Convert file to base64
+  const toBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   };
 
   // Handle form submission with EmailJS
@@ -43,24 +81,60 @@ const ContactForm = ({ isOpen, onClose, recipientEmail = 'Tyler.a.leduc@gmail.co
         to_email: recipientEmail,
         from_name: formData.name,
         from_email: formData.email,
-        subject: `New inquiry from ${formData.company}`,
-        message: `
-          Name: ${formData.name}
-          Company: ${formData.company}
-          Company Size: ${formData.employees}
-          Phone: ${formData.phone}
-          
-          Requirements:
-          ${formData.requirements}
-        `
+        subject: isJobApplication 
+          ? `Job Application: ${formData.position}` 
+          : `New inquiry from ${formData.company}`,
+        message: isJobApplication
+          ? `
+            Name: ${formData.name}
+            Position: ${formData.position}
+            Phone: ${formData.phone}
+            Email: ${formData.email}
+            
+            Cover Letter / Additional Info:
+            ${formData.requirements}
+          `
+          : `
+            Name: ${formData.name}
+            Company: ${formData.company}
+            Company Size: ${formData.employees}
+            Phone: ${formData.phone}
+            
+            Requirements:
+            ${formData.requirements}
+          `
       };
+      
+      // Add file attachment if provided
+      if (fileAttachment) {
+        try {
+          const fileBase64 = await toBase64(fileAttachment);
+          templateParams.attachment = fileBase64;
+          templateParams.attachment_name = fileAttachment.name;
+        } catch (fileErr) {
+          console.error('Error encoding file:', fileErr);
+          setError('Error processing file attachment. Please try again with a smaller file.');
+          setIsSubmitting(false);
+          return;
+        }
+      }
 
       // EmailJS is already initialized in App.js
-      await emailjs.send(
-        "service_zeogjbm", // Your EmailJS service ID
-        "template_mfizbds", // Your EmailJS template ID
-        templateParams
-      );
+      if (fileAttachment) {
+        // Use sendForm for attachments
+        await emailjs.sendForm(
+          "service_zeogjbm", // Your EmailJS service ID
+          "template_mfizbds", // Your EmailJS template ID
+          formRef.current
+        );
+      } else {
+        // Use regular send for no attachments
+        await emailjs.send(
+          "service_zeogjbm", // Your EmailJS service ID
+          "template_mfizbds", // Your EmailJS template ID
+          templateParams
+        );
+      }
       
       // Show success message
       setFormSubmitted(true);
@@ -68,15 +142,17 @@ const ContactForm = ({ isOpen, onClose, recipientEmail = 'Tyler.a.leduc@gmail.co
       // Reset form after delay
       setTimeout(() => {
         setFormSubmitted(false);
-        onClose();
+        onClose && onClose();
         setFormData({
           name: '',
           company: '',
           employees: '',
           requirements: '',
           email: '',
-          phone: ''
+          phone: '',
+          position: isJobApplication ? 'General Application' : ''
         });
+        setFileAttachment(null);
       }, 3000);
     } catch (err) {
       console.error('Failed to send email:', err);
@@ -151,6 +227,7 @@ const ContactForm = ({ isOpen, onClose, recipientEmail = 'Tyler.a.leduc@gmail.co
       transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
       boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)',
       outline: 'none',
+      color: '#1E293B',
     },
     formInputFocus: {
       border: '1px solid #38BDF8',
@@ -297,12 +374,239 @@ const ContactForm = ({ isOpen, onClose, recipientEmail = 'Tyler.a.leduc@gmail.co
     '1000+ employees'
   ];
 
-  // If the form is not open, don't render anything
-  if (!isOpen) return null;
+  // If modal mode and form is not open, don't render anything
+  if (!isOpen && !embedded) return null;
 
-  return (
-    <AnimatePresence>
-      {isOpen && (
+  // Determine if we're in modal mode or embedded mode
+  const isModalMode = !embedded && styles.contactFormOverlay !== undefined;
+
+  // Main form content (used in both modal and embedded modes)
+  const formContent = (
+    <>
+      {!embedded && <div style={styles.formPattern}></div>}
+      
+      <div style={styles.formContent}>
+        <h2 style={styles.formTitle}>Get Started with Le Duc Systems</h2>
+        <p style={styles.formSubtitle}>Tell us about your project, and we'll get back to you within 24 hours.</p>
+        
+        <form ref={formRef} onSubmit={handleSubmit} encType="multipart/form-data">
+          {/* Form fields here */}
+          <div style={styles.formRow}>
+            <div style={styles.formCol50}>
+              <div style={styles.formGroup}>
+                <label style={styles.formLabel}>Your Name*</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="John Smith"
+                  required
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  style={styles.formInput}
+                  onFocus={(e) => {
+                    e.target.style.border = '1px solid #38BDF8';
+                    e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
+                    e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
+                  }}
+                />
+              </div>
+            </div>
+            <div style={styles.formCol50}>
+              <div style={styles.formGroup}>
+                <label style={styles.formLabel}>{isJobApplication ? 'Position*' : 'Company Name*'}</label>
+                <input
+                  type="text"
+                  name={isJobApplication ? 'position' : 'company'}
+                  placeholder={isJobApplication ? 'Position you\'re applying for' : 'Acme Inc.'}
+                  required
+                  value={isJobApplication ? formData.position : formData.company}
+                  onChange={handleInputChange}
+                  style={styles.formInput}
+                  onFocus={(e) => {
+                    e.target.style.border = '1px solid #38BDF8';
+                    e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
+                    e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div style={styles.formRow}>
+            <div style={styles.formCol50}>
+              <div style={styles.formGroup}>
+                <label style={styles.formLabel}>Email Address*</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="your@email.com"
+                  required
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  style={styles.formInput}
+                  onFocus={(e) => {
+                    e.target.style.border = '1px solid #38BDF8';
+                    e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
+                    e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
+                  }}
+                />
+              </div>
+            </div>
+            <div style={styles.formCol50}>
+              <div style={styles.formGroup}>
+                <label style={styles.formLabel}>Phone Number</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="+1 (555) 123-4567"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  style={styles.formInput}
+                  onFocus={(e) => {
+                    e.target.style.border = '1px solid #38BDF8';
+                    e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
+                    e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          {!isJobApplication && (
+            <div style={styles.formGroup}>
+              <label style={styles.formLabel}>Company Size*</label>
+              <div style={styles.selectWrapper}>
+                <select
+                  name="employees"
+                  required={!isJobApplication}
+                  value={formData.employees}
+                  onChange={handleInputChange}
+                  style={{...styles.formInput, ...styles.formSelect}}
+                  onFocus={(e) => {
+                    e.target.style.border = '1px solid #38BDF8';
+                    e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
+                    e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
+                  }}
+                >
+                  {employeeOptions.map((option, index) => (
+                    <option key={index} value={index === 0 ? '' : option} disabled={index === 0}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                <div style={styles.selectIcon}>▼</div>
+              </div>
+            </div>
+          )}
+
+          <div style={styles.formGroup}>
+            <label style={styles.formLabel}>{isJobApplication ? 'Cover Letter / Additional Info*' : 'What are you looking for?*'}</label>
+            <textarea
+              name="requirements"
+              placeholder={isJobApplication ? "Tell us about yourself and why you're interested in this position..." : "Tell us about your project and requirements..."}
+              required
+              value={formData.requirements}
+              onChange={handleInputChange}
+              style={{...styles.formInput, ...styles.formTextarea}}
+              onFocus={(e) => {
+                e.target.style.border = '1px solid #38BDF8';
+                e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
+              }}
+              onBlur={(e) => {
+                e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
+                e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
+              }}
+            ></textarea>
+          </div>
+          
+          {isJobApplication && (
+            <div style={styles.formGroup}>
+              <label style={styles.formLabel}>Resume/CV (PDF, DOC, DOCX)*</label>
+              <input
+                type="file"
+                name="resume"
+                accept=".pdf,.doc,.docx"
+                required={isJobApplication}
+                onChange={handleFileChange}
+                style={{...styles.formInput, padding: '0.5rem 1rem'}}
+                onFocus={(e) => {
+                  e.target.style.border = '1px solid #38BDF8';
+                  e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
+                  e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
+                }}
+              />
+              <div style={{
+                fontSize: '0.8rem',
+                color: '#718096',
+                marginTop: '5px',
+                fontStyle: 'italic'
+              }}>
+                File must be under 5MB. For larger files, please include a link to your resume in the message or on Google Drive, Dropbox, etc.
+              </div>
+            </div>
+          )}
+
+          {error && <div style={styles.errorMessage}>{error}</div>}
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            style={{
+              ...styles.formSubmitButton,
+              opacity: isSubmitting ? 0.7 : 1,
+              cursor: isSubmitting ? 'not-allowed' : 'pointer'
+            }}
+            onMouseEnter={(e) => {
+              if (!isSubmitting) {
+                e.target.style.background = 'linear-gradient(135deg, #0EA5E9 0%, #06B6D4 100%)';
+                e.target.style.boxShadow = '0 6px 20px rgba(14, 165, 233, 0.4), 0 0 10px rgba(14, 165, 233, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+                e.target.style.transform = 'translateY(-2px)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, #06B6D4 0%, #0EA5E9 100%)';
+              e.target.style.boxShadow = '0 4px 15px rgba(14, 165, 233, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+              e.target.style.transform = 'translateY(0)';
+            }}
+          >
+            {isSubmitting ? 'Sending...' : isJobApplication ? 'Submit Application' : 'Submit Request'}
+          </button>
+        </form>
+      </div>
+
+      {/* Success message */}
+      <div style={styles.formSuccessMessage}>
+        <div style={styles.formSuccessIcon}>
+          <div style={styles.formSuccessIconCheck}></div>
+        </div>
+        <h3 style={styles.formSuccessTitle}>Thank You!</h3>
+        <p style={styles.formSuccessText}>Your request has been submitted successfully. We'll get back to you within 24 hours.</p>
+      </div>
+    </>
+  );
+
+  // Modal mode
+  if (isModalMode && isOpen && !embedded) {
+    return (
+      <AnimatePresence>
         <motion.div 
           style={styles.contactFormOverlay}
           initial={{ opacity: 0 }}
@@ -317,7 +621,7 @@ const ContactForm = ({ isOpen, onClose, recipientEmail = 'Tyler.a.leduc@gmail.co
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            {/* Close button */}
+            {/* Close button - only in modal mode */}
             <div 
               style={styles.formClose} 
               onClick={onClose}
@@ -354,195 +658,30 @@ const ContactForm = ({ isOpen, onClose, recipientEmail = 'Tyler.a.leduc@gmail.co
               </div>
             </div>
 
-            <div style={styles.formPattern}></div>
-            
-            <div style={styles.formContent}>
-              <h2 style={styles.formTitle}>Get Started with Le Duc Systems</h2>
-              <p style={styles.formSubtitle}>Tell us about your project, and we'll get back to you within 24 hours.</p>
-              
-              <form onSubmit={handleSubmit}>
-                <div style={styles.formRow}>
-                  <div style={styles.formCol50}>
-                    <div style={styles.formGroup}>
-                      <label style={styles.formLabel}>Your Name*</label>
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="Jane Doe"
-                        required
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        style={styles.formInput}
-                        onFocus={(e) => {
-                          e.target.style.border = '1px solid #38BDF8';
-                          e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
-                        }}
-                        onBlur={(e) => {
-                          e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
-                          e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div style={styles.formCol50}>
-                    <div style={styles.formGroup}>
-                      <label style={styles.formLabel}>Company Name*</label>
-                      <input
-                        type="text"
-                        name="company"
-                        placeholder="Acme Inc."
-                        required
-                        value={formData.company}
-                        onChange={handleInputChange}
-                        style={styles.formInput}
-                        onFocus={(e) => {
-                          e.target.style.border = '1px solid #38BDF8';
-                          e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
-                        }}
-                        onBlur={(e) => {
-                          e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
-                          e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div style={styles.formRow}>
-                  <div style={styles.formCol50}>
-                    <div style={styles.formGroup}>
-                      <label style={styles.formLabel}>Email Address*</label>
-                      <input
-                        type="email"
-                        name="email"
-                        placeholder="your@email.com"
-                        required
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        style={styles.formInput}
-                        onFocus={(e) => {
-                          e.target.style.border = '1px solid #38BDF8';
-                          e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
-                        }}
-                        onBlur={(e) => {
-                          e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
-                          e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div style={styles.formCol50}>
-                    <div style={styles.formGroup}>
-                      <label style={styles.formLabel}>Phone Number</label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        placeholder="+1 (555) 123-4567"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        style={styles.formInput}
-                        onFocus={(e) => {
-                          e.target.style.border = '1px solid #38BDF8';
-                          e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
-                        }}
-                        onBlur={(e) => {
-                          e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
-                          e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div style={styles.formGroup}>
-                  <label style={styles.formLabel}>Company Size*</label>
-                  <div style={styles.selectWrapper}>
-                    <select
-                      name="employees"
-                      required
-                      value={formData.employees}
-                      onChange={handleInputChange}
-                      style={{...styles.formInput, ...styles.formSelect}}
-                      onFocus={(e) => {
-                        e.target.style.border = '1px solid #38BDF8';
-                        e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
-                      }}
-                      onBlur={(e) => {
-                        e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
-                        e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
-                      }}
-                    >
-                      {employeeOptions.map((option, index) => (
-                        <option key={index} value={index === 0 ? '' : option} disabled={index === 0}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                    <div style={styles.selectIcon}>▼</div>
-                  </div>
-                </div>
-
-                <div style={styles.formGroup}>
-                  <label style={styles.formLabel}>What are you looking for?*</label>
-                  <textarea
-                    name="requirements"
-                    placeholder="Tell us about your project and requirements..."
-                    required
-                    value={formData.requirements}
-                    onChange={handleInputChange}
-                    style={{...styles.formInput, ...styles.formTextarea}}
-                    onFocus={(e) => {
-                      e.target.style.border = '1px solid #38BDF8';
-                      e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
-                    }}
-                    onBlur={(e) => {
-                      e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
-                      e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
-                    }}
-                  ></textarea>
-                </div>
-
-                {error && <div style={styles.errorMessage}>{error}</div>}
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  style={{
-                    ...styles.formSubmitButton,
-                    opacity: isSubmitting ? 0.7 : 1,
-                    cursor: isSubmitting ? 'not-allowed' : 'pointer'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isSubmitting) {
-                      e.target.style.background = 'linear-gradient(135deg, #0EA5E9 0%, #06B6D4 100%)';
-                      e.target.style.boxShadow = '0 6px 20px rgba(14, 165, 233, 0.4), 0 0 10px rgba(14, 165, 233, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
-                      e.target.style.transform = 'translateY(-2px)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.background = 'linear-gradient(135deg, #06B6D4 0%, #0EA5E9 100%)';
-                    e.target.style.boxShadow = '0 4px 15px rgba(14, 165, 233, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
-                    e.target.style.transform = 'translateY(0)';
-                  }}
-                >
-                  {isSubmitting ? 'Sending...' : 'Submit Request'}
-                </button>
-              </form>
-            </div>
-
-            {/* Success message */}
-            <div style={styles.formSuccessMessage}>
-              <div style={styles.formSuccessIcon}>
-                <div style={styles.formSuccessIconCheck}></div>
-              </div>
-              <h3 style={styles.formSuccessTitle}>Thank You!</h3>
-              <p style={styles.formSuccessText}>Your request has been submitted successfully. We'll get back to you within 24 hours.</p>
-            </div>
+            {formContent}
           </motion.div>
         </motion.div>
-      )}
-    </AnimatePresence>
-  );
+      </AnimatePresence>
+    );
+  }
+  
+  // Embedded mode (non-modal) or when embedded prop is true
+  if (embedded || !isModalMode || (isModalMode === false && isOpen)) {
+    return (
+      <div style={{
+        background: 'white',
+        borderRadius: '8px',
+        boxShadow: 'none',
+        padding: '0',
+        width: '100%',
+        position: 'relative'
+      }}>
+        {formContent}
+      </div>
+    );
+  }
+  
+  return null;
 };
 
 export default ContactForm;

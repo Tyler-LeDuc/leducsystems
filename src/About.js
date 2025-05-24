@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { commonStyles } from './utils/styles';
-import { projects } from './data/projects';
 
 const About = () => {
-  const [activeProject, setActiveProject] = useState(1);
   const [visibleSection, setVisibleSection] = useState('');
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const sectionRefs = {
@@ -11,23 +9,22 @@ const About = () => {
     values: useRef(null),
     history: useRef(null),
     team: useRef(null),
-    projects: useRef(null),
     testimonials: useRef(null)
   };
   
   // Counter animation for statistics
   const [counters, setCounters] = useState({
-    clients: 25,
-    projects: 100,
-    awards: 3,
-    years: 7
+    projects: 0,
+    clients: 0,
+    satisfaction: 50,
+    uptime: 80
   });
   
   const statsTarget = {
-    clients: 85,
-    projects: 240,
-    awards: 17,
-    years: 6
+    projects: 50,
+    clients: 15,
+    satisfaction: 98,
+    uptime: 99
   };
   
   // Handle window resize for responsive design
@@ -56,7 +53,7 @@ const About = () => {
           setVisibleSection(entry.target.id);
           
           // Start counter animation when stats section is visible
-          if (entry.target.id === 'stats' && counters.clients === 25) {
+          if (entry.target.id === 'stats' && counters.projects === 0) {
             animateCounters();
           }
         }
@@ -93,10 +90,10 @@ const About = () => {
       const progress = step / steps * (2 - step / steps);
       
       setCounters({
-        clients: Math.floor(progress * statsTarget.clients),
         projects: Math.floor(progress * statsTarget.projects),
-        awards: Math.floor(progress * statsTarget.awards),
-        years: Math.floor(progress * statsTarget.years)
+        clients: Math.floor(progress * statsTarget.clients),
+        satisfaction: Math.floor(progress * statsTarget.satisfaction),
+        uptime: Math.floor(progress * statsTarget.uptime)
       });
       
       if (step >= steps) {
@@ -106,10 +103,6 @@ const About = () => {
     }, interval);
   };
   
-  // Project showcase navigation
-  const handleProjectChange = (id) => {
-    setActiveProject(id);
-  };
 
   // Define hover state handling functions
   const [hoveredElement, setHoveredElement] = useState(null);
@@ -687,106 +680,31 @@ const About = () => {
     },
   };
 
-  // Get the active project
-  const currentProject = projects.find(project => project.id === activeProject);
   
-  // Team members data
-  const teamMembers = [
-    {
-      id: 1,
-      name: "Sophie Le Duc",
-      role: "Founder & CEO",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-      bio: "Former Google engineer with 15+ years of experience building scalable enterprise systems. Sophie founded Le Duc Systems with a vision to democratize access to enterprise-grade technology.",
-      social: ["linkedin", "twitter", "github"]
-    },
-    {
-      id: 2,
-      name: "Marcus Chen",
-      role: "CTO",
-      image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-      bio: "AI and machine learning specialist with a PhD from MIT. Marcus leads our technical strategy and ensures our solutions leverage cutting-edge technology that delivers real business impact.",
-      social: ["linkedin", "github"]
-    },
-    {
-      id: 3,
-      name: "Elena Rodriguez",
-      role: "Lead Solutions Architect",
-      image: "https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-      bio: "Cloud architecture expert with experience scaling systems for Fortune 500 companies. Elena ensures our solutions are robust, secure, and built for scale from day one.",
-      social: ["linkedin", "github", "medium"]
-    }
-  ];
+  // Team members data - keeping it general for now as a small team
+  const teamMembers = [];
   
-  // Company history timeline
+  // Technology milestones
   const historyTimeline = [
     {
-      year: "2018",
-      title: "Founded in San Francisco",
-      description: "Le Duc Systems was founded by Sophie Le Duc with a small team of three engineers focused on building custom enterprise software solutions for local businesses."
+      year: "AI & ML",
+      title: "Advanced Intelligence Solutions",
+      description: "Leveraging state-of-the-art machine learning models including GPT-4, Claude, and custom-trained models to deliver intelligent automation, predictive analytics, and natural language understanding capabilities."
     },
     {
-      year: "2019",
-      title: "First Major Client & Series A Funding",
-      description: "Secured our first Fortune 500 client and closed a $5M Series A funding round led by Accel Partners, allowing us to expand our team and service offerings."
+      year: "Cloud",
+      title: "Enterprise-Grade Infrastructure",
+      description: "Building on AWS, Azure, and Google Cloud platforms with expertise in serverless architectures, containerization with Kubernetes, and auto-scaling solutions for optimal performance and cost efficiency."
     },
     {
-      year: "2020",
-      title: "Launch of CloudScale™ Platform",
-      description: "Developed our proprietary CloudScale™ platform, enabling mid-sized businesses to leverage enterprise-grade infrastructure at a fraction of the traditional cost."
-    },
-    {
-      year: "2022",
-      title: "International Expansion",
-      description: "Opened offices in London and Singapore, expanding our global presence and bringing our solutions to international markets with a team of 50+ talented professionals."
-    },
-    {
-      year: "2023",
-      title: "AI Integration & Series B Funding",
-      description: "Integrated advanced AI capabilities into our core offerings and secured $25M in Series B funding to accelerate product development and market expansion."
-    },
-    {
-      year: "2024",
-      title: "Launch of SecureEdge™ Solutions",
-      description: "Introduced our SecureEdge™ suite of products focused on edge computing security, establishing Le Duc Systems as a leader in the secure IoT infrastructure space."
+      year: "Innovation",
+      title: "Continuous Technology Evolution",
+      description: "Staying at the forefront of technological advancement with expertise in emerging technologies like edge computing, blockchain integration, and quantum-ready algorithms for future-proof solutions."
     }
   ];
   
-  // Client testimonials
-  const testimonials = [
-    {
-      id: 1,
-      text: "We initially hired Le Duc Systems to fix our customer portal issues. Despite some initial timeline challenges, they delivered a solution that cut our server costs by 32% and reduced page load times from 6 seconds to under 1.5.",
-      name: "Home Builder Client",
-      role: "IT Director",
-      company: "Fulton Homes",
-      image: null
-    },
-    {
-      id: 2,
-      text: "After recurring security breaches, we implemented their SecureEdge system. The onboarding took longer than planned but the results speak for themselves - zero incidents in 14 months and our compliance audits are finally passing.",
-      name: "Financial Services Client",
-      role: "",
-      company: "",
-      image: null
-    },
-    {
-      id: 3,
-      text: "I was skeptical about moving our legacy healthcare systems to CloudScale. The transition had some disruptions, but our processing time dropped from 4 hours to 20 minutes, transforming our business.",
-      name: "Healthcare Technology Client",
-      role: "",
-      company: "",
-      image: null
-    },
-    {
-      id: 4,
-      text: "As a small construction firm, Le Duc's modular approach let us implement just what we needed within budget. Their project management tool eliminated double-bookings and material shortages that were costing us thousands monthly.",
-      name: "Small Business Client",
-      role: "",
-      company: "",
-      image: null
-    }
-  ];
+  // Client testimonials - removed for now as we're a new business
+  const testimonials = [];
 
   return (
     <section id="about" style={{...styles.about, ...commonStyles.section}}>
@@ -796,37 +714,19 @@ const About = () => {
         maxWidth: isMobile ? '100%' : '1200px',
         padding: isMobile ? '0 1rem' : '0 2rem'
       }}>
-        <h2 style={{
-          ...commonStyles.sectionTitle,
-          fontSize: isMobile ? '2rem' : '2.5rem',
-          marginBottom: isMobile ? '1rem' : '1.5rem'
-        }}>
-          About <span style={commonStyles.sectionHighlight}>Le Duc Systems</span>
-        </h2>
-        <div style={{
-          ...commonStyles.sectionTitleLine,
-          width: isMobile ? '60px' : '80px'
-        }}></div>
-        <p style={{
-          ...commonStyles.sectionIntro,
-          fontSize: isMobile ? '1.1rem' : '1.25rem',
-          marginBottom: isMobile ? '2rem' : '3rem'
-        }}>
-          Delivering transformative technology solutions that drive measurable business outcomes since 2018
-        </p>
         
         {/* Mission & Approach Section */}
         <div style={styles.aboutGrid} ref={sectionRefs.mission} id="mission">
           <div style={styles.aboutContent}>
             <h3 style={styles.aboutTitle}>
-              Our Mission
+              Technology-First Vision
               <div style={styles.aboutTitleUnderline}></div>
             </h3>
             <p style={styles.aboutText}>
-              At Le Duc Systems, we're on a mission to democratize access to enterprise-grade technology. We believe every business deserves robust, scalable software solutions that can compete with industry giants—without the enterprise price tag or complexity.
+              Le Duc Systems harnesses cutting-edge AI and cloud technologies to transform how businesses operate. Our expertise spans from advanced machine learning models to scalable enterprise architectures, enabling organizations to leverage the full potential of modern technology.
             </p>
             <p style={styles.aboutText}>
-              Through our innovative platforms and dedicated expertise, we empower organizations to accelerate their digital transformation journey, optimize operations, and drive sustainable growth in an increasingly competitive landscape.
+              We specialize in building intelligent systems that adapt and evolve with your business needs. By combining deep technical expertise with practical implementation experience, we deliver solutions that not only meet today's challenges but position you for tomorrow's opportunities.
             </p>
           </div>
           
@@ -839,10 +739,11 @@ const About = () => {
                 } : {})
               }}
             ></div>
-            <img 
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-              alt="Le Duc Systems Team" 
+            <div 
               style={{
+                display: 'flex', 
+                flexDirection: 'column',
+                alignItems: 'center',
                 ...styles.aboutImage, 
                 ...(hoveredElement === 'aboutImage' ? {
                   transform: isMobile ? 'translateY(-5px)' : 'perspective(1000px) rotateY(-2deg) translateY(-5px)'
@@ -850,7 +751,95 @@ const About = () => {
               }}
               onMouseEnter={() => handleMouseEnter('aboutImage')}
               onMouseLeave={handleMouseLeave}
-            />
+            >
+              <img 
+                src="/duck-icon.png" 
+                alt="Le Duc Systems Duck Logo" 
+                style={{height: '220px', width: 'auto', marginBottom: '15px'}} 
+              />
+              <div style={{
+                fontWeight: 700, 
+                color: '#1A365D',
+                fontSize: '2.2rem',
+                letterSpacing: '0.5px',
+                lineHeight: 1.1,
+                textAlign: 'center'
+              }}>
+                <div>Le Duc</div>
+                <div>Systems</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Values Section */}
+        <div style={styles.valuesGrid} ref={sectionRefs.values} id="values">
+          <div 
+            style={{
+              ...styles.valueCard,
+              ...(hoveredElement === 'value1' ? styles.valueCardHover : {})
+            }}
+            onMouseEnter={() => handleMouseEnter('value1')}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div style={styles.valueIconContainer}>
+              <div style={styles.valueIcon}>🎯</div>
+            </div>
+            <h4 style={styles.valueTitle}>AI Expertise</h4>
+            <p style={{...styles.aboutText, marginBottom: 0, fontSize: isMobile ? '0.95rem' : '1rem'}}>
+              Deep expertise in machine learning, natural language processing, and computer vision to build intelligent solutions that drive real business value.
+            </p>
+          </div>
+          
+          <div 
+            style={{
+              ...styles.valueCard,
+              ...(hoveredElement === 'value2' ? styles.valueCardHover : {})
+            }}
+            onMouseEnter={() => handleMouseEnter('value2')}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div style={styles.valueIconContainer}>
+              <div style={styles.valueIcon}>🚀</div>
+            </div>
+            <h4 style={styles.valueTitle}>Cloud Architecture</h4>
+            <p style={{...styles.aboutText, marginBottom: 0, fontSize: isMobile ? '0.95rem' : '1rem'}}>
+              Scalable cloud-native architectures using AWS, Azure, and GCP to ensure your applications perform reliably at any scale.
+            </p>
+          </div>
+          
+          <div 
+            style={{
+              ...styles.valueCard,
+              ...(hoveredElement === 'value3' ? styles.valueCardHover : {})
+            }}
+            onMouseEnter={() => handleMouseEnter('value3')}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div style={styles.valueIconContainer}>
+              <div style={styles.valueIcon}>💡</div>
+            </div>
+            <h4 style={styles.valueTitle}>Full-Stack Development</h4>
+            <p style={{...styles.aboutText, marginBottom: 0, fontSize: isMobile ? '0.95rem' : '1rem'}}>
+              End-to-end development capabilities from responsive front-ends to robust APIs and microservices architectures.
+            </p>
+          </div>
+          
+          <div 
+            style={{
+              ...styles.valueCard,
+              ...(hoveredElement === 'value4' ? styles.valueCardHover : {})
+            }}
+            onMouseEnter={() => handleMouseEnter('value4')}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div style={styles.valueIconContainer}>
+              <div style={styles.valueIcon}>🤝</div>
+            </div>
+            <h4 style={styles.valueTitle}>Data Engineering</h4>
+            <p style={{...styles.aboutText, marginBottom: 0, fontSize: isMobile ? '0.95rem' : '1rem'}}>
+              Advanced data pipelines and analytics platforms that transform raw data into actionable insights for informed decision-making.
+            </p>
           </div>
         </div>
         
@@ -859,40 +848,40 @@ const About = () => {
           <div style={styles.statsPattern}></div>
           <div style={styles.statsGrid}>
             <div style={styles.statItem}>
-              <div style={styles.statNumber}>{counters.clients}+</div>
-              <div style={styles.statTitle}>Global Clients</div>
-              <div style={styles.statDescription}>Across 12 industries</div>
-            </div>
-            
-            <div style={styles.statItem}>
               <div style={styles.statNumber}>{counters.projects}+</div>
               <div style={styles.statTitle}>Projects Delivered</div>
-              <div style={styles.statDescription}>With 98% client satisfaction</div>
+              <div style={styles.statDescription}>Across industries</div>
             </div>
             
             <div style={styles.statItem}>
-              <div style={styles.statNumber}>{counters.awards}</div>
-              <div style={styles.statTitle}>Industry Awards</div>
-              <div style={styles.statDescription}>For innovation & excellence</div>
+              <div style={styles.statNumber}>{counters.clients}+</div>
+              <div style={styles.statTitle}>Happy Clients</div>
+              <div style={styles.statDescription}>And counting</div>
             </div>
             
             <div style={styles.statItem}>
-              <div style={styles.statNumber}>{counters.years}</div>
-              <div style={styles.statTitle}>Years of Growth</div>
-              <div style={styles.statDescription}>And continuous innovation</div>
+              <div style={styles.statNumber}>{counters.satisfaction}%</div>
+              <div style={styles.statTitle}>Client Satisfaction</div>
+              <div style={styles.statDescription}>Average rating</div>
+            </div>
+            
+            <div style={styles.statItem}>
+              <div style={styles.statNumber}>{counters.uptime}.9%</div>
+              <div style={styles.statTitle}>System Uptime</div>
+              <div style={styles.statDescription}>Reliability guaranteed</div>
             </div>
           </div>
         </div>
         
-        {/* Testimonials Section */}
-        <div style={styles.testimonialsSection} ref={sectionRefs.testimonials} id="testimonials">
+        {/* Our Journey Section */}
+        <div style={styles.historySection} ref={sectionRefs.history} id="history">
           <h3 style={{
             ...styles.aboutTitle, 
             textAlign: 'center', 
             display: 'block', 
             marginBottom: isMobile ? '1.5rem' : '2.5rem'
           }}>
-            Client Feedback
+            Our Technology Stack
             <div style={{
               ...styles.aboutTitleUnderline, 
               left: '50%', 
@@ -900,36 +889,14 @@ const About = () => {
             }}></div>
           </h3>
           
-          <div style={styles.testimonialGrid}>
-            {testimonials.slice(0, isMobile ? 2 : 4).map((testimonial) => (
-              <div 
-                key={testimonial.id} 
-                style={{
-                  ...styles.testimonialCard,
-                  ...(hoveredElement === `testimonial${testimonial.id}` ? styles.testimonialCardHover : {})
-                }}
-                onMouseEnter={() => handleMouseEnter(`testimonial${testimonial.id}`)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <div style={styles.testimonialQuote}>"</div>
-                <p style={styles.testimonialText}>{testimonial.text}</p>
-                <div style={{
-                  padding: '0.5rem 0.75rem',
-                  backgroundColor: 'rgba(66, 153, 225, 0.1)',
-                  borderRadius: '4px',
-                  display: 'inline-block',
-                  marginTop: '0.5rem'
-                }}>
-                  <div style={{
-                    fontSize: isMobile ? '0.9rem' : '1rem',
-                    fontWeight: 600,
-                    color: '#2B6CB0'
-                  }}>
-                    {testimonial.name}
-                    {testimonial.role && ` • ${testimonial.role}`}
-                    {testimonial.company && ` • ${testimonial.company}`}
-                  </div>
-                </div>
+          <div style={styles.timelineContainer}>
+            <div style={styles.timelineLine}></div>
+            {historyTimeline.map((item, index) => (
+              <div key={index} style={styles.timelineItem}>
+                <div style={styles.timelineDot}></div>
+                <div style={styles.timelineYear}>{item.year}</div>
+                <h4 style={styles.timelineTitle}>{item.title}</h4>
+                <p style={styles.timelineDescription}>{item.description}</p>
               </div>
             ))}
           </div>

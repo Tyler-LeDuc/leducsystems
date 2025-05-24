@@ -13,7 +13,7 @@ const Footer = () => {
 
   const styles = {
     footer: {
-      backgroundColor: '#1A365D',
+      backgroundColor: '#1E293B',
       color: '#FFFFFF',
       padding: '4rem 0 3rem',
     },
@@ -27,6 +27,14 @@ const Footer = () => {
       justifyContent: 'space-between',
       flexWrap: 'wrap',
       gap: '2rem',
+    },
+    footerColumn: {
+      flex: '1 1 200px',
+      marginBottom: '1.5rem',
+    },
+    logoColumn: {
+      flex: '1 1 300px',
+      marginBottom: '1.5rem',
     },
     footerLogo: {
       display: 'flex',
@@ -43,7 +51,7 @@ const Footer = () => {
       fontSize: '1.2rem',
       fontWeight: 600,
       marginBottom: '1rem',
-      color: '#4FD1C5',
+      color: '#38BDF8',
     },
     contactItem: {
       display: 'flex',
@@ -65,15 +73,15 @@ const Footer = () => {
       textDecoration: 'none',
       transition: 'color 0.2s ease-in-out',
       ':hover': {
-        color: '#4FD1C5',
+        color: '#38BDF8',
       },
     },
     contactButton: {
       display: 'inline-block',
       marginTop: '1rem',
       padding: '0.6rem 1.2rem',
-      backgroundColor: '#4FD1C5',
-      color: '#1A365D',
+      backgroundColor: '#38BDF8',
+      color: '#1E293B',
       borderRadius: '4px',
       fontWeight: 600,
       textDecoration: 'none',
@@ -82,7 +90,7 @@ const Footer = () => {
       cursor: 'pointer',
     },
     contactButtonHover: {
-      backgroundColor: '#38B2AC',
+      backgroundColor: '#0EA5E9',
       transform: 'translateY(-2px)',
       boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     },
@@ -98,7 +106,7 @@ const Footer = () => {
       transition: 'color 0.2s ease-in-out',
       cursor: 'pointer',
       ':hover': {
-        color: '#4FD1C5',
+        color: '#38BDF8',
       },
     },
     bottomSection: {
@@ -135,24 +143,39 @@ const Footer = () => {
         <div style={commonStyles.container}>
           <div style={styles.footerContent}>
             <div style={styles.topSection}>
-              <div>
+              <div style={styles.logoColumn}>
                 <div style={styles.footerLogo}>
-                  <img 
-                    src="/duck-logo.png" 
-                    alt="Le Duc Logo" 
-                    style={{height: '130px', width: 'auto'}} 
-                  />
+                  <div style={{display: 'flex', alignItems: 'center'}}>
+                    <img 
+                      src="/duck-icon.png" 
+                      alt="Le Duc Systems Duck Icon" 
+                      style={{height: '140px', width: 'auto', marginRight: '-20px'}} 
+                    />
+                    <div style={{
+                      fontWeight: 700, 
+                      color: '#FFFFFF',
+                      fontSize: '2.4rem',
+                      letterSpacing: '0.5px',
+                      lineHeight: 1.1
+                    }}>
+                      <div>Le Duc</div>
+                      <div>Systems</div>
+                    </div>
+                  </div>
                 </div>
+                <p style={{color: '#B2C5E3', marginTop: '15px'}}>
+                  Providing innovative AI solutions for businesses of all sizes. Our expertise helps you transform your operations with cutting-edge technology.
+                </p>
               </div>
 
-              <div>
+              <div style={styles.footerColumn}>
                 <h3 style={styles.sectionTitle}>Contact Us</h3>
                 <div style={styles.contactItem}>
                   <svg style={styles.contactIcon} viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-.001 5.75c.69 0 1.251.56 1.251 1.25s-.561 1.25-1.251 1.25-1.249-.56-1.249-1.25.559-1.25 1.249-1.25zm2.001 12.25h-4v-1c.484-.179 1-.201 1-.735v-4.467c0-.534-.516-.618-1-.797v-1h3v6.265c0 .535.517.558 1 .735v.999z" />
                   </svg>
-                  <a href="mailto:tyler.a.leduc@gmail.com" style={{...styles.link, display: 'block'}}>
-                    tyler.a.leduc@gmail.com
+                  <a href="mailto:leducsystems@gmail.com" style={{...styles.link, display: 'block'}}>
+                    leducsystems@gmail.com
                   </a>
                 </div>
                 <div style={styles.contactItem}>
@@ -168,12 +191,12 @@ const Footer = () => {
                   style={styles.contactButton}
                   onClick={toggleContactForm}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#38B2AC';
+                    e.currentTarget.style.backgroundColor = '#0EA5E9';
                     e.currentTarget.style.transform = 'translateY(-2px)';
                     e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '#4FD1C5';
+                    e.currentTarget.style.backgroundColor = '#38BDF8';
                     e.currentTarget.style.transform = 'translateY(0)';
                     e.currentTarget.style.boxShadow = 'none';
                   }}
@@ -182,11 +205,22 @@ const Footer = () => {
                 </button>
               </div>
 
-              <div>
-                <h3 style={styles.sectionTitle}>Quick Links</h3>
+              <div style={styles.footerColumn}>
+                <h3 style={styles.sectionTitle}>Site Navigation</h3>
                 <div style={styles.navLinks}>
-                  <a href="#about" style={styles.link}>About Us</a>
-                  <a href="#services" style={styles.link}>Services</a>
+                  <a href="/" style={styles.link}>Home</a>
+                  <a href="/about" style={styles.link}>About Us</a>
+                  <a href="/services" style={styles.link}>Services</a>
+                  <a href="/contact" style={styles.link}>Contact</a>
+                </div>
+              </div>
+              
+              <div style={styles.footerColumn}>
+                <h3 style={styles.sectionTitle}>Resources</h3>
+                <div style={styles.navLinks}>
+                  <a href="/blog" style={styles.link}>Blog</a>
+                  <a href="/pricing" style={styles.link}>Pricing</a>
+                  <a href="/team" style={styles.link}>Our Team</a>
                 </div>
               </div>
             </div>
@@ -209,7 +243,7 @@ const Footer = () => {
       <ContactForm 
         isOpen={contactFormOpen} 
         onClose={toggleContactForm}
-        recipientEmail="Tyler.a.leduc@gmail.com"
+        recipientEmail="leducsystems@gmail.com"
       />
     </>
   );

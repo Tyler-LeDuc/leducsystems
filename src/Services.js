@@ -1,141 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiCode, FiSmartphone, FiCloud, FiDatabase, FiLayers, FiSettings, FiPlus, FiX, FiChevronRight, FiUsers, FiBarChart2, FiZap, FiCheck, FiArrowRight, FiClock, FiShield, FiTarget } from 'react-icons/fi';
-
-// Top services (displayed as flippable cards)
-const topServices = [
-  {
-    id: 1,
-    title: 'Custom Software',
-    description: 'Enterprise solutions tailored to your business challenges using cutting-edge technologies.',
-    icon: <FiCode size={24} />,
-    gradient: 'linear-gradient(90deg, #3B82F6 0%, #4F46E5 100%)',
-    color: '#3B82F6',
-    features: [
-      'Scalable full-stack applications',
-      'High-performance architecture',
-      'Legacy system modernization'
-    ],
-    backContent: {
-      title: 'Our Development Process',
-      metrics: [
-        { label: 'Time to Market', value: '4 mo' },
-        { label: 'Client Rating', value: '4.9/5' }
-      ],
-      phases: [
-        { icon: <FiUsers size={20} />, name: 'Discovery', description: 'Requirements gathering' },
-        { icon: <FiCode size={20} />, name: 'Development', description: 'Agile implementation' },
-        { icon: <FiZap size={20} />, name: 'Deployment', description: 'Production transition' }
-      ]
-    }
-  },
-  {
-    id: 2,
-    title: 'Web & Mobile Apps',
-    description: 'Engaging, responsive applications that deliver exceptional user experiences across all devices.',
-    icon: <FiSmartphone size={24} />,
-    gradient: 'linear-gradient(90deg, #14B8A6 0%, #2563EB 100%)',
-    color: '#14B8A6',
-    features: [
-      'Progressive Web Apps (PWA)',
-      'Native iOS and Android apps',
-      'Cross-platform solutions'
-    ],
-    backContent: {
-      title: 'App Development Expertise',
-      stats: [
-        { value: '250+', label: 'Apps' },
-        { value: '99.8%', label: 'Uptime' }
-      ],
-      technologies: [
-        'React Native', 'Swift', 'Flutter'
-      ],
-      testimonial: {
-        quote: "They delivered a beautiful app that exceeded our expectations.",
-        author: "Sarah J."
-      }
-    }
-  },
-  {
-    id: 3,
-    title: 'Data Integration',
-    description: 'Seamless connectivity between systems with custom data pipelines that unlock your business data.',
-    icon: <FiDatabase size={24} />,
-    gradient: 'linear-gradient(90deg, #A855F7 0%, #4F46E5 100%)',
-    color: '#A855F7',
-    features: [
-      'ETL pipeline development',
-      'API design and integration',
-      'Real-time data processing'
-    ],
-    backContent: {
-      title: 'Data Flow Architecture',
-      caseStudy: {
-        industry: 'Healthcare',
-        challenge: 'Fragmented data systems',
-        results: [
-          '68% faster retrieval',
-          '99.9% accuracy'
-        ]
-      },
-      dataVolumes: [
-        { label: 'Daily Volume', value: '1.8 TB' },
-        { label: 'Avg. Latency', value: '<50ms' }
-      ]
-    }
-  }
-];
-
-// Bottom services (displayed in a different format)
-const bottomServices = [
-  {
-    id: 4,
-    title: 'Cloud & DevOps',
-    description: 'Robust cloud infrastructure ensuring scalability, security, and continuous delivery.',
-    icon: <FiCloud size={24} />,
-    gradient: 'linear-gradient(90deg, #60A5FA 0%, #1D4ED8 100%)',
-    color: '#2563EB',
-    features: [
-      'Multi-cloud architecture',
-      'CI/CD pipeline implementation',
-      'Containerization (Docker/K8s)'
-    ]
-  },
-  {
-    id: 5,
-    title: 'Process Automation',
-    description: 'Streamline operations with intelligent automation that connects systems and reduces manual work.',
-    icon: <FiSettings size={24} />,
-    gradient: 'linear-gradient(90deg, #10B981 0%, #0D9488 100%)',
-    color: '#059669',
-    features: [
-      'Workflow automation',
-      'Business logic implementation',
-      'Custom API integration'
-    ]
-  },
-  {
-    id: 6,
-    title: 'Enterprise Solutions',
-    description: 'End-to-end software ecosystems addressing complex challenges through strategic implementation.',
-    icon: <FiLayers size={24} />,
-    gradient: 'linear-gradient(90deg, #6366F1 0%, #7E22CE 100%)',
-    color: '#4F46E5',
-    features: [
-      'ERP & CRM systems',
-      'Business Intelligence',
-      'Digital transformation'
-    ]
-  }
-];
+import { useNavigate } from 'react-router-dom';
+import { FiCode, FiSmartphone, FiCpu, FiCloud, FiArrowRight, FiCheck, FiZap, FiTrendingUp } from 'react-icons/fi';
+import { services as serviceData } from './data/services';
+import { unifiedTheme, getSectionStyles, getContainerStyles, getHeaderStyles, getTitleStyles, getSubtitleStyles, getDescriptionStyles, getCardStyles, getButtonStyles, getResponsiveValue } from './theme/unifiedTheme';
 
 const Services = () => {
-  const [flippedCards, setFlippedCards] = useState({});
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
-  const [activeTab, setActiveTab] = useState(4); // Default to first bottom service
+  const navigate = useNavigate();
+  const [hoveredService, setHoveredService] = useState(null);
+  const [visibleServices, setVisibleServices] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
-  
+  const [flippedCards, setFlippedCards] = useState(new Set());
+  const sectionRef = useRef(null);
+  const cardRefs = useRef({});
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -143,151 +21,123 @@ const Services = () => {
     
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-    };
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
-  
-  const toggleFlip = (id, event) => {
-    // Prevent the card click from triggering modal open
-    event.stopPropagation();
-    setFlippedCards(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
-  };
-  
-  const openModal = (service) => {
-    setModalContent(service);
-    setModalOpen(true);
-  };
-  
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-  
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              setVisibleServices(prev => [...new Set([...prev, 'intro'])]);
+            }, 50);
+            setTimeout(() => {
+              setVisibleServices(prev => [...new Set([...prev, 'services'])]);
+            }, 200);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
-  };
-  
-  const item = {
-    hidden: { y: 20, opacity: 0 },
-    show: { 
-      y: 0, 
-      opacity: 1,
-      transition: {
-        duration: 0.5
-      }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Map service data to include icons
+  const getIconComponent = (serviceId) => {
+    const size = isMobile ? 24 : 28;
+    switch (serviceId) {
+      case 1: return <FiCpu size={size} />;
+      case 2: return <FiCode size={size} />;
+      case 3: return <FiZap size={size} />;
+      case 4: return <FiSmartphone size={size} />;
+      case 5: return <FiTrendingUp size={size} />;
+      case 6: return <FiCloud size={size} />;
+      default: return <FiCpu size={size} />;
     }
   };
 
-  // Styles object with all inline styles
+  const coreServices = serviceData.map(service => ({
+    ...service,
+    icon: getIconComponent(service.id),
+    color: service.gradient.match(/#[0-9A-F]{6}/i)[0] || '#3B82F6'
+  }));
+
   const styles = {
     section: {
+      ...getSectionStyles(isMobile, 'primary'),
+      background: `linear-gradient(135deg, #0A0F1C 0%, #1A1F2E 100%)`,
       position: 'relative',
-      padding: '96px 0',
-      overflow: 'hidden',
-      background: 'linear-gradient(to bottom right, #F9FAFB, #F3F4F6)'
+      overflow: 'hidden'
     },
-    decorCircle1: {
+    backgroundPattern: {
       position: 'absolute',
       top: 0,
       left: 0,
-      width: '384px',
-      height: '384px',
-      transform: 'translateX(-50%)',
-      backgroundColor: '#3B82F6',
-      borderRadius: '50%',
-      mixBlendMode: 'multiply',
-      filter: 'blur(48px)',
-      opacity: 0.1,
-      zIndex: 1
-    },
-    decorCircle2: {
-      position: 'absolute',
-      bottom: 0,
       right: 0,
-      width: '384px',
-      height: '384px',
-      transform: 'translateX(50%)',
-      backgroundColor: '#4F46E5',
-      borderRadius: '50%',
-      mixBlendMode: 'multiply',
-      filter: 'blur(48px)',
-      opacity: 0.1,
-      zIndex: 1
+      bottom: 0,
+      opacity: 0.03,
+      backgroundImage: 'radial-gradient(rgba(255, 201, 5, 0.3) 1px, transparent 1px)',
+      backgroundSize: '60px 60px',
+      animation: 'float 20s ease-in-out infinite'
     },
-    container: {
-      position: 'relative',
-      maxWidth: '1024px',
-      margin: '0 auto',
-      padding: '0 16px',
-      zIndex: 10
-    },
+    container: getContainerStyles(isMobile),
     header: {
-      textAlign: 'center',
-      marginBottom: '64px'
+      ...getHeaderStyles(isMobile),
+      color: 'white'
     },
-    spanLabel: {
-      display: 'inline-block',
-      fontSize: '14px',
-      fontWeight: 600,
-      letterSpacing: '0.05em',
-      textTransform: 'uppercase',
-      color: '#2563EB'
+    subtitle: {
+      ...getSubtitleStyles(),
+      color: '#FFC905',
+      letterSpacing: '3px'
     },
     title: {
-      marginTop: '8px',
-      fontSize: isMobile ? '32px' : '48px',
-      fontWeight: 700,
-      color: '#111827',
-      lineHeight: 1.2
-    },
-    titleSpan: {
-      color: '#2563EB'
-    },
-    divider: {
-      height: '4px',
-      width: '96px',
-      margin: '16px auto',
-      backgroundColor: '#2563EB',
-      borderRadius: '2px'
+      ...getTitleStyles(isMobile, 'xlarge'),
+      color: 'white',
+      textShadow: '0 4px 20px rgba(0,0,0,0.3)'
     },
     description: {
-      marginTop: '24px',
-      maxWidth: '672px',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      fontSize: '18px',
-      color: '#4B5563'
+      ...getDescriptionStyles(isMobile),
+      color: 'rgba(255, 255, 255, 0.7)',
+      maxWidth: '600px'
     },
     grid: {
       display: 'grid',
       gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-      gap: '24px',
-      marginBottom: '80px'
+      gap: isMobile ? '60px' : '80px',
+      marginBottom: isMobile ? '80px' : '100px',
+      padding: isMobile ? '20px 0' : '40px 0',
+      width: '100%',
+      justifyItems: 'center',
+      alignItems: 'start'
     },
-    // Flip card styles
-          cardContainer: {
+    card: {
+      position: 'relative',
+      width: '100%',
+      maxWidth: isMobile ? '320px' : '360px',
+      height: isMobile ? '320px' : '360px',
       perspective: '1000px',
-      height: '400px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      margin: '0 auto',
+      transform: 'translateZ(0)',
+      backfaceVisibility: 'hidden',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'stretch'
     },
     cardInner: {
       position: 'relative',
       width: '100%',
       height: '100%',
-      transition: 'transform 0.8s',
+      textAlign: 'center',
+      transition: 'transform 0.6s ease-in-out',
       transformStyle: 'preserve-3d',
-      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-      borderRadius: '12px'
+      transformOrigin: 'center center'
     },
     cardInnerFlipped: {
       transform: 'rotateY(180deg)'
@@ -297,1060 +147,470 @@ const Services = () => {
       width: '100%',
       height: '100%',
       backfaceVisibility: 'hidden',
-      borderRadius: '12px',
-      overflow: 'hidden'
-    },
-    cardFront: {
-      backgroundColor: '#FFFFFF',
-      border: '1px solid #F3F4F6',
+      background: '#1A1F2E',
+      backdropFilter: 'blur(20px)',
+      borderRadius: unifiedTheme.borderRadius['2xl'],
+      padding: getResponsiveValue('16px 16px', '20px 20px', isMobile),
+      boxShadow: '0 10px 40px rgba(0, 0, 0, 0.5)',
+      border: `1px solid rgba(255, 255, 255, 0.1)`,
+      transition: `all ${unifiedTheme.animation.duration.slow} ${unifiedTheme.animation.easing.default}`,
+      overflow: 'hidden',
       display: 'flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      cursor: 'pointer'
     },
     cardBack: {
-      backgroundColor: '#FFFFFF',
-      transform: 'rotateY(180deg)',
-      border: '1px solid #F3F4F6',
-      display: 'flex',
-      flexDirection: 'column'
+      transform: 'rotateY(180deg)'
     },
-    cardTopBorder: {
+    cardHover: {
+      boxShadow: '0 20px 60px rgba(0, 0, 0, 0.7)',
+      borderColor: '#FFC905',
+      transform: 'translateY(-4px)'
+    },
+    cardGlow: {
       position: 'absolute',
       top: 0,
       left: 0,
-      width: '100%',
-      height: '4px'
+      right: 0,
+      bottom: 0,
+      borderRadius: '24px',
+      opacity: 0,
+      transition: 'opacity 0.4s ease',
+      background: 'linear-gradient(135deg, rgba(255,201,5,0.15) 0%, rgba(255,201,5,0.05) 100%)',
+      zIndex: 1
+    },
+    cardGlowActive: {
+      opacity: 1
     },
     cardContent: {
-      padding: '24px',
+      position: 'relative',
+      zIndex: 2,
       display: 'flex',
       flexDirection: 'column',
       height: '100%'
     },
     iconContainer: {
+      width: isMobile ? '44px' : '52px',
+      height: isMobile ? '44px' : '52px',
+      borderRadius: '14px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      width: '48px',
-      height: '48px',
-      marginBottom: '16px',
-      borderRadius: '8px',
-      color: '#FFFFFF',
-      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+      margin: '0 auto 8px',
+      position: 'relative',
+      transition: 'all 0.4s ease'
     },
-    cardTitle: {
+    iconContainerHover: {
+      transform: 'scale(1.02)'
+    },
+    icon: {
+      color: 'white',
+      filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))',
+      position: 'relative',
+      zIndex: 2
+    },
+    serviceTitle: {
+      fontSize: getResponsiveValue(unifiedTheme.typography.fontSizes.base, unifiedTheme.typography.fontSizes.lg, isMobile),
+      fontWeight: unifiedTheme.typography.fontWeights.extrabold,
+      color: 'white',
+      marginBottom: '2px',
+      lineHeight: unifiedTheme.typography.lineHeights.snug
+    },
+    serviceSubtitle: {
+      fontSize: getResponsiveValue(unifiedTheme.typography.fontSizes.xs, unifiedTheme.typography.fontSizes.sm, isMobile),
+      fontWeight: unifiedTheme.typography.fontWeights.semibold,
       marginBottom: '8px',
-      fontSize: '20px',
-      fontWeight: 700,
-      color: '#111827'
+      color: '#FFC905',
+      textTransform: 'uppercase',
+      letterSpacing: '1px'
     },
-    cardDescription: {
-      fontSize: '14px',
-      lineHeight: 1.5,
-      color: '#4B5563',
-      marginBottom: '16px'
+    serviceDescription: {
+      fontSize: getResponsiveValue(unifiedTheme.typography.fontSizes.xs, unifiedTheme.typography.fontSizes.sm, isMobile),
+      color: 'rgba(255, 255, 255, 0.7)',
+      lineHeight: unifiedTheme.typography.lineHeights.tight,
+      marginBottom: '10px',
+      flex: '0 0 auto'
     },
-    featuresList: {
-      listStyle: 'none',
-      padding: 0,
-      margin: '16px 0 0 0',
+    featuresContainer: {
+      marginBottom: '10px',
+      flex: '1 1 auto',
       display: 'flex',
       flexDirection: 'column',
-      gap: '12px'
+      justifyContent: 'flex-start',
+      minHeight: '40px'
     },
-    featureItem: {
+    feature: {
       display: 'flex',
-      alignItems: 'flex-start',
-      fontSize: '14px'
+      alignItems: 'center',
+      fontSize: isMobile ? '0.65rem' : '0.7rem',
+      color: 'rgba(255, 255, 255, 0.6)',
+      fontWeight: unifiedTheme.typography.fontWeights.medium,
+      marginBottom: '4px',
+      lineHeight: 1.2
     },
     featureIcon: {
-      width: '20px',
-      height: '20px',
+      width: '14px',
+      height: '14px',
+      color: '#FFC905',
       marginRight: '8px',
-      marginTop: '2px',
-      flexShrink: 0,
-      color: '#2563EB'
+      flexShrink: 0
     },
-    featureText: {
-      color: '#4B5563'
-    },
-    learnMoreBtn: {
-      display: 'inline-flex',
+    keyMetric: {
+      display: 'flex',
       alignItems: 'center',
-      marginTop: 'auto',
-      fontSize: '14px',
-      fontWeight: 500,
-      color: '#2563EB',
-      border: 'none',
-      background: 'transparent',
-      cursor: 'pointer',
-      padding: '8px 0',
-      transition: 'color 0.2s ease'
+      justifyContent: 'center',
+      padding: '6px 12px',
+      borderRadius: '12px',
+      fontSize: '0.7rem',
+      fontWeight: unifiedTheme.typography.fontWeights.bold,
+      marginBottom: '10px',
+      color: '#0A0F1C',
+      background: '#FFC905',
+      textShadow: 'none',
+      flex: '0 0 auto'
     },
-    learnMoreBtnHover: {
-      color: '#1D4ED8'
+    learnMore: {
+      padding: '6px 12px',
+      width: 'auto',
+      maxWidth: 'calc(100% - 32px)',
+      flex: '0 0 auto',
+      marginTop: 'auto',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      fontSize: getResponsiveValue('0.7rem', '0.75rem', isMobile),
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+      background: 'transparent',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      borderRadius: unifiedTheme.borderRadius.lg,
+      color: 'rgba(255, 255, 255, 0.8)',
+      fontWeight: unifiedTheme.typography.fontWeights.medium,
+      transition: 'all 0.3s ease',
+      cursor: 'pointer'
+    },
+    learnMoreHover: {
+      background: 'rgba(255, 201, 5, 0.1)',
+      borderColor: '#FFC905',
+      color: '#FFC905',
+      transform: 'translateY(-2px)'
     },
     learnMoreIcon: {
-      marginLeft: '4px'
+      marginLeft: '8px',
+      transition: 'transform 0.3s ease'
     },
-    // Card back styles - new enhanced designs
+    cta: {
+      textAlign: 'center',
+      padding: isMobile ? '40px 24px' : '60px 40px',
+      background: 'rgba(255, 255, 255, 0.03)',
+      backdropFilter: 'blur(20px)',
+      borderRadius: unifiedTheme.borderRadius['2xl'],
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      marginTop: '40px'
+    },
+    ctaTitle: {
+      fontSize: isMobile ? '1.8rem' : '2.25rem',
+      fontWeight: 800,
+      color: 'white',
+      marginBottom: '16px',
+      textShadow: '0 2px 10px rgba(0,0,0,0.3)'
+    },
+    ctaDescription: {
+      fontSize: '1.125rem',
+      color: 'rgba(255, 255, 255, 0.7)',
+      marginBottom: '32px',
+      maxWidth: '500px',
+      margin: '0 auto 32px'
+    },
+    ctaButton: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      padding: '16px 32px',
+      background: '#FFC905',
+      color: '#0A0F1C',
+      fontSize: '1.125rem',
+      fontWeight: 700,
+      borderRadius: '16px',
+      textDecoration: 'none',
+      transition: 'all 0.3s ease',
+      boxShadow: '0 8px 32px rgba(255, 201, 5, 0.3)'
+    },
+    ctaButtonHover: {
+      transform: 'translateY(-2px)',
+      boxShadow: '0 12px 40px rgba(255, 201, 5, 0.4)',
+      background: '#FFD93D'
+    },
     backContent: {
-      padding: '24px',
-      height: '100%',
       display: 'flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      height: '100%',
+      textAlign: 'left'
     },
     backTitle: {
-      fontSize: '22px',
-      fontWeight: 700,
-      color: '#111827',
-      marginBottom: '20px',
+      fontSize: getResponsiveValue(unifiedTheme.typography.fontSizes.lg, unifiedTheme.typography.fontSizes.xl, isMobile),
+      fontWeight: unifiedTheme.typography.fontWeights.extrabold,
+      color: 'white',
+      marginBottom: '8px'
+    },
+    backDescription: {
+      fontSize: getResponsiveValue('0.75rem', '0.875rem', isMobile),
+      color: 'rgba(255, 255, 255, 0.7)',
+      marginBottom: '12px',
+      lineHeight: 1.4
+    },
+    backSection: {
+      marginBottom: '12px'
+    },
+    backSectionTitle: {
+      fontSize: getResponsiveValue('0.65rem', '0.75rem', isMobile),
+      fontWeight: unifiedTheme.typography.fontWeights.bold,
+      color: '#FFC905',
+      marginBottom: '6px',
+      textTransform: 'uppercase',
+      letterSpacing: '0.5px'
+    },
+    backList: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '6px'
+    },
+    backListItem: {
+      background: 'rgba(255, 201, 5, 0.1)',
+      color: '#FFC905',
+      padding: '2px 6px',
+      borderRadius: unifiedTheme.borderRadius.base,
+      fontSize: getResponsiveValue('0.65rem', '0.7rem', isMobile),
+      fontWeight: unifiedTheme.typography.fontWeights.medium,
+      border: '1px solid rgba(255, 201, 5, 0.3)'
+    },
+    backPricing: {
+      marginTop: 'auto',
+      padding: '8px',
+      background: 'rgba(255, 201, 5, 0.1)',
+      borderRadius: unifiedTheme.borderRadius.lg,
+      border: `1px solid rgba(255, 201, 5, 0.3)`,
       textAlign: 'center'
     },
-    // Software Development card back styles
-    metricsContainer: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginBottom: '24px',
-      padding: '12px 0',
-      borderTop: '1px solid #E5E7EB',
-      borderBottom: '1px solid #E5E7EB'
-    },
-    metricItem: {
-      textAlign: 'center',
-      flex: '1 1 auto'
-    },
-    metricValue: {
-      fontSize: '20px',
-      fontWeight: 700,
-      marginBottom: '4px',
-      color: '#111827'
-    },
-    metricLabel: {
-      fontSize: '12px',
-      color: '#6B7280',
-      textTransform: 'uppercase',
-      letterSpacing: '0.025em'
-    },
-    phasesTitle: {
-      fontSize: '15px',
-      fontWeight: 600,
-      color: '#111827',
-      marginBottom: '16px'
-    },
-    phasesList: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '16px'
-    },
-    phaseItem: {
-      display: 'flex',
-      alignItems: 'flex-start'
-    },
-    phaseIcon: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '32px',
-      height: '32px',
-      borderRadius: '50%',
-      marginRight: '12px',
-      flexShrink: 0
-    },
-    phaseContent: {
-      flex: 1
-    },
-    phaseName: {
-      fontSize: '14px',
-      fontWeight: 600,
-      color: '#111827',
+    backPrice: {
+      fontSize: getResponsiveValue(unifiedTheme.typography.fontSizes.base, unifiedTheme.typography.fontSizes.lg, isMobile),
+      fontWeight: unifiedTheme.typography.fontWeights.bold,
+      color: '#FFC905',
       marginBottom: '2px'
     },
-    phaseDescription: {
-      fontSize: '12px',
-      color: '#6B7280'
-    },
-    // App Development card back styles
-    statsContainer: {
-      display: 'flex',
-      justifyContent: 'space-around',
-      marginBottom: '20px'
-    },
-    statItem: {
-      textAlign: 'center',
-      padding: '0 8px'
-    },
-    statValue: {
-      fontSize: '22px',
-      fontWeight: 700,
-      marginBottom: '4px'
-    },
-    statLabel: {
-      fontSize: '12px',
-      color: '#6B7280'
-    },
-    technologiesContainer: {
-      marginBottom: '20px'
-    },
-    technologiesTitle: {
-      fontSize: '15px',
-      fontWeight: 600,
-      color: '#111827',
-      marginBottom: '12px'
-    },
-    technologiesList: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: '8px'
-    },
-    technologyTag: {
-      fontSize: '12px',
-      fontWeight: 500,
-      padding: '4px 8px',
-      borderRadius: '4px',
-      backgroundColor: '#F3F4F6',
-      color: '#4B5563'
-    },
-    platformsContainer: {
-      marginBottom: '20px'
-    },
-    platformItem: {
-      marginBottom: '8px'
-    },
-    platformHeader: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      fontSize: '13px',
-      fontWeight: 500,
-      marginBottom: '4px'
-    },
-    platformName: {
-      color: '#111827'
-    },
-    platformPercentage: {
-      color: '#6B7280'
-    },
-    progressBar: {
-      height: '6px',
-      backgroundColor: '#E5E7EB',
-      borderRadius: '3px',
-      overflow: 'hidden'
-    },
-    progressFill: {
-      height: '100%',
-      borderRadius: '3px'
-    },
-    testimonialContainer: {
-      marginTop: 'auto',
-      backgroundColor: '#F9FAFB',
-      padding: '12px',
-      borderRadius: '8px',
-      position: 'relative'
-    },
-    testimonialQuote: {
-      fontSize: '13px',
-      fontStyle: 'italic',
-      color: '#4B5563',
-      marginBottom: '8px',
-      position: 'relative',
-      paddingLeft: '16px'
-    },
-    testimonialQuotemark: {
-      position: 'absolute',
-      top: '0',
-      left: '0',
-      fontSize: '24px',
-      color: '#D1D5DB',
-      lineHeight: '0.5'
-    },
-    testimonialAuthor: {
-      fontSize: '12px',
-      fontWeight: 600,
-      color: '#111827',
-      textAlign: 'right'
-    },
-    // Data Integration card back styles
-    caseStudyContainer: {
-      backgroundColor: 'rgba(168, 85, 247, 0.05)',
-      padding: '16px',
-      borderRadius: '8px',
-      marginBottom: '20px'
-    },
-    caseStudyLabel: {
-      fontSize: '12px',
-      fontWeight: 600,
-      color: '#A855F7',
-      textTransform: 'uppercase',
-      marginBottom: '8px'
-    },
-    caseStudyGrid: {
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gap: '16px'
-    },
-    caseStudyItem: {
-      marginBottom: '12px'
-    },
-    caseStudyHeading: {
-      fontSize: '13px',
-      fontWeight: 600,
-      color: '#111827',
-      marginBottom: '4px'
-    },
-    caseStudyText: {
-      fontSize: '12px',
-      color: '#6B7280'
-    },
-    resultsList: {
-      padding: 0,
-      margin: '12px 0 0 0',
-      listStyle: 'none'
-    },
-    resultItem: {
-      display: 'flex',
-      alignItems: 'center',
-      fontSize: '12px',
-      color: '#6B7280',
-      marginBottom: '6px'
-    },
-    resultIcon: {
-      color: '#A855F7',
-      marginRight: '6px',
-      flexShrink: 0
-    },
-    dataVolumeContainer: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginBottom: '20px',
-      gap: '8px'
-    },
-    dataVolumeItem: {
-      flex: 1,
-      backgroundColor: '#F9FAFB',
-      padding: '12px',
-      borderRadius: '8px',
-      textAlign: 'center'
-    },
-    dataVolumeValue: {
-      fontSize: '16px',
-      fontWeight: 700,
-      color: '#111827',
-      marginBottom: '4px'
-    },
-    dataVolumeLabel: {
-      fontSize: '11px',
-      color: '#6B7280'
-    },
-    integrationContainer: {
-      marginTop: 'auto'
-    },
-    integrationTypes: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: '8px',
-      margin: '0'
-    },
-    integrationType: {
-      display: 'flex',
-      alignItems: 'center',
-      padding: '8px 12px',
-      backgroundColor: '#F3F4F6',
-      borderRadius: '6px',
-      fontSize: '12px',
-      color: '#4B5563',
-      fontWeight: 500
-    },
-    integrationIcon: {
-      marginRight: '6px',
-      color: '#A855F7'
-    },
-    
-    // Bottom services styles
-    bottomSection: {
-      marginTop: '80px',
-      position: 'relative',
-      backgroundColor: '#FFFFFF',
-      borderRadius: '16px',
-      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
-      overflow: 'hidden',
-      display: 'flex',
-      flexDirection: isMobile ? 'column' : 'row',
-      minHeight: '400px'
-    },
-    imageContainer: {
-      flex: isMobile ? '0 0 240px' : '0 0 45%',
-      position: 'relative',
-      overflow: 'hidden',
-      backgroundColor: '#F9FAFB',
-      backgroundImage: 'url("https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80")',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    imageOverlay: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      background: 'linear-gradient(135deg, rgba(79, 70, 229, 0.8) 0%, rgba(59, 130, 246, 0.5) 100%)',
-      mixBlendMode: 'multiply',
-      zIndex: 1
-    },
-    imageContent: {
-      position: 'relative',
-      zIndex: 2,
-      padding: '40px',
-      color: '#FFFFFF',
-      textAlign: 'center'
-    },
-    imageTitle: {
-      fontSize: '32px',
-      fontWeight: 700,
-      marginBottom: '16px',
-      textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-    },
-    imageDescription: {
-      fontSize: '16px',
-      lineHeight: 1.5,
-      marginBottom: '24px',
-      maxWidth: '400px',
-      textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
-    },
-    contentContainer: {
-      flex: isMobile ? '1' : '0 0 55%',
-      padding: '0',
-      display: 'flex',
-      flexDirection: 'column'
-    },
-    tabsContainer: {
-      display: 'flex',
-      borderBottom: '1px solid #E5E7EB'
-    },
-    tab: {
-      padding: '16px 24px',
-      fontSize: '15px',
-      fontWeight: 500,
-      color: '#6B7280',
-      backgroundColor: 'transparent',
-      border: 'none',
-      borderBottom: '2px solid transparent',
-      cursor: 'pointer',
-      transition: 'all 0.2s ease',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '8px'
-    },
-    tabActive: {
-      color: '#111827',
-      borderBottomColor: '#2563EB',
-      fontWeight: 600
-    },
-    tabContent: {
-      padding: '32px',
-      flex: 1,
-      display: 'flex',
-      flexDirection: 'column'
-    },
-    tabContentTitle: {
-      fontSize: '24px',
-      fontWeight: 700,
-      color: '#111827',
-      marginBottom: '12px',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '12px'
-    },
-    tabContentIcon: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '40px',
-      height: '40px',
-      borderRadius: '8px',
-      color: '#FFFFFF'
-    },
-    tabContentDescription: {
-      color: '#4B5563',
-      marginBottom: '24px',
-      lineHeight: 1.6
-    },
-    tabFeaturesList: {
-      listStyle: 'none',
-      padding: 0,
-      margin: '0',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '16px'
-    },
-    tabFeatureItem: {
-      display: 'flex',
-      alignItems: 'flex-start'
-    },
-    tabFeatureIcon: {
-      width: '20px',
-      height: '20px',
-      marginRight: '12px',
-      marginTop: '2px',
-      flexShrink: 0
-    },
-    tabFeatureText: {
-      color: '#4B5563'
-    },
-    modalOverlay: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 50,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '16px',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)'
-    },
-    modalContent: {
-      position: 'relative',
-      width: '100%',
-      maxWidth: '500px',
-      backgroundColor: '#FFFFFF',
-      borderRadius: '12px',
-      overflow: 'hidden',
-      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
-    },
-    modalTopBorder: {
-      height: '8px',
-      width: '100%'
-    },
-    closeButton: {
-      position: 'absolute',
-      top: '16px',
-      right: '16px',
-      color: '#9CA3AF',
-      background: 'transparent',
-      border: 'none',
-      cursor: 'pointer',
-      padding: '4px',
-      transition: 'color 0.2s ease'
-    },
-    closeButtonHover: {
-      color: '#6B7280'
-    },
-    modalBody: {
-      padding: '24px'
-    },
-    modalIconContainer: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '64px',
-      height: '64px',
-      margin: '0 auto 24px',
-      borderRadius: '8px',
-      color: '#FFFFFF'
-    },
-    modalTitle: {
-      textAlign: 'center',
-      fontSize: '24px',
-      fontWeight: 700,
-      color: '#111827',
-      marginBottom: '16px'
-    },
-    modalDescription: {
-      color: '#4B5563',
-      marginBottom: '24px'
-    },
-    modalSubtitle: {
-      fontSize: '16px',
-      fontWeight: 500,
-      color: '#111827',
-      marginBottom: '12px'
-    },
-    modalFeaturesList: {
-      listStyle: 'none',
-      padding: 0,
-      margin: '0 0 24px 0',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '12px'
-    },
-    modalFeatureItem: {
-      display: 'flex',
-      alignItems: 'flex-start'
-    },
-    modalFeatureIcon: {
-      width: '20px',
-      height: '20px',
-      marginRight: '12px',
-      marginTop: '2px',
-      flexShrink: 0,
-      color: '#2563EB'
-    },
-    modalFeatureText: {
-      color: '#4B5563'
-    },
-  };
-
-  // Find the currently active bottom service
-  const activeService = bottomServices.find(service => service.id === activeTab);
-
-  // Custom card backs for each service
-  const renderCardBack = (service) => {
-    switch(service.id) {
-      case 1: // Custom Software
-        return (
-          <div style={styles.backContent}>
-            <h3 style={{...styles.backTitle, color: service.color}}>
-              {service.backContent.title}
-            </h3>
-            
-            <div style={styles.metricsContainer}>
-              {service.backContent.metrics.map((metric, index) => (
-                <div key={index} style={styles.metricItem}>
-                  <div style={{...styles.metricValue, color: service.color}}>{metric.value}</div>
-                  <div style={styles.metricLabel}>{metric.label}</div>
-                </div>
-              ))}
-            </div>
-            
-            <div style={styles.phasesList}>
-              {service.backContent.phases.map((phase, index) => (
-                <div key={index} style={styles.phaseItem}>
-                  <div 
-                    style={{
-                      ...styles.phaseIcon,
-                      backgroundColor: `${service.color}20`, // 20% opacity
-                      color: service.color
-                    }}
-                  >
-                    {phase.icon}
-                  </div>
-                  <div style={styles.phaseContent}>
-                    <div style={styles.phaseName}>{phase.name}</div>
-                    <div style={styles.phaseDescription}>{phase.description}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-        
-      case 2: // Web & Mobile Apps
-        return (
-          <div style={styles.backContent}>
-            <h3 style={{...styles.backTitle, color: service.color}}>
-              {service.backContent.title}
-            </h3>
-            
-            <div style={styles.statsContainer}>
-              {service.backContent.stats.map((stat, index) => (
-                <div key={index} style={styles.statItem}>
-                  <div style={{...styles.statValue, color: service.color}}>
-                    {stat.value}
-                  </div>
-                  <div style={styles.statLabel}>{stat.label}</div>
-                </div>
-              ))}
-            </div>
-            
-            <div style={styles.technologiesContainer}>
-              <h4 style={styles.technologiesTitle}>Core Technologies</h4>
-              <div style={styles.technologiesList}>
-                {service.backContent.technologies.map((tech, index) => (
-                  <span 
-                    key={index} 
-                    style={{
-                      ...styles.technologyTag,
-                      backgroundColor: `${service.color}15`, // 15% opacity
-                      color: service.color
-                    }}
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-            
-            <div style={{...styles.testimonialContainer, marginTop: '30px'}}>
-              <div style={styles.testimonialQuote}>
-                <span style={styles.testimonialQuotemark}>&ldquo;</span>
-                {service.backContent.testimonial.quote}
-              </div>
-              <div style={styles.testimonialAuthor}>
-                — {service.backContent.testimonial.author}
-              </div>
-            </div>
-          </div>
-        );
-        
-      case 3: // Data Integration
-        return (
-          <div style={styles.backContent}>
-            <h3 style={{...styles.backTitle, color: service.color}}>
-              {service.backContent.title}
-            </h3>
-            
-            <div style={styles.caseStudyContainer}>
-              <div style={styles.caseStudyLabel}>Case Study</div>
-              <div style={styles.caseStudyGrid}>
-                <div style={styles.caseStudyItem}>
-                  <div style={styles.caseStudyHeading}>Industry</div>
-                  <div style={styles.caseStudyText}>{service.backContent.caseStudy.industry}</div>
-                </div>
-                <div style={styles.caseStudyItem}>
-                  <div style={styles.caseStudyHeading}>Challenge</div>
-                  <div style={styles.caseStudyText}>{service.backContent.caseStudy.challenge}</div>
-                </div>
-              </div>
-              <div style={styles.caseStudyItem}>
-                <div style={styles.caseStudyHeading}>Results</div>
-                <ul style={styles.resultsList}>
-                  {service.backContent.caseStudy.results.map((result, index) => (
-                    <li key={index} style={styles.resultItem}>
-                      <FiCheck size={14} style={styles.resultIcon} />
-                      {result}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            
-            <div style={{...styles.dataVolumeContainer, marginTop: '30px'}}>
-              {service.backContent.dataVolumes.map((volume, index) => (
-                <div key={index} style={styles.dataVolumeItem}>
-                  <div style={{...styles.dataVolumeValue, color: service.color}}>
-                    {volume.value}
-                  </div>
-                  <div style={styles.dataVolumeLabel}>
-                    {volume.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-        
-      default:
-        return null;
+    backTimeline: {
+      fontSize: getResponsiveValue('0.65rem', '0.75rem', isMobile),
+      color: 'rgba(255, 255, 255, 0.6)'
     }
   };
 
+  const handleServiceClick = (service) => {
+    setFlippedCards(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(service.id)) {
+        newSet.delete(service.id);
+      } else {
+        newSet.add(service.id);
+      }
+      return newSet;
+    });
+  };
+
+  const handleContactClick = (e) => {
+    e.preventDefault();
+    navigate('/contact');
+  };
+
   return (
-    <section id="services" style={styles.section}>
-      {/* Decorative Elements */}
-      <div style={styles.decorCircle1}></div>
-      <div style={styles.decorCircle2}></div>
-      
+    <section style={styles.section} ref={sectionRef} id="services">
+      <div style={styles.backgroundPattern}></div>
+
       <div style={styles.container}>
-        <div style={styles.header}>
-          <motion.span 
-            style={styles.spanLabel}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+        <motion.div 
+          style={styles.header}
+          initial={{ opacity: 0, y: 40 }}
+          animate={visibleServices.includes('intro') ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <motion.div 
+            style={styles.subtitle}
+            initial={{ opacity: 0 }}
+            animate={visibleServices.includes('intro') ? { opacity: 1 } : {}}
+            transition={{ duration: 0.4, delay: 0.2 }}
           >
-            What We Do
-          </motion.span>
+            ELITE SOLUTIONS
+          </motion.div>
           
           <motion.h2 
             style={styles.title}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            initial={{ opacity: 0 }}
+            animate={visibleServices.includes('intro') ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
-            Our <span style={styles.titleSpan}>Services</span>
+            Technology Solutions That Drive Results
           </motion.h2>
-          
-          <motion.div 
-            style={styles.divider}
-            initial={{ width: 0 }}
-            animate={{ width: 96 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          ></motion.div>
           
           <motion.p 
             style={styles.description}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            animate={visibleServices.includes('intro') ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.4 }}
           >
-            Technology solutions tailored to transform your business
+            Transform your business with intelligent solutions designed for measurable ROI and enterprise reliability.
           </motion.p>
-        </div>
-        
-        {/* Top 3 service cards - now flippable */}
-        <motion.div 
-          style={styles.grid}
-          variants={container}
-          initial="hidden"
-          animate="show"
-        >
-          {topServices.map((service) => (
+        </motion.div>
+
+        <div style={styles.grid}>
+          {coreServices.map((service, index) => (
             <motion.div
               key={service.id}
-              variants={item}
-              style={styles.cardContainer}
-              onClick={(e) => toggleFlip(service.id, e)}
+              style={styles.card}
+              initial={{ opacity: 0, y: 60 }}
+              animate={visibleServices.includes('services') ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              ref={el => cardRefs.current[service.id] = el}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleServiceClick(service);
+              }}
             >
               <div 
                 style={{
                   ...styles.cardInner,
-                  ...(flippedCards[service.id] ? styles.cardInnerFlipped : {})
+                  ...(flippedCards.has(service.id) ? styles.cardInnerFlipped : {})
                 }}
               >
-                {/* Card Front */}
-                <div style={{...styles.cardFace, ...styles.cardFront}}>
+                {/* Front of card */}
+                <div 
+                  style={{
+                    ...styles.cardFace,
+                    ...(hoveredService === service.id && !flippedCards.has(service.id) ? styles.cardHover : {})
+                  }}
+                  onMouseEnter={() => !flippedCards.has(service.id) && setHoveredService(service.id)}
+                  onMouseLeave={() => setHoveredService(null)}
+                >
                   <div 
                     style={{
-                      ...styles.cardTopBorder,
-                      background: service.gradient
+                      ...styles.cardGlow,
+                      ...(hoveredService === service.id ? styles.cardGlowActive : {})
                     }}
-                  ></div>
+                  />
                   
                   <div style={styles.cardContent}>
-                    <div 
-                      style={{
+                    {/* Header */}
+                    <div style={{ flex: '0 0 auto' }}>
+                      <div style={{
                         ...styles.iconContainer,
-                        background: service.gradient
-                      }}
-                    >
-                      {service.icon}
+                        background: service.gradient,
+                        ...(hoveredService === service.id && !flippedCards.has(service.id) ? styles.iconContainerHover : {})
+                      }}>
+                        <div style={styles.icon}>
+                          {service.icon}
+                        </div>
+                      </div>
+
+                      <h3 style={styles.serviceTitle}>{service.title}</h3>
+                      <div style={styles.serviceSubtitle}>
+                        {service.subtitle}
+                      </div>
                     </div>
-                    
-                    <h3 style={styles.cardTitle}>{service.title}</h3>
-                    <p style={styles.cardDescription}>{service.description}</p>
-                    
-                    <ul style={styles.featuresList}>
-                      {service.features.map((feature, index) => (
-                        <li key={index} style={styles.featureItem}>
-                          <svg 
-                            style={{...styles.featureIcon, color: service.color}}
-                            fill="currentColor" 
-                            viewBox="0 0 20 20"
-                          >
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                          </svg>
-                          <span style={styles.featureText}>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation(); // Prevent card flip when clicking this button
-                        openModal(service);
-                      }}
-                      style={{
-                        ...styles.learnMoreBtn,
-                        color: service.color
-                      }}
-                      onMouseOver={(e) => {
-                        e.currentTarget.style.color = styles.learnMoreBtnHover.color;
-                      }}
-                      onMouseOut={(e) => {
-                        e.currentTarget.style.color = service.color;
-                      }}
-                    >
-                      Learn more
-                      <FiPlus style={styles.learnMoreIcon} />
-                    </button>
+
+                    {/* Body */}
+                    <div style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column' }}>
+                      <p style={styles.serviceDescription}>{service.description}</p>
+
+                      {/* Key Metric */}
+                      <div style={styles.keyMetric}>
+                        <span style={{ fontSize: '1.1rem', marginRight: '8px' }}>{service.keyMetric.number}</span>
+                        {service.keyMetric.label}
+                      </div>
+
+                      {/* Features */}
+                      <div style={styles.featuresContainer}>
+                        {service.features.slice(0, 2).map((feature, idx) => (
+                          <div key={idx} style={styles.feature}>
+                            <FiCheck style={styles.featureIcon} />
+                            {feature}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Learn More Button */}
+                      <div 
+                        style={{
+                          ...styles.learnMore,
+                          ...(hoveredService === service.id && !flippedCards.has(service.id) ? styles.learnMoreHover : {})
+                        }}
+                      >
+                        <span>View Details</span>
+                        <FiArrowRight style={{
+                          ...styles.learnMoreIcon,
+                          ...(hoveredService === service.id && !flippedCards.has(service.id) ? { transform: 'translateX(4px)' } : {})
+                        }} />
+                      </div>
+                    </div>
                   </div>
                 </div>
-                
-                {/* Card Back - Customized for each service */}
-                <div style={{...styles.cardFace, ...styles.cardBack}}>
-                  <div 
-                    style={{
-                      ...styles.cardTopBorder,
-                      background: service.gradient
-                    }}
-                  ></div>
-                  
-                  {renderCardBack(service)}
+
+                {/* Back of card */}
+                <div 
+                  style={{...styles.cardFace, ...styles.cardBack}}
+                >
+                  <div style={styles.backContent}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                      <h3 style={{ ...styles.backTitle, marginBottom: 0 }}>{service.title}</h3>
+                      <span style={{ fontSize: '0.75rem', color: '#FFC905', cursor: 'pointer' }}>← Back</span>
+                    </div>
+                    <p style={styles.backDescription}>{service.detailedDescription.substring(0, 120)}...</p>
+                    
+                    <div style={styles.backSection}>
+                      <div style={styles.backSectionTitle}>Key Technologies</div>
+                      <div style={styles.backList}>
+                        {service.technologies.slice(0, 2).map((tech, idx) => (
+                          <span key={idx} style={styles.backListItem}>{tech}</span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div style={{ ...styles.backPricing, marginTop: 'auto' }}>
+                      <div style={styles.backPrice}>{service.startingPrice}</div>
+                      <div style={styles.backTimeline}>Timeline: {service.timeline}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
           ))}
-        </motion.div>
-        
-        {/* Bottom services section with image and tabs */}
+        </div>
+
         <motion.div 
-          style={styles.bottomSection}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          style={styles.cta}
+          initial={{ opacity: 0, y: 40 }}
+          animate={visibleServices.includes('services') ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.8 }}
         >
-          {/* Left side image */}
-          <div style={styles.imageContainer}>
-            <div style={styles.imageOverlay}></div>
-            <div style={styles.imageContent}>
-              <h3 style={styles.imageTitle}>Enterprise-grade Solutions</h3>
-              <p style={styles.imageDescription}>
-                Comprehensive technology services designed to elevate your business and drive digital transformation.
-              </p>
-            </div>
-          </div>
-          
-          {/* Right side tabbed content */}
-          <div style={styles.contentContainer}>
-            <div style={styles.tabsContainer}>
-              {bottomServices.map(service => (
-                <button
-                  key={service.id}
-                  style={{
-                    ...styles.tab,
-                    ...(activeTab === service.id ? styles.tabActive : {}),
-                    borderBottomColor: activeTab === service.id ? service.color : 'transparent'
-                  }}
-                  onClick={() => setActiveTab(service.id)}
-                >
-                  {service.icon}
-                  {!isMobile && service.title}
-                </button>
-              ))}
-            </div>
-            
-            <AnimatePresence mode="wait">
-              <motion.div 
-                key={activeTab}
-                style={styles.tabContent}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-              >
-                <h3 style={styles.tabContentTitle}>
-                  <div 
-                    style={{
-                      ...styles.tabContentIcon,
-                      background: activeService.gradient
-                    }}
-                  >
-                    {activeService.icon}
-                  </div>
-                  {activeService.title}
-                </h3>
-                
-                <p style={styles.tabContentDescription}>
-                  {activeService.description}
-                </p>
-                
-                <ul style={styles.tabFeaturesList}>
-                  {activeService.features.map((feature, index) => (
-                    <li key={index} style={styles.tabFeatureItem}>
-                      <svg 
-                        style={{
-                          ...styles.tabFeatureIcon,
-                          color: activeService.color
-                        }}
-                        fill="currentColor" 
-                        viewBox="0 0 20 20"
-                      >
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <span style={styles.tabFeatureText}>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <motion.button
-                  onClick={() => openModal(activeService)}
-                  style={{
-                    ...styles.learnMoreBtn,
-                    color: activeService.color,
-                    marginTop: 'auto',
-                    alignSelf: 'flex-start',
-                    padding: '8px 0',
-                    marginTop: '24px'
-                  }}
-                  whileHover={{ x: 5 }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.color = activeService.color;
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.color = activeService.color;
-                  }}
-                >
-                  Explore {activeService.title}
-                  <FiChevronRight style={{ marginLeft: '4px' }} />
-                </motion.button>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+          <h3 style={styles.ctaTitle}>Ready to Transform Your Business?</h3>
+          <p style={styles.ctaDescription}>
+            Let's create your competitive advantage with cutting-edge technology solutions.
+          </p>
+          <motion.a
+            href="#contact"
+            style={styles.ctaButton}
+            whileHover={styles.ctaButtonHover}
+            onClick={handleContactClick}
+          >
+            Start Your Project
+            <FiArrowRight style={{ marginLeft: '8px' }} />
+          </motion.a>
         </motion.div>
       </div>
-      
-      {/* Service Details Modal */}
-      <AnimatePresence>
-        {modalOpen && modalContent && (
-          <motion.div
-            style={styles.modalOverlay}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              style={styles.modalContent}
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", damping: 30 }}
-            >
-              <div 
-                style={{
-                  ...styles.modalTopBorder,
-                  background: modalContent.gradient
-                }}
-              ></div>
-              
-              <button 
-                style={styles.closeButton}
-                onClick={closeModal}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.color = styles.closeButtonHover.color;
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.color = styles.closeButton.color;
-                }}
-              >
-                <FiX size={24} />
-              </button>
-              
-              <div style={styles.modalBody}>
-                <div 
-                  style={{
-                    ...styles.modalIconContainer,
-                    background: modalContent.gradient
-                  }}
-                >
-                  {modalContent.icon}
-                </div>
-                
-                <h3 style={styles.modalTitle}>{modalContent.title}</h3>
-                <p style={styles.modalDescription}>{modalContent.description}</p>
-                
-                <h4 style={styles.modalSubtitle}>Key Features:</h4>
-                <ul style={styles.modalFeaturesList}>
-                  {modalContent.features.map((feature, index) => (
-                    <li key={index} style={styles.modalFeatureItem}>
-                      <svg 
-                        style={{...styles.modalFeatureIcon, color: modalContent.color}}
-                        fill="currentColor" 
-                        viewBox="0 0 20 20"
-                      >
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <span style={styles.modalFeatureText}>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(180deg); }
+        }
+      `}</style>
     </section>
   );
 };
