@@ -1,36 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import emailjs from '@emailjs/browser';
-
-// Helper functions for formatting
-const formatPhoneNumber = (value) => {
-  const phoneNumber = value.replace(/[^\d]/g, '');
-  const phoneNumberLength = phoneNumber.length;
-  
-  if (phoneNumberLength < 4) return phoneNumber;
-  if (phoneNumberLength < 7) {
-    return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
-  }
-  return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
-};
-
-const formatCompanyName = (value) => {
-  return value
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
-};
-
-// Validation helpers
-const validateEmail = (email) => {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
-};
-
-const validatePhone = (phone) => {
-  const cleaned = phone.replace(/[^\d]/g, '');
-  return cleaned.length >= 10;
-};
 
 // Contact Form Component that can be imported and used anywhere
 const ContactForm = ({ 
@@ -51,18 +21,12 @@ const ContactForm = ({
     requirements: '',
     email: '',
     phone: '',
-    position: isJobApplication ? 'General Application' : '',
-    timeline: '',
-    budget: '',
-    projectType: ''
+    position: isJobApplication ? 'General Application' : ''
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [fileAttachment, setFileAttachment] = useState(null);
-  const [touchedFields, setTouchedFields] = useState({});
-  const [validationErrors, setValidationErrors] = useState({});
-  const [currentStep, setCurrentStep] = useState(1);
 
   // Update body overflow when form is opened/closed (only in modal mode)
   useEffect(() => {
@@ -74,98 +38,10 @@ const ContactForm = ({
     }
   }, [isOpen, embedded]);
 
-  // Auto-save to localStorage
-  useEffect(() => {
-    const savedData = localStorage.getItem('contactFormData');
-    if (savedData && !formSubmitted) {
-      try {
-        const parsed = JSON.parse(savedData);
-        setFormData(prev => ({ ...prev, ...parsed }));
-      } catch (e) {
-        console.error('Error loading saved form data:', e);
-      }
-    }
-  }, [formSubmitted]);
-  
-  // Save form data on change
-  useEffect(() => {
-    if (!formSubmitted && Object.values(formData).some(val => val !== '' && val.length > 0)) {
-      localStorage.setItem('contactFormData', JSON.stringify(formData));
-    }
-  }, [formData, formSubmitted]);
-  
-  // Validation on field blur
-  const validateField = useCallback((name, value) => {
-    const errors = { ...validationErrors };
-    
-    switch (name) {
-      case 'email':
-        if (!validateEmail(value)) {
-          errors.email = 'Please enter a valid email address';
-        } else {
-          delete errors.email;
-        }
-        break;
-      
-      case 'phone':
-        if (value && !validatePhone(value)) {
-          errors.phone = 'Phone number should be at least 10 digits';
-        } else {
-          delete errors.phone;
-        }
-        break;
-      
-      case 'name':
-        if (!value || value.trim().length < 2) {
-          errors.name = 'Name should be at least 2 characters';
-        } else {
-          delete errors.name;
-        }
-        break;
-      
-      case 'company':
-        if (!isJobApplication && (!value || value.trim().length < 2)) {
-          errors.company = 'Company name is required';
-        } else {
-          delete errors.company;
-        }
-        break;
-      
-      default:
-        break;
-    }
-    
-    setValidationErrors(errors);
-  }, [validationErrors, isJobApplication]);
-  
-  // Handle field blur
-  const handleFieldBlur = (e) => {
-    const { name, value } = e.target;
-    setTouchedFields({ ...touchedFields, [name]: true });
-    validateField(name, value);
-  };
-  
-  // Handle form input changes with formatting
+  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    
-    let formattedValue = value;
-    
-    // Apply formatting based on field
-    switch (name) {
-      case 'phone':
-        formattedValue = formatPhoneNumber(value);
-        break;
-      case 'company':
-        if (value.length > 0 && !touchedFields[name]) {
-          formattedValue = formatCompanyName(value);
-        }
-        break;
-      default:
-        break;
-    }
-    
-    setFormData({ ...formData, [name]: formattedValue });
+    setFormData({ ...formData, [name]: value });
   };
   
   // Handle file input change
@@ -223,7 +99,6 @@ const ContactForm = ({
             Company: ${formData.company}
             Company Size: ${formData.employees}
             Phone: ${formData.phone}
-            Email: ${formData.email}
             
             Requirements:
             ${formData.requirements}
@@ -261,9 +136,6 @@ const ContactForm = ({
         );
       }
       
-      // Clear saved data
-      localStorage.removeItem('contactFormData');
-      
       // Show success message
       setFormSubmitted(true);
       
@@ -278,15 +150,9 @@ const ContactForm = ({
           requirements: '',
           email: '',
           phone: '',
-          position: isJobApplication ? 'General Application' : '',
-          timeline: '',
-          budget: '',
-          projectType: ''
+          position: isJobApplication ? 'General Application' : ''
         });
         setFileAttachment(null);
-        setTouchedFields({});
-        setValidationErrors({});
-        setCurrentStep(1);
       }, 3000);
     } catch (err) {
       console.error('Failed to send email:', err);
@@ -304,53 +170,48 @@ const ContactForm = ({
       left: 0,
       width: '100%',
       height: '100vh',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: 'rgba(15, 23, 42, 0.97)',
       backdropFilter: 'blur(8px)',
       zIndex: 200,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      padding: '1rem',
     },
     formWrapper: {
-      width: '100%',
+      width: '90%',
       maxWidth: '650px',
-      height: '85vh',
-      maxHeight: '600px',
-      padding: window.innerWidth <= 768 ? '1.25rem' : '1.5rem',
-      backgroundColor: '#FFFFFF',
+      padding: '2.5rem',
+      backgroundColor: 'rgba(255, 255, 255, 0.97)',
       borderRadius: '12px',
-      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+      boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3), 0 0 80px rgba(14, 165, 233, 0.2)',
       position: 'relative',
       overflow: 'hidden',
-      display: 'flex',
-      flexDirection: 'column',
     },
     formTitle: {
-      fontSize: '1.75rem',
+      fontSize: '1.8rem',
       fontWeight: 700,
-      color: '#1F2937',
-      marginBottom: '0.5rem',
+      color: '#1E293B',
+      marginBottom: '0.8rem',
       textAlign: 'center',
       position: 'relative',
     },
     formSubtitle: {
       fontSize: '1rem',
       fontWeight: 400,
-      color: '#6B7280',
-      marginBottom: '1.5rem',
+      color: '#64748B',
+      marginBottom: '2rem',
       textAlign: 'center',
-      maxWidth: '85%',
-      margin: '0 auto 1.5rem',
+      maxWidth: '80%',
+      margin: '0 auto 2.5rem',
     },
     formGroup: {
-      marginBottom: '0.9rem',
+      marginBottom: '1.5rem',
       position: 'relative',
     },
     formLabel: {
       display: 'block',
-      marginBottom: '0.3rem',
-      fontSize: '0.85rem',
+      marginBottom: '0.5rem',
+      fontSize: '0.9rem',
       fontWeight: 500,
       color: '#334155',
       transition: 'all 0.3s ease',
@@ -358,26 +219,23 @@ const ContactForm = ({
     formInput: {
       display: 'block',
       width: '100%',
-      padding: '0.6rem 0.8rem',
-      fontSize: '0.9rem',
+      padding: '0.8rem 1rem',
+      fontSize: '1rem',
       borderRadius: '6px',
-      border: '1px solid #E5E7EB',
+      border: '1px solid rgba(203, 213, 225, 0.8)',
       background: '#FFFFFF',
       transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
       boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)',
       outline: 'none',
       color: '#1E293B',
-      boxSizing: 'border-box',
     },
     formInputFocus: {
       border: '1px solid #38BDF8',
       boxShadow: '0 0 0 4px rgba(56, 189, 248, 0.15)',
     },
     formTextarea: {
-      height: '100px',
+      height: '120px',
       resize: 'vertical',
-      minHeight: '100px',
-      maxHeight: '200px',
     },
     selectWrapper: {
       position: 'relative',
@@ -397,18 +255,18 @@ const ContactForm = ({
     formSubmitButton: {
       display: 'block',
       width: '100%',
-      padding: '0.9rem',
-      background: '#3B82F6',
+      padding: '1rem',
+      background: 'linear-gradient(135deg, #06B6D4 0%, #0EA5E9 100%)',
       color: '#FFFFFF',
       borderRadius: '6px',
       fontWeight: 600,
-      fontSize: '1rem',
+      fontSize: '1.05rem',
       border: 'none',
       cursor: 'pointer',
       transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-      boxShadow: '0 4px 15px rgba(59, 130, 246, 0.25)',
-      textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-      marginTop: '0.5rem',
+      boxShadow: '0 4px 15px rgba(14, 165, 233, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+      textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
+      marginTop: '1rem',
       position: 'relative',
       overflow: 'hidden',
     },
@@ -441,17 +299,6 @@ const ContactForm = ({
     formContent: {
       position: 'relative',
       zIndex: 2,
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      overflow: 'hidden',
-    },
-    formScrollArea: {
-      flex: 1,
-      overflowY: 'auto',
-      overflowX: 'hidden',
-      paddingRight: '0.5rem',
-      marginRight: '-0.5rem',
     },
     formSuccessMessage: {
       position: 'absolute',
@@ -459,7 +306,7 @@ const ContactForm = ({
       left: 0,
       width: '100%',
       height: '100%',
-      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.99) 0%, rgba(248, 250, 252, 0.99) 100%)',
+      background: 'rgba(255, 255, 255, 0.98)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -468,54 +315,45 @@ const ContactForm = ({
       visibility: formSubmitted ? 'visible' : 'hidden',
       transition: 'all 0.3s ease',
       zIndex: 5,
-      borderRadius: '12px',
     },
     formSuccessIcon: {
-      width: '90px',
-      height: '90px',
+      width: '80px',
+      height: '80px',
       borderRadius: '50%',
-      background: '#3B82F6',
+      background: 'linear-gradient(135deg, #06B6D4 0%, #0EA5E9 100%)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      marginBottom: '2rem',
-      boxShadow: '0 15px 35px rgba(59, 130, 246, 0.3), 0 5px 15px rgba(59, 130, 246, 0.2)',
+      marginBottom: '1.5rem',
+      boxShadow: '0 10px 20px rgba(14, 165, 233, 0.3)',
       position: 'relative',
     },
     formSuccessIconCheck: {
-      width: '28px',
-      height: '40px',
-      borderBottom: '5px solid white',
-      borderRight: '5px solid white',
-      transform: 'rotate(45deg)',
-      marginLeft: '-5px',
-      marginTop: '-8px',
+      width: '32px',
+      height: '22px',
+      borderBottom: '4px solid white',
+      borderRight: '4px solid white',
+      transform: 'rotate(45deg) translate(-2px, -2px)',
     },
     formSuccessTitle: {
-      fontSize: '1.75rem',
+      fontSize: '1.5rem',
       fontWeight: 700,
       color: '#1E293B',
-      marginBottom: '1rem',
-      textAlign: 'center',
+      marginBottom: '0.8rem',
     },
     formSuccessText: {
-      fontSize: '1.1rem',
-      color: '#475569',
+      fontSize: '1rem',
+      color: '#64748B',
       textAlign: 'center',
-      maxWidth: '85%',
-      lineHeight: 1.6,
-      marginBottom: '0.5rem',
+      maxWidth: '80%',
     },
     formRow: {
       display: 'flex',
       gap: '1rem',
       width: '100%',
-      flexWrap: window.innerWidth <= 640 ? 'wrap' : 'nowrap',
     },
     formCol50: {
-      flex: window.innerWidth <= 640 ? '0 0 100%' : '0 0 calc(50% - 0.5rem)',
-      maxWidth: window.innerWidth <= 640 ? '100%' : 'calc(50% - 0.5rem)',
-      width: window.innerWidth <= 640 ? '100%' : 'calc(50% - 0.5rem)',
+      flex: '0 0 calc(50% - 0.5rem)',
     },
     errorMessage: {
       color: '#EF4444',
@@ -527,7 +365,7 @@ const ContactForm = ({
 
   // Employee options for dropdown
   const employeeOptions = [
-    'Select company size',
+    'Select number of employees',
     '1-10 employees',
     '11-50 employees',
     '51-200 employees',
@@ -548,18 +386,15 @@ const ContactForm = ({
       {!embedded && <div style={styles.formPattern}></div>}
       
       <div style={styles.formContent}>
-        <div style={{ flexShrink: 0 }}>
-          <h2 style={styles.formTitle}>Start Your Project Today</h2>
-          <p style={styles.formSubtitle}>Tell us about your vision and we'll show you how to make it reality. Free consultation included.</p>
-        </div>
+        <h2 style={styles.formTitle}>Get Started with Le Duc Systems</h2>
+        <p style={styles.formSubtitle}>Tell us about your project, and we'll get back to you within 24 hours.</p>
         
-        <form ref={formRef} onSubmit={handleSubmit} encType="multipart/form-data" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-          <div style={styles.formScrollArea}>
+        <form ref={formRef} onSubmit={handleSubmit} encType="multipart/form-data">
           {/* Form fields here */}
           <div style={styles.formRow}>
             <div style={styles.formCol50}>
               <div style={styles.formGroup}>
-                <label style={styles.formLabel}>Full Name *</label>
+                <label style={styles.formLabel}>Your Name*</label>
                 <input
                   type="text"
                   name="name"
@@ -567,33 +402,16 @@ const ContactForm = ({
                   required
                   value={formData.name}
                   onChange={handleInputChange}
-                  onBlur={handleFieldBlur}
-                  style={{
-                    ...styles.formInput,
-                    border: validationErrors.name && touchedFields.name
-                      ? '2px solid #EF4444'
-                      : touchedFields.name && formData.name
-                        ? '2px solid #10B981'
-                        : '1px solid rgba(203, 213, 225, 0.8)'
-                  }}
+                  style={styles.formInput}
                   onFocus={(e) => {
-                    e.target.style.border = '2px solid #38BDF8';
+                    e.target.style.border = '1px solid #38BDF8';
                     e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
                   }}
                   onBlur={(e) => {
-                    handleFieldBlur(e);
+                    e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
                     e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
                   }}
                 />
-                {validationErrors.name && touchedFields.name && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    style={{ color: '#EF4444', fontSize: '0.85rem', marginTop: '0.3rem' }}
-                  >
-                    {validationErrors.name}
-                  </motion.p>
-                )}
               </div>
             </div>
             <div style={styles.formCol50}>
@@ -623,7 +441,7 @@ const ContactForm = ({
           <div style={styles.formRow}>
             <div style={styles.formCol50}>
               <div style={styles.formGroup}>
-                <label style={styles.formLabel}>Email Address *</label>
+                <label style={styles.formLabel}>Email Address*</label>
                 <input
                   type="email"
                   name="email"
@@ -631,33 +449,16 @@ const ContactForm = ({
                   required
                   value={formData.email}
                   onChange={handleInputChange}
-                  onBlur={handleFieldBlur}
-                  style={{
-                    ...styles.formInput,
-                    border: validationErrors.email && touchedFields.email
-                      ? '2px solid #EF4444'
-                      : touchedFields.email && validateEmail(formData.email)
-                        ? '2px solid #10B981'
-                        : '1px solid rgba(203, 213, 225, 0.8)'
-                  }}
+                  style={styles.formInput}
                   onFocus={(e) => {
-                    e.target.style.border = '2px solid #38BDF8';
+                    e.target.style.border = '1px solid #38BDF8';
                     e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
                   }}
                   onBlur={(e) => {
-                    handleFieldBlur(e);
+                    e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
                     e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
                   }}
                 />
-                {validationErrors.email && touchedFields.email && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    style={{ color: '#EF4444', fontSize: '0.85rem', marginTop: '0.3rem' }}
-                  >
-                    {validationErrors.email}
-                  </motion.p>
-                )}
               </div>
             </div>
             <div style={styles.formCol50}>
@@ -684,43 +485,40 @@ const ContactForm = ({
           </div>
 
           {!isJobApplication && (
-            <>
-              <div style={styles.formGroup}>
-                <label style={styles.formLabel}>Company Size</label>
-                <div style={styles.selectWrapper}>
-                  <select
-                    name="employees"
-                    value={formData.employees}
-                    onChange={handleInputChange}
-                    style={{...styles.formInput, ...styles.formSelect}}
-                    onFocus={(e) => {
-                      e.target.style.border = '2px solid #38BDF8';
-                      e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
-                    }}
-                    onBlur={(e) => {
-                      e.target.style.border = formData.employees ? '2px solid #10B981' : '1px solid rgba(203, 213, 225, 0.8)';
-                      e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
-                    }}
-                  >
-                    {employeeOptions.map((option, index) => (
-                      <option key={index} value={index === 0 ? '' : option} disabled={index === 0}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                  <div style={styles.selectIcon}>▼</div>
-                </div>
+            <div style={styles.formGroup}>
+              <label style={styles.formLabel}>Company Size*</label>
+              <div style={styles.selectWrapper}>
+                <select
+                  name="employees"
+                  required={!isJobApplication}
+                  value={formData.employees}
+                  onChange={handleInputChange}
+                  style={{...styles.formInput, ...styles.formSelect}}
+                  onFocus={(e) => {
+                    e.target.style.border = '1px solid #38BDF8';
+                    e.target.style.boxShadow = '0 0 0 4px rgba(56, 189, 248, 0.15)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.border = '1px solid rgba(203, 213, 225, 0.8)';
+                    e.target.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)';
+                  }}
+                >
+                  {employeeOptions.map((option, index) => (
+                    <option key={index} value={index === 0 ? '' : option} disabled={index === 0}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                <div style={styles.selectIcon}>▼</div>
               </div>
-
-
-            </>
+            </div>
           )}
 
           <div style={styles.formGroup}>
-            <label style={styles.formLabel}>{isJobApplication ? 'Cover Letter / Additional Info*' : 'Project Details *'}</label>
+            <label style={styles.formLabel}>{isJobApplication ? 'Cover Letter / Additional Info*' : 'What are you looking for?*'}</label>
             <textarea
               name="requirements"
-              placeholder={isJobApplication ? "Tell us about yourself and why you're interested in this position..." : "Describe your project goals, timeline, and any specific requirements..."}
+              placeholder={isJobApplication ? "Tell us about yourself and why you're interested in this position..." : "Tell us about your project and requirements..."}
               required
               value={formData.requirements}
               onChange={handleInputChange}
@@ -767,150 +565,41 @@ const ContactForm = ({
           )}
 
           {error && <div style={styles.errorMessage}>{error}</div>}
-          </div>
 
-          <div style={{ flexShrink: 0, marginTop: '1rem' }}>
-          <motion.button
+          <button
             type="submit"
             disabled={isSubmitting}
-            whileHover={!isSubmitting ? { scale: 1.02 } : {}}
-            whileTap={!isSubmitting ? { scale: 0.98 } : {}}
             style={{
               ...styles.formSubmitButton,
               opacity: isSubmitting ? 0.7 : 1,
-              cursor: isSubmitting ? 'not-allowed' : 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.5rem'
+              cursor: isSubmitting ? 'not-allowed' : 'pointer'
             }}
             onMouseEnter={(e) => {
               if (!isSubmitting) {
-                e.target.style.background = '#2563EB';
-                e.target.style.boxShadow = '0 6px 20px rgba(59, 130, 246, 0.4)';
-                e.target.style.transform = 'translateY(-1px)';
+                e.target.style.background = 'linear-gradient(135deg, #0EA5E9 0%, #06B6D4 100%)';
+                e.target.style.boxShadow = '0 6px 20px rgba(14, 165, 233, 0.4), 0 0 10px rgba(14, 165, 233, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+                e.target.style.transform = 'translateY(-2px)';
               }
             }}
             onMouseLeave={(e) => {
-              e.target.style.background = '#3B82F6';
-              e.target.style.boxShadow = '0 4px 15px rgba(59, 130, 246, 0.25)';
+              e.target.style.background = 'linear-gradient(135deg, #06B6D4 0%, #0EA5E9 100%)';
+              e.target.style.boxShadow = '0 4px 15px rgba(14, 165, 233, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
               e.target.style.transform = 'translateY(0)';
             }}
           >
-            {isSubmitting ? (
-              <>
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                  style={{
-                    width: '20px',
-                    height: '20px',
-                    border: '2px solid #FFFFFF',
-                    borderTopColor: 'transparent',
-                    borderRadius: '50%'
-                  }}
-                />
-                Sending...
-              </>
-            ) : (
-              <>
-                {isJobApplication ? 'Submit Application' : 'Send Message'}
-              </>
-            )}
-          </motion.button>
-          
-          </div>
+            {isSubmitting ? 'Sending...' : isJobApplication ? 'Submit Application' : 'Submit Request'}
+          </button>
         </form>
       </div>
 
       {/* Success message */}
-      <AnimatePresence>
-        {formSubmitted && (
-          <motion.div 
-            style={styles.formSuccessMessage}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div 
-              style={styles.formSuccessIcon}
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ 
-                type: 'spring',
-                stiffness: 260,
-                damping: 20,
-                delay: 0.1
-              }}
-            >
-              <motion.div 
-                style={styles.formSuccessIconCheck}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.3 }}
-              />
-            </motion.div>
-            <motion.h3 
-              style={styles.formSuccessTitle}
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              Message Sent Successfully!
-            </motion.h3>
-            <motion.p 
-              style={styles.formSuccessText}
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              Thank you for contacting Le Duc Systems. Our team will review your project and respond within 24 hours.
-            </motion.p>
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: window.innerWidth <= 640 ? '1rem' : '2rem',
-                marginTop: '2rem',
-                padding: window.innerWidth <= 640 ? '1rem' : '1.5rem',
-                background: 'rgba(14, 165, 233, 0.05)',
-                borderRadius: '8px',
-                border: '1px solid rgba(14, 165, 233, 0.1)',
-                maxWidth: '90%',
-                flexDirection: window.innerWidth <= 640 ? 'column' : 'row',
-                textAlign: window.innerWidth <= 640 ? 'center' : 'left',
-              }}
-            >
-              <div style={{ 
-                fontSize: '2rem',
-                lineHeight: 1,
-              }}>⏰</div>
-              <div>
-                <p style={{
-                  fontSize: '1.05rem',
-                  fontWeight: 600,
-                  color: '#1F2937',
-                  marginBottom: '0.25rem'
-                }}>
-                  Guaranteed Response: Within 24 Hours
-                </p>
-                <p style={{
-                  fontSize: '0.875rem',
-                  color: '#64748B',
-                  margin: 0
-                }}>
-                  {isJobApplication 
-                    ? "We'll carefully review your application and get back to you soon!"
-                    : "We'll provide a detailed analysis of your project and next steps."}
-                </p>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div style={styles.formSuccessMessage}>
+        <div style={styles.formSuccessIcon}>
+          <div style={styles.formSuccessIconCheck}></div>
+        </div>
+        <h3 style={styles.formSuccessTitle}>Thank You!</h3>
+        <p style={styles.formSuccessText}>Your request has been submitted successfully. We'll get back to you within 24 hours.</p>
+      </div>
     </>
   );
 

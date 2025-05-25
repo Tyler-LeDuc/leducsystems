@@ -147,7 +147,7 @@ const ServicesPage = () => {
       icon: <FiEye size={24} />,
       color: '#2563EB',
       benefit: '99.7% accuracy',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop'
+      image: 'https://images.unsplash.com/photo-1655635949384-f737c5133dfe?w=400&h=300&fit=crop'
     },
     {
       id: 'nlp-solutions',
@@ -273,23 +273,23 @@ const ServicesPage = () => {
     {
       id: 1,
       quote: "Le Duc Systems transformed our operations with AI that actually works. We've eliminated 80% of manual processing and our team can focus on strategic work.",
-      author: "Sarah Chen",
-      title: "CTO, TechCorp Industries",
-      company: "Fortune 500 Manufacturing"
+      author: "S. Chen",
+      title: "Technology Executive",
+      company: "Manufacturing Industry Leader"
     },
     {
       id: 2,
       quote: "The AI agents they built for us are like having 20 additional team members who never sleep. Our customer response times went from hours to minutes.",
-      author: "Michael Rodriguez",
-      title: "VP of Operations, FinanceFirst",
-      company: "Regional Financial Services"
+      author: "M. Rodriguez",
+      title: "Operations Director",
+      company: "Financial Services Company"
     },
     {
       id: 3,
       quote: "ROI in 3 months, not 3 years. Their computer vision system caught defects we didn't even know we had. Game-changing technology.",
-      author: "Jennifer Park",
-      title: "Quality Director, Precision Manufacturing",
-      company: "Aerospace Components"
+      author: "J. Park",
+      title: "Quality Assurance Lead",
+      company: "Industrial Manufacturing"
     }
   ];
 
@@ -352,7 +352,7 @@ const ServicesPage = () => {
       position: 'relative'
     },
     hero: {
-      padding: isMobile ? '60px 20px 80px' : '100px 40px 120px',
+      padding: isMobile ? '40px 20px 60px' : '80px 40px 100px',
       textAlign: 'center',
       position: 'relative',
       overflow: 'hidden',
@@ -416,7 +416,7 @@ const ServicesPage = () => {
       marginTop: '8px'
     },
     section: {
-      padding: isMobile ? '80px 20px' : '120px 40px',
+      padding: isMobile ? '20px 10px' : '30px 20px',
       maxWidth: '1200px',
       margin: '0 auto'
     },
@@ -436,15 +436,15 @@ const ServicesPage = () => {
       fontSize: isMobile ? '1rem' : '1.2rem',
       color: 'rgba(255, 255, 255, 0.8)',
       textAlign: 'center',
-      marginBottom: '60px',
+      marginBottom: '40px',
       maxWidth: '600px',
-      margin: '0 auto 60px'
+      margin: '0 auto 40px'
     },
     aiGrid: {
       display: 'grid',
       gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
       gap: isMobile ? '30px' : '40px',
-      marginBottom: '80px'
+      marginBottom: '60px'
     },
     aiCard: {
       background: '#1A1F2E',
@@ -514,7 +514,7 @@ const ServicesPage = () => {
       display: 'grid',
       gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
       gap: isMobile ? '24px' : '30px',
-      marginBottom: '80px'
+      marginBottom: '60px'
     },
     supportingCard: {
       background: '#1A1F2E',
@@ -611,7 +611,7 @@ const ServicesPage = () => {
       border: '1px solid rgba(255, 255, 255, 0.1)'
     },
     cta: {
-      padding: isMobile ? '80px 20px' : '120px 40px',
+      padding: isMobile ? '40px 20px' : '60px 40px',
       textAlign: 'center',
       background: 'linear-gradient(135deg, rgba(255, 201, 5, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%)'
     },
@@ -928,150 +928,6 @@ const ServicesPage = () => {
         </motion.div>
       </section>
 
-      {/* Case Studies */}
-      <section style={styles.section} data-section="case-studies">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={visibleSections.includes('case-studies') ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 style={styles.sectionTitle}>Proven Results</h2>
-          <p style={styles.sectionSubtitle}>
-            Real implementations, measurable outcomes, transformative impact
-          </p>
-          
-          {caseStudies.map((study, index) => (
-            <motion.div
-              key={study.id}
-              style={styles.caseStudyCard}
-              initial={{ opacity: 0, y: 40 }}
-              animate={visibleSections.includes('case-studies') ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: index * 0.2 }}
-            >
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr',
-                gap: '30px',
-                alignItems: 'start'
-              }}>
-                <div>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginBottom: '16px'
-                  }}>
-                    <h3 style={{
-                      fontSize: '1.3rem',
-                      fontWeight: '700',
-                      color: 'white',
-                      margin: 0,
-                      marginRight: '16px'
-                    }}>
-                      {study.company}
-                    </h3>
-                    <span style={{
-                      background: 'rgba(139, 92, 246, 0.2)',
-                      color: '#8B5CF6',
-                      padding: '4px 12px',
-                      borderRadius: '8px',
-                      fontSize: '0.8rem',
-                      fontWeight: '600'
-                    }}>
-                      {study.industry}
-                    </span>
-                  </div>
-                  
-                  <div style={{ marginBottom: '16px' }}>
-                    <h4 style={{
-                      fontSize: '1rem',
-                      fontWeight: '600',
-                      color: '#EC4899',
-                      marginBottom: '8px'
-                    }}>
-                      Challenge
-                    </h4>
-                    <p style={{
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      lineHeight: '1.5',
-                      margin: 0
-                    }}>
-                      {study.challenge}
-                    </p>
-                  </div>
-                  
-                  <div>
-                    <h4 style={{
-                      fontSize: '1rem',
-                      fontWeight: '600',
-                      color: '#10B981',
-                      marginBottom: '8px'
-                    }}>
-                      Solution
-                    </h4>
-                    <p style={{
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      lineHeight: '1.5',
-                      margin: 0
-                    }}>
-                      {study.solution}
-                    </p>
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 style={{
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    color: '#3B82F6',
-                    marginBottom: '16px'
-                  }}>
-                    Results
-                  </h4>
-                  <ul style={{
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0
-                  }}>
-                    {study.results.map((result, idx) => (
-                      <li key={idx} style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        marginBottom: '12px',
-                        fontSize: '0.95rem',
-                        color: 'white',
-                        fontWeight: '600'
-                      }}>
-                        <FiCheck style={{
-                          color: '#10B981',
-                          marginRight: '8px',
-                          flexShrink: 0
-                        }} />
-                        {result}
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <div style={{
-                    marginTop: '16px',
-                    padding: '12px',
-                    background: 'rgba(59, 130, 246, 0.1)',
-                    borderRadius: '8px',
-                    border: '1px solid rgba(59, 130, 246, 0.2)'
-                  }}>
-                    <span style={{
-                      fontSize: '0.9rem',
-                      color: '#3B82F6',
-                      fontWeight: '600'
-                    }}>
-                      {study.timeline}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
 
       {/* Testimonials */}
       <section style={{...styles.section, ...styles.sectionAlt}} data-section="testimonials">

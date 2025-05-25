@@ -75,9 +75,9 @@ const WhyChooseUs = () => {
   ];
 
   const stats = [
-    { value: '150+', label: 'Projects Delivered', icon: <FiTarget size={24} /> },
+    { value: '35+', label: 'Projects Delivered', icon: <FiTarget size={24} /> },
     { value: '98%', label: 'Client Satisfaction', icon: <FiHeart size={24} /> },
-    { value: '57%', label: 'Avg. Efficiency Gain', icon: <FiTrendingUp size={24} /> },
+    { value: '25+', label: 'Happy Clients', icon: <FiHeart size={24} /> },
     { value: '24/7', label: 'Support Coverage', icon: <FiClock size={24} /> }
   ];
 

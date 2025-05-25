@@ -216,7 +216,12 @@ const PortfolioPage = () => {
               onMouseEnter={() => setHoveredProject(project.id)}
               onMouseLeave={() => setHoveredProject(null)}
             >
-              <img src={project.image} alt={project.name} style={styles.projectImage} />
+              <div 
+                style={{
+                  ...styles.projectImage,
+                  background: project.gradient
+                }}
+              />
               <div style={styles.projectContent}>
                 <h2 style={styles.projectTitle}>{project.name}</h2>
                 <p style={styles.projectDescription}>{project.description}</p>

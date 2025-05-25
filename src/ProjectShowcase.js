@@ -77,14 +77,40 @@ const ProjectShowcase = () => {
       color: '#B8BCC8'
     },
     showcase: {
-      display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-      gap: getResponsiveValue('30px', '50px', isMobile),
-      alignItems: 'center',
+      maxWidth: '900px',
+      margin: '0 auto',
       marginBottom: getResponsiveValue('40px', '60px', isMobile)
     },
-    projectInfo: {
-      order: isMobile ? 2 : 1
+    projectCard: {
+      backgroundColor: '#1A1F2E',
+      borderRadius: unifiedTheme.borderRadius.xl,
+      padding: getResponsiveValue('40px', '60px', isMobile),
+      border: '2px solid rgba(255, 201, 5, 0.2)',
+      boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)',
+      position: 'relative',
+      overflow: 'hidden'
+    },
+    projectCardBg: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      width: '300px',
+      height: '300px',
+      background: 'radial-gradient(circle, rgba(255, 201, 5, 0.1) 0%, transparent 70%)',
+      borderRadius: '50%',
+      transform: 'translate(100px, -100px)'
+    },
+    projectContent: {
+      position: 'relative',
+      zIndex: 1
+    },
+    projectHeader: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      marginBottom: '30px',
+      flexWrap: isMobile ? 'wrap' : 'nowrap',
+      gap: '20px'
     },
     projectBadge: {
       display: 'inline-block',
@@ -94,11 +120,10 @@ const ProjectShowcase = () => {
       borderRadius: unifiedTheme.borderRadius.full,
       fontSize: unifiedTheme.typography.fontSizes.sm,
       fontWeight: unifiedTheme.typography.fontWeights.semibold,
-      marginBottom: '20px',
       border: '1px solid rgba(255, 201, 5, 0.3)'
     },
     projectTitle: {
-      fontSize: getResponsiveValue(unifiedTheme.typography.fontSizes['2xl'], unifiedTheme.typography.fontSizes['3xl'], isMobile),
+      fontSize: getResponsiveValue(unifiedTheme.typography.fontSizes['3xl'], unifiedTheme.typography.fontSizes['4xl'], isMobile),
       fontWeight: unifiedTheme.typography.fontWeights.bold,
       color: '#FFFFFF',
       marginBottom: '20px',
@@ -108,24 +133,29 @@ const ProjectShowcase = () => {
       fontSize: unifiedTheme.typography.fontSizes.lg,
       color: '#B8BCC8',
       lineHeight: unifiedTheme.typography.lineHeights.loose,
-      marginBottom: '30px'
+      marginBottom: '40px'
     },
     statsGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(3, 1fr)',
+      gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
       gap: '20px',
-      marginBottom: '30px'
+      marginBottom: '40px'
     },
     statItem: {
-      backgroundColor: '#1A1F2E',
+      backgroundColor: 'rgba(10, 15, 28, 0.6)',
       textAlign: 'center',
-      padding: '20px',
+      padding: '25px',
       borderRadius: unifiedTheme.borderRadius.lg,
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
+      border: '1px solid rgba(255, 201, 5, 0.2)',
+      backdropFilter: 'blur(10px)'
+    },
+    statIcon: {
+      fontSize: '2rem',
+      color: '#FFC905',
+      marginBottom: '12px'
     },
     statValue: {
-      fontSize: unifiedTheme.typography.fontSizes['2xl'],
+      fontSize: unifiedTheme.typography.fontSizes['3xl'],
       fontWeight: unifiedTheme.typography.fontWeights.extrabold,
       color: '#FFC905',
       marginBottom: '8px'
@@ -150,39 +180,14 @@ const ProjectShowcase = () => {
       gap: '8px'
     },
     techTag: {
-      padding: '6px 12px',
-      backgroundColor: '#1A1F2E',
+      padding: '8px 16px',
+      backgroundColor: 'rgba(255, 201, 5, 0.1)',
       color: '#FFC905',
       borderRadius: unifiedTheme.borderRadius.sm,
       fontSize: unifiedTheme.typography.fontSizes.sm,
       fontWeight: unifiedTheme.typography.fontWeights.medium,
-      border: '1px solid rgba(255, 201, 5, 0.3)'
-    },
-    projectVisual: {
-      order: isMobile ? 1 : 2,
-      position: 'relative'
-    },
-    projectImage: {
-      width: '100%',
-      height: '350px',
-      borderRadius: unifiedTheme.borderRadius.lg,
-      objectFit: 'cover',
-      boxShadow: unifiedTheme.shadows.xl,
-      border: '1px solid rgba(255, 255, 255, 0.1)'
-    },
-    imageOverlay: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      background: 'linear-gradient(135deg, rgba(255, 201, 5, 0.1) 0%, rgba(255, 201, 5, 0.2) 100%)',
-      borderRadius: '16px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      opacity: 0,
-      transition: 'opacity 0.3s ease'
+      border: '1px solid rgba(255, 201, 5, 0.3)',
+      transition: 'all 0.3s ease'
     },
     controls: {
       display: 'flex',
@@ -274,53 +279,68 @@ const ProjectShowcase = () => {
           <motion.div
             key={currentProject}
             style={styles.showcase}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.5 }}
           >
-            <div style={styles.projectInfo}>
-              <div style={styles.projectBadge}>
-                Case Study #{currentProject + 1}
-              </div>
-              <h3 style={styles.projectTitle}>{project.name}</h3>
-              <p style={styles.projectDescription}>{project.description}</p>
-              
-              <div style={styles.statsGrid}>
-                {Object.entries(project.stats).map(([key, value], index) => (
-                  <motion.div
-                    key={key}
-                    style={styles.statItem}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <div style={styles.statValue}>{value}</div>
-                    <div style={styles.statLabel}>
-                      {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              <div style={styles.techStack}>
-                <div style={styles.techTitle}>Technologies Used:</div>
-                <div style={styles.techTags}>
-                  {project.technologies.map((tech, index) => (
-                    <span key={index} style={styles.techTag}>{tech}</span>
-                  ))}
+            <div style={styles.projectCard}>
+              <div style={styles.projectCardBg}></div>
+              <div style={styles.projectContent}>
+                <div style={styles.projectHeader}>
+                  <div style={styles.projectBadge}>
+                    Case Study #{currentProject + 1}
+                  </div>
                 </div>
-              </div>
-            </div>
+                
+                <h3 style={styles.projectTitle}>{project.name}</h3>
+                <p style={styles.projectDescription}>{project.description}</p>
+                
+                <div style={styles.statsGrid}>
+                  {Object.entries(project.stats).map(([key, value], index) => {
+                    const icons = [FiTrendingUp, FiZap, FiTarget];
+                    const Icon = icons[index % icons.length];
+                    return (
+                      <motion.div
+                        key={key}
+                        style={styles.statItem}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                      >
+                        <div style={styles.statIcon}>
+                          <Icon />
+                        </div>
+                        <div style={styles.statValue}>{value}</div>
+                        <div style={styles.statLabel}>
+                          {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
 
-            <div style={styles.projectVisual}>
-              <img 
-                src={project.image} 
-                alt={project.name}
-                style={styles.projectImage}
-              />
-              <div style={styles.imageOverlay}>
-                <FiZap size={48} color="#FFC905" />
+                <div style={styles.techStack}>
+                  <div style={styles.techTitle}>Technologies Used:</div>
+                  <div style={styles.techTags}>
+                    {project.technologies.map((tech, index) => (
+                      <motion.span 
+                        key={index} 
+                        style={styles.techTag}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: index * 0.05 }}
+                        whileHover={{ 
+                          scale: 1.05,
+                          backgroundColor: 'rgba(255, 201, 5, 0.2)',
+                          borderColor: 'rgba(255, 201, 5, 0.5)'
+                        }}
+                      >
+                        {tech}
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>

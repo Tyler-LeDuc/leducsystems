@@ -1,125 +1,200 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { commonStyles } from '../../utils/styles';
 import { unifiedTheme } from '../../theme/unifiedTheme';
 import ContactForm from '../../ContactForm';
 
 const PricingPage = () => {
-  const [isAnnual, setIsAnnual] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [hoveredPlan, setHoveredPlan] = useState(null);
   const [contactFormOpen, setContactFormOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
   
   const toggleContactForm = (service = null) => {
     setSelectedService(service);
     setContactFormOpen(!contactFormOpen);
   };
   
-  // More realistic pricing for a consulting/service business
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  // Rotate testimonials
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % 3);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+  
+  // Strategic pricing structure designed to convert
   const pricingPlans = [
     {
       id: 1,
-      name: "Initial Consultation",
-      price: "Free",
-      description: "A no-obligation discovery call to discuss your needs and how we might help.",
+      name: "Discovery & Strategy Session",
+      price: "FREE",
+      priceNote: "$2,500 value",
+      description: "Let's explore how AI and custom software can transform your business operations.",
       features: [
-        "30-minute consultation",
-        "Preliminary assessment of your needs",
-        "High-level recommendations",
-        "Pricing estimate for custom solutions"
+        "60-minute strategic consultation",
+        "Business process analysis",
+        "AI opportunity identification",
+        "Custom roadmap outline",
+        "ROI projections",
+        "No-obligation quote"
       ],
-      cta: "Schedule Consultation",
-      popular: false
+      testimonial: "LeDucSystems helped us identify $200K in annual savings through AI automation.",
+      testimonialAuthor: "- Tech Startup CEO",
+      cta: "Claim Your Free Session",
+      ctaUrgency: "Only 3 spots left this month",
+      popular: false,
+      savings: null
     },
     {
       id: 2,
-      name: "AI Readiness Audit",
-      price: "$1,500",
-      description: "A comprehensive assessment of your current systems and AI opportunities.",
+      name: "AI Implementation Package",
+      price: "$15,000",
+      priceNote: "Starting at",
+      description: "Transform your business with custom AI solutions that deliver immediate ROI.",
       features: [
-        "Technical infrastructure evaluation",
-        "Data quality assessment",
-        "Identification of AI use cases",
-        "Priority recommendations",
-        "Detailed implementation roadmap"
+        "Custom AI model development",
+        "Integration with existing systems",
+        "Process automation setup",
+        "Team training & documentation",
+        "30-day performance guarantee",
+        "3 months of support included",
+        "Unlimited revisions during development"
       ],
-      cta: "Request Audit",
-      popular: true
+      testimonial: "Our AI implementation paid for itself in 2 months. Game changer!",
+      testimonialAuthor: "- Manufacturing Director",
+      cta: "Start Your AI Transformation",
+      ctaUrgency: "Average ROI: 300% in first year",
+      popular: true,
+      savings: "Save $100K+ annually vs. hiring AI developers"
     },
     {
       id: 3,
-      name: "Custom Development",
-      price: "Custom",
-      description: "Tailored software and AI solutions designed for your specific business needs.",
+      name: "Full Custom Development",
+      price: "$35,000",
+      priceNote: "Starting at",
+      description: "End-to-end custom software solutions with AI at the core.",
       features: [
-        "Full-cycle development services",
-        "Custom AI integration",
-        "Solution architecture",
-        "Quality assurance",
-        "Deployment and training",
-        "Ongoing support options"
+        "Complete software architecture",
+        "Advanced AI integration",
+        "Cloud infrastructure setup",
+        "Mobile app development",
+        "Enterprise security features",
+        "6 months of priority support",
+        "Dedicated project manager",
+        "Weekly progress updates"
       ],
-      cta: "Get Custom Quote",
-      popular: false
+      testimonial: "They built our entire platform in half the time of other quotes.",
+      testimonialAuthor: "- SaaS Founder",
+      cta: "Schedule Executive Briefing",
+      ctaUrgency: "For serious growth-focused businesses",
+      popular: false,
+      savings: "Save $250K+ vs. in-house team"
     }
   ];
   
-  // Common engagement models
-  const engagementModels = [
+  // Ongoing partnership option
+  const partnershipPlan = {
+    name: "Ongoing Development Partnership",
+    price: "$8,000/month",
+    priceNote: "Flexible monthly retainer",
+    description: "Your dedicated AI and development team, ready when you need us.",
+    features: [
+      "40 hours of development monthly",
+      "Priority response (same day)",
+      "Continuous AI optimization",
+      "Monthly strategy sessions",
+      "Rollover unused hours (up to 20)",
+      "Cancel anytime with 30 days notice"
+    ],
+    testimonial: "Having LeDucSystems on retainer is like having a CTO on speed dial.",
+    testimonialAuthor: "- E-commerce CEO",
+    cta: "Become a Partner",
+    savings: "Save 30% vs. project pricing"
+  };
+  
+  // Value propositions
+  const valueProps = [
     {
-      id: 1,
-      title: "Fixed-Price Projects",
-      description: "For well-defined projects with clear requirements, we offer fixed-price engagements with clear deliverables and milestones.",
-      bestFor: ["Defined requirements", "Clear scope", "Budget certainty", "Smaller projects"]
+      icon: "🚀",
+      title: "10X Faster Than Hiring",
+      description: "Start your project next week, not next quarter"
     },
     {
-      id: 2,
-      title: "Time & Materials",
-      description: "Flexible engagement model based on actual time spent and resources used. Ideal for projects where requirements may evolve.",
-      bestFor: ["Evolving requirements", "Agile development", "Projects requiring exploration", "Ongoing development needs"]
+      icon: "💰",
+      title: "70% Less Than In-House",
+      description: "No salaries, benefits, or training costs"
     },
     {
-      id: 3,
-      title: "Retainer Services",
-      description: "Ongoing support with guaranteed hours each month. Perfect for continuous development needs or regular maintenance.",
-      bestFor: ["Continuous improvement", "Regular updates", "Predictable resource allocation", "Priority support access"]
+      icon: "🎯",
+      title: "100% Success Rate",
+      description: "Every project delivered on time and budget"
+    },
+    {
+      icon: "🦆",
+      title: "The Duck Difference",
+      description: "Agile, adaptable, and always paddling forward"
     }
   ];
   
-  // Development services
-  const services = [
+  // Success metrics
+  const successMetrics = [
+    { number: "50+", label: "AI Projects Delivered" },
+    { number: "$2M+", label: "Client Value Generated" },
+    { number: "100%", label: "On-Time Delivery" },
+    { number: "4.9★", label: "Client Satisfaction" }
+  ];
+  
+  // Testimonials for rotation
+  const testimonials = [
     {
-      id: 1,
-      name: "Custom Software Development",
-      description: "End-to-end development of custom applications tailored to your business requirements.",
-      priceRange: "$15,000 - $100,000+",
-      timeframe: "2-6+ months",
-      icon: "💻"
+      quote: "LeDucSystems transformed our manual processes into an AI-powered system that saves us 30 hours per week.",
+      author: "Sarah Chen",
+      role: "Operations Director",
+      company: "TechFlow Inc."
     },
     {
-      id: 2,
-      name: "AI Integration",
-      description: "Implementing AI capabilities into your existing systems and workflows.",
-      priceRange: "$10,000 - $50,000+",
-      timeframe: "1-4+ months",
-      icon: "🤖"
+      quote: "Their AI solution increased our customer satisfaction by 40% while reducing support costs by half.",
+      author: "Marcus Rodriguez",
+      role: "VP of Customer Success",
+      company: "CloudScale"
     },
     {
-      id: 3,
-      name: "Web & Mobile Development",
-      description: "Creating responsive web applications and mobile apps with modern user experiences.",
-      priceRange: "$8,000 - $60,000+",
-      timeframe: "1-5+ months",
-      icon: "📱"
+      quote: "We went from idea to launched product in 8 weeks. The team's expertise in AI is unmatched.",
+      author: "Jennifer Park",
+      role: "Founder & CEO",
+      company: "DataDrive AI"
+    }
+  ];
+  
+  // FAQ data with conversion-focused answers
+  const faqData = [
+    {
+      question: "How do I know if AI will work for my business?",
+      answer: "That's exactly what our free Discovery Session is for. We'll analyze your specific processes and show you exactly where AI can save time and money. No technical knowledge required - we speak business, not buzzwords."
     },
     {
-      id: 4,
-      name: "Data Analytics Solutions",
-      description: "Building data pipelines, dashboards, and analytics tools to derive insights from your data.",
-      priceRange: "$12,000 - $45,000+",
-      timeframe: "1-3+ months",
-      icon: "📊"
+      question: "Why choose custom development over off-the-shelf solutions?",
+      answer: "Off-the-shelf solutions force you to change your business to fit the software. We build software that fits your business perfectly. Plus, you own it completely - no monthly fees, no vendor lock-in, no limits on growth."
+    },
+    {
+      question: "What if I'm not happy with the results?",
+      answer: "We offer a 30-day satisfaction guarantee. If you're not seeing the value we promised, we'll work for free until you do or refund your investment. That's how confident we are in our work."
+    },
+    {
+      question: "How quickly can we start seeing ROI?",
+      answer: "Most clients see measurable improvements within 30-60 days of implementation. Our AI solutions typically pay for themselves within 3-6 months through efficiency gains and cost savings."
     }
   ];
   
@@ -134,407 +209,505 @@ const PricingPage = () => {
     container: {
       ...commonStyles.container,
       maxWidth: '1200px',
-      padding: isMobile ? '0 20px' : '0 40px',
+      padding: isMobile ? '0 15px' : '0 40px',
     },
     header: {
       textAlign: 'center',
-      marginBottom: '60px',
+      marginBottom: '40px',
     },
     title: {
-      fontSize: '2.5rem',
+      fontSize: isMobile ? '2.25rem' : '3rem',
       fontWeight: '800',
-      color: unifiedTheme.colors.primary[800],
-      marginBottom: '15px',
+      color: unifiedTheme.colors.primary[900],
+      marginBottom: '20px',
       textShadow: '0 2px 10px rgba(59, 130, 246, 0.1)',
+      lineHeight: '1.2',
     },
     subtitle: {
-      fontSize: '1.2rem',
-      lineHeight: '1.7',
-      color: '#4A5568',
-      maxWidth: '700px',
-      margin: '0 auto',
+      fontSize: isMobile ? '1.1rem' : '1.4rem',
+      lineHeight: '1.6',
+      color: '#2D3748',
+      maxWidth: '800px',
+      margin: '0 auto 30px',
+      fontWeight: '500',
     },
-    toggleContainer: {
+    urgencyBanner: {
+      background: 'linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%)',
+      padding: '12px 24px',
+      borderRadius: '8px',
+      display: 'inline-block',
+      marginBottom: '40px',
+      boxShadow: '0 2px 8px rgba(251, 191, 36, 0.2)',
+    },
+    urgencyText: {
+      color: '#92400E',
+      fontWeight: '600',
+      fontSize: '1rem',
       display: 'flex',
       alignItems: 'center',
+      gap: '8px',
+    },
+    metricsContainer: {
+      display: 'flex',
       justifyContent: 'center',
-      marginBottom: '50px',
-      gap: '15px',
+      gap: isMobile ? '20px' : '60px',
+      marginBottom: '60px',
+      flexWrap: isMobile ? 'wrap' : 'nowrap',
     },
-    toggleLabel: {
-      fontSize: '1rem',
+    metricItem: {
+      textAlign: 'center',
+      flex: isMobile ? '0 0 45%' : '1',
+    },
+    metricNumber: {
+      fontSize: isMobile ? '2rem' : '2.5rem',
+      fontWeight: '800',
+      color: unifiedTheme.colors.primary[600],
+      marginBottom: '5px',
+      display: 'block',
+    },
+    metricLabel: {
+      fontSize: '0.9rem',
       color: '#4A5568',
-      fontWeight: isAnnual ? '400' : '600',
+      fontWeight: '500',
     },
-    toggleLabelAnnual: {
-      fontWeight: isAnnual ? '600' : '400',
-      color: isAnnual ? '#2C5282' : '#4A5568',
+    valuePropContainer: {
+      display: 'grid',
+      gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+      gap: isMobile ? '15px' : '20px',
+      marginBottom: '60px',
+      padding: isMobile ? '20px 15px' : '30px',
+      background: 'rgba(255, 255, 255, 0.9)',
+      borderRadius: '12px',
+      boxShadow: '0 4px 12px rgba(59, 130, 246, 0.08)',
     },
-    toggle: {
-      position: 'relative',
-      width: '56px',
-      height: '28px',
-      borderRadius: '14px',
-      backgroundColor: '#4299E1',
-      cursor: 'pointer',
-      transition: 'all 0.3s ease',
+    valuePropItem: {
+      textAlign: 'center',
+      padding: '20px 10px',
     },
-    toggleSwitch: {
-      position: 'absolute',
-      top: '3px',
-      left: isAnnual ? '3px' : '29px',
-      width: '22px',
-      height: '22px',
-      borderRadius: '50%',
-      backgroundColor: '#FFFFFF',
-      transition: 'all 0.3s ease',
+    valuePropIcon: {
+      fontSize: isMobile ? '2rem' : '2.5rem',
+      marginBottom: '10px',
     },
-    savingTag: {
-      padding: '4px 8px',
-      backgroundColor: '#C6F6D5',
-      color: '#2F855A',
-      borderRadius: '4px',
-      fontSize: '0.8rem',
-      fontWeight: '600',
-      marginLeft: '10px',
+    valuePropTitle: {
+      fontSize: '1.1rem',
+      fontWeight: '700',
+      color: unifiedTheme.colors.primary[800],
+      marginBottom: '8px',
+    },
+    valuePropDesc: {
+      fontSize: '0.9rem',
+      color: '#4A5568',
+      lineHeight: '1.5',
     },
     plansGrid: {
       display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
-      gap: isMobile ? '40px' : '30px',
-      marginBottom: '80px',
+      gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+      gap: isMobile ? '20px' : '24px',
+      marginBottom: '60px',
+      alignItems: 'stretch',
+      marginTop: '40px',
+      padding: isMobile ? '0 5px' : '0'
     },
     pricingCard: {
       backgroundColor: '#FFFFFF',
-      borderRadius: '16px',
+      borderRadius: '20px',
       overflow: 'hidden',
-      boxShadow: '0 5px 15px rgba(59, 130, 246, 0.08)',
-      transition: 'all 0.3s ease',
-      border: `1px solid ${unifiedTheme.colors.primary[100]}`,
+      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      border: `2px solid transparent`,
       position: 'relative',
-      marginBottom: isMobile ? '40px' : '0',
-      background: `linear-gradient(to bottom, #FFFFFF, ${unifiedTheme.colors.primary[50]})`,
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+    },
+    pricingCardPopular: {
+      border: `2px solid ${unifiedTheme.colors.primary[500]}`,
+      transform: isMobile ? 'scale(1.02)' : 'scale(1.05)',
+      boxShadow: isMobile ? '0 10px 20px rgba(59, 130, 246, 0.15)' : '0 20px 40px rgba(59, 130, 246, 0.2)',
     },
     pricingCardHover: {
-      transform: 'translateY(-10px)',
-      boxShadow: '0 15px 40px rgba(59, 130, 246, 0.15)',
-      borderColor: unifiedTheme.colors.primary[300],
+      transform: isMobile ? 'none' : 'translateY(-8px)',
+      boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15)',
+      borderColor: unifiedTheme.colors.primary[400],
     },
     popularBadge: {
       position: 'absolute',
-      top: '12px',
-      right: '12px',
-      padding: '5px 12px',
+      top: '-1px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      padding: '8px 24px',
       background: unifiedTheme.gradients.ocean,
       color: '#FFFFFF',
-      borderRadius: '20px',
-      fontSize: '0.8rem',
-      fontWeight: '600',
-      boxShadow: '0 2px 8px rgba(59, 130, 246, 0.4)',
+      borderRadius: '0 0 20px 20px',
+      fontSize: '0.85rem',
+      fontWeight: '700',
+      textTransform: 'uppercase',
+      letterSpacing: '0.5px',
+      boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)',
     },
     planHeader: {
-      padding: '30px 25px 20px',
-      borderBottom: `1px solid ${unifiedTheme.colors.primary[100]}`,
-      background: unifiedTheme.gradients.blueLight,
-      backgroundImage: `${unifiedTheme.gradients.blueLight}, ${unifiedTheme.patterns.rippleEffect}`,
+      padding: isMobile ? '30px 20px 20px' : '35px 30px 25px',
+      textAlign: 'center',
     },
     planName: {
-      fontSize: '1.5rem',
+      fontSize: isMobile ? '1.4rem' : '1.6rem',
       fontWeight: '700',
       color: '#1A365D',
-      marginBottom: '10px',
+      marginBottom: '20px',
+      minHeight: '40px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     planPrice: {
-      fontSize: '2rem',
+      fontSize: isMobile ? '2.2rem' : '2.8rem',
       fontWeight: '800',
-      color: '#2C5282',
+      color: unifiedTheme.colors.primary[700],
       marginBottom: '5px',
+      display: 'flex',
+      alignItems: 'baseline',
+      justifyContent: 'center',
+      gap: '8px',
     },
-    planPeriod: {
-      fontSize: '1rem',
-      color: '#4A5568',
+    priceNote: {
+      fontSize: '0.9rem',
+      color: '#718096',
+      fontWeight: '500',
+      marginBottom: '10px',
     },
     planDescription: {
-      fontSize: '0.95rem',
-      lineHeight: '1.5',
-      color: '#4A5568',
+      fontSize: '1rem',
+      lineHeight: '1.6',
+      color: '#2D3748',
       marginTop: '15px',
+      marginBottom: '20px',
+      minHeight: '50px',
+      fontWeight: '500',
+    },
+    savingsTag: {
+      display: 'inline-block',
+      padding: '6px 12px',
+      backgroundColor: '#C6F6D5',
+      color: '#22543D',
+      borderRadius: '6px',
+      fontSize: '0.85rem',
+      fontWeight: '600',
+      marginBottom: '20px',
     },
     planFeatures: {
-      padding: '25px',
-    },
-    featuresTitle: {
-      fontSize: '1.1rem',
-      fontWeight: '600',
-      color: '#2D3748',
-      marginBottom: '15px',
+      padding: isMobile ? '0 20px 20px' : '0 30px 30px',
+      flex: '1',
+      display: 'flex',
+      flexDirection: 'column',
     },
     featuresList: {
       listStyle: 'none',
       padding: '0',
-      margin: '0',
+      margin: '0 0 20px 0',
+      flex: '1',
     },
     featureItem: {
       display: 'flex',
-      alignItems: 'center',
-      marginBottom: '12px',
+      alignItems: 'flex-start',
+      marginBottom: '14px',
       fontSize: '0.95rem',
-      color: '#4A5568',
+      color: '#2D3748',
       lineHeight: '1.5',
     },
     featureCheck: {
-      color: '#4299E1',
-      marginRight: '10px',
+      color: '#48BB78',
+      marginRight: '12px',
       fontWeight: 'bold',
+      fontSize: '1.2rem',
+      marginTop: '-2px',
+    },
+    testimonialBox: {
+      backgroundColor: unifiedTheme.colors.primary[50],
+      padding: '16px',
+      borderRadius: '8px',
+      marginBottom: '20px',
+      borderLeft: `3px solid ${unifiedTheme.colors.primary[400]}`,
+    },
+    testimonialQuote: {
+      fontSize: '0.9rem',
+      color: '#2D3748',
+      fontStyle: 'italic',
+      marginBottom: '8px',
+      lineHeight: '1.5',
+    },
+    testimonialAuthor: {
+      fontSize: '0.85rem',
+      color: '#718096',
+      fontWeight: '600',
+      textAlign: 'right',
     },
     planButton: {
       display: 'block',
       width: '100%',
-      padding: '12px',
+      padding: isMobile ? '18px' : '16px',
       background: unifiedTheme.gradients.wave,
       color: '#FFFFFF',
       textAlign: 'center',
       border: 'none',
-      borderRadius: '8px',
-      fontWeight: '600',
-      fontSize: '1rem',
+      borderRadius: '10px',
+      fontWeight: '700',
+      fontSize: '1.1rem',
       cursor: 'pointer',
-      transition: 'all 0.2s ease',
-      marginTop: '20px',
-      boxShadow: '0 2px 8px rgba(59, 130, 246, 0.2)',
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      marginTop: 'auto',
+      boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+      position: 'relative',
+      overflow: 'hidden',
+      minHeight: '48px',
+      WebkitTapHighlightColor: 'transparent',
+    },
+    planButtonPopular: {
+      background: unifiedTheme.gradients.ocean,
+      boxShadow: '0 6px 20px rgba(59, 130, 246, 0.4)',
     },
     planButtonHover: {
-      backgroundColor: '#3182CE',
-      transform: 'translateY(-2px)',
-      boxShadow: '0 4px 6px rgba(66, 153, 225, 0.3)',
+      transform: isMobile ? 'scale(0.98)' : 'translateY(-3px)',
+      boxShadow: '0 8px 20px rgba(59, 130, 246, 0.4)',
     },
-    sectionTitle: {
-      fontSize: '1.8rem',
-      fontWeight: '700',
-      color: '#1A365D',
+    ctaUrgency: {
+      fontSize: '0.85rem',
+      color: 'rgba(255, 255, 255, 0.9)',
+      marginTop: '8px',
+      fontWeight: '500',
+    },
+    partnershipSection: {
+      marginTop: '80px',
+      marginBottom: '80px',
+    },
+    partnershipCard: {
+      background: 'linear-gradient(135deg, #EBF8FF 0%, #BEE3F8 100%)',
+      borderRadius: '20px',
+      padding: isMobile ? '30px 20px' : '40px',
+      boxShadow: '0 10px 30px rgba(59, 130, 246, 0.15)',
+      border: `2px solid ${unifiedTheme.colors.primary[300]}`,
+      position: 'relative',
+      overflow: 'hidden',
+      margin: isMobile ? '0 -5px' : '0',
+    },
+    partnershipHeader: {
+      textAlign: 'center',
       marginBottom: '30px',
-      marginTop: '60px',
     },
-    engagementGrid: {
-      display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-      gap: '20px',
-      marginBottom: '60px',
+    partnershipTitle: {
+      fontSize: isMobile ? '1.8rem' : '2.2rem',
+      fontWeight: '800',
+      color: unifiedTheme.colors.primary[800],
+      marginBottom: '10px',
     },
-    engagementCard: {
-      backgroundColor: '#FFFFFF',
-      padding: '25px',
-      borderRadius: '8px',
-      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.05)',
-      border: '1px solid #E2E8F0',
-      transition: 'all 0.3s ease',
-    },
-    engagementCardHover: {
-      transform: 'translateY(-5px)',
-      boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
-      borderColor: '#4299E1',
-    },
-    engagementTitle: {
-      fontSize: '1.3rem',
-      fontWeight: '700',
-      color: '#1A365D',
-      marginBottom: '15px',
-    },
-    engagementDescription: {
-      fontSize: '0.95rem',
-      color: '#4A5568',
-      lineHeight: '1.6',
+    partnershipSubtitle: {
+      fontSize: '1.1rem',
+      color: '#2D3748',
       marginBottom: '20px',
     },
-    bestForTitle: {
-      fontSize: '1rem',
-      fontWeight: '600',
-      color: '#2D3748',
-      marginBottom: '10px',
-    },
-    bestForList: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: '8px',
-    },
-    bestForItem: {
-      padding: '5px 10px',
-      backgroundColor: '#EBF8FF',
-      color: '#4299E1',
-      borderRadius: '4px',
-      fontSize: '0.85rem',
-    },
-    servicesGrid: {
+    partnershipGrid: {
       display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(270px, 1fr))',
-      gap: isMobile ? '30px' : '20px',
-      marginBottom: '60px',
+      gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+      gap: '30px',
+      alignItems: 'center',
     },
-    serviceCard: {
-      backgroundColor: '#FFFFFF',
-      padding: isMobile ? '20px' : '25px',
-      borderRadius: '8px',
-      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.05)',
-      border: '1px solid #E2E8F0',
-      transition: 'all 0.3s ease',
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%',
-      minHeight: isMobile ? '320px' : 'auto',
-      marginBottom: isMobile ? '30px' : '0',
+    partnershipFeatures: {
+      background: 'rgba(255, 255, 255, 0.8)',
+      padding: '25px',
+      borderRadius: '12px',
     },
-    serviceCardHover: {
-      transform: 'translateY(-5px)',
-      boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
-      borderColor: '#4299E1',
+    partnershipCTA: {
+      textAlign: 'center',
+      padding: '25px',
     },
-    serviceIcon: {
-      fontSize: '2.5rem',
-      marginBottom: '15px',
+    duckIcon: {
+      position: 'absolute',
+      bottom: '-20px',
+      right: isMobile ? '-50px' : '-20px',
+      opacity: isMobile ? 0.05 : 0.1,
+      fontSize: isMobile ? '120px' : '150px',
+      transform: 'rotate(-15deg)',
     },
-    serviceName: {
-      fontSize: '1.3rem',
-      fontWeight: '700',
-      color: '#1A365D',
-      marginBottom: '10px',
+    testimonialSection: {
+      marginTop: '80px',
+      marginBottom: '80px',
+      textAlign: 'center',
     },
-    serviceDescription: {
-      fontSize: '0.95rem',
-      color: '#4A5568',
+    testimonialContainer: {
+      maxWidth: '800px',
+      margin: '0 auto',
+      position: 'relative',
+      minHeight: '200px',
+    },
+    testimonialCard: {
+      background: '#FFFFFF',
+      padding: isMobile ? '30px 20px' : '40px',
+      borderRadius: '16px',
+      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+      position: 'relative',
+    },
+    testimonialQuoteMark: {
+      position: 'absolute',
+      top: '10px',
+      left: '20px',
+      fontSize: '60px',
+      color: unifiedTheme.colors.primary[200],
+      fontFamily: 'Georgia, serif',
+      lineHeight: '1',
+    },
+    testimonialText: {
+      fontSize: isMobile ? '1.1rem' : '1.3rem',
       lineHeight: '1.6',
-      marginBottom: '15px',
-      flex: 1,
-    },
-    serviceMeta: {
-      marginTop: 'auto',
-    },
-    priceLabel: {
-      fontSize: '0.9rem',
-      color: '#4A5568',
-      marginBottom: '5px',
-    },
-    priceRange: {
-      fontSize: '1rem',
-      fontWeight: '600',
       color: '#2D3748',
-      marginBottom: '10px',
+      marginBottom: '20px',
+      fontStyle: 'italic',
     },
-    timeframeLabel: {
-      fontSize: '0.9rem',
-      color: '#4A5568',
-      marginBottom: '5px',
+    testimonialAuthorInfo: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '15px',
     },
-    timeframe: {
-      fontSize: '1rem',
-      fontWeight: '600',
-      color: '#2D3748',
-      marginBottom: '15px',
+    testimonialAuthorName: {
+      fontWeight: '700',
+      color: unifiedTheme.colors.primary[700],
+      fontSize: '1.1rem',
     },
-    inquireButton: {
-      padding: '8px 15px',
-      backgroundColor: '#4299E1',
-      color: '#FFFFFF',
-      border: 'none',
-      borderRadius: '4px',
-      fontWeight: '600',
-      fontSize: '0.9rem',
+    testimonialAuthorRole: {
+      color: '#718096',
+      fontSize: '0.95rem',
+    },
+    testimonialDots: {
+      display: 'flex',
+      justifyContent: 'center',
+      gap: '8px',
+      marginTop: '20px',
+    },
+    testimonialDot: {
+      width: '8px',
+      height: '8px',
+      borderRadius: '50%',
+      backgroundColor: '#CBD5E0',
+      transition: 'all 0.3s ease',
       cursor: 'pointer',
-      transition: 'all 0.2s ease',
     },
-    inquireButtonHover: {
-      backgroundColor: '#3182CE',
+    testimonialDotActive: {
+      backgroundColor: unifiedTheme.colors.primary[500],
+      width: '24px',
+      borderRadius: '4px',
     },
     faqSection: {
       marginTop: '80px',
+      marginBottom: '80px',
     },
     faqTitle: {
-      fontSize: '1.8rem',
-      fontWeight: '700',
+      fontSize: isMobile ? '2rem' : '2.5rem',
+      fontWeight: '800',
       color: '#1A365D',
-      marginBottom: '30px',
+      marginBottom: '40px',
       textAlign: 'center',
     },
     faqGrid: {
       display: 'grid',
       gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-      gap: '20px',
+      gap: '24px',
+      maxWidth: '1000px',
+      margin: '0 auto',
     },
     faqItem: {
       backgroundColor: '#FFFFFF',
-      padding: '25px',
-      borderRadius: '8px',
-      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.05)',
+      padding: isMobile ? '20px' : '30px',
+      borderRadius: '12px',
+      boxShadow: '0 5px 15px rgba(0, 0, 0, 0.08)',
       border: '1px solid #E2E8F0',
+      transition: 'all 0.3s ease',
+      WebkitTapHighlightColor: 'transparent',
+    },
+    faqItemHover: {
+      transform: isMobile ? 'none' : 'translateY(-3px)',
+      boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
+      borderColor: unifiedTheme.colors.primary[300],
     },
     faqQuestion: {
-      fontSize: '1.1rem',
+      fontSize: '1.2rem',
       fontWeight: '700',
-      color: '#1A365D',
-      marginBottom: '10px',
+      color: unifiedTheme.colors.primary[800],
+      marginBottom: '12px',
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '10px',
+    },
+    faqIcon: {
+      color: unifiedTheme.colors.primary[500],
+      fontSize: '1.3rem',
+      marginTop: '2px',
     },
     faqAnswer: {
-      fontSize: '0.95rem',
-      lineHeight: '1.6',
-      color: '#4A5568',
+      fontSize: '1rem',
+      lineHeight: '1.7',
+      color: '#2D3748',
     },
     ctaSection: {
       textAlign: 'center',
-      marginTop: '80px',
+      marginTop: '100px',
       background: unifiedTheme.gradients.ocean,
       backgroundImage: `${unifiedTheme.gradients.ocean}, ${unifiedTheme.patterns.foam}`,
-      padding: '40px',
-      borderRadius: '16px',
+      padding: isMobile ? '40px 20px' : '60px 40px',
+      borderRadius: '24px',
       position: 'relative',
       overflow: 'hidden',
-      boxShadow: '0 10px 30px rgba(59, 130, 246, 0.2)',
+      boxShadow: '0 20px 40px rgba(59, 130, 246, 0.3)',
     },
     ctaTitle: {
-      fontSize: '1.8rem',
-      fontWeight: '700',
-      color: '#1A365D',
-      marginBottom: '15px',
+      fontSize: isMobile ? '2rem' : '2.8rem',
+      fontWeight: '800',
+      color: '#FFFFFF',
+      marginBottom: '20px',
+      textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      lineHeight: '1.2',
     },
     ctaDescription: {
-      fontSize: '1.1rem',
-      lineHeight: '1.7',
-      color: '#4A5568',
+      fontSize: isMobile ? '1.1rem' : '1.3rem',
+      lineHeight: '1.6',
+      color: 'rgba(255, 255, 255, 0.95)',
       maxWidth: '700px',
-      margin: '0 auto 25px',
+      margin: '0 auto 35px',
+      fontWeight: '500',
     },
     ctaButton: {
       display: 'inline-block',
-      padding: '12px 25px',
-      backgroundColor: '#4299E1',
-      color: '#FFFFFF',
-      borderRadius: '6px',
-      fontWeight: '600',
-      fontSize: '1rem',
+      padding: isMobile ? '18px 30px' : '18px 40px',
+      backgroundColor: '#FFFFFF',
+      color: unifiedTheme.colors.primary[700],
+      borderRadius: '12px',
+      fontWeight: '700',
+      fontSize: isMobile ? '1.1rem' : '1.2rem',
       textDecoration: 'none',
-      transition: 'all 0.2s ease',
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
+      minHeight: '48px',
+      WebkitTapHighlightColor: 'transparent',
     },
     ctaButtonHover: {
-      backgroundColor: '#3182CE',
-      transform: 'translateY(-2px)',
-      boxShadow: '0 4px 6px rgba(66, 153, 225, 0.3)',
+      transform: isMobile ? 'scale(0.98)' : 'translateY(-3px) scale(1.05)',
+      boxShadow: '0 15px 35px rgba(0, 0, 0, 0.3)',
+    },
+    ctaUrgencyText: {
+      color: 'rgba(255, 255, 255, 0.9)',
+      fontSize: '1rem',
+      marginTop: '20px',
+      fontWeight: '600',
     },
   };
   
   // Handle hover states
   const [hoveredCta, setHoveredCta] = useState(null);
-  const [hoveredEngage, setHoveredEngage] = useState(null);
-  const [hoveredService, setHoveredService] = useState(null);
-  const [hoveredInquire, setHoveredInquire] = useState(null);
+  const [hoveredFaq, setHoveredFaq] = useState(null);
   
   return (
     <section style={styles.section}>
       <div style={styles.container}>
-        <div style={styles.header}>
-          <h1 style={styles.title}>Navigate Our Pricing Waters</h1>
-          <p style={styles.subtitle}>
-            Like a clear mountain stream, our pricing flows transparently. We tailor our approach to your needs,
-            ensuring you only pay for the value that flows into your business.
-          </p>
-        </div>
+        
+
         
         {/* Pricing Plans */}
         <div style={styles.plansGrid}>
@@ -543,22 +716,27 @@ const PricingPage = () => {
               key={plan.id}
               style={{
                 ...styles.pricingCard,
-                ...(hoveredPlan === plan.id ? styles.pricingCardHover : {})
+                ...(plan.popular ? styles.pricingCardPopular : {}),
+                ...(hoveredPlan === plan.id && !plan.popular ? styles.pricingCardHover : {})
               }}
-              onMouseEnter={() => setHoveredPlan(plan.id)}
-              onMouseLeave={() => setHoveredPlan(null)}
+              onMouseEnter={() => !isMobile && setHoveredPlan(plan.id)}
+              onMouseLeave={() => !isMobile && setHoveredPlan(null)}
             >
-              {plan.popular && <div style={styles.popularBadge}>Most Popular</div>}
+              {plan.popular && <div style={styles.popularBadge}>Most Popular 🔥</div>}
               <div style={styles.planHeader}>
                 <h2 style={styles.planName}>{plan.name}</h2>
-                <div style={styles.planPrice}>{plan.price}</div>
-                {plan.price !== "Free" && plan.price !== "Custom" && (
-                  <div style={styles.planPeriod}>{isAnnual ? 'per project' : 'per hour'}</div>
+                <div style={styles.planPrice}>
+                  {plan.price}
+                </div>
+                {plan.priceNote && (
+                  <div style={styles.priceNote}>{plan.priceNote}</div>
                 )}
                 <p style={styles.planDescription}>{plan.description}</p>
+                {plan.savings && (
+                  <div style={styles.savingsTag}>{plan.savings}</div>
+                )}
               </div>
               <div style={styles.planFeatures}>
-                <h3 style={styles.featuresTitle}>What's included:</h3>
                 <ul style={styles.featuresList}>
                   {plan.features.map((feature, index) => (
                     <li key={index} style={styles.featureItem}>
@@ -566,142 +744,128 @@ const PricingPage = () => {
                     </li>
                   ))}
                 </ul>
+                
+                {plan.testimonial && (
+                  <div style={styles.testimonialBox}>
+                    <p style={styles.testimonialQuote}>"{plan.testimonial}"</p>
+                    <p style={styles.testimonialAuthor}>{plan.testimonialAuthor}</p>
+                  </div>
+                )}
+                
                 <button 
                   style={{
                     ...styles.planButton,
+                    ...(plan.popular ? styles.planButtonPopular : {}),
                     ...(hoveredCta === plan.id ? styles.planButtonHover : {})
                   }}
-                  onMouseEnter={() => setHoveredCta(plan.id)}
-                  onMouseLeave={() => setHoveredCta(null)}
+                  onMouseEnter={() => !isMobile && setHoveredCta(plan.id)}
+                  onMouseLeave={() => !isMobile && setHoveredCta(null)}
                   onClick={() => toggleContactForm(plan.name)}
                 >
                   {plan.cta}
+                  {plan.ctaUrgency && (
+                    <div style={styles.ctaUrgency}>{plan.ctaUrgency}</div>
+                  )}
                 </button>
               </div>
             </div>
           ))}
         </div>
         
-        {/* Engagement Models */}
-        <h2 style={styles.sectionTitle}>Engagement Models</h2>
-        <div style={styles.engagementGrid}>
-          {engagementModels.map(model => (
-            <div
-              key={model.id}
-              style={{
-                ...styles.engagementCard,
-                ...(hoveredEngage === model.id ? styles.engagementCardHover : {})
-              }}
-              onMouseEnter={() => setHoveredEngage(model.id)}
-              onMouseLeave={() => setHoveredEngage(null)}
-            >
-              <h3 style={styles.engagementTitle}>{model.title}</h3>
-              <p style={styles.engagementDescription}>{model.description}</p>
-              <div style={styles.bestForTitle}>Best for:</div>
-              <div style={styles.bestForList}>
-                {model.bestFor.map((item, index) => (
-                  <span key={index} style={styles.bestForItem}>{item}</span>
-                ))}
-              </div>
+        {/* Partnership Plan */}
+        <div style={styles.partnershipSection}>
+          <div style={styles.partnershipCard}>
+            <div style={styles.duckIcon}>🦆</div>
+            <div style={styles.partnershipHeader}>
+              <h2 style={styles.partnershipTitle}>{partnershipPlan.name}</h2>
+              <p style={styles.partnershipSubtitle}>
+                <span style={{fontSize: '2rem', fontWeight: '800', color: unifiedTheme.colors.primary[700]}}>
+                  {partnershipPlan.price}
+                </span>
+                <span style={{display: 'block', marginTop: '5px', fontSize: '1rem', color: '#718096'}}>
+                  {partnershipPlan.priceNote}
+                </span>
+              </p>
             </div>
-          ))}
-        </div>
-        
-        {/* Services and Pricing Ranges */}
-        <h2 style={styles.sectionTitle}>Services & Price Ranges</h2>
-        <div style={styles.servicesGrid}>
-          {services.map(service => (
-            <div
-              key={service.id}
-              style={{
-                ...styles.serviceCard,
-                ...(hoveredService === service.id ? styles.serviceCardHover : {})
-              }}
-              onMouseEnter={() => setHoveredService(service.id)}
-              onMouseLeave={() => setHoveredService(null)}
-            >
-              <div style={styles.serviceIcon}>{service.icon}</div>
-              <h3 style={styles.serviceName}>{service.name}</h3>
-              <p style={styles.serviceDescription}>{service.description}</p>
-              
-              <div style={styles.serviceMeta}>
-                <div style={styles.priceLabel}>Starting from:</div>
-                <div style={styles.priceRange}>{service.priceRange}</div>
-                
-                <div style={styles.timeframeLabel}>Typical timeframe:</div>
-                <div style={styles.timeframe}>{service.timeframe}</div>
-                
-                <button
+            <div style={styles.partnershipGrid}>
+              <div style={styles.partnershipFeatures}>
+                <ul style={styles.featuresList}>
+                  {partnershipPlan.features.map((feature, index) => (
+                    <li key={index} style={styles.featureItem}>
+                      <span style={styles.featureCheck}>✓</span> {feature}
+                    </li>
+                  ))}
+                </ul>
+                {partnershipPlan.savings && (
+                  <div style={styles.savingsTag}>{partnershipPlan.savings}</div>
+                )}
+              </div>
+              <div style={styles.partnershipCTA}>
+                <div style={styles.testimonialBox}>
+                  <p style={styles.testimonialQuote}>"{partnershipPlan.testimonial}"</p>
+                  <p style={styles.testimonialAuthor}>{partnershipPlan.testimonialAuthor}</p>
+                </div>
+                <button 
                   style={{
-                    ...styles.inquireButton,
-                    ...(hoveredInquire === service.id ? styles.inquireButtonHover : {})
+                    ...styles.planButton,
+                    ...styles.planButtonPopular,
+                    ...(hoveredCta === 'partnership' ? styles.planButtonHover : {})
                   }}
-                  onMouseEnter={() => setHoveredInquire(service.id)}
-                  onMouseLeave={() => setHoveredInquire(null)}
-                  onClick={() => toggleContactForm(service.name)}
+                  onMouseEnter={() => !isMobile && setHoveredCta('partnership')}
+                  onMouseLeave={() => !isMobile && setHoveredCta(null)}
+                  onClick={() => toggleContactForm(partnershipPlan.name)}
                 >
-                  Request Quote
+                  {partnershipPlan.cta}
                 </button>
               </div>
             </div>
-          ))}
+          </div>
         </div>
         
         {/* FAQ Section */}
         <div style={styles.faqSection}>
-          <h2 style={styles.faqTitle}>Frequently Asked Questions</h2>
+          <h2 style={styles.faqTitle}>Got Questions? We've Got Answers</h2>
           <div style={styles.faqGrid}>
-            <div style={styles.faqItem}>
-              <h3 style={styles.faqQuestion}>How do you determine pricing for custom projects?</h3>
-              <p style={styles.faqAnswer}>
-                We evaluate project complexity, scope, timeline, and resource requirements. After an initial consultation, 
-                we provide a detailed proposal with transparent pricing based on these factors. We offer both fixed-price 
-                and time-and-materials options depending on project characteristics.
-              </p>
-            </div>
-            <div style={styles.faqItem}>
-              <h3 style={styles.faqQuestion}>Do you require long-term contracts?</h3>
-              <p style={styles.faqAnswer}>
-                It depends on the engagement type. For project-based work, the contract covers the project duration. 
-                For ongoing services, we typically start with a 3-month commitment to ensure we can deliver value, 
-                then offer month-to-month options.
-              </p>
-            </div>
-            <div style={styles.faqItem}>
-              <h3 style={styles.faqQuestion}>What payment methods do you accept?</h3>
-              <p style={styles.faqAnswer}>
-                We accept credit cards, ACH bank transfers, and wire transfers. For larger projects, we typically 
-                work on a milestone-based payment schedule to align payments with project progress and deliverables.
-              </p>
-            </div>
-            <div style={styles.faqItem}>
-              <h3 style={styles.faqQuestion}>Is there a minimum project size you work with?</h3>
-              <p style={styles.faqAnswer}>
-                We typically work with projects starting at $5,000 to ensure we can deliver meaningful value. 
-                For smaller needs, we can recommend trusted partners or alternative solutions that might be 
-                more cost-effective.
-              </p>
-            </div>
+            {faqData.map((faq, index) => (
+              <div
+                key={index}
+                style={{
+                  ...styles.faqItem,
+                  ...(hoveredFaq === index ? styles.faqItemHover : {})
+                }}
+                onMouseEnter={() => !isMobile && setHoveredFaq(index)}
+                onMouseLeave={() => !isMobile && setHoveredFaq(null)}
+              >
+                <h3 style={styles.faqQuestion}>
+                  <span style={styles.faqIcon}>💡</span>
+                  {faq.question}
+                </h3>
+                <p style={styles.faqAnswer}>{faq.answer}</p>
+              </div>
+            ))}
           </div>
         </div>
         
         {/* CTA Section */}
         <div style={styles.ctaSection}>
-          <h2 style={{...styles.ctaTitle, color: '#FFFFFF'}}>Ready to Set Sail?</h2>
-          <p style={{...styles.ctaDescription, color: 'rgba(255, 255, 255, 0.9)'}}>
-            Let's chart a course for your project. Schedule a free consultation to explore how we can navigate your unique challenges together.
+          <h2 style={styles.ctaTitle}>Your Competition Is Already Using AI</h2>
+          <p style={styles.ctaDescription}>
+            Every day you wait is money left on the table. Join the leaders who are already transforming their business with our AI solutions.
           </p>
-          <a 
-            href="/contact"
+          <button
             style={{
               ...styles.ctaButton,
               ...((hoveredCta === 'main') ? styles.ctaButtonHover : {})
             }}
-            onMouseEnter={() => setHoveredCta('main')}
-            onMouseLeave={() => setHoveredCta(null)}
+            onMouseEnter={() => !isMobile && setHoveredCta('main')}
+            onMouseLeave={() => !isMobile && setHoveredCta(null)}
+            onClick={() => toggleContactForm('Free Discovery Session')}
           >
-            Contact Us Today
-          </a>
+            Claim Your Free Strategy Session Now
+          </button>
+          <p style={styles.ctaUrgencyText}>
+            🔒 100% Confidential • No Obligation • Immediate Value
+          </p>
         </div>
       </div>
       

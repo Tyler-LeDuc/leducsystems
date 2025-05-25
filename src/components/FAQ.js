@@ -42,7 +42,7 @@ const FAQ = () => {
     {
       id: 7,
       question: "Where are you located?",
-      answer: "We're headquartered in San Francisco, CA, with satellite offices in key markets. We work with clients both locally and remotely across the United States. Our established collaboration tools and processes ensure smooth communication and project management regardless of location."
+      answer: "We're located in Chandler, AZ at 3133 W Frye Rd. We work with clients both locally and remotely across the United States. Our established collaboration tools and processes ensure smooth communication and project management regardless of location."
     },
     {
       id: 8,

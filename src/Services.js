@@ -573,7 +573,7 @@ const Services = () => {
                     </div>
 
                     <div style={{ ...styles.backPricing, marginTop: 'auto' }}>
-                      <div style={styles.backPrice}>{service.startingPrice}</div>
+                      <div style={styles.backPrice}>Get Started Today</div>
                       <div style={styles.backTimeline}>Timeline: {service.timeline}</div>
                     </div>
                   </div>

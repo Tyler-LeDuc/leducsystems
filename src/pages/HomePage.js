@@ -1,5 +1,5 @@
 import React from 'react';
-import Hero from '../Hero';
+import HeroNew from '../HeroNew';
 import Services from '../Services';
 import ProjectShowcase from '../ProjectShowcase';
 import Testimonials from '../components/Testimonials';
@@ -12,7 +12,7 @@ import CallToAction from '../components/CallToAction';
 const HomePage = () => {
   return (
     <div>
-      <Hero />
+      <HeroNew />
       <Services />
       <ProjectShowcase />
       <WhyChooseUs />

@@ -364,8 +364,14 @@ const CaseStudyPage = () => {
           <p style={styles.intro}>{project.description}</p>
         </div>
         
-        {/* Hero Image */}
-        <img src={project.image} alt={project.name} style={styles.heroImage} />
+        {/* Hero Section */}
+        <div 
+          style={{
+            ...styles.heroImage,
+            background: project.gradient,
+            height: '300px'
+          }}
+        />
         
         {/* Stats Section */}
         <div style={styles.statsSection}>

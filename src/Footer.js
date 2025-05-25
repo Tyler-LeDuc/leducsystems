@@ -169,8 +169,8 @@ const Footer = () => {
               </div>
 
               <div style={styles.footerColumn}>
-                <h3 style={styles.sectionTitle}>Contact Us</h3>
-                <div style={styles.contactItem}>
+                <h3 style={{...styles.sectionTitle, textAlign: 'center'}}>Contact Us</h3>
+                <div style={{...styles.contactItem, justifyContent: 'center'}}>
                   <svg style={styles.contactIcon} viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-.001 5.75c.69 0 1.251.56 1.251 1.25s-.561 1.25-1.251 1.25-1.249-.56-1.249-1.25.559-1.25 1.249-1.25zm2.001 12.25h-4v-1c.484-.179 1-.201 1-.735v-4.467c0-.534-.516-.618-1-.797v-1h3v6.265c0 .535.517.558 1 .735v.999z" />
                   </svg>
@@ -178,7 +178,7 @@ const Footer = () => {
                     leducsystems@gmail.com
                   </a>
                 </div>
-                <div style={styles.contactItem}>
+                <div style={{...styles.contactItem, justifyContent: 'center'}}>
                   <svg style={styles.contactIcon} viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.445 17.827c-3.684 1.684-9.401-9.43-5.8-11.308l1.053-.519 1.746 3.409-1.042.513c-1.095.587 1.185 5.04 2.305 4.497l1.032-.505 1.76 3.397-1.054.516z" />
                   </svg>
@@ -187,40 +187,35 @@ const Footer = () => {
                   </a>
                 </div>
                 
-                <button 
-                  style={styles.contactButton}
-                  onClick={toggleContactForm}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#0EA5E9';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '#38BDF8';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}
-                >
-                  Send us a message
-                </button>
+                <div style={{display: 'flex', justifyContent: 'center', marginTop: '1rem'}}>
+                  <button 
+                    style={styles.contactButton}
+                    onClick={toggleContactForm}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#0EA5E9';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = '#38BDF8';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
+                    Send us a message
+                  </button>
+                </div>
               </div>
 
               <div style={styles.footerColumn}>
                 <h3 style={styles.sectionTitle}>Site Navigation</h3>
                 <div style={styles.navLinks}>
                   <a href="/" style={styles.link}>Home</a>
-                  <a href="/about" style={styles.link}>About Us</a>
                   <a href="/services" style={styles.link}>Services</a>
-                  <a href="/contact" style={styles.link}>Contact</a>
-                </div>
-              </div>
-              
-              <div style={styles.footerColumn}>
-                <h3 style={styles.sectionTitle}>Resources</h3>
-                <div style={styles.navLinks}>
-                  <a href="/blog" style={styles.link}>Blog</a>
                   <a href="/pricing" style={styles.link}>Pricing</a>
-                  <a href="/team" style={styles.link}>Our Team</a>
+                  <a href="/careers" style={styles.link}>Careers</a>
+                  <a href="/about" style={styles.link}>About</a>
+                  <a href="/contact" style={styles.link}>Contact</a>
                 </div>
               </div>
             </div>

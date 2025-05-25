@@ -260,6 +260,23 @@ const Hero = () => {
     },
   ];
 
+  // Cute duck styles
+  const duckStyles = {
+    container: {
+      position: 'absolute',
+      top: isMobile ? '15%' : '10%',
+      right: isMobile ? '5%' : '15%',
+      width: isMobile ? '120px' : '200px',
+      height: isMobile ? '120px' : '200px',
+      zIndex: 5,
+    },
+    svg: {
+      width: '100%',
+      height: '100%',
+      filter: 'drop-shadow(0 20px 40px rgba(251, 191, 36, 0.3))',
+    }
+  };
+
   return (
     <>
       <motion.section 
@@ -301,6 +318,87 @@ const Hero = () => {
             ease: 'easeInOut',
           }}
         />
+        
+        {/* Clean Flying Duck Animation */}
+        <motion.div 
+          style={duckStyles.container}
+          animate={{
+            x: [0, 30, 0, -30, 0],
+            y: [0, -15, -5, -15, 0],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        >
+          <svg viewBox="0 0 200 200" style={duckStyles.svg}>
+            <defs>
+              <linearGradient id="duckMainBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#60A5FA" />
+                <stop offset="100%" stopColor="#3B82F6" />
+              </linearGradient>
+              <linearGradient id="duckDarkBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#3B82F6" />
+                <stop offset="100%" stopColor="#1E40AF" />
+              </linearGradient>
+            </defs>
+            
+            {/* Clean duck silhouette in flight */}
+            <g transform="translate(100, 100)">
+              {/* Body */}
+              <path 
+                d="M -20 0 
+                   C -20 -15, 20 -15, 30 0
+                   C 30 15, -20 15, -20 0"
+                fill="url(#duckMainBlue)"
+              />
+              
+              {/* Head and neck */}
+              <path 
+                d="M -20 -5
+                   C -35 -5, -40 -15, -35 -20
+                   C -30 -25, -20 -22, -15 -15"
+                fill="url(#duckMainBlue)"
+              />
+              
+              {/* Bill */}
+              <path 
+                d="M -35 -20 L -45 -20 L -35 -18 Z" 
+                fill="#F59E0B"
+              />
+              
+              {/* Eye */}
+              <circle cx="-28" cy="-20" r="2" fill="#1F2937" />
+              
+              {/* Wing */}
+              <motion.path
+                d="M -5 -5
+                   C -10 -25, 10 -25, 15 -5
+                   C 10 -10, -5 -10, -5 -5"
+                fill="url(#duckDarkBlue)"
+                animate={{ 
+                  d: [
+                    "M -5 -5 C -10 -25, 10 -25, 15 -5 C 10 -10, -5 -10, -5 -5",
+                    "M -5 -5 C -15 -30, 15 -30, 20 -5 C 15 -10, -5 -10, -5 -5",
+                    "M -5 -5 C -10 -25, 10 -25, 15 -5 C 10 -10, -5 -10, -5 -5"
+                  ]
+                }}
+                transition={{ 
+                  duration: 0.8, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+              />
+              
+              {/* Tail */}
+              <path 
+                d="M 30 0 L 40 -5 L 35 0 L 40 5 Z" 
+                fill="url(#duckDarkBlue)"
+              />
+            </g>
+          </svg>
+        </motion.div>
         
         {/* Main content */}
         <motion.div 

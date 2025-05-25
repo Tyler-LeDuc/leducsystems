@@ -14,15 +14,15 @@ const About = () => {
   
   // Counter animation for statistics
   const [counters, setCounters] = useState({
-    projects: 0,
-    clients: 0,
-    satisfaction: 50,
-    uptime: 80
+    projects: 35,
+    clients: 25,
+    satisfaction: 98,
+    uptime: 99
   });
   
   const statsTarget = {
-    projects: 50,
-    clients: 15,
+    projects: 25,
+    clients: 25,
     satisfaction: 98,
     uptime: 99
   };
@@ -757,17 +757,6 @@ const About = () => {
                 alt="Le Duc Systems Duck Logo" 
                 style={{height: '220px', width: 'auto', marginBottom: '15px'}} 
               />
-              <div style={{
-                fontWeight: 700, 
-                color: '#1A365D',
-                fontSize: '2.2rem',
-                letterSpacing: '0.5px',
-                lineHeight: 1.1,
-                textAlign: 'center'
-              }}>
-                <div>Le Duc</div>
-                <div>Systems</div>
-              </div>
             </div>
           </div>
         </div>

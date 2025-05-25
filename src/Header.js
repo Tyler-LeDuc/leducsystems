@@ -112,19 +112,22 @@ const Header = ({ scrolled: propScrolled }) => {
     logoImage: {
       transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
       opacity: 0.95,
+      position: 'relative',
+      zIndex: 2,
     },
     logoGlow: {
       position: 'absolute',
       top: '50%',
-      left: '50%',
+      left: '30px', // Center the glow on the duck icon
       transform: 'translate(-50%, -50%)',
-      width: '100%',
-      height: '100%',
+      width: scrolled ? '80px' : '100px',
+      height: scrolled ? '80px' : '100px',
       borderRadius: '50%',
-      background: 'radial-gradient(circle, rgba(14, 165, 233, 0.3) 0%, rgba(14, 165, 233, 0) 70%)',
-      filter: 'blur(12px)',
-      opacity: scrolled ? 0 : 0.7,
-      transition: 'opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+      background: 'radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(59, 130, 246, 0.2) 40%, rgba(59, 130, 246, 0) 70%)',
+      filter: 'blur(20px)',
+      opacity: scrolled ? 0.5 : 0.8,
+      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+      pointerEvents: 'none',
     },
     nav: {
       display: 'flex',
@@ -357,18 +360,33 @@ const Header = ({ scrolled: propScrolled }) => {
           <Link to="/" style={styles.logoContainer} onClick={() => handleLinkClick('home')}>
             <div style={styles.logoWrapper}>
               <div style={styles.logoGlow}></div>
-              <div style={{display: 'flex', alignItems: 'center'}}>
+              <div style={{display: 'flex', alignItems: 'center', position: 'relative'}}>
                 <img 
                   src="/duck-icon.png" 
                   alt="Le Duc Systems Duck Icon" 
-                  style={{height: scrolled ? '80px' : '100px', width: 'auto', marginRight: '-20px'}} 
+                  style={{
+                    ...styles.logoImage,
+                    height: scrolled ? '60px' : '80px', 
+                    width: 'auto', 
+                    marginRight: '12px',
+                    filter: 'drop-shadow(0 2px 8px rgba(59, 130, 246, 0.3))'
+                  }} 
                 />
                 <div style={{
                   fontWeight: 700, 
-                  color: '#1A365D',
+                  background: 'linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
                   fontSize: scrolled ? '1.5rem' : '1.8rem',
                   letterSpacing: '0.5px',
-                  lineHeight: 1.1
+                  lineHeight: 1.2,
+                  textShadow: '0 2px 8px rgba(59, 130, 246, 0.1)',
+                  position: 'relative',
+                  zIndex: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingBottom: '2px'
                 }}>
                   <div>Le Duc</div>
                   <div>Systems</div>
@@ -442,7 +460,10 @@ const Header = ({ scrolled: propScrolled }) => {
                 color: '#1A365D',
                 fontSize: '1.2rem',
                 letterSpacing: '0.3px',
-                lineHeight: 1.1
+                lineHeight: 1.2,
+                display: 'flex',
+                flexDirection: 'column',
+                paddingBottom: '2px'
               }}>
                 <div>Le Duc</div>
                 <div>Systems</div>
