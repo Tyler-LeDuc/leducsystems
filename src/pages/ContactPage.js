@@ -208,31 +208,6 @@ const ContactPage = () => {
         <div style={contactStyles.container}>
           {/* Contact Methods */}
           <div style={contactStyles.contactInfo}>
-            {/* Email Card */}
-            <div style={contactStyles.contactCard}
-                 onMouseEnter={(e) => {
-                   e.currentTarget.style.transform = 'translateY(-4px)';
-                   e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.12)';
-                 }}
-                 onMouseLeave={(e) => {
-                   e.currentTarget.style.transform = 'translateY(0)';
-                   e.currentTarget.style.boxShadow = 'none';
-                 }}>
-              <div style={contactStyles.contactIcon}>📧</div>
-              <h3 style={contactStyles.contactCardTitle}>Email Us</h3>
-              <p style={contactStyles.contactCardValue}>
-                <a href="mailto:leducsystems@gmail.com" 
-                   style={contactStyles.contactLink}
-                   onMouseEnter={(e) => e.target.style.color = unifiedTheme.colors.primary[700]}
-                   onMouseLeave={(e) => e.target.style.color = unifiedTheme.colors.primary[600]}>
-                  leducsystems@gmail.com
-                </a>
-              </p>
-              <p style={{ ...contactStyles.contactCardValue, fontSize: '0.85rem', marginTop: '8px' }}>
-                We respond within 24 hours
-              </p>
-            </div>
-            
             {/* Phone Card */}
             <div style={contactStyles.contactCard}
                  onMouseEnter={(e) => {
@@ -308,7 +283,6 @@ const ContactPage = () => {
               <ContactForm 
                 isOpen={true} 
                 onClose={() => {}}
-                recipientEmail="leducsystems@gmail.com"
                 embedded={true}
               />
             </div>
@@ -338,26 +312,6 @@ const ContactPage = () => {
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Le Duc Systems Office Location"
               ></iframe>
-            </div>
-          </div>
-          
-          {/* Trust Badges */}
-          <div style={contactStyles.trustBadges}>
-            <div style={contactStyles.trustBadge}>
-              <span>🛡️</span>
-              <span>Secure & Confidential</span>
-            </div>
-            <div style={contactStyles.trustBadge}>
-              <span>🏆</span>
-              <span>Award-Winning Team</span>
-            </div>
-            <div style={contactStyles.trustBadge}>
-              <span>🤝</span>
-              <span>Trusted by 50+ Clients</span>
-            </div>
-            <div style={contactStyles.trustBadge}>
-              <span>📊</span>
-              <span>Data-Driven Results</span>
             </div>
           </div>
         </div>

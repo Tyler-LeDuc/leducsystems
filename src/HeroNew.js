@@ -782,7 +782,6 @@ const HeroNew = () => {
       <ContactForm 
         isOpen={contactFormOpen} 
         onClose={() => setContactFormOpen(false)}
-        recipientEmail="leducsystems@gmail.com"
       />
 
       {/* Add keyframe animations */}

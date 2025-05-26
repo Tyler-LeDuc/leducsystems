@@ -31,7 +31,7 @@ const Testimonials = () => {
       text: "After struggling with outdated systems for years, their team modernized our entire infrastructure in just 5 months. The new platform handles 3x our previous transaction volume with better stability. Our team now spends 60% less time on manual data processing, allowing us to focus on strategic initiatives.",
       name: "M.L.",
       role: "Enterprise Solutions",
-      company: "Financial Services Firm",
+      company: "Professional Services Firm",
       initials: "ML",
       bgColor: "linear-gradient(135deg, #FF9500, #FFB800)"
     },
@@ -40,7 +40,7 @@ const Testimonials = () => {
       text: "Their data analytics solution consolidated information from 14 different systems into one comprehensive platform. Now our marketing team can create campaigns based on actual customer behavior rather than assumptions. We've cut campaign creation time by 65% while improving performance metrics across all channels.",
       name: "R.T.",
       role: "Digital Strategy",
-      company: "Healthcare Technology Provider",
+      company: "Technology Services Provider",
       initials: "RT",
       bgColor: "linear-gradient(135deg, #FFC905, #FFD700)"
     },

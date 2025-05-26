@@ -103,7 +103,7 @@ const CaseStudyPage = () => {
       }
     },
     5: {
-      challenge: "A medium-sized financial services firm was struggling with knowledge management. Critical information was scattered across emails, documents, and employees' personal knowledge. This was causing inefficiencies, knowledge gaps when employees left, and inconsistent customer service.",
+      challenge: "A medium-sized professional services firm was struggling with knowledge management. Critical information was scattered across emails, documents, and employees' personal knowledge. This was causing inefficiencies, knowledge gaps when employees left, and inconsistent customer service.",
       approach: "We developed a knowledge management platform powered by custom-trained language models designed specifically for the client's domain. The system was built to extract, organize, and make accessible all the unstructured information across the organization.",
       solution: "The platform uses natural language processing to automatically categorize and tag content, making it easily searchable. It includes semantic search capabilities, automated report generation, and a continuous learning system that improves as it's used. The interface was designed for ease of use by non-technical staff.",
       results: [
@@ -459,7 +459,6 @@ const CaseStudyPage = () => {
       <ContactForm 
         isOpen={contactFormOpen} 
         onClose={toggleContactForm}
-        recipientEmail="leducsystems@gmail.com"
       />
     </section>
   );

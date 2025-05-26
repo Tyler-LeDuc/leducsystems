@@ -9,6 +9,8 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import PricingPage from './pages/pricing/PricingPage';
 import CareersPage from './pages/CareersPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsOfServicePage from './pages/TermsOfServicePage';
 import { initEmailService } from './emailService';
 import emailjs from '@emailjs/browser';
 
@@ -57,6 +59,8 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/careers" element={<CareersPage />} />
+          <Route path="/privacy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms" element={<TermsOfServicePage />} />
         </Routes>
         <Footer />
 

@@ -22,12 +22,12 @@ const FAQ = () => {
     {
       id: 3,
       question: "Do you offer support after project completion?",
-      answer: "Yes, we provide 30 days of complimentary support after project completion to address any immediate issues. Beyond that, we offer flexible maintenance packages tailored to your needs, ensuring your solution remains effective and up-to-date."
+      answer: "Yes, all projects include post-launch support. The duration varies by package: starter projects include 30 days, standard implementations include 3 months, and enterprise solutions include 6 months of priority support. We also offer flexible maintenance packages for ongoing needs."
     },
     {
       id: 4,
       question: "How experienced is your team?",
-      answer: "Our experienced team brings 15+ years of combined expertise from backgrounds in software development, AI implementation, and business consulting. We've successfully delivered projects across various technologies and business domains for clients of all sizes."
+      answer: "Our team brings diverse expertise from backgrounds in software development, AI implementation, and business consulting. Since our founding in 2024, we've successfully delivered dozens of projects across various technologies and business domains for clients of all sizes."
     },
     {
       id: 5,

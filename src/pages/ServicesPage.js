@@ -78,7 +78,7 @@ const ServicesPage = () => {
         'Sales lead qualification',
         'Technical support triage'
       ],
-      roi: '300% ROI in 6 months',
+      roi: 'Substantial ROI improvements',
       implementation: '2-4 weeks'
     },
     {
@@ -106,7 +106,7 @@ const ServicesPage = () => {
         'Data analytics dashboards',
         'Process automation tools'
       ],
-      roi: '250% productivity increase',
+      roi: 'Significant productivity gains',
       implementation: '4-12 weeks'
     },
     {
@@ -134,7 +134,7 @@ const ServicesPage = () => {
         'Customer insights',
         'Risk assessment'
       ],
-      roi: '400% average ROI',
+      roi: 'Proven ROI improvements',
       implementation: '3-8 weeks'
     }
   ];
@@ -146,7 +146,7 @@ const ServicesPage = () => {
       description: 'Advanced image and video analysis for quality control, security, and automation.',
       icon: <FiEye size={24} />,
       color: '#2563EB',
-      benefit: '99.7% accuracy',
+      benefit: 'Industry-leading accuracy',
       image: 'https://images.unsplash.com/photo-1655635949384-f737c5133dfe?w=400&h=300&fit=crop'
     },
     {
@@ -155,7 +155,7 @@ const ServicesPage = () => {
       description: 'Extract insights from text, automate document processing, and enable natural conversations.',
       icon: <FiDatabase size={24} />,
       color: '#7C3AED',
-      benefit: '95% automation rate',
+      benefit: 'High automation rate',
       image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=300&fit=crop'
     },
     {
@@ -164,7 +164,7 @@ const ServicesPage = () => {
       description: 'Scalable, secure cloud solutions optimized for AI workloads and modern applications.',
       icon: <FiCloud size={24} />,
       color: '#059669',
-      benefit: '99.99% uptime',
+      benefit: 'Exceptional uptime',
       image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&h=300&fit=crop'
     }
   ];
@@ -232,7 +232,7 @@ const ServicesPage = () => {
       challenge: 'Manual quality control was missing 15% of defects, costing $2.3M annually',
       solution: 'Deployed computer vision AI for real-time defect detection',
       results: [
-        '99.8% defect detection accuracy',
+        'Industry-leading defect detection',
         '$2.1M annual savings',
         '40% reduction in quality issues',
         'ROI achieved in 4 months'
@@ -241,8 +241,8 @@ const ServicesPage = () => {
     },
     {
       id: 2,
-      company: 'Financial Services Firm',
-      industry: 'Financial Services',
+      company: 'Professional Services Firm',
+      industry: 'Professional Services',
       challenge: 'Customer service team overwhelmed with 10,000+ daily inquiries',
       solution: 'Implemented intelligent AI agents for customer support automation',
       results: [
@@ -255,13 +255,13 @@ const ServicesPage = () => {
     },
     {
       id: 3,
-      company: 'Healthcare Organization',
-      industry: 'Healthcare',
+      company: 'Enterprise Organization',
+      industry: 'Regulated Industry',
       challenge: 'Document processing taking 40+ hours weekly, prone to errors',
       solution: 'AI-powered document intelligence and processing system',
       results: [
         '95% processing time reduction',
-        '99.5% accuracy improvement',
+        'Dramatic accuracy improvement',
         '$180K annual savings',
         'Compliance risk eliminated'
       ],
@@ -282,7 +282,7 @@ const ServicesPage = () => {
       quote: "The AI agents they built for us are like having 20 additional team members who never sleep. Our customer response times went from hours to minutes.",
       author: "M. Rodriguez",
       title: "Operations Director",
-      company: "Financial Services Company"
+      company: "Enterprise Services Company"
     },
     {
       id: 3,

@@ -224,11 +224,11 @@ const Footer = () => {
               <p style={styles.copyright}>
                 © {new Date().getFullYear()} Le Duc Systems. All rights reserved.
               </p>
-              {/* <div style={styles.termsLinks}>
+              <div style={styles.termsLinks}>
                 <a href="/privacy" style={styles.termLink}>Privacy Policy</a>
                 <a href="/terms" style={styles.termLink}>Terms of Service</a>
-                <a href="/cookies" style={styles.termLink}>Cookie Policy</a>
-              </div> */}
+                {/* <a href="/cookies" style={styles.termLink}>Cookie Policy</a> */}
+              </div>
             </div>
           </div>
         </div>
@@ -238,7 +238,6 @@ const Footer = () => {
       <ContactForm 
         isOpen={contactFormOpen} 
         onClose={toggleContactForm}
-        recipientEmail="leducsystems@gmail.com"
       />
     </>
   );

@@ -76,9 +76,9 @@ const ServiceDetails = () => {
         "Business Process Analysis & Opportunity Mapping",
         "Architecture Design & Technology Selection",
         "Agile Development with 2-Week Delivery Cycles",
-        "Comprehensive Testing (98.5% Test Coverage)",
+        "Comprehensive Testing with Excellent Coverage",
         "CI/CD Implementation & Performance Optimization",
-        "Ongoing Support with 99.9% SLA"
+        "Ongoing Support with Priority SLA"
       ],
       technologies: ["JavaScript/TypeScript", "React", "Node.js", "Python", "Java", "AWS/Azure/GCP", "MongoDB/PostgreSQL", "GraphQL", "Redis", "Elasticsearch"],
       image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
@@ -87,7 +87,7 @@ const ServiceDetails = () => {
       id: 2,
       title: "AI Solution Integration",
       description: "Incorporating artificial intelligence capabilities into your existing systems to enhance functionality and efficiency.",
-      longDescription: "Unlock the full potential of your business data with our AI integration services. Our implementations have reduced manual processing time by 67% and increased decision accuracy by 45% for our clients. We specialize in creating practical AI solutions that deliver immediate ROI while setting the foundation for advanced capabilities. Our approach focuses on seamlessly embedding AI into your existing workflows—whether it's automating document processing with 98% accuracy, implementing predictive maintenance that reduces downtime by 73%, or creating natural language interfaces that make complex systems accessible to all employees. We emphasize explainable AI design so your team always understands and trusts the systems supporting their decisions.",
+      longDescription: "Unlock the full potential of your business data with our AI integration services. Our implementations have significantly reduced manual processing time and increased decision accuracy for our clients. We specialize in creating practical AI solutions that deliver immediate ROI while setting the foundation for advanced capabilities. Our approach focuses on seamlessly embedding AI into your existing workflows—whether it's automating document processing with industry-leading accuracy, implementing predictive maintenance that dramatically reduces downtime, or creating natural language interfaces that make complex systems accessible to all employees. We emphasize explainable AI design so your team always understands and trusts the systems supporting their decisions.",
       process: [
         "Data Landscape & Opportunity Assessment",
         "Use Case Prioritization Based on ROI Potential",
@@ -103,7 +103,7 @@ const ServiceDetails = () => {
       id: 3,
       title: "Web & Mobile Applications",
       description: "User-friendly applications designed to provide seamless experiences across all devices.",
-      longDescription: "Capture and retain more customers with digital experiences that convert at every touchpoint. Our clients typically see 40% higher engagement rates and 25% better conversion rates after implementing our solutions. We create applications that not only look stunning but deliver exceptional performance—with page load times under 1.5 seconds and a 99.9% crash-free rate. Our development process prioritizes user experience through extensive research and testing, ensuring interfaces that are intuitive for your specific audience. We place special emphasis on performance optimization, accessibility compliance, and cross-platform consistency to maximize your market reach while minimizing development and maintenance costs.",
+      longDescription: "Capture and retain more customers with digital experiences that convert at every touchpoint. Our clients typically see significantly higher engagement rates and better conversion rates after implementing our solutions. We create applications that not only look stunning but deliver exceptional performance—with fast page load times and exceptional reliability. Our development process prioritizes user experience through extensive research and testing, ensuring interfaces that are intuitive for your specific audience. We place special emphasis on performance optimization, accessibility compliance, and cross-platform consistency to maximize your market reach while minimizing development and maintenance costs.",
       process: [
         "User Research & Competitive Analysis",
         "Interactive Prototyping & User Testing",
@@ -119,7 +119,7 @@ const ServiceDetails = () => {
       id: 4,
       title: "Cloud Infrastructure & DevOps",
       description: "Robust, scalable cloud infrastructure setup with automated deployment pipelines for continuous delivery.",
-      longDescription: "Cut infrastructure costs by up to 40% while achieving enterprise-grade reliability with our cloud and DevOps expertise. We've helped companies reduce deployment times from days to minutes while maintaining 99.99% uptime. Our approach combines cloud-native architecture with comprehensive automation to create infrastructure that scales precisely with your needs—eliminating overprovisioning while ensuring capacity during peak demands. Security is built into every layer with automated compliance checks and least-privilege access controls. For organizations transitioning to the cloud, our migration strategies minimize disruption with zero-downtime cutover approaches that have successfully moved mission-critical workloads for healthcare, financial services, and e-commerce clients.",
+      longDescription: "Cut infrastructure costs significantly while achieving enterprise-grade reliability with our cloud and DevOps expertise. We've helped companies reduce deployment times from days to minutes while maintaining exceptional uptime. Our approach combines cloud-native architecture with comprehensive automation to create infrastructure that scales precisely with your needs—eliminating overprovisioning while ensuring capacity during peak demands. Security is built into every layer with automated compliance checks and least-privilege access controls. For organizations transitioning to the cloud, our migration strategies minimize disruption with zero-downtime cutover approaches that have successfully moved mission-critical workloads for enterprise clients across various industries.",
       process: [
         "Infrastructure Audit & Cost-Optimization Analysis",
         "Security & Compliance Requirements Mapping",

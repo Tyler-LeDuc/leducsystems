@@ -599,14 +599,14 @@ const CareersPage = () => {
                     </>
                   )}
                   
-                  <a
-                    href={`mailto:leducsystems@gmail.com?subject=Interest in ${job.title} Opportunity`}
+                  <button
+                    onClick={() => window.location.href = '/contact'}
                     style={styles.applyButton}
                     onMouseOver={(e) => e.currentTarget.style.backgroundColor = styles.applyButtonHover.backgroundColor}
                     onMouseOut={(e) => e.currentTarget.style.backgroundColor = styles.applyButton.backgroundColor}
                   >
                     Express Interest
-                  </a>
+                  </button>
                 </div>
               ))}
             </div>
@@ -677,12 +677,7 @@ const CareersPage = () => {
           }} />
           
           <div style={{ position: 'relative', zIndex: 1 }}>
-            <h1 style={styles.title}>Dive Into Our Talent Pool</h1>
-            <p style={styles.subtitle}>
-              Like tributaries feeding into a mighty river, talented professionals join our flow to create powerful currents of innovation.
-              Whether you're ready to ride the next wave of opportunity or want to be part of our talent ecosystem for future projects, 
-              we're looking for passionate individuals who can navigate the waters of modern technology.
-            </p>
+            <h1 style={styles.title}>Dive Into Our Talent Pool</h1>s
           </div>
         </div>
         
@@ -726,8 +721,8 @@ const CareersPage = () => {
             Even if the current doesn't seem to flow in your direction, we'd love to explore how your skills might create new ripples in our talent pool.
             Send us your resume and let's see how our professional streams might converge.
           </p>
-          <a 
-            href="mailto:leducsystems@gmail.com?subject=Professional Introduction - [Your Name]" 
+          <button 
+            onClick={() => window.location.href = '/contact'} 
             style={styles.emailLink}
             onMouseOver={(e) => {
               e.currentTarget.style.backgroundColor = styles.emailLinkHover.backgroundColor;
@@ -739,8 +734,7 @@ const CareersPage = () => {
             }}
           >
             Get In Touch
-          </a>
-          <span style={styles.emailText}>leducsystems@gmail.com</span>
+          </button>
         </div>
       </div>
       

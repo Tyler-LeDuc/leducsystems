@@ -49,8 +49,8 @@ const WhyChooseUs = () => {
       id: 4,
       icon: <FiUsers size={32} />,
       title: 'Expert Team',
-      description: 'Senior developers with 15+ years average experience in modern technologies and industry best practices.',
-      metric: '15+ Years Experience',
+      description: 'Expert developers with deep experience in modern technologies and industry best practices.',
+      metric: 'Expert Team',
       gradient: 'linear-gradient(135deg, #FFC905 0%, #FFB000 100%)',
       color: '#FFC905'
     },
@@ -75,7 +75,7 @@ const WhyChooseUs = () => {
   ];
 
   const stats = [
-    { value: '35+', label: 'Projects Delivered', icon: <FiTarget size={24} /> },
+    { value: '25+', label: 'Projects Delivered', icon: <FiTarget size={24} /> },
     { value: '98%', label: 'Client Satisfaction', icon: <FiHeart size={24} /> },
     { value: '25+', label: 'Happy Clients', icon: <FiHeart size={24} /> },
     { value: '24/7', label: 'Support Coverage', icon: <FiClock size={24} /> }

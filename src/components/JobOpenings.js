@@ -222,8 +222,7 @@ const JobOpenings = () => {
             <ContactForm 
               embedded={true}
               isJobApplication={true}
-              recipientEmail="leducsystems@gmail.com"
-            />
+                  />
           </div>
         )}
       </div>

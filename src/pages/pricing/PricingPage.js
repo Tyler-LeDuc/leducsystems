@@ -11,6 +11,7 @@ const PricingPage = () => {
   const [selectedService, setSelectedService] = useState(null);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   
+  
   const toggleContactForm = (service = null) => {
     setSelectedService(service);
     setContactFormOpen(!contactFormOpen);
@@ -138,7 +139,7 @@ const PricingPage = () => {
     },
     {
       icon: "🎯",
-      title: "100% Success Rate",
+      title: "Proven Track Record",
       description: "Every project delivered on time and budget"
     },
     {
@@ -150,9 +151,9 @@ const PricingPage = () => {
   
   // Success metrics
   const successMetrics = [
-    { number: "50+", label: "AI Projects Delivered" },
+    { number: "25+", label: "AI Projects Delivered" },
     { number: "$2M+", label: "Client Value Generated" },
-    { number: "100%", label: "On-Time Delivery" },
+    { number: "100%", label: "On-Time Delivery*" },
     { number: "4.9★", label: "Client Satisfaction" }
   ];
   
@@ -445,29 +446,33 @@ const PricingPage = () => {
       display: 'block',
       width: '100%',
       padding: isMobile ? '18px' : '16px',
-      background: unifiedTheme.gradients.wave,
+      background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
       color: '#FFFFFF',
       textAlign: 'center',
       border: 'none',
       borderRadius: '10px',
-      fontWeight: '700',
+      fontWeight: '600',
       fontSize: '1.1rem',
       cursor: 'pointer',
       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       marginTop: 'auto',
-      boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+      boxShadow: '0 4px 14px rgba(37, 99, 235, 0.25)',
       position: 'relative',
       overflow: 'hidden',
       minHeight: '48px',
       WebkitTapHighlightColor: 'transparent',
     },
     planButtonPopular: {
-      background: unifiedTheme.gradients.ocean,
-      boxShadow: '0 6px 20px rgba(59, 130, 246, 0.4)',
+      background: 'linear-gradient(135deg, #2563EB 0%, #1E40AF 100%)',
+      boxShadow: '0 6px 20px rgba(37, 99, 235, 0.35)',
+      fontSize: '1.15rem',
+      padding: isMobile ? '20px' : '18px',
+      fontWeight: '700',
     },
     planButtonHover: {
-      transform: isMobile ? 'scale(0.98)' : 'translateY(-3px)',
-      boxShadow: '0 8px 20px rgba(59, 130, 246, 0.4)',
+      transform: isMobile ? 'scale(0.98)' : 'translateY(-2px)',
+      boxShadow: '0 8px 24px rgba(37, 99, 235, 0.4)',
+      background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
     },
     ctaUrgency: {
       fontSize: '0.85rem',
@@ -675,21 +680,26 @@ const PricingPage = () => {
     },
     ctaButton: {
       display: 'inline-block',
-      padding: isMobile ? '18px 30px' : '18px 40px',
-      backgroundColor: '#FFFFFF',
-      color: unifiedTheme.colors.primary[700],
+      padding: isMobile ? '20px 35px' : '20px 45px',
+      background: 'linear-gradient(135deg, #1E40AF 0%, #2563EB 100%)',
+      color: '#FFFFFF',
       borderRadius: '12px',
       fontWeight: '700',
-      fontSize: isMobile ? '1.1rem' : '1.2rem',
+      fontSize: isMobile ? '1.15rem' : '1.25rem',
       textDecoration: 'none',
       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-      boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
-      minHeight: '48px',
+      boxShadow: '0 8px 24px rgba(37, 99, 235, 0.3)',
+      minHeight: '56px',
       WebkitTapHighlightColor: 'transparent',
+      position: 'relative',
+      overflow: 'hidden',
+      border: '2px solid transparent',
     },
     ctaButtonHover: {
-      transform: isMobile ? 'scale(0.98)' : 'translateY(-3px) scale(1.05)',
-      boxShadow: '0 15px 35px rgba(0, 0, 0, 0.3)',
+      transform: isMobile ? 'scale(0.98)' : 'translateY(-3px)',
+      boxShadow: '0 12px 32px rgba(37, 99, 235, 0.4)',
+      background: 'linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%)',
+      border: '2px solid rgba(255, 255, 255, 0.2)',
     },
     ctaUrgencyText: {
       color: 'rgba(255, 255, 255, 0.9)',
@@ -864,7 +874,7 @@ const PricingPage = () => {
             Claim Your Free Strategy Session Now
           </button>
           <p style={styles.ctaUrgencyText}>
-            🔒 100% Confidential • No Obligation • Immediate Value
+            🔒 Completely Confidential • No Obligation • Immediate Value
           </p>
         </div>
       </div>
@@ -873,7 +883,6 @@ const PricingPage = () => {
       <ContactForm
         isOpen={contactFormOpen}
         onClose={toggleContactForm}
-        recipientEmail="leducsystems@gmail.com"
         selectedService={selectedService}
       />
     </section>

@@ -14,7 +14,7 @@ const About = () => {
   
   // Counter animation for statistics
   const [counters, setCounters] = useState({
-    projects: 35,
+    projects: 25,
     clients: 25,
     satisfaction: 98,
     uptime: 99

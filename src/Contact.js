@@ -107,7 +107,6 @@ const Contact = () => {
             <ContactForm 
               isOpen={true} 
               onClose={() => {}} // Empty function since we always want it open
-              recipientEmail="leducsystems@gmail.com"
               embedded={true}
             />
           </div>

@@ -6,7 +6,7 @@ import emailjs from '@emailjs/browser';
 const ContactForm = ({ 
   isOpen, 
   onClose, 
-  recipientEmail = 'leducsystems@gmail.com', 
+  recipientEmail = 'contact@leducsystems.com', 
   embedded = false, 
   isJobApplication = false 
 }) => {

@@ -532,7 +532,6 @@ const Hero = () => {
       <ContactForm 
         isOpen={contactFormOpen} 
         onClose={toggleContactForm}
-        recipientEmail="leducsystems@gmail.com"
       />
     </>
   );

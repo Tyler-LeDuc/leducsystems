@@ -503,7 +503,6 @@ const Header = ({ scrolled: propScrolled }) => {
       <ContactForm 
         isOpen={contactFormOpen} 
         onClose={toggleContactForm}
-        recipientEmail="leducsystems@gmail.com"
       />
     </>
   );

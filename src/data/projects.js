@@ -38,7 +38,7 @@ export const projects = [
   {
     id: 4,
     name: "Computer Vision Quality Control System",
-    description: "Implemented an automated visual inspection system for a precision manufacturing client using computer vision and deep learning. The solution identifies defects with 99.2% accuracy at 20x the speed of manual inspection, reducing defect escape rate by 94%.",
+    description: "Implemented an automated visual inspection system for a precision manufacturing client using computer vision and deep learning. The solution identifies defects with industry-leading accuracy at dramatically increased speeds compared to manual inspection, significantly reducing defect escape rates.",
     gradient: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
     stats: {
       inspectionSpeed: "20x",
