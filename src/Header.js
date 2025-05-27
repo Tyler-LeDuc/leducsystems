@@ -94,6 +94,11 @@ const Header = ({ scrolled: propScrolled }) => {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      maxWidth: '1400px',
+      margin: '0 auto',
+      width: '100%',
+      padding: isMobile ? '0 1rem' : '0 3rem',
+      boxSizing: 'border-box',
     },
     logoContainer: {
       display: 'flex',
@@ -130,18 +135,19 @@ const Header = ({ scrolled: propScrolled }) => {
       pointerEvents: 'none',
     },
     nav: {
-      display: 'flex',
-      gap: '2.8rem',
+      display: isMobile ? 'none' : 'flex',
+      gap: '2rem',
+      marginRight: '2rem',
     },
     navLink: {
       color: '#334155', // Darker slate for better contrast
       textDecoration: 'none',
       fontWeight: 500,
-      fontSize: '0.95rem',
+      fontSize: '1rem',
       letterSpacing: '0.5px',
       transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
       position: 'relative',
-      padding: '0.5rem 0',
+      padding: '0.5rem 0.75rem',
       opacity: 0.85,
     },
     navLinkHover: {
@@ -275,15 +281,15 @@ const Header = ({ scrolled: propScrolled }) => {
       display: isMobile ? 'none' : 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '0.65rem 1.5rem',
+      padding: '0.75rem 2rem',
       background: buttonHover 
         ? 'linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%)' 
         : 'linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%)',
       color: '#FFFFFF',
       borderRadius: '6px',
       fontWeight: 600,
-      fontSize: '0.95rem',
-      marginLeft: '1.8rem',
+      fontSize: '1rem',
+      marginLeft: '1rem',
       border: 'none',
       transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
       boxShadow: buttonHover 
@@ -355,8 +361,44 @@ const Header = ({ scrolled: propScrolled }) => {
 
   return (
     <>
-      <header style={styles.header}>
-        <div style={{...commonStyles.container, ...styles.headerContainer}}>
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 101,
+        width: '100%',
+      }}>
+        {/* Phone bar */}
+        <div style={{
+          background: '#1A1F2E',
+          color: '#FFFFFF',
+          padding: '0.25rem 0',
+          fontSize: '0.75rem',
+          textAlign: 'center',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        }}>
+          <a 
+            href="tel:+14804149516" 
+            style={{
+              color: '#FBBF24',
+              textDecoration: 'none',
+              fontWeight: '500',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+            }}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            Call: (480) 414-9516
+          </a>
+        </div>
+        
+        {/* Main header */}
+        <header style={styles.header}>
+          <div style={styles.headerContainer}>
           <Link to="/" style={styles.logoContainer} onClick={() => handleLinkClick('home')}>
             <div style={styles.logoWrapper}>
               <div style={styles.logoGlow}></div>
@@ -420,6 +462,7 @@ const Header = ({ scrolled: propScrolled }) => {
                 </Link>
               ))}
             </nav>
+            
             
             <button 
               style={styles.ctaButton}
@@ -496,8 +539,9 @@ const Header = ({ scrolled: propScrolled }) => {
               Get Started
             </button>
           </div>
-        </div>
-      </header>
+          </div>
+        </header>
+      </div>
 
       {/* Integrated ContactForm Component */}
       <ContactForm 

@@ -206,8 +206,46 @@ const ContactPage = () => {
       {/* Contact Section */}
       <div style={{...commonStyles.container, marginTop: '-60px'}}>
         <div style={contactStyles.container}>
-          {/* Contact Methods */}
-          <div style={contactStyles.contactInfo}>
+          {/* CTA Section */}
+          <div style={contactStyles.ctaSection}>
+            <h2 style={{ 
+              fontSize: '1.8rem', 
+              fontWeight: '700', 
+              color: '#1F2937', 
+              marginBottom: '16px' 
+            }}>
+              Ready to Start Your Project?
+            </h2>
+            <p style={{ 
+              fontSize: '1.1rem', 
+              color: '#6B7280', 
+              marginBottom: '32px',
+              maxWidth: '600px',
+              margin: '0 auto 32px',
+            }}>
+              Schedule a free consultation to discuss your needs and discover how we can help you achieve your goals.
+            </p>
+          </div>
+          
+          
+          {/* Embedded Contact Form */}
+          <div style={contactStyles.formWrapper}>
+            <div id="contact-form-container">
+              <ContactForm 
+                isOpen={true} 
+                onClose={() => {}}
+                embedded={true}
+              />
+            </div>
+          </div>
+          
+          {/* Contact Methods - Centered with 2 columns */}
+          <div style={{
+            ...contactStyles.contactInfo,
+            gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(2, 1fr)',
+            maxWidth: '600px',
+            margin: '48px auto 0',
+          }}>
             {/* Phone Card */}
             <div style={contactStyles.contactCard}
                  onMouseEnter={(e) => {
@@ -252,39 +290,6 @@ const ContactPage = () => {
               <p style={{ ...contactStyles.contactCardValue, fontSize: '0.85rem', marginTop: '8px' }}>
                 By appointment only
               </p>
-            </div>
-          </div>
-          
-          {/* CTA Section */}
-          <div style={contactStyles.ctaSection}>
-            <h2 style={{ 
-              fontSize: '1.8rem', 
-              fontWeight: '700', 
-              color: '#1F2937', 
-              marginBottom: '16px' 
-            }}>
-              Ready to Start Your Project?
-            </h2>
-            <p style={{ 
-              fontSize: '1.1rem', 
-              color: '#6B7280', 
-              marginBottom: '32px',
-              maxWidth: '600px',
-              margin: '0 auto 32px',
-            }}>
-              Schedule a free consultation to discuss your needs and discover how we can help you achieve your goals.
-            </p>
-          </div>
-          
-          
-          {/* Embedded Contact Form */}
-          <div style={contactStyles.formWrapper}>
-            <div id="contact-form-container">
-              <ContactForm 
-                isOpen={true} 
-                onClose={() => {}}
-                embedded={true}
-              />
             </div>
           </div>
           

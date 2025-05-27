@@ -141,7 +141,7 @@ const HeroNew = () => {
       background: '#000000',
       position: 'relative',
       overflow: 'hidden',
-      paddingTop: '80px',
+      paddingTop: '110px',
       paddingBottom: '40px'
     },
     backgroundCanvas: {

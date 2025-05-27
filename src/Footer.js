@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { commonStyles } from './utils/styles';
 import ContactForm from './ContactForm';
 
@@ -210,12 +211,12 @@ const Footer = () => {
               <div style={styles.footerColumn}>
                 <h3 style={styles.sectionTitle}>Site Navigation</h3>
                 <div style={styles.navLinks}>
-                  <a href="/" style={styles.link}>Home</a>
-                  <a href="/services" style={styles.link}>Services</a>
-                  <a href="/pricing" style={styles.link}>Pricing</a>
-                  <a href="/careers" style={styles.link}>Careers</a>
-                  <a href="/about" style={styles.link}>About</a>
-                  <a href="/contact" style={styles.link}>Contact</a>
+                  <Link to="/" style={styles.link}>Home</Link>
+                  <Link to="/services" style={styles.link}>Services</Link>
+                  <Link to="/pricing" style={styles.link}>Pricing</Link>
+                  <Link to="/careers" style={styles.link}>Careers</Link>
+                  <Link to="/about" style={styles.link}>About</Link>
+                  <Link to="/contact" style={styles.link}>Contact</Link>
                 </div>
               </div>
             </div>
@@ -225,9 +226,9 @@ const Footer = () => {
                 © {new Date().getFullYear()} Le Duc Systems. All rights reserved.
               </p>
               <div style={styles.termsLinks}>
-                <a href="/privacy" style={styles.termLink}>Privacy Policy</a>
-                <a href="/terms" style={styles.termLink}>Terms of Service</a>
-                {/* <a href="/cookies" style={styles.termLink}>Cookie Policy</a> */}
+                <Link to="/privacy" style={styles.termLink}>Privacy Policy</Link>
+                <Link to="/terms" style={styles.termLink}>Terms of Service</Link>
+                {/* <Link to="/cookies" style={styles.termLink}>Cookie Policy</Link> */}
               </div>
             </div>
           </div>

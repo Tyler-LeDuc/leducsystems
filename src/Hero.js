@@ -45,7 +45,7 @@ const Hero = () => {
 
   const styles = {
     hero: {
-      paddingTop: '150px',
+      paddingTop: '170px',
       minHeight: '100vh',
       display: 'flex',
       alignItems: 'center',
