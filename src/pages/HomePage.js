@@ -2,7 +2,6 @@ import React from 'react';
 import HeroNew from '../HeroNew';
 import Services from '../Services';
 import ProjectShowcase from '../ProjectShowcase';
-import Testimonials from '../components/Testimonials';
 import CompanyTimeline from '../components/CompanyTimeline';
 import FAQ from '../components/FAQ';
 import WhyChooseUs from '../components/WhyChooseUs';
@@ -17,7 +16,6 @@ const HomePage = () => {
       <ProjectShowcase />
       <WhyChooseUs />
       <TechStack />
-      <Testimonials />
       <FAQ />
       <CallToAction />
     </div>

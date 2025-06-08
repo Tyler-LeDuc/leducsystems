@@ -7,7 +7,6 @@ const HeroNew = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [contactFormOpen, setContactFormOpen] = useState(false);
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [typingText, setTypingText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
   
@@ -26,27 +25,27 @@ const HeroNew = () => {
   const backgroundY = useTransform(scrollY, [0, 500], [0, 150]);
   
   const typingPhrases = [
-    "AI-Powered Solutions",
-    "Enterprise Software",
-    "Digital Transformation",
-    "Machine Learning Magic"
+    "Custom Software Solutions",
+    "AI Implementation Experts",
+    "Claude-Powered Development",
+    "Enterprise Applications"
   ];
 
   const projectHighlights = [
     {
-      metric: "2-4 Weeks",
-      description: "Average project delivery time",
-      detail: "From kickoff to production"
+      metric: "$2.5M+",
+      description: "Average client revenue increase",
+      detail: "Within first 12 months"
     },
     {
-      metric: "24/7",
-      description: "AI-powered monitoring",
-      detail: "Real-time system optimization"
+      metric: "3 Hours",
+      description: "From idea to working prototype",
+      detail: "AI-accelerated development"
     },
     {
-      metric: "100%",
-      description: "Custom solutions",
-      detail: "No templates, pure innovation"
+      metric: "Zero",
+      description: "Production downtime incidents",
+      detail: "99.99% uptime guarantee"
     }
   ];
 
@@ -88,7 +87,7 @@ const HeroNew = () => {
         
         if (charIndex === currentPhrase.length) {
           isDeleting = true;
-          timeout = setTimeout(type, 2000);
+          timeout = setTimeout(type, 3000); // Increased pause time at end of word
         } else {
           timeout = setTimeout(type, 100);
         }
@@ -99,7 +98,7 @@ const HeroNew = () => {
         if (charIndex === 0) {
           isDeleting = false;
           phraseIndex = (phraseIndex + 1) % typingPhrases.length;
-          timeout = setTimeout(type, 500);
+          timeout = setTimeout(type, 800); // Increased pause before next word
         } else {
           timeout = setTimeout(type, 50);
         }
@@ -111,13 +110,6 @@ const HeroNew = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  // Project highlight rotation
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % projectHighlights.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [projectHighlights.length]);
 
   // Responsive handler
   useEffect(() => {
@@ -135,14 +127,14 @@ const HeroNew = () => {
   const styles = {
     hero: {
       minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
       background: '#000000',
       position: 'relative',
       overflow: 'hidden',
-      paddingTop: '110px',
-      paddingBottom: '40px'
+      paddingTop: isMobile ? '140px' : '160px', // Adjusted for phone bar + header height
+      paddingBottom: '40px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center'
     },
     backgroundCanvas: {
       position: 'absolute',
@@ -161,29 +153,34 @@ const HeroNew = () => {
     floatingDuck: {
       position: 'relative',
       display: 'inline-block',
-      width: isMobile ? '80px' : '100px',
-      height: isMobile ? '80px' : '100px',
+      width: isMobile ? '120px' : '160px',
+      height: isMobile ? '120px' : '160px',
       marginLeft: '1rem',
       verticalAlign: 'middle',
     },
     duckSvg: {
       width: '100%',
       height: '100%',
-      filter: 'drop-shadow(0 20px 40px rgba(251, 191, 36, 0.5))',
+      filter: 'drop-shadow(0 30px 60px rgba(251, 191, 36, 0.6)) drop-shadow(0 15px 30px rgba(245, 158, 11, 0.4))',
     },
     content: {
       position: 'relative',
       zIndex: 10,
       width: '100%',
-      maxWidth: '1400px',
+      maxWidth: '1200px',
+      margin: '0 auto',
       padding: '0 2rem',
-      display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-      gap: '4rem',
+      display: 'flex',
+      flexDirection: 'column',
       alignItems: 'center',
+      textAlign: 'center',
     },
     leftColumn: {
-      textAlign: isMobile ? 'center' : 'left',
+      textAlign: 'center',
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
     },
     trustBadge: {
       display: 'inline-flex',
@@ -216,7 +213,9 @@ const HeroNew = () => {
       fontWeight: '800',
       color: '#FFFFFF',
       marginBottom: '2rem',
-      minHeight: isMobile ? '3rem' : '4rem',
+      minHeight: isMobile ? '3.5rem' : '5rem',
+      display: 'flex',
+      alignItems: 'center',
     },
     cursor: {
       display: 'inline-block',
@@ -231,14 +230,15 @@ const HeroNew = () => {
       color: '#94A3B8',
       lineHeight: '1.6',
       marginBottom: '3rem',
-      maxWidth: '600px',
+      maxWidth: '700px',
+      margin: '0 auto 3rem',
     },
     ctaGroup: {
       display: 'flex',
       gap: '1rem',
       flexWrap: 'wrap',
       alignItems: 'center',
-      justifyContent: isMobile ? 'center' : 'flex-start',
+      justifyContent: 'center',
       marginBottom: '3rem',
     },
     primaryCta: {
@@ -285,7 +285,7 @@ const HeroNew = () => {
       alignItems: 'center',
       gap: '2rem',
       flexWrap: 'wrap',
-      justifyContent: isMobile ? 'center' : 'flex-start',
+      justifyContent: 'center',
     },
     capabilitiesGrid: {
       display: 'flex',
@@ -391,16 +391,6 @@ const HeroNew = () => {
       color: '#94A3B8',
       marginBottom: '1.5rem',
     },
-    highlightCta: {
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: '0.5rem',
-      fontSize: '0.875rem',
-      color: '#FBBF24',
-      fontWeight: '500',
-      cursor: 'pointer',
-      transition: 'all 0.3s ease',
-    },
   };
 
   return (
@@ -482,7 +472,7 @@ const HeroNew = () => {
 
             {/* Subheadline */}
             <p style={styles.subheadline}>
-              We build AI-powered software that transforms your business in weeks, not years. 
+              Custom software development powered by Claude and cutting-edge AI. We transform your ideas into production-ready solutions.
             </p>
 
             {/* CTA buttons */}
@@ -497,13 +487,13 @@ const HeroNew = () => {
                 onClick={() => setContactFormOpen(true)}
               >
                 <span style={styles.ctaPulse} />
-                <span style={{ position: 'relative' }}>Get Your Free AI Roadmap</span>
+                <span style={{ position: 'relative' }}>Schedule a Consultation</span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </motion.button>
 
-              {/* Geometric Animated Duck */}
+              {/* Ultra Cool Animated Duck */}
               <motion.div 
                 ref={duckRef}
                 style={{
@@ -512,171 +502,388 @@ const HeroNew = () => {
                   y: smoothMouseY,
                 }}
                 animate={{
-                  y: [0, -30, 0],
+                  y: [0, -15, -8, 0],
+                  rotate: [0, 3, -3, 0],
                 }}
                 transition={{
-                  duration: 4,
+                  duration: 6,
                   repeat: Infinity,
                   ease: 'easeInOut',
                 }}
               >
-                <svg viewBox="0 0 200 200" style={styles.duckSvg}>
+                <svg viewBox="0 0 200 250" style={styles.duckSvg}>
                   <defs>
-                    <linearGradient id="duckYellow" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#FCD34D" />
-                      <stop offset="100%" stopColor="#FBBF24" />
+                    {/* Enhanced gradients */}
+                    <linearGradient id="duckGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#FFD700" />
+                      <stop offset="50%" stopColor="#FBBF24" />
+                      <stop offset="100%" stopColor="#F59E0B" />
                     </linearGradient>
                     <linearGradient id="duckOrange" x1="0%" y1="0%" x2="100%" y2="100%">
                       <stop offset="0%" stopColor="#FB923C" />
-                      <stop offset="100%" stopColor="#F97316" />
+                      <stop offset="50%" stopColor="#F97316" />
+                      <stop offset="100%" stopColor="#EA580C" />
                     </linearGradient>
-                    <filter id="glow">
+                    <radialGradient id="duckGlow">
+                      <stop offset="0%" stopColor="#FBBF24" stopOpacity="0.6" />
+                      <stop offset="50%" stopColor="#F59E0B" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#F59E0B" stopOpacity="0" />
+                    </radialGradient>
+                    {/* Metallic shimmer */}
+                    <linearGradient id="shimmer" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <motion.stop 
+                        offset="0%" 
+                        stopColor="#FFFFFF" 
+                        stopOpacity="0"
+                        animate={{ stopOpacity: [0, 0.4, 0] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                      />
+                      <motion.stop 
+                        offset="50%" 
+                        stopColor="#FFFFFF" 
+                        stopOpacity="0.3"
+                        animate={{ stopOpacity: [0.3, 0.7, 0.3] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                      />
+                      <motion.stop 
+                        offset="100%" 
+                        stopColor="#FFFFFF" 
+                        stopOpacity="0"
+                        animate={{ stopOpacity: [0, 0.4, 0] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                      />
+                    </linearGradient>
+                    {/* Glow filter */}
+                    <filter id="glow" width="300%" height="300%">
                       <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                      <feColorMatrix in="coloredBlur" mode="matrix" 
+                        values="1 0 0 0 0.95
+                                0 1 0 0 0.75  
+                                0 0 1 0 0.04
+                                0 0 0 1 0"/>
                       <feMerge>
                         <feMergeNode in="coloredBlur"/>
                         <feMergeNode in="SourceGraphic"/>
                       </feMerge>
                     </filter>
+                    {/* Motion blur filter */}
+                    <filter id="motionBlur">
+                      <feGaussianBlur in="SourceGraphic" stdDeviation="1,0" />
+                    </filter>
                   </defs>
                   
                   <g transform="translate(100, 100)">
-                    {/* Shadow */}
+                    {/* Dynamic glow aura - properly centered */}
+                    <motion.circle
+                      cx="0"
+                      cy="0"
+                      r="65"
+                      fill="url(#duckGlow)"
+                      filter="url(#glow)"
+                      animate={{ 
+                        scale: [1, 1.2, 1],
+                        opacity: [0.3, 0.6, 0.3],
+                      }}
+                      transition={{ 
+                        duration: 4, 
+                        repeat: Infinity, 
+                        ease: "easeInOut" 
+                      }}
+                    />
+                    
+                    {/* Bird body group - centered */}
+                    <g transform="translate(0, 0)">
+                    
+                    {/* Shadow with motion */}
                     <motion.ellipse
                       cx="0"
                       cy="60"
-                      rx="40"
-                      ry="10"
-                      fill="rgba(0,0,0,0.1)"
-                      animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.05, 0.1] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                    
-                    {/* Duck Body - Clean geometric shape */}
-                    <motion.path
-                      d="M -30 10
-                         C -30 -20, -10 -35, 15 -35
-                         C 40 -35, 45 -20, 45 0
-                         C 45 30, 30 40, 0 40
-                         C -30 40, -40 30, -30 10"
-                      fill="url(#duckYellow)"
-                      strokeWidth="2"
-                      stroke="#F59E0B"
+                      rx="45"
+                      ry="12"
+                      fill="rgba(0,0,0,0.2)"
                       animate={{ 
-                        d: [
-                          "M -30 10 C -30 -20, -10 -35, 15 -35 C 40 -35, 45 -20, 45 0 C 45 30, 30 40, 0 40 C -30 40, -40 30, -30 10",
-                          "M -30 10 C -30 -22, -10 -37, 15 -37 C 40 -37, 45 -22, 45 0 C 45 32, 30 42, 0 42 C -30 42, -40 32, -30 10",
-                          "M -30 10 C -30 -20, -10 -35, 15 -35 C 40 -35, 45 -20, 45 0 C 45 30, 30 40, 0 40 C -30 40, -40 30, -30 10"
-                        ]
-                      }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                    
-                    {/* Wing - Simple geometric */}
-                    <motion.path
-                      d="M -5 5
-                         C -5 -10, 5 -15, 15 -10
-                         C 25 -5, 25 10, 15 20
-                         C 5 25, -5 20, -5 5"
-                      fill="#F59E0B"
-                      opacity="0.8"
-                      animate={{ 
-                        rotate: [0, -5, 0],
-                        scale: [1, 1.05, 1]
+                        scale: [1, 1.3, 1], 
+                        opacity: [0.2, 0.1, 0.2] 
                       }}
                       transition={{ 
-                        duration: 2, 
+                        duration: 6, 
                         repeat: Infinity, 
-                        ease: "easeInOut"
+                        ease: "easeInOut" 
                       }}
-                      style={{ transformOrigin: "5px 5px" }}
                     />
                     
-                    {/* Beak - Distinctive triangular shape */}
+                    {/* Duck Body - Sleek and modern */}
                     <motion.path
-                      d="M 40 -10 L 55 -8 L 40 -6 Z"
-                      fill="url(#duckOrange)"
+                      d="M -35 15
+                         C -35 -25, -15 -40, 20 -40
+                         C 50 -40, 55 -25, 55 0
+                         C 55 35, 40 45, 5 45
+                         C -35 45, -45 35, -35 15"
+                      fill="url(#duckGold)"
+                      strokeWidth="3"
+                      stroke="#F59E0B"
+                      filter="url(#glow)"
                       animate={{ 
-                        scaleX: [1, 1.1, 1]
+                        d: [
+                          "M -35 15 C -35 -25, -15 -40, 20 -40 C 50 -40, 55 -25, 55 0 C 55 35, 40 45, 5 45 C -35 45, -45 35, -35 15",
+                          "M -35 15 C -35 -28, -15 -43, 20 -43 C 50 -43, 55 -28, 55 0 C 55 38, 40 48, 5 48 C -35 48, -45 38, -35 15",
+                          "M -35 15 C -35 -25, -15 -40, 20 -40 C 50 -40, 55 -25, 55 0 C 55 35, 40 45, 5 45 C -35 45, -45 35, -35 15"
+                        ]
                       }}
                       transition={{ 
                         duration: 3, 
                         repeat: Infinity, 
-                        ease: "easeInOut"
+                        ease: "easeInOut" 
                       }}
-                      style={{ transformOrigin: "40px -8px" }}
                     />
                     
-                    {/* Eye - Minimalist design */}
-                    <g>
-                      <circle cx="25" cy="-15" r="8" fill="#FFFFFF" />
-                      <motion.circle 
-                        cx="25" 
-                        cy="-15" 
-                        r="5" 
-                        fill="#1F2937"
+                    {/* Body shimmer overlay */}
+                    <motion.path
+                      d="M -35 15
+                         C -35 -25, -15 -40, 20 -40
+                         C 50 -40, 55 -25, 55 0
+                         C 55 35, 40 45, 5 45
+                         C -35 45, -45 35, -35 15"
+                      fill="url(#shimmer)"
+                      opacity="0.4"
+                    />
+                    
+                    {/* Dynamic Wing with feather details */}
+                    <motion.g
+                      animate={{ 
+                        rotate: [-10, 10, -10],
+                      }}
+                      transition={{ 
+                        duration: 1.5, 
+                        repeat: Infinity, 
+                        ease: "easeInOut"
+                      }}
+                      style={{ transformOrigin: "0px 0px" }}
+                    >
+                      <motion.path
+                        d="M -10 5
+                           C -10 -20, 10 -25, 25 -15
+                           C 40 -5, 40 15, 25 30
+                           C 10 40, -10 30, -10 5"
+                        fill="#F59E0B"
+                        opacity="0.9"
+                        filter="url(#motionBlur)"
                         animate={{ 
-                          scale: [1, 0.8, 1]
+                          d: [
+                            "M -10 5 C -10 -20, 10 -25, 25 -15 C 40 -5, 40 15, 25 30 C 10 40, -10 30, -10 5",
+                            "M -10 5 C -15 -25, 15 -30, 30 -15 C 45 -5, 45 15, 30 35 C 15 45, -10 35, -10 5",
+                            "M -10 5 C -10 -20, 10 -25, 25 -15 C 40 -5, 40 15, 25 30 C 10 40, -10 30, -10 5"
+                          ]
                         }}
                         transition={{ 
-                          duration: 4, 
+                          duration: 1, 
                           repeat: Infinity, 
-                          ease: "easeInOut",
-                          times: [0, 0.5, 1]
+                          ease: "easeInOut"
                         }}
                       />
-                      <circle cx="27" cy="-17" r="2" fill="#FFFFFF" />
-                    </g>
-                    
-                    {/* Tail feathers - Geometric accent */}
-                    <motion.g
-                      animate={{ rotate: [0, 3, 0] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                      style={{ transformOrigin: "-30px 30px" }}
-                    >
-                      <path d="M -30 25 L -40 30 L -30 30 Z" fill="#F59E0B" opacity="0.7" />
-                      <path d="M -30 30 L -40 35 L -30 35 Z" fill="#F97316" opacity="0.7" />
+                      {/* Wing feather lines */}
+                      <line x1="5" y1="-5" x2="20" y2="-15" stroke="#EA580C" strokeWidth="2" opacity="0.6" />
+                      <line x1="10" y1="5" x2="25" y2="-5" stroke="#EA580C" strokeWidth="2" opacity="0.6" />
+                      <line x1="15" y1="15" x2="30" y2="5" stroke="#EA580C" strokeWidth="2" opacity="0.6" />
                     </motion.g>
                     
-                    {/* Tech circuit patterns on body */}
-                    <g opacity="0.3">
-                      <motion.line 
-                        x1="0" y1="0" x2="20" y2="0" 
-                        stroke="#FFFFFF" 
-                        strokeWidth="1"
-                        strokeDasharray="3 3"
-                        animate={{ pathLength: [0, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
+                    {/* Sleek Beak with gradient */}
+                    <motion.path
+                      d="M 50 -12 L 68 -10 L 50 -8 Z"
+                      fill="url(#duckOrange)"
+                      filter="url(#glow)"
+                      animate={{ 
+                        scaleX: [1, 1.15, 1],
+                        x: [0, 2, 0]
+                      }}
+                      transition={{ 
+                        duration: 2.5, 
+                        repeat: Infinity, 
+                        ease: "easeInOut"
+                      }}
+                      style={{ transformOrigin: "50px -10px" }}
+                    />
+                    
+                    {/* Expressive Eye with tech details */}
+                    <g filter="url(#glow)">
+                      {/* Eye socket */}
+                      <ellipse cx="30" cy="-18" rx="12" ry="10" fill="#FFFFFF" />
+                      {/* Iris with animation */}
+                      <motion.ellipse 
+                        cx="30" 
+                        cy="-18" 
+                        rx="7" 
+                        ry="7"
+                        fill="#1F2937"
+                        animate={{ 
+                          rx: [7, 5, 7],
+                          ry: [7, 5, 7],
+                        }}
+                        transition={{ 
+                          duration: 3, 
+                          repeat: Infinity, 
+                          ease: "easeInOut",
+                        }}
                       />
-                      <motion.line 
-                        x1="5" y1="10" x2="25" y2="10" 
-                        stroke="#FFFFFF" 
-                        strokeWidth="1"
-                        strokeDasharray="3 3"
-                        animate={{ pathLength: [0, 1] }}
-                        transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                      />
-                      <circle cx="20" cy="0" r="2" fill="#FFFFFF" />
-                      <circle cx="25" cy="10" r="2" fill="#FFFFFF" />
+                      {/* Pupil */}
+                      <circle cx="30" cy="-18" r="3" fill="#000000" />
+                      {/* Eye highlights */}
+                      <circle cx="33" cy="-21" r="3" fill="#FFFFFF" opacity="0.9" />
+                      <circle cx="28" cy="-16" r="1.5" fill="#FFFFFF" opacity="0.7" />
                     </g>
                     
-                    {/* Ripple effect */}
+                    {/* Stylized tail feathers */}
+                    <motion.g
+                      animate={{ 
+                        rotate: [-5, 8, -5],
+                        x: [0, -3, 0]
+                      }}
+                      transition={{ 
+                        duration: 2.5, 
+                        repeat: Infinity, 
+                        ease: "easeInOut" 
+                      }}
+                      style={{ transformOrigin: "-35px 35px" }}
+                    >
+                      <path d="M -35 30 L -48 35 L -35 35 Z" fill="#F59E0B" opacity="0.8" />
+                      <path d="M -35 35 L -50 42 L -35 40 Z" fill="#F97316" opacity="0.8" />
+                      <path d="M -35 40 L -48 48 L -35 45 Z" fill="#EA580C" opacity="0.8" />
+                    </motion.g>
+                    
+                    {/* Tech circuit patterns - enhanced */}
+                    <g opacity="0.5">
+                      <motion.path
+                        d="M 0 0 L 25 0 L 25 10 L 35 10"
+                        fill="none"
+                        stroke="#FFFFFF"
+                        strokeWidth="2"
+                        strokeDasharray="4 2"
+                        animate={{ 
+                          pathLength: [0, 1, 0],
+                          opacity: [0, 1, 0]
+                        }}
+                        transition={{ 
+                          duration: 3, 
+                          repeat: Infinity,
+                          ease: "linear"
+                        }}
+                      />
+                      <motion.circle 
+                        cx="25" 
+                        cy="0" 
+                        r="3" 
+                        fill="#FFFFFF"
+                        animate={{ 
+                          scale: [0, 1, 0],
+                          opacity: [0, 1, 0]
+                        }}
+                        transition={{ 
+                          duration: 3, 
+                          repeat: Infinity,
+                          delay: 0.5
+                        }}
+                      />
+                      <motion.circle 
+                        cx="35" 
+                        cy="10" 
+                        r="3" 
+                        fill="#FFFFFF"
+                        animate={{ 
+                          scale: [0, 1, 0],
+                          opacity: [0, 1, 0]
+                        }}
+                        transition={{ 
+                          duration: 3, 
+                          repeat: Infinity,
+                          delay: 1
+                        }}
+                      />
+                    </g>
+                    
+                    {/* Energy particles */}
+                    {[...Array(5)].map((_, i) => (
+                      <motion.circle
+                        key={i}
+                        r="2"
+                        fill="#FBBF24"
+                        initial={{ 
+                          x: 0, 
+                          y: 0,
+                          opacity: 0 
+                        }}
+                        animate={{ 
+                          x: [0, (Math.random() - 0.5) * 100],
+                          y: [0, (Math.random() - 0.5) * 100],
+                          opacity: [0, 1, 0]
+                        }}
+                        transition={{ 
+                          duration: 2 + Math.random() * 2, 
+                          repeat: Infinity,
+                          delay: i * 0.3,
+                          ease: "easeOut"
+                        }}
+                      />
+                    ))}
+                    
+                    </g> {/* End of bird body group */}
+                    
+                    {/* Ripple effects - centered */}
                     <motion.circle
                       cx="0"
-                      cy="40"
-                      r="50"
+                      cy="0"
+                      r="60"
                       fill="none"
-                      stroke="rgba(251, 191, 36, 0.3)"
-                      strokeWidth="2"
-                      initial={{ r: 50, opacity: 0 }}
+                      stroke="rgba(251, 191, 36, 0.4)"
+                      strokeWidth="3"
+                      initial={{ r: 60, opacity: 0 }}
                       animate={{ 
-                        r: [50, 80, 50],
-                        opacity: [0, 0.3, 0]
+                        r: [60, 100, 60],
+                        opacity: [0, 0.4, 0]
                       }}
                       transition={{ 
                         duration: 3, 
                         repeat: Infinity,
                         ease: "easeOut"
                       }}
+                    />
+                    <motion.circle
+                      cx="0"
+                      cy="0"
+                      r="60"
+                      fill="none"
+                      stroke="rgba(245, 158, 11, 0.3)"
+                      strokeWidth="2"
+                      initial={{ r: 60, opacity: 0 }}
+                      animate={{ 
+                        r: [60, 90, 60],
+                        opacity: [0, 0.3, 0]
+                      }}
+                      transition={{ 
+                        duration: 3, 
+                        repeat: Infinity,
+                        ease: "easeOut",
+                        delay: 0.5
+                      }}
+                    />
+                    
+                    {/* Additional halo effect - centered */}
+                    <motion.circle
+                      cx="0"
+                      cy="0"
+                      r="80"
+                      fill="none"
+                      stroke="rgba(251, 191, 36, 0.2)"
+                      strokeWidth="1"
+                      strokeDasharray="5 10"
+                      animate={{ 
+                        rotate: [0, 360],
+                      }}
+                      transition={{ 
+                        duration: 20, 
+                        repeat: Infinity,
+                        ease: "linear"
+                      }}
+                      style={{ transformOrigin: "0px 0px" }}
                     />
                   </g>
                 </svg>
@@ -707,74 +914,56 @@ const HeroNew = () => {
                 ))}
               </div>
             </motion.div>
+
+            {/* Stats section - centered */}
+            <motion.div 
+              style={{
+                display: 'flex',
+                gap: '3rem',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                marginTop: '3rem',
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              {[
+                { number: '87%', label: 'Revenue Growth' },
+                { number: '5-10X', label: 'ROI Average' },
+                { number: '60%', label: 'Cost Reduction' },
+                { number: '2-4 Wks', label: 'Time to Market' },
+              ].map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  style={{
+                    textAlign: 'center',
+                    minWidth: '120px',
+                  }}
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.9 + i * 0.1 }}
+                >
+                  <div style={{
+                    fontSize: '2.5rem',
+                    fontWeight: '900',
+                    background: 'linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    marginBottom: '0.5rem',
+                  }}>{stat.number}</div>
+                  <div style={{
+                    fontSize: '0.875rem',
+                    color: '#94A3B8',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                  }}>{stat.label}</div>
+                </motion.div>
+              ))}
+            </motion.div>
           </motion.div>
 
-          {/* Right column - Stats & Testimonial */}
-          {!isMobile && (
-            <motion.div 
-              style={styles.rightColumn}
-              initial={{ x: 50, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              {/* Stats grid */}
-              <div style={styles.statsGrid}>
-                {[
-                  { number: '3X', label: 'Faster Delivery' },
-                  { number: '50+', label: 'AI Projects' },
-                  { number: '98%', label: 'Success Rate' },
-                  { number: '$10M+', label: 'Client Savings' },
-                ].map((stat, i) => (
-                  <motion.div
-                    key={stat.label}
-                    style={styles.statCard}
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.6 + i * 0.1 }}
-                    whileHover={{ 
-                      y: -5,
-                      borderColor: 'rgba(251, 191, 36, 0.3)',
-                      background: 'rgba(251, 191, 36, 0.02)',
-                    }}
-                  >
-                    <div style={styles.statNumber}>{stat.number}</div>
-                    <div style={styles.statLabel}>{stat.label}</div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Project highlight card */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentTestimonial}
-                  style={styles.highlightCard}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div style={styles.highlightHeader}>
-                    <span style={styles.highlightBadge}>Why Choose Us</span>
-                  </div>
-                  <div style={styles.highlightMetric}>
-                    {projectHighlights[currentTestimonial].metric}
-                  </div>
-                  <div style={styles.highlightDescription}>
-                    {projectHighlights[currentTestimonial].description}
-                  </div>
-                  <div style={styles.highlightDetail}>
-                    {projectHighlights[currentTestimonial].detail}
-                  </div>
-                  <motion.div 
-                    style={styles.highlightCta}
-                    whileHover={{ x: 5 }}
-                  >
-                    <span>Learn how we deliver fast →</span>
-                  </motion.div>
-                </motion.div>
-              </AnimatePresence>
-            </motion.div>
-          )}
         </div>
       </motion.section>
 

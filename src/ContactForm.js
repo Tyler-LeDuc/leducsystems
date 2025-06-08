@@ -995,13 +995,15 @@ const ContactForm = ({
                 style={styles.formSubmitButton}
                 onMouseEnter={(e) => {
                   if (!isSubmitting) {
-                    e.target.style.background = unifiedTheme.gradients.blueLight;
+                    e.target.style.background = unifiedTheme.gradients.oceanDark;
                     e.target.style.transform = 'translateY(-2px)';
+                    e.target.style.boxShadow = '0 12px 24px -8px rgba(59, 130, 246, 0.4)';
                   }
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.background = unifiedTheme.gradients.blue;
                   e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = unifiedTheme.shadows.glowHover;
                 }}
               >
                 {isSubmitting ? (

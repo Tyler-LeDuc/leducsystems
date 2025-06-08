@@ -10,7 +10,7 @@ const TermsOfServicePage = () => {
   const styles = {
     container: {
       ...commonStyles.container,
-      paddingTop: '120px',
+      paddingTop: '160px', // Adjusted for phone bar + header height
       paddingBottom: '80px',
       maxWidth: '800px',
     },

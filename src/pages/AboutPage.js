@@ -6,7 +6,7 @@ import About from '../About';
 const AboutPage = () => {
   return (
     <div className="about-page">
-      <div style={{ paddingTop: '100px' }}></div>
+      <div style={{ paddingTop: '160px' }}></div> {/* Adjusted for phone bar + header height */}
       
       {/* Page Intro with Water Theme */}
       <div style={{ 

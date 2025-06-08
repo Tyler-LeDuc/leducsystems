@@ -131,7 +131,7 @@ const ContactPage = () => {
 
   return (
     <div className="contact-page">
-      <div style={{ paddingTop: '100px' }}></div>
+      <div style={{ paddingTop: '160px' }}></div> {/* Adjusted for phone bar + header height */}
       
       {/* Professional Hero Section */}
       <div style={{ 

@@ -52,10 +52,6 @@ const CaseStudyPage = () => {
         "78% of common queries now handled without agent intervention",
         "Annual cost savings of approximately $420,000 from improved efficiency"
       ],
-      testimonial: {
-        quote: "The AI customer service platform has transformed how we interact with our customers. Issues are resolved faster, our agents are more productive, and our customers are happier. It's been a game-changing implementation for our business.",
-        author: "Director of Customer Experience, Fortune 500 Retailer"
-      }
     },
     2: {
       challenge: "A manufacturing client was experiencing significant unplanned downtime across their production facilities, leading to missed deadlines and increased costs. Traditional maintenance schedules were ineffective at preventing critical equipment failures.",
@@ -67,10 +63,6 @@ const CaseStudyPage = () => {
         "94.7% accuracy in predicting equipment failures up to 72 hours in advance",
         "ROI achieved within 7 months of implementation"
       ],
-      testimonial: {
-        quote: "Before implementing this solution, unexpected equipment failures were costing us millions in lost production time. Now we can address issues before they cause downtime. It's completely transformed our maintenance approach.",
-        author: "Chief Operations Officer, Global Manufacturing"
-      }
     },
     3: {
       challenge: "The client, a growing wholesale distributor, was struggling with inventory management issues including frequent stockouts of popular items and excess inventory of slower-moving products. Their manual forecasting methods couldn't keep pace with their growth or market fluctuations.",
@@ -82,10 +74,6 @@ const CaseStudyPage = () => {
         "92.3% forecast accuracy (up from 65% with previous methods)",
         "28% decrease in working capital tied up in inventory"
       ],
-      testimonial: {
-        quote: "This system has given us unprecedented visibility into our supply chain. We can now confidently make inventory decisions based on data rather than gut feeling, and the results speak for themselves.",
-        author: "VP of Operations, Regional Distributor"
-      }
     },
     4: {
       challenge: "A precision manufacturing client was relying on manual quality control inspections that were time-consuming, inconsistent, and unable to catch all defects. This was resulting in customer complaints, returns, and damage to their reputation for quality.",
@@ -97,10 +85,6 @@ const CaseStudyPage = () => {
         "94% reduction in defective products reaching customers",
         "ROI achieved within the first quarter through reduced returns and quality costs"
       ],
-      testimonial: {
-        quote: "The speed and accuracy of this system have exceeded our expectations. We're catching defects that human inspectors would miss, and we've been able to redeploy our quality control staff to more valuable activities.",
-        author: "Director of Quality Assurance, Precision Manufacturing"
-      }
     },
     5: {
       challenge: "A medium-sized professional services firm was struggling with knowledge management. Critical information was scattered across emails, documents, and employees' personal knowledge. This was causing inefficiencies, knowledge gaps when employees left, and inconsistent customer service.",
@@ -112,10 +96,6 @@ const CaseStudyPage = () => {
         "78% reduction in time required to onboard new employees",
         "41% improvement in consistent application of policies and procedures"
       ],
-      testimonial: {
-        quote: "This knowledge platform has democratized information across our organization. Our newer team members can now quickly access the collective wisdom of the company, and our clients receive more consistent information regardless of who they speak with.",
-        author: "CTO, Regional Bank"
-      }
     },
     6: {
       challenge: "An engineering firm was facing increasingly complex design challenges with traditional CAD approaches. They needed to explore innovative design solutions that could optimize for multiple conflicting requirements while reducing material usage and development time.",
@@ -127,10 +107,6 @@ const CaseStudyPage = () => {
         "31% improvement in product performance metrics",
         "Enabled creation of novel designs that wouldn't have been conceived with traditional methods"
       ],
-      testimonial: {
-        quote: "This technology has fundamentally changed our design process. We're now able to explore design possibilities we never would have considered, while simultaneously reducing costs and improving performance.",
-        author: "Lead Design Engineer, Engineering Firm"
-      }
     }
   };
   
@@ -139,7 +115,7 @@ const CaseStudyPage = () => {
 
   const styles = {
     section: {
-      paddingTop: '120px',
+      paddingTop: '160px', // Adjusted for phone bar + header height
       paddingBottom: '80px',
       background: `linear-gradient(to bottom, #FFFFFF, ${unifiedTheme.colors.primary[50]})`,
       backgroundImage: `linear-gradient(to bottom, #FFFFFF, ${unifiedTheme.colors.primary[50]}), ${unifiedTheme.patterns.underwater}`,
@@ -245,16 +221,6 @@ const CaseStudyPage = () => {
       lineHeight: '1.6',
       color: '#2D3748',
     },
-    testimonialSection: {
-      margin: '50px 0',
-      background: unifiedTheme.gradients.ocean,
-      backgroundImage: `${unifiedTheme.gradients.ocean}, ${unifiedTheme.patterns.rippleEffect}`,
-      padding: '30px',
-      borderRadius: '16px',
-      position: 'relative',
-      boxShadow: '0 10px 30px rgba(59, 130, 246, 0.15)',
-      border: `1px solid ${unifiedTheme.colors.primary[300]}`,
-    },
     quoteIcon: {
       position: 'absolute',
       top: '20px',
@@ -262,23 +228,6 @@ const CaseStudyPage = () => {
       fontSize: '4rem',
       color: 'rgba(66, 153, 225, 0.2)',
       fontFamily: 'Georgia, serif',
-    },
-    testimonialText: {
-      fontSize: '1.2rem',
-      lineHeight: '1.8',
-      fontStyle: 'italic',
-      color: '#FFFFFF',
-      marginBottom: '20px',
-      position: 'relative',
-      zIndex: '1',
-      paddingLeft: '15px',
-      textShadow: '0 1px 3px rgba(0,0,0,0.2)',
-    },
-    testimonialAuthor: {
-      fontSize: '1rem',
-      color: 'rgba(255, 255, 255, 0.9)',
-      fontWeight: '600',
-      textAlign: 'right',
     },
     techSection: {
       marginTop: '40px',
@@ -417,12 +366,6 @@ const CaseStudyPage = () => {
           </ul>
         </div>
         
-        {/* Testimonial Section */}
-        <div style={styles.testimonialSection}>
-          <div style={styles.quoteIcon}>"</div>
-          <p style={styles.testimonialText}>{details.testimonial.quote}</p>
-          <div style={styles.testimonialAuthor}>— {details.testimonial.author}</div>
-        </div>
         
         {/* Technologies Used */}
         <div style={styles.techSection}>

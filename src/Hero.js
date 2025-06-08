@@ -45,7 +45,7 @@ const Hero = () => {
 
   const styles = {
     hero: {
-      paddingTop: '170px',
+      paddingTop: isMobile ? '120px' : '100px', // Reduced padding for larger screens
       minHeight: '100vh',
       display: 'flex',
       alignItems: 'center',
@@ -103,6 +103,10 @@ const Hero = () => {
       maxWidth: '1200px',
       width: '100%',
       padding: '0 2rem',
+      margin: '0 auto',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
     },
     eyebrow: {
       fontSize: '1rem',
@@ -132,6 +136,8 @@ const Hero = () => {
       WebkitTextFillColor: 'transparent',
       backgroundClip: 'text',
       position: 'relative',
+      minWidth: '200px',
+      textAlign: 'center',
     },
     subtitle: {
       fontSize: isMobile ? '1.125rem' : '1.375rem',
@@ -260,20 +266,20 @@ const Hero = () => {
     },
   ];
 
-  // Cute duck styles
+  // Sexy animated duck styles
   const duckStyles = {
     container: {
       position: 'absolute',
       top: isMobile ? '15%' : '10%',
       right: isMobile ? '5%' : '15%',
-      width: isMobile ? '120px' : '200px',
-      height: isMobile ? '120px' : '200px',
+      width: isMobile ? '150px' : '250px',
+      height: isMobile ? '150px' : '250px',
       zIndex: 5,
     },
     svg: {
       width: '100%',
       height: '100%',
-      filter: 'drop-shadow(0 20px 40px rgba(251, 191, 36, 0.3))',
+      filter: 'drop-shadow(0 30px 60px rgba(251, 191, 36, 0.4)) drop-shadow(0 15px 30px rgba(59, 130, 246, 0.3))',
     }
   };
 
@@ -319,83 +325,252 @@ const Hero = () => {
           }}
         />
         
-        {/* Clean Flying Duck Animation */}
+        {/* Sexy Flying Duck Animation */}
         <motion.div 
           style={duckStyles.container}
           animate={{
-            x: [0, 30, 0, -30, 0],
-            y: [0, -15, -5, -15, 0],
+            x: [0, 40, 20, -40, 0],
+            y: [0, -20, -10, -25, 0],
+            rotate: [0, 5, -5, 8, 0],
           }}
           transition={{
-            duration: 6,
+            duration: 8,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
         >
           <svg viewBox="0 0 200 200" style={duckStyles.svg}>
             <defs>
-              <linearGradient id="duckMainBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+              {/* Enhanced gradients for sexy appeal */}
+              <linearGradient id="duckBodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#60A5FA" />
-                <stop offset="100%" stopColor="#3B82F6" />
+                <stop offset="50%" stopColor="#3B82F6" />
+                <stop offset="100%" stopColor="#2563EB" />
               </linearGradient>
-              <linearGradient id="duckDarkBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+              <linearGradient id="duckWingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#3B82F6" />
-                <stop offset="100%" stopColor="#1E40AF" />
+                <stop offset="50%" stopColor="#1E40AF" />
+                <stop offset="100%" stopColor="#1E3A8A" />
               </linearGradient>
+              <linearGradient id="duckBillGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#FBBF24" />
+                <stop offset="100%" stopColor="#F59E0B" />
+              </linearGradient>
+              <radialGradient id="duckGlow">
+                <stop offset="0%" stopColor="#60A5FA" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#3B82F6" stopOpacity="0" />
+              </radialGradient>
+              {/* Shimmer effect */}
+              <linearGradient id="shimmer" x1="0%" y1="0%" x2="100%" y2="100%">
+                <motion.stop 
+                  offset="0%" 
+                  stopColor="#FFFFFF" 
+                  stopOpacity="0"
+                  animate={{ stopOpacity: [0, 0.3, 0] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                />
+                <motion.stop 
+                  offset="50%" 
+                  stopColor="#FFFFFF" 
+                  stopOpacity="0.2"
+                  animate={{ stopOpacity: [0.2, 0.6, 0.2] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                />
+                <motion.stop 
+                  offset="100%" 
+                  stopColor="#FFFFFF" 
+                  stopOpacity="0"
+                  animate={{ stopOpacity: [0, 0.3, 0] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                />
+              </linearGradient>
+              {/* Feather texture filter */}
+              <filter id="featherTexture">
+                <feTurbulence baseFrequency="0.02" numOctaves="4" seed="5" />
+                <feComposite operator="over" in2="SourceGraphic" />
+              </filter>
             </defs>
             
-            {/* Clean duck silhouette in flight */}
+            {/* Glow effect behind duck */}
+            <motion.circle 
+              cx="100" 
+              cy="100" 
+              r="60" 
+              fill="url(#duckGlow)"
+              animate={{ 
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.6, 0.3],
+              }}
+              transition={{ 
+                duration: 4, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+            />
+            
+            {/* Sexy duck silhouette in flight */}
             <g transform="translate(100, 100)">
-              {/* Body */}
-              <path 
-                d="M -20 0 
-                   C -20 -15, 20 -15, 30 0
-                   C 30 15, -20 15, -20 0"
-                fill="url(#duckMainBlue)"
-              />
-              
-              {/* Head and neck */}
-              <path 
-                d="M -20 -5
-                   C -35 -5, -40 -15, -35 -20
-                   C -30 -25, -20 -22, -15 -15"
-                fill="url(#duckMainBlue)"
-              />
-              
-              {/* Bill */}
-              <path 
-                d="M -35 -20 L -45 -20 L -35 -18 Z" 
-                fill="#F59E0B"
-              />
-              
-              {/* Eye */}
-              <circle cx="-28" cy="-20" r="2" fill="#1F2937" />
-              
-              {/* Wing */}
-              <motion.path
-                d="M -5 -5
-                   C -10 -25, 10 -25, 15 -5
-                   C 10 -10, -5 -10, -5 -5"
-                fill="url(#duckDarkBlue)"
-                animate={{ 
+              {/* Body with shimmer */}
+              <motion.path 
+                d="M -25 0 
+                   C -25 -20, 25 -20, 35 0
+                   C 35 20, -25 20, -25 0"
+                fill="url(#duckBodyGradient)"
+                animate={{
                   d: [
-                    "M -5 -5 C -10 -25, 10 -25, 15 -5 C 10 -10, -5 -10, -5 -5",
-                    "M -5 -5 C -15 -30, 15 -30, 20 -5 C 15 -10, -5 -10, -5 -5",
-                    "M -5 -5 C -10 -25, 10 -25, 15 -5 C 10 -10, -5 -10, -5 -5"
+                    "M -25 0 C -25 -20, 25 -20, 35 0 C 35 20, -25 20, -25 0",
+                    "M -25 0 C -25 -22, 25 -22, 35 0 C 35 22, -25 22, -25 0",
+                    "M -25 0 C -25 -20, 25 -20, 35 0 C 35 20, -25 20, -25 0",
                   ]
                 }}
                 transition={{ 
-                  duration: 0.8, 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+              />
+              <path 
+                d="M -25 0 
+                   C -25 -20, 25 -20, 35 0
+                   C 35 20, -25 20, -25 0"
+                fill="url(#shimmer)"
+                opacity="0.3"
+              />
+              
+              {/* Elegant neck and head */}
+              <motion.path 
+                d="M -25 -8
+                   C -40 -8, -45 -18, -40 -25
+                   C -35 -30, -22 -27, -18 -20"
+                fill="url(#duckBodyGradient)"
+                animate={{
+                  d: [
+                    "M -25 -8 C -40 -8, -45 -18, -40 -25 C -35 -30, -22 -27, -18 -20",
+                    "M -25 -8 C -42 -8, -47 -20, -42 -27 C -37 -32, -22 -29, -18 -22",
+                    "M -25 -8 C -40 -8, -45 -18, -40 -25 C -35 -30, -22 -27, -18 -20",
+                  ]
+                }}
+                transition={{ 
+                  duration: 3, 
                   repeat: Infinity, 
                   ease: "easeInOut" 
                 }}
               />
               
-              {/* Tail */}
-              <path 
-                d="M 30 0 L 40 -5 L 35 0 L 40 5 Z" 
-                fill="url(#duckDarkBlue)"
+              {/* Sleek bill */}
+              <motion.path 
+                d="M -40 -25 L -52 -25 L -40 -22 Z" 
+                fill="url(#duckBillGradient)"
+                animate={{
+                  d: [
+                    "M -40 -25 L -52 -25 L -40 -22 Z",
+                    "M -42 -27 L -54 -27 L -42 -24 Z",
+                    "M -40 -25 L -52 -25 L -40 -22 Z",
+                  ]
+                }}
+                transition={{ 
+                  duration: 3, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
               />
+              
+              {/* Expressive eye */}
+              <motion.circle 
+                cx="-32" 
+                cy="-25" 
+                r="3" 
+                fill="#1F2937"
+                animate={{ 
+                  r: [3, 2.5, 3],
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+              />
+              <circle cx="-31" cy="-26" r="1" fill="#FFFFFF" opacity="0.8" />
+              
+              {/* Dynamic wing with feather details */}
+              <motion.path
+                d="M -8 -8
+                   C -15 -35, 20 -35, 28 -8
+                   C 20 -15, -8 -15, -8 -8"
+                fill="url(#duckWingGradient)"
+                animate={{ 
+                  d: [
+                    "M -8 -8 C -15 -35, 20 -35, 28 -8 C 20 -15, -8 -15, -8 -8",
+                    "M -8 -8 C -20 -40, 25 -40, 33 -8 C 25 -15, -8 -15, -8 -8",
+                    "M -8 -8 C -12 -32, 18 -32, 25 -8 C 18 -15, -8 -15, -8 -8",
+                    "M -8 -8 C -15 -35, 20 -35, 28 -8 C 20 -15, -8 -15, -8 -8"
+                  ]
+                }}
+                transition={{ 
+                  duration: 1, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+              />
+              
+              {/* Wing feather details */}
+              <motion.path
+                d="M -5 -20 L 0 -25 M 5 -22 L 10 -27 M 15 -20 L 20 -25"
+                stroke="rgba(30, 64, 175, 0.3)"
+                strokeWidth="1"
+                animate={{ 
+                  opacity: [0.3, 0.6, 0.3],
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+              />
+              
+              {/* Sexy tail feathers */}
+              <motion.g
+                animate={{ 
+                  rotate: [-5, 5, -5],
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+              >
+                <path 
+                  d="M 35 0 L 48 -8 L 42 0 L 48 8 Z" 
+                  fill="url(#duckWingGradient)"
+                />
+                <path 
+                  d="M 35 -3 L 45 -10 L 40 -3 Z" 
+                  fill="url(#duckBodyGradient)"
+                  opacity="0.7"
+                />
+                <path 
+                  d="M 35 3 L 45 10 L 40 3 Z" 
+                  fill="url(#duckBodyGradient)"
+                  opacity="0.7"
+                />
+              </motion.g>
+              
+              {/* Speed lines for motion effect */}
+              <motion.g
+                animate={{ 
+                  opacity: [0, 0.3, 0],
+                  x: [0, -50, -100],
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeOut" 
+                }}
+              >
+                <line x1="40" y1="-10" x2="60" y2="-10" stroke="#60A5FA" strokeWidth="2" />
+                <line x1="40" y1="0" x2="65" y2="0" stroke="#3B82F6" strokeWidth="3" />
+                <line x1="40" y1="10" x2="60" y2="10" stroke="#60A5FA" strokeWidth="2" />
+              </motion.g>
             </g>
           </svg>
         </motion.div>

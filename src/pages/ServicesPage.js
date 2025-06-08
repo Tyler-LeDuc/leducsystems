@@ -10,7 +10,6 @@ const ServicesPage = () => {
   const [visibleSections, setVisibleSections] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
   const [selectedProcess, setSelectedProcess] = useState(0);
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [activeFAQ, setActiveFAQ] = useState(null);
   const sectionRef = useRef(null);
 
@@ -43,13 +42,6 @@ const ServicesPage = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Auto-rotate testimonials
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveTestimonial(prev => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
 
   // AI-First Service Structure with images
   const aiServices = [
@@ -86,7 +78,7 @@ const ServicesPage = () => {
       title: 'Custom Software Development',
       subtitle: 'Tailored Digital Solutions',
       description: 'Full-stack software development with integrated AI capabilities. We build scalable, modern applications designed specifically for your business needs.',
-      longDescription: 'From concept to deployment, we create custom software solutions that leverage cutting-edge technologies and AI to give you a competitive edge.',
+      longDescription: 'From concept to deployment, we create custom software solutions that leverage cutting-edge technologies and AI to give you a competitive edge. Our team uses advanced tools like Claude Code to accelerate development and ensure code quality.',
       icon: <FiCode size={isMobile ? 28 : 32} />,
       gradient: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
       color: '#059669',
@@ -97,7 +89,8 @@ const ServicesPage = () => {
         'Mobile app development',
         'API design and integration',
         'Cloud-native architecture',
-        'Legacy system modernization'
+        'Legacy system modernization',
+        'AI-powered development with Claude Code'
       ],
       useCases: [
         'Enterprise resource planning',
@@ -269,29 +262,6 @@ const ServicesPage = () => {
     }
   ];
 
-  const testimonials = [
-    {
-      id: 1,
-      quote: "Le Duc Systems transformed our operations with AI that actually works. We've eliminated 80% of manual processing and our team can focus on strategic work.",
-      author: "S. Chen",
-      title: "Technology Executive",
-      company: "Manufacturing Industry Leader"
-    },
-    {
-      id: 2,
-      quote: "The AI agents they built for us are like having 20 additional team members who never sleep. Our customer response times went from hours to minutes.",
-      author: "M. Rodriguez",
-      title: "Operations Director",
-      company: "Enterprise Services Company"
-    },
-    {
-      id: 3,
-      quote: "ROI in 3 months, not 3 years. Their computer vision system caught defects we didn't even know we had. Game-changing technology.",
-      author: "J. Park",
-      title: "Quality Assurance Lead",
-      company: "Industrial Manufacturing"
-    }
-  ];
 
   const faqs = [
     {
@@ -348,7 +318,7 @@ const ServicesPage = () => {
       background: '#0A0F1C',
       backgroundImage: 'linear-gradient(to bottom, #0A0F1C 0%, #1A1F2E 100%)',
       minHeight: '100vh',
-      paddingTop: '120px',
+      paddingTop: '160px', // Adjusted for phone bar + header height
       position: 'relative'
     },
     hero: {
@@ -564,15 +534,6 @@ const ServicesPage = () => {
       padding: '30px',
       border: '1px solid rgba(255, 255, 255, 0.1)',
       marginBottom: '30px'
-    },
-    testimonialCard: {
-      background: '#1A1F2E',
-      borderRadius: '20px',
-      padding: '40px',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      textAlign: 'center',
-      maxWidth: '800px',
-      margin: '0 auto'
     },
     faqItem: {
       background: '#1A1F2E',
@@ -929,95 +890,6 @@ const ServicesPage = () => {
       </section>
 
 
-      {/* Testimonials */}
-      <section style={{...styles.section, ...styles.sectionAlt}} data-section="testimonials">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={visibleSections.includes('testimonials') ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 style={styles.sectionTitle}>Client Success Stories</h2>
-          <p style={styles.sectionSubtitle}>
-            What our clients say about their AI transformation journey
-          </p>
-          
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTestimonial}
-              style={styles.testimonialCard}
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ duration: 0.5 }}
-            >
-              <FiStar style={{
-                fontSize: '2rem',
-                color: '#F59E0B',
-                marginBottom: '20px'
-              }} />
-              
-              <blockquote style={{
-                fontSize: isMobile ? '1.1rem' : '1.3rem',
-                color: 'white',
-                lineHeight: '1.6',
-                fontStyle: 'italic',
-                marginBottom: '30px',
-                fontWeight: '400'
-              }}>
-                "{testimonials[activeTestimonial].quote}"
-              </blockquote>
-              
-              <div>
-                <div style={{
-                  fontSize: '1.1rem',
-                  fontWeight: '700',
-                  color: 'white',
-                  marginBottom: '4px'
-                }}>
-                  {testimonials[activeTestimonial].author}
-                </div>
-                <div style={{
-                  fontSize: '0.9rem',
-                  color: '#8B5CF6',
-                  fontWeight: '600',
-                  marginBottom: '4px'
-                }}>
-                  {testimonials[activeTestimonial].title}
-                </div>
-                <div style={{
-                  fontSize: '0.8rem',
-                  color: 'rgba(255, 255, 255, 0.6)'
-                }}>
-                  {testimonials[activeTestimonial].company}
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-          
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginTop: '30px',
-            gap: '12px'
-          }}>
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveTestimonial(index)}
-                style={{
-                  width: '12px',
-                  height: '12px',
-                  borderRadius: '50%',
-                  border: 'none',
-                  background: index === activeTestimonial ? '#8B5CF6' : 'rgba(255, 255, 255, 0.3)',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-              />
-            ))}
-          </div>
-        </motion.div>
-      </section>
 
       {/* Trust Indicators */}
       <section style={styles.section} data-section="trust">

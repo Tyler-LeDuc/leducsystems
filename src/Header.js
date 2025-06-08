@@ -56,15 +56,20 @@ const Header = ({ scrolled: propScrolled }) => {
 
   // Check viewport width
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
   const [isNarrowScreen, setIsNarrowScreen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
   
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-      setIsNarrowScreen(window.innerWidth <= 600); // For full-width mobile menu
+      const width = window.innerWidth;
+      setWindowWidth(width);
+      setIsMobile(width <= 768);
+      setIsTablet(width > 768 && width <= 1024);
+      setIsNarrowScreen(width <= 600); // For full-width mobile menu
       
       // Close mobile menu when resizing to desktop
-      if (window.innerWidth > 768 && menuOpen) {
+      if (width > 768 && menuOpen) {
         setMenuOpen(false);
         document.body.style.overflow = 'auto';
       }
@@ -84,8 +89,8 @@ const Header = ({ scrolled: propScrolled }) => {
       width: '100%',
       zIndex: 100,
       transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-      background: scrolled ? 'rgba(255, 255, 255, 0.98)' : 'rgba(255, 255, 255, 0.95)',
-      backdropFilter: scrolled ? 'blur(12px)' : 'blur(8px)',
+      background: scrolled ? 'rgba(255, 255, 255, 0.98)' : '#FFFFFF',
+      backdropFilter: scrolled ? 'blur(12px)' : 'none',
       boxShadow: scrolled ? '0 4px 30px rgba(0, 0, 0, 0.1)' : 'none',
       padding: scrolled ? '0.6rem 0' : '1rem 0',
       borderBottom: scrolled ? '1px solid rgba(56, 189, 248, 0.2)' : 'none',
@@ -97,7 +102,7 @@ const Header = ({ scrolled: propScrolled }) => {
       maxWidth: '1400px',
       margin: '0 auto',
       width: '100%',
-      padding: isMobile ? '0 1rem' : '0 3rem',
+      padding: isMobile ? '0 1rem' : isTablet ? '0 1.5rem' : '0 2rem',
       boxSizing: 'border-box',
     },
     logoContainer: {
@@ -136,19 +141,22 @@ const Header = ({ scrolled: propScrolled }) => {
     },
     nav: {
       display: isMobile ? 'none' : 'flex',
-      gap: '2rem',
-      marginRight: '2rem',
+      gap: isTablet ? '1rem' : '1.5rem',
+      marginRight: isTablet ? '1rem' : '1.5rem',
+      alignItems: 'center',
+      flexWrap: 'nowrap',
     },
     navLink: {
       color: '#334155', // Darker slate for better contrast
       textDecoration: 'none',
       fontWeight: 500,
-      fontSize: '1rem',
+      fontSize: isTablet ? '0.9rem' : '1rem',
       letterSpacing: '0.5px',
       transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
       position: 'relative',
-      padding: '0.5rem 0.75rem',
+      padding: isTablet ? '0.4rem 0.5rem' : '0.5rem 0.75rem',
       opacity: 0.85,
+      whiteSpace: 'nowrap',
     },
     navLinkHover: {
       opacity: 1,
@@ -281,15 +289,15 @@ const Header = ({ scrolled: propScrolled }) => {
       display: isMobile ? 'none' : 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '0.75rem 2rem',
+      padding: isTablet ? '0.6rem 1.2rem' : '0.75rem 2rem',
       background: buttonHover 
         ? 'linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%)' 
         : 'linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%)',
       color: '#FFFFFF',
       borderRadius: '6px',
       fontWeight: 600,
-      fontSize: '1rem',
-      marginLeft: '1rem',
+      fontSize: isTablet ? '0.9rem' : '1rem',
+      marginLeft: isTablet ? '0.75rem' : '1rem',
       border: 'none',
       transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
       boxShadow: buttonHover 
@@ -302,6 +310,8 @@ const Header = ({ scrolled: propScrolled }) => {
       transform: buttonHover ? 'translateY(-2px) scale(1.03)' : 'translateY(0) scale(1)',
       textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
       letterSpacing: '0.3px',
+      whiteSpace: 'nowrap',
+      flexShrink: 0,
     },
     ctaButtonShimmer: {
       position: 'absolute',
@@ -349,55 +359,25 @@ const Header = ({ scrolled: propScrolled }) => {
     styles.hamburger.display = 'flex';
   }
 
-  // Navigation links definition
+  // Navigation links definition with priority
   const navLinks = [
-    { id: 'home', path: '/', label: 'Home' },
-    { id: 'services', path: '/services', label: 'Services' },
-    { id: 'pricing', path: '/pricing', label: 'Pricing' },
-    { id: 'careers', path: '/careers', label: 'Careers' },
-    { id: 'about', path: '/about', label: 'About' },
-    { id: 'contact', path: '/contact', label: 'Contact' }
+    { id: 'home', path: '/', label: 'Home', priority: 1 },
+    { id: 'services', path: '/services', label: 'Services', priority: 1 },
+    { id: 'pricing', path: '/pricing', label: 'Pricing', priority: 1 },
+    { id: 'about', path: '/about', label: 'About', priority: 2 },
+    { id: 'contact', path: '/contact', label: 'Contact', priority: 1 }
   ];
+  
+  // Filter links based on available space
+  const visibleLinks = navLinks.filter(link => {
+    if (!isTablet) return true; // Show all on desktop
+    if (windowWidth > 900) return true; // Show all on larger tablets
+    return link.priority === 1; // Only show priority 1 links on smaller tablets
+  });
 
   return (
     <>
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 101,
-        width: '100%',
-      }}>
-        {/* Phone bar */}
-        <div style={{
-          background: '#1A1F2E',
-          color: '#FFFFFF',
-          padding: '0.25rem 0',
-          fontSize: '0.75rem',
-          textAlign: 'center',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-        }}>
-          <a 
-            href="tel:+14804149516" 
-            style={{
-              color: '#FBBF24',
-              textDecoration: 'none',
-              fontWeight: '500',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-            }}
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-            </svg>
-            Call: (480) 414-9516
-          </a>
-        </div>
-        
-        {/* Main header */}
-        <header style={styles.header}>
+      <header style={styles.header}>
           <div style={styles.headerContainer}>
           <Link to="/" style={styles.logoContainer} onClick={() => handleLinkClick('home')}>
             <div style={styles.logoWrapper}>
@@ -408,9 +388,9 @@ const Header = ({ scrolled: propScrolled }) => {
                   alt="Le Duc Systems Duck Icon" 
                   style={{
                     ...styles.logoImage,
-                    height: scrolled ? '60px' : '80px', 
+                    height: scrolled ? (isTablet ? '50px' : '60px') : (isTablet ? '60px' : '80px'), 
                     width: 'auto', 
-                    marginRight: '12px',
+                    marginRight: isTablet ? '8px' : '12px',
                     filter: 'drop-shadow(0 2px 8px rgba(59, 130, 246, 0.3))'
                   }} 
                 />
@@ -420,7 +400,7 @@ const Header = ({ scrolled: propScrolled }) => {
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
-                  fontSize: scrolled ? '1.5rem' : '1.8rem',
+                  fontSize: scrolled ? (isTablet ? '1.2rem' : '1.5rem') : (isTablet ? '1.4rem' : '1.8rem'),
                   letterSpacing: '0.5px',
                   lineHeight: 1.2,
                   textShadow: '0 2px 8px rgba(59, 130, 246, 0.1)',
@@ -437,9 +417,16 @@ const Header = ({ scrolled: propScrolled }) => {
             </div>
           </Link>
           
-          <div style={{display: 'flex', alignItems: 'center'}}>
+          <div style={{
+            display: 'flex', 
+            alignItems: 'center',
+            flex: '1 1 auto',
+            justifyContent: 'flex-end',
+            minWidth: 0,
+            gap: isTablet ? '0.5rem' : '1rem'
+          }}>
             <nav style={styles.nav}>
-              {navLinks.map(link => (
+              {visibleLinks.map(link => (
                 <Link 
                   key={link.id}
                   to={link.path}
@@ -539,9 +526,8 @@ const Header = ({ scrolled: propScrolled }) => {
               Get Started
             </button>
           </div>
-          </div>
-        </header>
-      </div>
+        </div>
+      </header>
 
       {/* Integrated ContactForm Component */}
       <ContactForm 

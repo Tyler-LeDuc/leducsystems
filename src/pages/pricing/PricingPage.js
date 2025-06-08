@@ -9,7 +9,6 @@ const PricingPage = () => {
   const [hoveredPlan, setHoveredPlan] = useState(null);
   const [contactFormOpen, setContactFormOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
   
   
   const toggleContactForm = (service = null) => {
@@ -27,13 +26,6 @@ const PricingPage = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   
-  // Rotate testimonials
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % 3);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
   
   // Strategic pricing structure designed to convert
   const pricingPlans = [
@@ -51,8 +43,6 @@ const PricingPage = () => {
         "ROI projections",
         "No-obligation quote"
       ],
-      testimonial: "LeDucSystems helped us identify $200K in annual savings through AI automation.",
-      testimonialAuthor: "- Tech Startup CEO",
       cta: "Claim Your Free Session",
       ctaUrgency: "Only 3 spots left this month",
       popular: false,
@@ -73,8 +63,6 @@ const PricingPage = () => {
         "3 months of support included",
         "Unlimited revisions during development"
       ],
-      testimonial: "Our AI implementation paid for itself in 2 months. Game changer!",
-      testimonialAuthor: "- Manufacturing Director",
       cta: "Start Your AI Transformation",
       ctaUrgency: "Average ROI: 300% in first year",
       popular: true,
@@ -96,8 +84,6 @@ const PricingPage = () => {
         "Dedicated project manager",
         "Weekly progress updates"
       ],
-      testimonial: "They built our entire platform in half the time of other quotes.",
-      testimonialAuthor: "- SaaS Founder",
       cta: "Schedule Executive Briefing",
       ctaUrgency: "For serious growth-focused businesses",
       popular: false,
@@ -119,8 +105,6 @@ const PricingPage = () => {
       "Rollover unused hours (up to 20)",
       "Cancel anytime with 30 days notice"
     ],
-    testimonial: "Having LeDucSystems on retainer is like having a CTO on speed dial.",
-    testimonialAuthor: "- E-commerce CEO",
     cta: "Become a Partner",
     savings: "Save 30% vs. project pricing"
   };
@@ -157,27 +141,6 @@ const PricingPage = () => {
     { number: "4.9★", label: "Client Satisfaction" }
   ];
   
-  // Testimonials for rotation
-  const testimonials = [
-    {
-      quote: "LeDucSystems transformed our manual processes into an AI-powered system that saves us 30 hours per week.",
-      author: "Sarah Chen",
-      role: "Operations Director",
-      company: "TechFlow Inc."
-    },
-    {
-      quote: "Their AI solution increased our customer satisfaction by 40% while reducing support costs by half.",
-      author: "Marcus Rodriguez",
-      role: "VP of Customer Success",
-      company: "CloudScale"
-    },
-    {
-      quote: "We went from idea to launched product in 8 weeks. The team's expertise in AI is unmatched.",
-      author: "Jennifer Park",
-      role: "Founder & CEO",
-      company: "DataDrive AI"
-    }
-  ];
   
   // FAQ data with conversion-focused answers
   const faqData = [
@@ -201,7 +164,7 @@ const PricingPage = () => {
   
   const styles = {
     section: {
-      paddingTop: '120px',
+      paddingTop: '160px', // Adjusted for phone bar + header height
       paddingBottom: '80px',
       background: unifiedTheme.gradients.pond,
       backgroundImage: `${unifiedTheme.gradients.pond}, ${unifiedTheme.patterns.current}`,
@@ -422,26 +385,6 @@ const PricingPage = () => {
       fontSize: '1.2rem',
       marginTop: '-2px',
     },
-    testimonialBox: {
-      backgroundColor: unifiedTheme.colors.primary[50],
-      padding: '16px',
-      borderRadius: '8px',
-      marginBottom: '20px',
-      borderLeft: `3px solid ${unifiedTheme.colors.primary[400]}`,
-    },
-    testimonialQuote: {
-      fontSize: '0.9rem',
-      color: '#2D3748',
-      fontStyle: 'italic',
-      marginBottom: '8px',
-      lineHeight: '1.5',
-    },
-    testimonialAuthor: {
-      fontSize: '0.85rem',
-      color: '#718096',
-      fontWeight: '600',
-      textAlign: 'right',
-    },
     planButton: {
       display: 'block',
       width: '100%',
@@ -531,74 +474,6 @@ const PricingPage = () => {
       opacity: isMobile ? 0.05 : 0.1,
       fontSize: isMobile ? '120px' : '150px',
       transform: 'rotate(-15deg)',
-    },
-    testimonialSection: {
-      marginTop: '80px',
-      marginBottom: '80px',
-      textAlign: 'center',
-    },
-    testimonialContainer: {
-      maxWidth: '800px',
-      margin: '0 auto',
-      position: 'relative',
-      minHeight: '200px',
-    },
-    testimonialCard: {
-      background: '#FFFFFF',
-      padding: isMobile ? '30px 20px' : '40px',
-      borderRadius: '16px',
-      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-      position: 'relative',
-    },
-    testimonialQuoteMark: {
-      position: 'absolute',
-      top: '10px',
-      left: '20px',
-      fontSize: '60px',
-      color: unifiedTheme.colors.primary[200],
-      fontFamily: 'Georgia, serif',
-      lineHeight: '1',
-    },
-    testimonialText: {
-      fontSize: isMobile ? '1.1rem' : '1.3rem',
-      lineHeight: '1.6',
-      color: '#2D3748',
-      marginBottom: '20px',
-      fontStyle: 'italic',
-    },
-    testimonialAuthorInfo: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '15px',
-    },
-    testimonialAuthorName: {
-      fontWeight: '700',
-      color: unifiedTheme.colors.primary[700],
-      fontSize: '1.1rem',
-    },
-    testimonialAuthorRole: {
-      color: '#718096',
-      fontSize: '0.95rem',
-    },
-    testimonialDots: {
-      display: 'flex',
-      justifyContent: 'center',
-      gap: '8px',
-      marginTop: '20px',
-    },
-    testimonialDot: {
-      width: '8px',
-      height: '8px',
-      borderRadius: '50%',
-      backgroundColor: '#CBD5E0',
-      transition: 'all 0.3s ease',
-      cursor: 'pointer',
-    },
-    testimonialDotActive: {
-      backgroundColor: unifiedTheme.colors.primary[500],
-      width: '24px',
-      borderRadius: '4px',
     },
     faqSection: {
       marginTop: '80px',
@@ -755,12 +630,6 @@ const PricingPage = () => {
                   ))}
                 </ul>
                 
-                {plan.testimonial && (
-                  <div style={styles.testimonialBox}>
-                    <p style={styles.testimonialQuote}>"{plan.testimonial}"</p>
-                    <p style={styles.testimonialAuthor}>{plan.testimonialAuthor}</p>
-                  </div>
-                )}
                 
                 <button 
                   style={{
@@ -811,10 +680,6 @@ const PricingPage = () => {
                 )}
               </div>
               <div style={styles.partnershipCTA}>
-                <div style={styles.testimonialBox}>
-                  <p style={styles.testimonialQuote}>"{partnershipPlan.testimonial}"</p>
-                  <p style={styles.testimonialAuthor}>{partnershipPlan.testimonialAuthor}</p>
-                </div>
                 <button 
                   style={{
                     ...styles.planButton,

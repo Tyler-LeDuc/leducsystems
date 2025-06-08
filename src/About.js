@@ -8,8 +8,7 @@ const About = () => {
     mission: useRef(null),
     values: useRef(null),
     history: useRef(null),
-    team: useRef(null),
-    testimonials: useRef(null)
+    team: useRef(null)
   };
   
   // Counter animation for statistics
@@ -606,78 +605,6 @@ const About = () => {
       boxShadow: '0 7px 14px rgba(66, 153, 225, 0.4)',
     },
     
-    // Testimonials Section
-    testimonialsSection: {
-      marginBottom: isMobile ? '3rem' : '5rem',
-      position: 'relative',
-      padding: isMobile ? '0 1rem' : '0',
-    },
-    testimonialGrid: {
-      display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(2, 1fr)',
-      gap: isMobile ? '1.5rem' : '2.5rem',
-      marginTop: isMobile ? '2rem' : '3rem',
-    },
-    testimonialCard: {
-      backgroundColor: '#FFFFFF',
-      padding: isMobile ? '1.5rem' : '2.5rem',
-      borderRadius: isMobile ? '12px' : '16px',
-      boxShadow: '0 10px 25px rgba(0, 0, 0, 0.05)',
-      border: '1px solid #EDF2F7',
-      position: 'relative',
-      transition: 'all 0.3s ease',
-    },
-    testimonialCardHover: {
-      transform: 'translateY(-8px)',
-      boxShadow: '0 20px 35px rgba(0, 0, 0, 0.1)',
-      borderColor: '#4299E1',
-    },
-    testimonialQuote: {
-      fontSize: isMobile ? '2.5rem' : '3rem',
-      color: '#4299E1',
-      opacity: 0.2,
-      position: 'absolute',
-      top: isMobile ? '15px' : '20px',
-      right: isMobile ? '15px' : '25px',
-      fontFamily: 'Georgia, serif',
-    },
-    testimonialText: {
-      fontSize: isMobile ? '1rem' : '1.15rem',
-      color: '#2D3748',
-      lineHeight: 1.8,
-      marginBottom: isMobile ? '1.5rem' : '2rem',
-      fontStyle: 'italic',
-    },
-    testimonialAuthor: {
-      display: 'flex',
-      alignItems: 'center',
-    },
-    testimonialImage: {
-      width: isMobile ? '50px' : '60px',
-      height: isMobile ? '50px' : '60px',
-      borderRadius: '50%',
-      objectFit: 'cover',
-      marginRight: '1rem',
-      border: '3px solid #EBF8FF',
-    },
-    testimonialInfo: {
-      flex: 1,
-    },
-    testimonialName: {
-      fontSize: isMobile ? '1.1rem' : '1.25rem',
-      fontWeight: 700,
-      color: '#1A365D',
-      marginBottom: '0.25rem',
-    },
-    testimonialRole: {
-      fontSize: isMobile ? '0.85rem' : '0.95rem',
-      color: '#4A5568',
-    },
-    testimonialCompany: {
-      fontSize: isMobile ? '0.85rem' : '0.95rem',
-      color: '#4299E1',
-      fontWeight: 600,
-    },
   };
 
   
@@ -703,8 +630,6 @@ const About = () => {
     }
   ];
   
-  // Client testimonials - removed for now as we're a new business
-  const testimonials = [];
 
   return (
     <section id="about" style={{...styles.about, ...commonStyles.section}}>

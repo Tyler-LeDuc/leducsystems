@@ -32,7 +32,7 @@ const PrivacyPolicyPage = () => {
       animation: 'float 20s ease-in-out infinite',
     },
     contentWrapper: {
-      paddingTop: '120px',
+      paddingTop: '160px', // Adjusted for phone bar + header height
       paddingBottom: '80px',
       position: 'relative',
       zIndex: 1,

@@ -229,7 +229,7 @@ const CareersPage = () => {
   
   const styles = {
     section: {
-      paddingTop: '80px',
+      paddingTop: '160px', // Adjusted for phone bar + header height
       paddingBottom: '80px',
     },
     container: {

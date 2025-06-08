@@ -102,7 +102,7 @@ const TeamPage = () => {
   
   const styles = {
     section: {
-      paddingTop: '120px',
+      paddingTop: '160px', // Adjusted for phone bar + header height
       paddingBottom: '80px',
       background: unifiedTheme.gradients.pond,
       backgroundImage: `${unifiedTheme.gradients.pond}, ${unifiedTheme.patterns.waterDrops}`,
