@@ -1,8 +1,28 @@
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import { MemoryRouter } from 'react-router-dom';
+import { AppShell } from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+function renderAt(path) {
+  return render(
+    <MemoryRouter initialEntries={[path]}>
+      <AppShell />
+    </MemoryRouter>
+  );
+}
+
+test('renders the home page with a single main heading', () => {
+  renderAt('/');
+  expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+});
+
+test('renders the primary navigation', () => {
+  renderAt('/');
+  expect(screen.getByRole('navigation', { name: /primary/i })).toBeInTheDocument();
+});
+
+test('unknown routes render the not found page', () => {
+  renderAt('/pricing');
+  expect(
+    screen.getByRole('heading', { level: 1, name: /does not exist/i })
+  ).toBeInTheDocument();
 });

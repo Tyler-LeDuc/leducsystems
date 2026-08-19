@@ -1,0 +1,51 @@
+/* =========================================================================
+   Contact page — the little that cannot be composed from components.css
+   ========================================================================= */
+
+.contact-hero {
+  overflow: hidden;
+}
+
+/* Numbered "what happens next" list. */
+.contact-steps {
+  counter-reset: contact-step;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.contact-steps li {
+  counter-increment: contact-step;
+  position: relative;
+  min-height: 28px;
+  padding-left: 46px;
+}
+
+.contact-steps li::before {
+  content: counter(contact-step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: -1px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  color: var(--accent-400);
+  background: var(--ink-100);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-xs);
+  text-indent: var(--ls-mono);
+}
+
+.contact-steps__title {
+  font-size: var(--fs-base);
+  font-weight: 550;
+  color: var(--text-hi);
+}
+
+@media (max-width: 620px) {
+  .contact-panel { padding: var(--sp-5); }
+}

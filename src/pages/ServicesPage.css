@@ -1,0 +1,43 @@
+/* =========================================================================
+   Services page — small additions only. Everything else composes from
+   components.css. Prefix: .services-
+   ========================================================================= */
+
+/* Deep-linked sections and pillars clear the fixed header. */
+.services-anchor {
+  scroll-margin-top: calc(var(--header-h) + var(--sp-5));
+}
+
+/* In-page jump links, built on .pill */
+.services-jump ul {
+  gap: var(--sp-2);
+}
+.services-jump__link {
+  transition: color var(--dur) var(--ease),
+              border-color var(--dur) var(--ease),
+              background-color var(--dur) var(--ease);
+}
+.services-jump__link:hover {
+  color: var(--accent-300);
+  background: var(--accent-wash);
+  border-color: var(--line-accent);
+}
+
+/* Pillar rows: the label column tracks the reader on wide screens via
+   .sticky-col in components.css. */
+.services-pillar__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+/* Engagement cards line up their closing note at the same baseline. */
+.services-engagement__end {
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--line);
+}
+
+/* Closing call to action — layout comes from .cta-block in components.css. */
+.services-cta__note {
+  gap: var(--sp-2);
+}

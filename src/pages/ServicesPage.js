@@ -1,1150 +1,389 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { FiCpu, FiZap, FiEye, FiTrendingUp, FiCloud, FiArrowRight, FiCheck, FiStar, FiTarget, FiTool, FiShield, FiUsers, FiClock, FiAward, FiLock, FiDatabase, FiSettings, FiCode, FiActivity, FiLayers } from 'react-icons/fi';
-import { unifiedTheme, getSectionStyles, getContainerStyles, getHeaderStyles, getTitleStyles, getSubtitleStyles, getDescriptionStyles, getCardStyles, getButtonStyles, getResponsiveValue } from '../theme/unifiedTheme';
+import React, { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
+import './ServicesPage.css';
 
-const ServicesPage = () => {
-  const navigate = useNavigate();
-  const [hoveredService, setHoveredService] = useState(null);
-  const [visibleSections, setVisibleSections] = useState([]);
-  const [isMobile, setIsMobile] = useState(false);
-  const [selectedProcess, setSelectedProcess] = useState(0);
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const [activeFAQ, setActiveFAQ] = useState(null);
-  const sectionRef = useRef(null);
+import SEO from '../components/SEO';
+import Reveal from '../components/Reveal';
+import {
+  SITE,
+  PILLARS,
+  ENGAGEMENTS,
+  PRICING_NOTE,
+  PROCESS,
+  TECH,
+  FAQ,
+  RESPONSE_PROMISE,
+} from '../data/site';
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+/* Stable anchors for the three pillars — the footer deep-links to these. */
+const PILLAR_ANCHORS = {
+  '01': 'build-with-ai',
+  '02': 'build-ai-in',
+  '03': 'build-to-last',
+};
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const section = entry.target.getAttribute('data-section');
-            setVisibleSections(prev => [...new Set([...prev, section])]);
-          }
-        });
-      },
-      { threshold: 0.1 }
+/* When each pillar is the right call, and when it plainly is not. */
+const PILLAR_FIT = {
+  '01': {
+    fit:
+      'When you already know roughly what has to exist — an internal tool, a customer-facing application, an integration between two systems that do not talk to each other — and the constraint is engineering capacity rather than certainty about the problem.',
+    notFit:
+      'When requirements are still moving week to week, or when nobody has decided what the software is actually for. Building first is the expensive way to discover that; start with a Discovery Sprint instead. And if the work genuinely needs several engineers running in parallel to hit a date, one person is not the answer, and I will say so before we start rather than after.',
+  },
+  '02': {
+    fit:
+      'When there is a repetitive judgement call buried in your product or your operations — reading documents, answering the same question in fifty forms, routing work to the right place, drafting a first pass a human then edits — and the data a model would need already exists somewhere you can reach.',
+    notFit:
+      'When the task has one correct answer that a query, a rule, or a well-designed form would produce. A model is a probabilistic answer to a deterministic question there: more expensive, slower, and less reliable than the boring version. It is also premature if the underlying data is not accessible yet — that is a data project first, and an AI project second.',
+  },
+  '03': {
+    fit:
+      'When something already works in a demo and now has to work in front of customers. You need to know when the output is wrong, how often, what it costs per request, how slow it gets under load, and what the product does on the day the model or the API is unavailable.',
+    notFit:
+      'As a standalone first purchase when nothing is live. Before there is real usage there is nothing to evaluate against, and a harness built on guesses only measures the guesses. This work belongs alongside a build, or immediately after one.',
+  },
+};
+
+/* Detail that does not fit on the home page version of the process. */
+const PROCESS_DETAIL = {
+  '01':
+    'Bring whatever exists — a document, a spreadsheet, a half-built prototype, or three paragraphs in an email. None of it needs to be tidy. You leave with an opinion about what to do next whether or not you hire me.',
+  '02':
+    'The proposal names the phases, what is explicitly out of scope, the assumptions it rests on, and what I need from you and by when: access, data, decisions, and one person who can answer questions. Most projects that slip, slip on that last list.',
+  '03':
+    'Repository access from day one and a working environment you can click through every week. Anything that turns out to be harder than scoped gets raised the week it is found, with options, and re-quoted before the work happens.',
+  '04':
+    'Documentation written for whoever inherits it, a runbook for the things that fail at three in the morning, and a walkthrough with the person who will own it. The credentials and infrastructure are already yours, because they were never anywhere else.',
+};
+
+const JUMP_LINKS = [
+  { href: '#offer', label: 'What I build' },
+  { href: '#engagement', label: 'Engagement models' },
+  { href: '#process', label: 'How it runs' },
+  { href: '#technology', label: 'Technology' },
+  { href: '#faq', label: 'Questions' },
+];
+
+function ServicesPage() {
+  const [openFaq, setOpenFaq] = useState([]);
+
+  const toggleFaq = useCallback((id) => {
+    setOpenFaq((current) =>
+      current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
     );
-
-    const sections = document.querySelectorAll('[data-section]');
-    sections.forEach(section => observer.observe(section));
-
-    return () => observer.disconnect();
   }, []);
-
-  // Auto-rotate testimonials
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveTestimonial(prev => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // AI-First Service Structure with images
-  const aiServices = [
-    {
-      id: 'ai-agents',
-      title: 'Intelligent AI Agents',
-      subtitle: 'Autonomous Digital Solutions',
-      description: 'Deploy smart AI agents that automate complex workflows, make intelligent decisions, and seamlessly integrate with your existing systems.',
-      longDescription: 'Our AI agents are sophisticated digital assistants that understand context, learn from interactions, and execute complex workflows with minimal oversight.',
-      icon: <FiActivity size={isMobile ? 28 : 32} />,
-      gradient: 'linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%)',
-      color: '#7C3AED',
-      keyBenefit: '80% Automation Rate',
-      image: 'https://images.unsplash.com/photo-1535378917042-10a22c95931a?w=800&h=600&fit=crop',
-      capabilities: [
-        'Multi-step reasoning and planning',
-        'Real-time decision making',
-        'Natural language processing',
-        'Cross-system integration',
-        'Continuous learning and adaptation'
-      ],
-      useCases: [
-        'Customer service automation',
-        'Document processing and analysis',
-        'Compliance monitoring',
-        'Sales lead qualification',
-        'Technical support triage'
-      ],
-      roi: 'Substantial ROI improvements',
-      implementation: '2-4 weeks'
-    },
-    {
-      id: 'custom-software',
-      title: 'Custom Software Development',
-      subtitle: 'Tailored Digital Solutions',
-      description: 'Full-stack software development with integrated AI capabilities. We build scalable, modern applications designed specifically for your business needs.',
-      longDescription: 'From concept to deployment, we create custom software solutions that leverage cutting-edge technologies and AI to give you a competitive edge.',
-      icon: <FiCode size={isMobile ? 28 : 32} />,
-      gradient: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
-      color: '#059669',
-      keyBenefit: '50% Faster Development',
-      image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop',
-      capabilities: [
-        'Modern web applications',
-        'Mobile app development',
-        'API design and integration',
-        'Cloud-native architecture',
-        'Legacy system modernization'
-      ],
-      useCases: [
-        'Enterprise resource planning',
-        'Customer relationship management',
-        'E-commerce platforms',
-        'Data analytics dashboards',
-        'Process automation tools'
-      ],
-      roi: 'Significant productivity gains',
-      implementation: '4-12 weeks'
-    },
-    {
-      id: 'ai-implementation',
-      title: 'AI Implementation & Integration',
-      subtitle: 'Transform Your Business',
-      description: 'Strategic AI implementation that transforms your operations. We help you identify opportunities and deploy AI solutions that deliver measurable results.',
-      longDescription: 'Our proven methodology ensures successful AI adoption, from initial assessment through deployment and optimization, with full training and support.',
-      icon: <FiLayers size={isMobile ? 28 : 32} />,
-      gradient: 'linear-gradient(135deg, #DC2626 0%, #B91C1C 100%)',
-      color: '#DC2626',
-      keyBenefit: '10x Efficiency Gains',
-      image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop',
-      capabilities: [
-        'AI strategy development',
-        'Model selection and training',
-        'System integration',
-        'Performance optimization',
-        'Change management'
-      ],
-      useCases: [
-        'Predictive analytics',
-        'Process automation',
-        'Quality control systems',
-        'Customer insights',
-        'Risk assessment'
-      ],
-      roi: 'Proven ROI improvements',
-      implementation: '3-8 weeks'
-    }
-  ];
-
-  const supportingServices = [
-    {
-      id: 'computer-vision',
-      title: 'Computer Vision',
-      description: 'Advanced image and video analysis for quality control, security, and automation.',
-      icon: <FiEye size={24} />,
-      color: '#2563EB',
-      benefit: 'Industry-leading accuracy',
-      image: 'https://images.unsplash.com/photo-1655635949384-f737c5133dfe?w=400&h=300&fit=crop'
-    },
-    {
-      id: 'nlp-solutions',
-      title: 'Natural Language Processing',
-      description: 'Extract insights from text, automate document processing, and enable natural conversations.',
-      icon: <FiDatabase size={24} />,
-      color: '#7C3AED',
-      benefit: 'High automation rate',
-      image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=300&fit=crop'
-    },
-    {
-      id: 'cloud-solutions',
-      title: 'Cloud Infrastructure',
-      description: 'Scalable, secure cloud solutions optimized for AI workloads and modern applications.',
-      icon: <FiCloud size={24} />,
-      color: '#059669',
-      benefit: 'Exceptional uptime',
-      image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&h=300&fit=crop'
-    }
-  ];
-
-  const processSteps = [
-    {
-      id: 1,
-      title: 'Discovery & Assessment',
-      description: 'We analyze your current processes, identify automation opportunities, and design a custom AI strategy.',
-      details: [
-        'Comprehensive workflow analysis',
-        'ROI potential assessment',
-        'Technical feasibility study',
-        'Custom strategy development'
-      ],
-      duration: '1-2 weeks',
-      icon: <FiTarget size={24} />
-    },
-    {
-      id: 2,
-      title: 'Proof of Concept',
-      description: 'Build and test a working prototype to validate the approach and demonstrate immediate value.',
-      details: [
-        'Rapid prototype development',
-        'Real-world testing',
-        'Performance validation',
-        'Stakeholder feedback integration'
-      ],
-      duration: '2-3 weeks',
-      icon: <FiSettings size={24} />
-    },
-    {
-      id: 3,
-      title: 'Development & Training',
-      description: 'Create the full solution with custom AI models trained specifically for your business needs.',
-      details: [
-        'Custom model development',
-        'Data pipeline creation',
-        'Security implementation',
-        'Integration development'
-      ],
-      duration: '4-8 weeks',
-      icon: <FiCpu size={24} />
-    },
-    {
-      id: 4,
-      title: 'Deployment & Optimization',
-      description: 'Launch your AI solution with full monitoring, optimization, and ongoing support.',
-      details: [
-        'Production deployment',
-        'Performance monitoring',
-        'Continuous optimization',
-        'Team training & support'
-      ],
-      duration: 'Ongoing',
-      icon: <FiZap size={24} />
-    }
-  ];
-
-  const caseStudies = [
-    {
-      id: 1,
-      company: 'Manufacturing Leader',
-      industry: 'Industrial Manufacturing',
-      challenge: 'Manual quality control was missing 15% of defects, costing $2.3M annually',
-      solution: 'Deployed computer vision AI for real-time defect detection',
-      results: [
-        'Industry-leading defect detection',
-        '$2.1M annual savings',
-        '40% reduction in quality issues',
-        'ROI achieved in 4 months'
-      ],
-      timeline: '8 weeks implementation'
-    },
-    {
-      id: 2,
-      company: 'Professional Services Firm',
-      industry: 'Professional Services',
-      challenge: 'Customer service team overwhelmed with 10,000+ daily inquiries',
-      solution: 'Implemented intelligent AI agents for customer support automation',
-      results: [
-        '75% of inquiries automated',
-        '3-minute average response time',
-        '92% customer satisfaction',
-        '60% cost reduction'
-      ],
-      timeline: '6 weeks implementation'
-    },
-    {
-      id: 3,
-      company: 'Enterprise Organization',
-      industry: 'Regulated Industry',
-      challenge: 'Document processing taking 40+ hours weekly, prone to errors',
-      solution: 'AI-powered document intelligence and processing system',
-      results: [
-        '95% processing time reduction',
-        'Dramatic accuracy improvement',
-        '$180K annual savings',
-        'Compliance risk eliminated'
-      ],
-      timeline: '5 weeks implementation'
-    }
-  ];
-
-  const testimonials = [
-    {
-      id: 1,
-      quote: "Le Duc Systems transformed our operations with AI that actually works. We've eliminated 80% of manual processing and our team can focus on strategic work.",
-      author: "S. Chen",
-      title: "Technology Executive",
-      company: "Manufacturing Industry Leader"
-    },
-    {
-      id: 2,
-      quote: "The AI agents they built for us are like having 20 additional team members who never sleep. Our customer response times went from hours to minutes.",
-      author: "M. Rodriguez",
-      title: "Operations Director",
-      company: "Enterprise Services Company"
-    },
-    {
-      id: 3,
-      quote: "ROI in 3 months, not 3 years. Their computer vision system caught defects we didn't even know we had. Game-changing technology.",
-      author: "J. Park",
-      title: "Quality Assurance Lead",
-      company: "Industrial Manufacturing"
-    }
-  ];
-
-  const faqs = [
-    {
-      question: "How quickly can we see results from AI implementation?",
-      answer: "Most clients see initial results within 2-4 weeks of deployment. Full ROI is typically achieved within 3-6 months, with some implementations paying for themselves in as little as 8 weeks."
-    },
-    {
-      question: "Is our data secure with AI systems?",
-      answer: "Absolutely. We implement enterprise-grade security including end-to-end encryption, SOC 2 compliance, and can deploy on-premise or in your private cloud. Your data never leaves your control."
-    },
-    {
-      question: "What if our team doesn't have AI expertise?",
-      answer: "That's exactly why we exist. We handle everything from strategy to implementation to training. Your team gets the benefits without needing to become AI experts."
-    },
-    {
-      question: "Can AI integrate with our existing systems?",
-      answer: "Yes. Our AI solutions are designed to work with your current tech stack. We integrate with ERPs, CRMs, databases, and custom applications through APIs and direct connections."
-    },
-    {
-      question: "What happens if the AI makes mistakes?",
-      answer: "Our systems include human oversight, confidence scoring, and fallback procedures. Critical decisions can require human approval, and we provide full audit trails for compliance."
-    },
-    {
-      question: "How much does AI implementation cost?",
-      answer: "Projects typically range from $18K-$50K depending on complexity. We provide detailed ROI projections and most implementations pay for themselves within 6 months through efficiency gains."
-    }
-  ];
-
-  const trustIndicators = [
-    {
-      icon: <FiShield size={24} />,
-      title: 'SOC 2 Compliant',
-      description: 'Enterprise security standards'
-    },
-    {
-      icon: <FiAward size={24} />,
-      title: 'ISO 27001 Certified',
-      description: 'Information security management'
-    },
-    {
-      icon: <FiUsers size={24} />,
-      title: '50+ Implementations',
-      description: 'Proven track record'
-    },
-    {
-      icon: <FiClock size={24} />,
-      title: '24/7 Support',
-      description: 'Always available when you need us'
-    }
-  ];
-
-  const styles = {
-    page: {
-      background: '#0A0F1C',
-      backgroundImage: 'linear-gradient(to bottom, #0A0F1C 0%, #1A1F2E 100%)',
-      minHeight: '100vh',
-      paddingTop: '120px',
-      position: 'relative'
-    },
-    hero: {
-      padding: isMobile ? '40px 20px 60px' : '80px 40px 100px',
-      textAlign: 'center',
-      position: 'relative',
-      overflow: 'hidden',
-      backgroundImage: `url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1920&h=800&fit=crop')`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundAttachment: 'fixed'
-    },
-    heroBackground: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      background: 'linear-gradient(to bottom, rgba(10, 15, 28, 0.9), rgba(26, 31, 46, 0.95))',
-      zIndex: 0
-    },
-    heroContent: {
-      position: 'relative',
-      zIndex: 1,
-      maxWidth: '900px',
-      margin: '0 auto'
-    },
-    heroTitle: {
-      fontSize: isMobile ? '2.5rem' : '4rem',
-      fontWeight: '800',
-      color: 'white',
-      marginBottom: '24px',
-      lineHeight: '1.1',
-      textShadow: '0 2px 10px rgba(0,0,0,0.3)'
-    },
-    heroSubtitle: {
-      fontSize: isMobile ? '1.1rem' : '1.3rem',
-      color: 'rgba(255, 255, 255, 0.85)',
-      marginBottom: '32px',
-      lineHeight: '1.6',
-      maxWidth: '700px',
-      margin: '0 auto 32px'
-    },
-    heroStats: {
-      display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3, 1fr)',
-      gap: isMobile ? '20px' : '40px',
-      marginTop: '60px',
-      maxWidth: '600px',
-      margin: '60px auto 0'
-    },
-    stat: {
-      textAlign: 'center'
-    },
-    statNumber: {
-      fontSize: isMobile ? '2rem' : '2.5rem',
-      fontWeight: '800',
-      color: '#FFC905',
-      display: 'block',
-      textShadow: '0 2px 10px rgba(255, 201, 5, 0.3)'
-    },
-    statLabel: {
-      fontSize: isMobile ? '0.9rem' : '1rem',
-      color: 'rgba(255, 255, 255, 0.8)',
-      marginTop: '8px'
-    },
-    section: {
-      padding: isMobile ? '20px 10px' : '30px 20px',
-      maxWidth: '1200px',
-      margin: '0 auto'
-    },
-    sectionAlt: {
-      background: 'rgba(255, 255, 255, 0.02)',
-      backdropFilter: 'blur(10px)',
-      position: 'relative'
-    },
-    sectionTitle: {
-      fontSize: isMobile ? '2rem' : '3rem',
-      fontWeight: '800',
-      color: 'white',
-      textAlign: 'center',
-      marginBottom: '20px'
-    },
-    sectionSubtitle: {
-      fontSize: isMobile ? '1rem' : '1.2rem',
-      color: 'rgba(255, 255, 255, 0.8)',
-      textAlign: 'center',
-      marginBottom: '40px',
-      maxWidth: '600px',
-      margin: '0 auto 40px'
-    },
-    aiGrid: {
-      display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-      gap: isMobile ? '30px' : '40px',
-      marginBottom: '60px'
-    },
-    aiCard: {
-      background: '#1A1F2E',
-      borderRadius: '24px',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      transition: 'all 0.4s ease',
-      cursor: 'pointer',
-      position: 'relative',
-      overflow: 'hidden'
-    },
-    aiCardHover: {
-      transform: 'translateY(-8px)',
-      borderColor: 'rgba(255, 201, 5, 0.3)',
-      boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)'
-    },
-    aiCardImage: {
-      width: '100%',
-      height: isMobile ? '180px' : '200px',
-      objectFit: 'cover',
-      marginBottom: '30px',
-      borderRadius: '16px',
-      opacity: 0.9
-    },
-    aiCardContent: {
-      padding: isMobile ? '0 20px 30px' : '0 30px 40px'
-    },
-    aiCardIcon: {
-      width: '60px',
-      height: '60px',
-      borderRadius: '16px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: '20px',
-      color: 'white'
-    },
-    aiCardTitle: {
-      fontSize: isMobile ? '1.3rem' : '1.5rem',
-      fontWeight: '700',
-      color: 'white',
-      marginBottom: '8px'
-    },
-    aiCardSubtitle: {
-      fontSize: '0.9rem',
-      fontWeight: '600',
-      marginBottom: '16px',
-      textTransform: 'uppercase',
-      letterSpacing: '1px'
-    },
-    aiCardDescription: {
-      fontSize: '1rem',
-      color: 'rgba(255, 255, 255, 0.8)',
-      lineHeight: '1.6',
-      marginBottom: '20px'
-    },
-    aiCardBenefit: {
-      background: 'rgba(255, 201, 5, 0.1)',
-      color: '#FFC905',
-      padding: '8px 16px',
-      borderRadius: '12px',
-      fontSize: '0.9rem',
-      fontWeight: '600',
-      textAlign: 'center',
-      border: '1px solid rgba(255, 201, 5, 0.2)'
-    },
-    supportingGrid: {
-      display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-      gap: isMobile ? '24px' : '30px',
-      marginBottom: '60px'
-    },
-    supportingCard: {
-      background: '#1A1F2E',
-      borderRadius: '16px',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      transition: 'all 0.3s ease',
-      overflow: 'hidden'
-    },
-    supportingCardHover: {
-      borderColor: 'rgba(255, 201, 5, 0.3)',
-      transform: 'translateY(-4px)'
-    },
-    supportingCardImage: {
-      width: '100%',
-      height: '180px',
-      objectFit: 'cover',
-      opacity: 0.85
-    },
-    supportingCardContent: {
-      padding: '24px'
-    },
-    processSection: {
-      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%)'
-    },
-    processGrid: {
-      display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-      gap: isMobile ? '30px' : '40px',
-      marginBottom: '60px'
-    },
-    processCard: {
-      background: '#1A1F2E',
-      borderRadius: '20px',
-      padding: '30px',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      transition: 'all 0.3s ease',
-      cursor: 'pointer'
-    },
-    processCardActive: {
-      borderColor: 'rgba(255, 201, 5, 0.3)',
-      transform: 'translateY(-4px)',
-      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
-    },
-    caseStudyCard: {
-      background: '#1A1F2E',
-      borderRadius: '20px',
-      padding: '30px',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      marginBottom: '30px'
-    },
-    testimonialCard: {
-      background: '#1A1F2E',
-      borderRadius: '20px',
-      padding: '40px',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      textAlign: 'center',
-      maxWidth: '800px',
-      margin: '0 auto'
-    },
-    faqItem: {
-      background: '#1A1F2E',
-      borderRadius: '12px',
-      marginBottom: '16px',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      overflow: 'hidden'
-    },
-    faqQuestion: {
-      padding: '20px',
-      cursor: 'pointer',
-      color: 'white',
-      fontSize: '1.1rem',
-      fontWeight: '600',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      transition: 'all 0.3s ease'
-    },
-    faqAnswer: {
-      padding: '0 20px 20px',
-      color: 'rgba(255, 255, 255, 0.8)',
-      lineHeight: '1.6'
-    },
-    trustGrid: {
-      display: 'grid',
-      gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-      gap: '30px',
-      marginBottom: '60px'
-    },
-    trustCard: {
-      background: '#1A1F2E',
-      borderRadius: '16px',
-      padding: '24px',
-      textAlign: 'center',
-      border: '1px solid rgba(255, 255, 255, 0.1)'
-    },
-    cta: {
-      padding: isMobile ? '40px 20px' : '60px 40px',
-      textAlign: 'center',
-      background: 'linear-gradient(135deg, rgba(255, 201, 5, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%)'
-    },
-    ctaTitle: {
-      fontSize: isMobile ? '2rem' : '2.5rem',
-      fontWeight: '800',
-      color: 'white',
-      marginBottom: '20px'
-    },
-    ctaDescription: {
-      fontSize: '1.2rem',
-      color: 'rgba(255, 255, 255, 0.9)',
-      marginBottom: '40px',
-      maxWidth: '600px',
-      margin: '0 auto 40px'
-    },
-    ctaButton: {
-      display: 'inline-flex',
-      alignItems: 'center',
-      padding: '16px 32px',
-      background: 'linear-gradient(135deg, #FFC905 0%, #FFB000 100%)',
-      color: '#0A0F1C',
-      fontSize: '1.1rem',
-      fontWeight: '700',
-      borderRadius: '16px',
-      textDecoration: 'none',
-      transition: 'all 0.3s ease',
-      border: 'none',
-      cursor: 'pointer',
-      boxShadow: '0 8px 32px rgba(255, 201, 5, 0.3)'
-    },
-    ctaButtonHover: {
-      transform: 'translateY(-2px)',
-      boxShadow: '0 12px 40px rgba(255, 201, 5, 0.4)'
-    }
-  };
-
-  const handleContactClick = () => {
-    navigate('/contact');
-  };
 
   return (
-    <div style={styles.page}>
-      {/* Hero Section */}
-      <section style={styles.hero} data-section="hero">
-        <div style={styles.heroBackground}></div>
-        <motion.div 
-          style={styles.heroContent}
-          initial={{ opacity: 0, y: 60 }}
-          animate={visibleSections.includes('hero') ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <h1 style={styles.heroTitle}>
-            AI Solutions & Custom Software Development
-          </h1>
-          <p style={styles.heroSubtitle}>
-            Transform your business with intelligent automation and custom software solutions. 
-            We leverage cutting-edge AI and modern development practices to deliver systems 
-            that drive efficiency, innovation, and measurable growth.
-          </p>
-          
-          <div style={styles.heroStats}>
-            <div style={styles.stat}>
-              <span style={styles.statNumber}>85%</span>
-              <span style={styles.statLabel}>Work Automation</span>
-            </div>
-            <div style={styles.stat}>
-              <span style={styles.statNumber}>10x</span>
-              <span style={styles.statLabel}>Faster Processing</span>
-            </div>
-            <div style={styles.stat}>
-              <span style={styles.statNumber}>300%</span>
-              <span style={styles.statLabel}>ROI Average</span>
-            </div>
-          </div>
-        </motion.div>
+    <>
+      <SEO
+        title="Services"
+        description="Three kinds of work: production software built with AI, language-model features built into your product, and the evaluation and guardrail engineering that keeps them working. Engagement models, process, and technology."
+        path="/services"
+      />
+
+      {/* ── Hero ───────────────────────────────────────────────────────── */}
+      <section className="section">
+        <div className="bg-glow" aria-hidden="true" />
+        <div className="container layer stack stack--lg">
+          <Reveal className="stack">
+            <span className="eyebrow">Services</span>
+            <h1 className="h1">A deliberately narrow offer</h1>
+            <p className="lede">
+              I do three kinds of work: ship production software, build language-model
+              features into it, and do the unglamorous engineering that keeps those
+              features working once real users arrive. Everything on this page is
+              capability and process — what I can build and how an engagement is
+              structured — not a claim about somebody else&rsquo;s project.
+            </p>
+            <p className="body muted">
+              A one-person practice earns nothing by pretending to cover everything. If
+              what you need sits outside this, you will hear that on the first call, and
+              where I can I will point you at someone who does it properly.
+            </p>
+          </Reveal>
+
+          <Reveal as="nav" className="services-jump" delay={90} aria-label="Sections on this page">
+            <ul className="cluster">
+              {JUMP_LINKS.map((link) => (
+                <li key={link.href}>
+                  <a className="pill services-jump__link" href={link.href}>
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
       </section>
 
-      {/* AI Services Section */}
-      <section style={{...styles.section, ...styles.sectionAlt}} data-section="ai-services">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={visibleSections.includes('ai-services') ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 style={styles.sectionTitle}>Our Core Services</h2>
-          <p style={styles.sectionSubtitle}>
-            Comprehensive solutions designed to accelerate your digital transformation
-          </p>
-          
-          <div style={styles.aiGrid}>
-            {aiServices.map((service, index) => (
-              <motion.div
-                key={service.id}
-                style={{
-                  ...styles.aiCard,
-                  ...(hoveredService === service.id ? styles.aiCardHover : {})
-                }}
-                onMouseEnter={() => setHoveredService(service.id)}
-                onMouseLeave={() => setHoveredService(null)}
-                initial={{ opacity: 0, y: 60 }}
-                animate={visibleSections.includes('ai-services') ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-              >
-                {service.image && (
-                  <img 
-                    src={service.image} 
-                    alt={service.title}
-                    style={styles.aiCardImage}
-                  />
-                )}
-                <div style={styles.aiCardContent}>
-                  <div style={{
-                    ...styles.aiCardIcon,
-                    background: service.gradient
-                  }}>
-                    {service.icon}
-                  </div>
-                  
-                  <h3 style={styles.aiCardTitle}>{service.title}</h3>
-                  <div style={{
-                    ...styles.aiCardSubtitle,
-                    color: service.color
-                  }}>
-                    {service.subtitle}
-                  </div>
-                  
-                  <p style={styles.aiCardDescription}>
-                    {service.description}
-                  </p>
-                  
-                  <div style={styles.aiCardBenefit}>
-                    {service.keyBenefit}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+      {/* ── What I build ───────────────────────────────────────────────── */}
+      <section id="offer" className="section section--rule services-anchor">
+        <div className="container stack stack--xl">
+          <Reveal className="section-head">
+            <span className="eyebrow">What I build</span>
+            <h2 className="h2">Three lines of work</h2>
+            <p className="body muted">
+              Use AI to build, build AI into the product, and build the parts that decide
+              whether it survives. Most engagements touch two of the three; a few touch
+              all of them.
+            </p>
+          </Reveal>
 
-          {/* Supporting Services */}
-          <h3 style={{...styles.sectionTitle, fontSize: isMobile ? '1.5rem' : '2rem', marginBottom: '40px'}}>
-            Supporting Technologies
-          </h3>
-          <div style={styles.supportingGrid}>
-            {supportingServices.map((service, index) => (
-              <motion.div
-                key={service.id}
-                style={{
-                  ...styles.supportingCard,
-                  ...(hoveredService === service.id ? styles.supportingCardHover : {})
-                }}
-                onMouseEnter={() => setHoveredService(service.id)}
-                onMouseLeave={() => setHoveredService(null)}
-                initial={{ opacity: 0, y: 40 }}
-                animate={visibleSections.includes('ai-services') ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
+          <div className="rows">
+            {PILLARS.map((pillar, index) => (
+              <Reveal
+                as="article"
+                key={pillar.id}
+                id={PILLAR_ANCHORS[pillar.id]}
+                className="row services-anchor"
+                delay={index * 80}
               >
-                {service.image && (
-                  <img 
-                    src={service.image} 
-                    alt={service.title}
-                    style={styles.supportingCardImage}
-                  />
-                )}
-                <div style={styles.supportingCardContent}>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginBottom: '16px'
-                  }}>
-                    <div style={{
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '10px',
-                      background: `${service.color}20`,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginRight: '12px'
-                    }}>
-                      <div style={{ color: service.color }}>
-                        {service.icon}
-                      </div>
+                <div className="sticky-col services-pillar__meta">
+                  <span className="card__index">{pillar.id}</span>
+                  <h3 className="h3">{pillar.title}</h3>
+                </div>
+
+                <div className="stack">
+                  <p className="body">{pillar.summary}</p>
+
+                  <div className="grid grid--2">
+                    <div className="stack stack--sm">
+                      <h4 className="mono">Deliverables</h4>
+                      <ul className="list">
+                        {pillar.deliverables.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
                     </div>
-                    <h3 style={{
-                      fontSize: '1.1rem',
-                      fontWeight: '600',
-                      color: 'white',
-                      margin: 0
-                    }}>
-                      {service.title}
-                    </h3>
-                  </div>
-                  
-                  <p style={{
-                    fontSize: '0.9rem',
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    lineHeight: '1.5',
-                    marginBottom: '12px'
-                  }}>
-                    {service.description}
-                  </p>
-                  
-                  <div style={{
-                    fontSize: '0.8rem',
-                    fontWeight: '600',
-                    color: service.color
-                  }}>
-                    {service.benefit}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
 
-      {/* Implementation Process */}
-      <section style={{...styles.section, ...styles.processSection}} data-section="process">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={visibleSections.includes('process') ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 style={styles.sectionTitle}>Our Implementation Process</h2>
-          <p style={styles.sectionSubtitle}>
-            A proven methodology that ensures successful project delivery
-          </p>
-          
-          <div style={styles.processGrid}>
-            {processSteps.map((step, index) => (
-              <motion.div
-                key={step.id}
-                style={{
-                  ...styles.processCard,
-                  ...(selectedProcess === index ? styles.processCardActive : {})
-                }}
-                onClick={() => setSelectedProcess(index)}
-                initial={{ opacity: 0, y: 40 }}
-                animate={visibleSections.includes('process') ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-              >
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginBottom: '16px'
-                }}>
-                  <div style={{
-                    width: '48px',
-                    height: '48px',
-                    borderRadius: '12px',
-                    background: 'rgba(139, 92, 246, 0.2)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginRight: '16px',
-                    color: '#8B5CF6'
-                  }}>
-                    {step.icon}
-                  </div>
-                  <div>
-                    <h3 style={{
-                      fontSize: '1.2rem',
-                      fontWeight: '700',
-                      color: 'white',
-                      margin: 0
-                    }}>
-                      {step.title}
-                    </h3>
-                    <div style={{
-                      fontSize: '0.9rem',
-                      color: '#8B5CF6',
-                      fontWeight: '600'
-                    }}>
-                      {step.duration}
+                    <div className="stack stack--sm">
+                      <h4 className="mono">Right fit when</h4>
+                      <p className="body body--sm muted">{PILLAR_FIT[pillar.id].fit}</p>
+                      <h4 className="mono">Not the right fit when</h4>
+                      <p className="body body--sm muted">{PILLAR_FIT[pillar.id].notFit}</p>
                     </div>
                   </div>
                 </div>
-                
-                <p style={{
-                  fontSize: '1rem',
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  lineHeight: '1.6',
-                  marginBottom: '16px'
-                }}>
-                  {step.description}
-                </p>
-                
-                <ul style={{
-                  listStyle: 'none',
-                  padding: 0,
-                  margin: 0
-                }}>
-                  {step.details.map((detail, idx) => (
-                    <li key={idx} style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      marginBottom: '8px',
-                      fontSize: '0.9rem',
-                      color: 'rgba(255, 255, 255, 0.7)'
-                    }}>
-                      <FiCheck style={{
-                        color: '#10B981',
-                        marginRight: '8px',
-                        flexShrink: 0
-                      }} />
-                      {detail}
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Engagement models ──────────────────────────────────────────── */}
+      <section id="engagement" className="section section--rule section--alt services-anchor">
+        <div className="container stack stack--xl">
+          <Reveal className="section-head">
+            <span className="eyebrow">Engagement models</span>
+            <h2 className="h2">Three ways to work together</h2>
+            <p className="body muted">
+              Most work starts at 01. Nothing about starting there obliges you to continue
+              to the next one, and each model ends at a point where stopping is a normal
+              outcome rather than a negotiation.
+            </p>
+          </Reveal>
+
+          <div className="grid grid--3">
+            {ENGAGEMENTS.map((model, index) => (
+              <Reveal
+                as="article"
+                key={model.id}
+                className="card card--feature"
+                delay={index * 80}
+              >
+                <span className="card__index">{model.id}</span>
+                <h3 className="card__title">{model.name}</h3>
+
+                <div className="cluster">
+                  <span className="pill pill--accent">{model.duration}</span>
+                  <span className="pill">{model.shape}</span>
+                </div>
+
+                <p className="card__body">{model.summary}</p>
+
+                <div className="stack stack--sm">
+                  <h4 className="mono">What you get</h4>
+                  <ul className="list">
+                    {model.includes.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="stack stack--xs mt-auto services-engagement__end">
+                  <h4 className="mono">Ends with</h4>
+                  <p className="card__body">{model.outcome}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal as="aside" className="panel stack" delay={120} aria-labelledby="pricing-title">
+            <span className="eyebrow">Pricing</span>
+            <h3 className="h3" id="pricing-title">
+              Why there are no numbers on this page
+            </h3>
+            <p className="body">{PRICING_NOTE}</p>
+            <p className="body muted">
+              A number printed on a website has to be either high enough to cover the worst
+              version of a project or low enough to be meaningless. Scope, the state of your
+              data, how many decisions are already made, and how much of the integration
+              surface you control move the figure far more than any feature list does.
+            </p>
+            <p className="body muted">
+              So the exchange is simple. Describe what you are trying to do, and you get a
+              written estimate with the scope it is attached to: what is included, what is
+              not, and what would change it. If the honest answer is that the work does not
+              need me, that goes in writing too.
+            </p>
+            <div className="cluster">
+              <Link className="link-arrow" to="/contact">
+                Ask for a written estimate
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── Process ────────────────────────────────────────────────────── */}
+      <section id="process" className="section section--rule services-anchor">
+        <div className="container stack stack--lg">
+          <Reveal className="section-head">
+            <span className="eyebrow">Process</span>
+            <h2 className="h2">How an engagement runs</h2>
+            <p className="body muted">
+              The same four steps, in the same order, every time. The point of the order is
+              that you can stop after any of them and still be holding something useful.
+            </p>
+          </Reveal>
+
+          <div className="grid grid--2">
+            {PROCESS.map((step, index) => (
+              <Reveal
+                as="article"
+                key={step.step}
+                className="card"
+                delay={index * 70}
+              >
+                <span className="card__index">{step.step}</span>
+                <h3 className="card__title">{step.title}</h3>
+                <p className="card__body">{step.body}</p>
+                <p className="card__body dim">{PROCESS_DETAIL[step.step]}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Technology ─────────────────────────────────────────────────── */}
+      <section id="technology" className="section section--rule section--alt services-anchor">
+        <div className="container stack stack--lg">
+          <Reveal className="section-head">
+            <span className="eyebrow">Technology</span>
+            <h2 className="h2">What I work with</h2>
+            <p className="body muted">
+              This is a capability list: the tools I build with and keep current on. It is
+              not a record of client work and there are no logos attached to it. Choices are
+              made per project against what you already run, and the boring, well-understood
+              option wins by default.
+            </p>
+          </Reveal>
+
+          <div className="grid grid--2">
+            {TECH.map((group, index) => (
+              <Reveal key={group.group} className="stack stack--sm" delay={index * 70}>
+                <h3 className="h4">{group.group}</h3>
+                <ul className="cluster">
+                  {group.items.map((item) => (
+                    <li className="pill" key={item}>
+                      {item}
                     </li>
                   ))}
                 </ul>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
-        </motion.div>
+        </div>
       </section>
 
+      {/* ── FAQ ────────────────────────────────────────────────────────── */}
+      <section id="faq" className="section section--rule services-anchor">
+        <div className="container container--narrow stack stack--lg">
+          <Reveal className="section-head">
+            <span className="eyebrow">Questions</span>
+            <h2 className="h2">The objections worth raising early</h2>
+            <p className="body muted">
+              These are the questions worth asking anyone you are about to hire, and the
+              answers you would get from me on a call.
+            </p>
+          </Reveal>
 
-      {/* Testimonials */}
-      <section style={{...styles.section, ...styles.sectionAlt}} data-section="testimonials">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={visibleSections.includes('testimonials') ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 style={styles.sectionTitle}>Client Success Stories</h2>
-          <p style={styles.sectionSubtitle}>
-            What our clients say about their AI transformation journey
-          </p>
-          
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTestimonial}
-              style={styles.testimonialCard}
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ duration: 0.5 }}
-            >
-              <FiStar style={{
-                fontSize: '2rem',
-                color: '#F59E0B',
-                marginBottom: '20px'
-              }} />
-              
-              <blockquote style={{
-                fontSize: isMobile ? '1.1rem' : '1.3rem',
-                color: 'white',
-                lineHeight: '1.6',
-                fontStyle: 'italic',
-                marginBottom: '30px',
-                fontWeight: '400'
-              }}>
-                "{testimonials[activeTestimonial].quote}"
-              </blockquote>
-              
-              <div>
-                <div style={{
-                  fontSize: '1.1rem',
-                  fontWeight: '700',
-                  color: 'white',
-                  marginBottom: '4px'
-                }}>
-                  {testimonials[activeTestimonial].author}
-                </div>
-                <div style={{
-                  fontSize: '0.9rem',
-                  color: '#8B5CF6',
-                  fontWeight: '600',
-                  marginBottom: '4px'
-                }}>
-                  {testimonials[activeTestimonial].title}
-                </div>
-                <div style={{
-                  fontSize: '0.8rem',
-                  color: 'rgba(255, 255, 255, 0.6)'
-                }}>
-                  {testimonials[activeTestimonial].company}
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-          
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginTop: '30px',
-            gap: '12px'
-          }}>
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveTestimonial(index)}
-                style={{
-                  width: '12px',
-                  height: '12px',
-                  borderRadius: '50%',
-                  border: 'none',
-                  background: index === activeTestimonial ? '#8B5CF6' : 'rgba(255, 255, 255, 0.3)',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-              />
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Trust Indicators */}
-      <section style={styles.section} data-section="trust">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={visibleSections.includes('trust') ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 style={styles.sectionTitle}>Enterprise-Grade Security & Compliance</h2>
-          <p style={styles.sectionSubtitle}>
-            Your trust is our foundation. We maintain the highest standards of security and compliance.
-          </p>
-          
-          <div style={styles.trustGrid}>
-            {trustIndicators.map((indicator, index) => (
-              <motion.div
-                key={index}
-                style={styles.trustCard}
-                initial={{ opacity: 0, y: 40 }}
-                animate={visibleSections.includes('trust') ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-              >
-                <div style={{
-                  color: '#FFC905',
-                  marginBottom: '12px'
-                }}>
-                  {indicator.icon}
-                </div>
-                <h3 style={{
-                  fontSize: '1rem',
-                  fontWeight: '700',
-                  color: 'white',
-                  marginBottom: '8px'
-                }}>
-                  {indicator.title}
-                </h3>
-                <p style={{
-                  fontSize: '0.9rem',
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  margin: 0
-                }}>
-                  {indicator.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      {/* FAQ Section */}
-      <section style={{...styles.section, ...styles.sectionAlt}} data-section="faq">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={visibleSections.includes('faq') ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 style={styles.sectionTitle}>Frequently Asked Questions</h2>
-          <p style={styles.sectionSubtitle}>
-            Get answers to common questions about AI implementation and our services
-          </p>
-          
-          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            {faqs.map((faq, index) => (
-              <motion.div
-                key={index}
-                style={styles.faqItem}
-                initial={{ opacity: 0, y: 20 }}
-                animate={visibleSections.includes('faq') ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-              >
-                <div
-                  style={{
-                    ...styles.faqQuestion,
-                    background: activeFAQ === index ? 'rgba(255, 201, 5, 0.05)' : 'transparent'
-                  }}
-                  onClick={() => setActiveFAQ(activeFAQ === index ? null : index)}
-                >
-                  <span>{faq.question}</span>
-                  <FiArrowRight style={{
-                    transform: activeFAQ === index ? 'rotate(90deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.3s ease'
-                  }} />
-                </div>
-                <AnimatePresence>
-                  {activeFAQ === index && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      style={{ overflow: 'hidden' }}
+          <Reveal delay={80}>
+            {FAQ.map((item) => {
+              const isOpen = openFaq.includes(item.id);
+              return (
+                <div className="qa" data-open={isOpen ? 'true' : 'false'} key={item.id}>
+                  <h3 className="qa__heading">
+                    <button
+                      type="button"
+                      className="qa__q"
+                      aria-expanded={isOpen}
+                      aria-controls={`faq-answer-${item.id}`}
+                      id={`faq-question-${item.id}`}
+                      onClick={() => toggleFaq(item.id)}
                     >
-                      <div style={styles.faqAnswer}>
-                        {faq.answer}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                      <span>{item.question}</span>
+                      <span className="qa__sign" aria-hidden="true">
+                        +
+                      </span>
+                    </button>
+                  </h3>
+                  <div
+                    className="qa__a"
+                    id={`faq-answer-${item.id}`}
+                    role="region"
+                    aria-labelledby={`faq-question-${item.id}`}
+                    aria-hidden={!isOpen}
+                  >
+                    <div>
+                      <p>{item.answer}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </Reveal>
+        </div>
       </section>
 
-      {/* CTA Section */}
-      <section style={styles.cta} data-section="cta">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={visibleSections.includes('cta') ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 style={styles.ctaTitle}>Ready to Transform Your Business?</h2>
-          <p style={styles.ctaDescription}>
-            Let's discuss how our AI solutions and custom software can accelerate your growth and drive measurable results.
-          </p>
-          <motion.button
-            style={styles.ctaButton}
-            whileHover={styles.ctaButtonHover}
-            onClick={handleContactClick}
-          >
-            Start Your AI Transformation
-            <FiArrowRight style={{ marginLeft: '8px' }} />
-          </motion.button>
-        </motion.div>
+      {/* ── Call to action ─────────────────────────────────────────────── */}
+      <section className="section section--tight section--rule">
+        <div className="container">
+          <Reveal className="panel cta-block">
+            <span className="eyebrow eyebrow--bare">Next step</span>
+            <h2 className="h2">Tell me what you are trying to build</h2>
+            <p className="lede">
+              Thirty minutes, no charge, no deck. If a Discovery Sprint is the right place to
+              start, we will scope one. If the honest answer is that you do not need it, you
+              will get that instead.
+            </p>
+            <div className="cluster">
+              <Link className="btn btn--primary btn--lg" to="/contact">
+                Start a project
+              </Link>
+              <a className="btn btn--ghost btn--lg" href={`mailto:${SITE.email}`}>
+                {SITE.email}
+              </a>
+            </div>
+            <p className="cluster services-cta__note body--sm muted">
+              <span className="dot" aria-hidden="true" />
+              {RESPONSE_PROMISE}
+            </p>
+          </Reveal>
+        </div>
       </section>
-    </div>
+    </>
   );
-};
+}
 
 export default ServicesPage;

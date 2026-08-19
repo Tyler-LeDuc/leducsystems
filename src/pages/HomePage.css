@@ -1,0 +1,189 @@
+/* =========================================================================
+   Le Duc Systems — Home page
+   Page-specific layout only. Everything else composes from components.css.
+   ========================================================================= */
+
+/* ── Hero ─────────────────────────────────────────────────────────────── */
+.home-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(72px, 11vw, 148px) clamp(56px, 7vw, 96px);
+  border-bottom: 1px solid var(--line);
+}
+
+.home-hero__title {
+  max-width: 17ch;
+  text-wrap: balance;
+}
+
+.home-hero__lede {
+  max-width: 58ch;
+}
+
+/* Quiet capability strip that closes the hero — not a logo wall. */
+.home-hero__keys {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-5) var(--sp-6);
+  margin-top: clamp(48px, 7vw, 88px);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--line);
+}
+
+.home-hero__key {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.home-hero__key-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--accent-400);
+}
+
+.home-hero__key-items {
+  font-size: var(--fs-xs);
+  line-height: var(--lh-base);
+  color: var(--text-xlo);
+}
+
+@media (max-width: 720px) {
+  .home-hero__keys { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ── Pillars ──────────────────────────────────────────────────────────── */
+.home-pillar {
+  gap: var(--sp-5);
+  padding: var(--sp-7) var(--sp-6);
+}
+
+.home-pillar__list {
+  margin-top: auto;
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--line);
+}
+
+/* ── The honest band ──────────────────────────────────────────────────── */
+.home-honest {
+  position: relative;
+  padding: clamp(32px, 5vw, 64px) clamp(24px, 4.5vw, 64px);
+  background: linear-gradient(150deg, var(--ink-150), var(--ink-100) 64%);
+  border: 1px solid var(--line-accent);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+}
+.home-honest::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent-400), transparent 82%);
+}
+
+/* Type comes from .h1; only the measure is page-specific. */
+.home-honest__title {
+  max-width: 14ch;
+}
+
+.home-honest__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  max-width: 64ch;
+}
+.home-honest__body p {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-loose);
+  color: var(--text);
+}
+
+.home-honest__sign {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--text-xlo);
+}
+.home-honest__sign strong { color: var(--text-hi); font-weight: 500; }
+
+/* ── Process ──────────────────────────────────────────────────────────── */
+.home-process {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-6);
+}
+.home-process::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--line);
+}
+
+.home-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding-top: var(--sp-6);
+}
+.home-step::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: var(--r-full);
+  background: var(--accent-500);
+  box-shadow: 0 0 0 5px var(--ink-000);
+}
+
+@media (max-width: 860px) {
+  .home-process {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding-left: var(--sp-6);
+  }
+  .home-process::before {
+    top: 0;
+    bottom: 0;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+  .home-step { padding-block: var(--sp-5); }
+  .home-step::before {
+    top: calc(var(--sp-5) + 6px);
+    left: calc(var(--sp-6) * -1 - 3px);
+  }
+}
+
+/* ── Differentiators ──────────────────────────────────────────────────── */
+.home-diff__label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+/* ── Closing band ─────────────────────────────────────────────────────── */
+/* The aside uses .sticky-col and the inner block uses .cta-block; both live
+   in components.css because every page needs them. */
+.home-close {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(72px, 9vw, 128px);
+  border-top: 1px solid var(--line);
+}

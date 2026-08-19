@@ -1,0 +1,88 @@
+/* =========================================================================
+   About page — page-specific styles only.
+   Everything else composes from components.css.
+   ========================================================================= */
+
+/* Identity block — stands in for a photograph, of which there is none.
+   Surface comes from .card.card--feature, stickiness from .sticky-col. */
+.about-identity {
+  gap: var(--sp-5);
+}
+
+.about-identity__mark {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.about-identity__name {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  letter-spacing: var(--ls-snug);
+  color: var(--text-hi);
+}
+
+.about-identity__facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.about-identity__facts > div {
+  display: grid;
+  grid-template-columns: 11ch minmax(0, 1fr);
+  gap: var(--sp-4);
+  align-items: baseline;
+}
+
+.about-identity__facts dt {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--text-xlo);
+}
+
+.about-identity__facts dd {
+  font-size: var(--fs-sm);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+/* Founding statement pull line. */
+.about-statement {
+  font-size: var(--fs-h3);
+  font-weight: 550;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-snug);
+  color: var(--text-hi);
+  max-width: 34ch;
+  padding-left: var(--sp-5);
+  border-left: 2px solid var(--accent-500);
+}
+
+@media (max-width: 960px) {
+  .about-identity {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-5);
+  }
+  .about-identity__facts {
+    flex: 1 1 320px;
+    min-width: 0;
+  }
+  .about-statement { max-width: none; }
+}
+
+@media (max-width: 620px) {
+  .about-identity {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .about-identity__facts > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-1);
+  }
+}

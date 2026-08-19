@@ -11,43 +11,84 @@
       gtag('config', 'G-VPCZV3J5CQ');
     </script>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/duck_icon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#06070A" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="robots" content="index, follow" />
+
+    <title>Le Duc Systems &mdash; Software consulting, built with AI</title>
     <meta
       name="description"
-      content="Le Duc AI Systems specializes in custom AI solutions, machine learning, and enterprise software development. Transform your business with cutting-edge AI technology, data analytics, and scalable software solutions tailored to your needs."
+      content="Le Duc Systems is a one-person software consultancy. I design, build, and ship production software, and I build the AI features inside it. You work with me directly."
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/duck_icon.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    <meta name="author" content="Tyler LeDuc" />
+    <link rel="canonical" href="https://leducsystems.com/" />
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>Le Duc AI Systems</title>
+    <!-- Icons -->
+    <link rel="icon" href="%PUBLIC_URL%/duck_icon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/duck-icon.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- Typography (required by src/styles/tokens.css) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Le Duc Systems" />
+    <meta property="og:title" content="Le Duc Systems &mdash; Software consulting, built with AI" />
+    <meta
+      property="og:description"
+      content="A one-person software consultancy. I design, build, and ship production software, and I build the AI features inside it. You work with me directly."
+    />
+    <meta property="og:url" content="https://leducsystems.com/" />
+    <meta property="og:image" content="https://leducsystems.com/duck-icon.png" />
+    <meta property="og:image:alt" content="The Le Duc Systems mark" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Le Duc Systems &mdash; Software consulting, built with AI" />
+    <meta
+      name="twitter:description"
+      content="A one-person software consultancy. I design, build, and ship production software, and I build the AI features inside it. You work with me directly."
+    />
+    <meta name="twitter:image" content="https://leducsystems.com/duck-icon.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Le Duc Systems",
+        "url": "https://leducsystems.com",
+        "email": "tyler@leducsystems.com",
+        "description": "Le Duc Systems is a one-person software consultancy. It designs, builds, and ships production software, and builds the AI features inside it.",
+        "founder": {
+          "@type": "Person",
+          "name": "Tyler LeDuc"
+        },
+        "foundingDate": "2024",
+        "areaServed": {
+          "@type": "Country",
+          "name": "United States"
+        },
+        "availableLanguage": "English",
+        "serviceType": [
+          "Custom software development",
+          "AI product engineering",
+          "Technical consulting"
+        ],
+        "logo": "https://leducsystems.com/duck-icon.png",
+        "image": "https://leducsystems.com/duck-icon.png"
+      }
+    </script>
   </head>
   <body>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>

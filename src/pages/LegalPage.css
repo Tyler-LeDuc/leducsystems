@@ -1,0 +1,108 @@
+/* =========================================================================
+   Le Duc Systems — Legal document pages (/privacy, /terms)
+   Long-form reading layout. Composed from components.css; only the pieces
+   that genuinely do not exist there live here.
+   ========================================================================= */
+
+.legal-hero {
+  padding-bottom: var(--section-y-tight);
+}
+
+.legal-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3) var(--sp-5);
+}
+
+.legal-summary {
+  align-items: flex-start;
+}
+.legal-summary p {
+  max-width: 66ch;
+  line-height: var(--lh-loose);
+}
+
+/* ── Table of contents ────────────────────────────────────────────────── */
+.legal-toc {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+.legal-toc__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-2) var(--sp-6);
+}
+@media (max-width: 620px) {
+  .legal-toc__list { grid-template-columns: minmax(0, 1fr); }
+}
+.legal-toc__link {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: baseline;
+  padding-block: 6px;
+  font-size: var(--fs-sm);
+  color: var(--text-lo);
+  transition: color var(--dur) var(--ease);
+}
+.legal-toc__link:hover { color: var(--accent-300); }
+@media (pointer: coarse) {
+  .legal-toc__link { min-height: 44px; align-items: center; }
+}
+.legal-toc__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  color: var(--text-xlo);
+  flex: none;
+}
+.legal-toc__link:hover .legal-toc__num { color: var(--accent-400); }
+
+/* ── Document body ────────────────────────────────────────────────────── */
+.legal-doc {
+  display: flex;
+  flex-direction: column;
+}
+
+.legal-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding-block: var(--sp-7);
+  border-top: 1px solid var(--line);
+}
+.legal-doc > .legal-section:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+/* Type comes from .h3; this only lays the number out beside the title. */
+.legal-section__title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-4);
+}
+.legal-section__num {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-mono);
+  color: var(--accent-400);
+}
+
+.legal-section p {
+  max-width: 70ch;
+  line-height: var(--lh-loose);
+}
+.legal-section .list li {
+  max-width: 68ch;
+  font-size: var(--fs-base);
+  color: var(--text);
+}
+.legal-section .legal-fineprint {
+  font-size: var(--fs-sm);
+  letter-spacing: var(--ls-wide);
+  color: var(--text-lo);
+}
