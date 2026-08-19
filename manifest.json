@@ -1,25 +1,23 @@
 {
-  "short_name": "Le Duc AI Systems",
-  "name": "Le Duc AI Systems",
+  "short_name": "Le Duc Systems",
+  "name": "Le Duc Systems",
+  "description": "A one-person software consultancy. Production software, and the AI features inside it.",
   "icons": [
     {
       "src": "duck_icon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "16x16 24x24 32x32 48x48 64x64 128x128 256x256",
       "type": "image/x-icon"
     },
     {
-      "src": "duck-logo.png",
+      "src": "duck-icon.png",
       "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "duck-logo.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "1024x1024",
+      "purpose": "any"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#06070A",
+  "background_color": "#06070A"
 }
