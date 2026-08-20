@@ -5,7 +5,6 @@ import Reveal from '../components/Reveal';
 import {
   SITE,
   PILLARS,
-  HONESTY,
   PROCESS,
   DIFFERENTIATORS,
   TECH,
@@ -108,46 +107,6 @@ export default function HomePage() {
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── The honest section ─────────────────────────────────────────── */}
-      <section className="section section--alt" aria-labelledby="honest-title">
-        <div className="container">
-          <Reveal className="home-honest">
-            <div className="stack stack--lg">
-              <div className="stack">
-                <p className="eyebrow">{HONESTY.eyebrow}</p>
-                <h2 id="honest-title" className="h1 home-honest__title">
-                  {HONESTY.title}
-                </h2>
-              </div>
-
-              <div className="home-honest__body">
-                {HONESTY.body.map((paragraph) => (
-                  <p key={paragraph.slice(0, 40)}>{paragraph}</p>
-                ))}
-              </div>
-
-              <div className="cluster cluster--lg">
-                <Link className="link-arrow" to="/services">
-                  How the work is structured
-                </Link>
-                <Link className="link-arrow" to="/about">
-                  Why this company exists
-                </Link>
-                <Link className="link-arrow" to="/contact">
-                  Have the conversation
-                </Link>
-              </div>
-
-              <p className="home-honest__sign">
-                <strong>{SITE.founder}</strong>
-                <span aria-hidden="true">·</span>
-                {SITE.name}
-              </p>
-            </div>
-          </Reveal>
         </div>
       </section>
 
