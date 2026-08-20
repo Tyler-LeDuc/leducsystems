@@ -10,7 +10,7 @@ export const SITE = {
   founder: 'Tyler LeDuc',
   email: 'tyler@leducsystems.com',
   url: 'https://leducsystems.com',
-  founded: 2024,
+  founded: 2026,
   tagline: 'Software that ships. Built with AI, and built to use it.',
   description:
     'Le Duc Systems is a one-person software consultancy. I design, build, and ship production software — and I build the AI features inside it. You work with me directly, from the first call to the last deploy.',

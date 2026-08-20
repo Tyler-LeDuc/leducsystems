@@ -34,7 +34,7 @@ function Footer() {
             <p className="body body--sm muted">
               A one-person software consultancy. I design, build, and ship production
               software, and I build the AI features inside it. Remote-first, US-based,
-              founded 2024.
+              founded {SITE.founded}.
             </p>
             <a className="site-footer__link link-underline" href={`mailto:${SITE.email}`}>
               {SITE.email}
