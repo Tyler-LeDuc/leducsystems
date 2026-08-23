@@ -25,7 +25,7 @@ export default function HomePage() {
   return (
     <>
       <SEO
-        title="Software consultancy built around AI"
+        title="Custom internal software for operations teams"
         description={SITE.description}
         path="/"
       />

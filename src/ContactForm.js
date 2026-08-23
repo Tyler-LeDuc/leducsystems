@@ -387,6 +387,12 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
       if (fileInputRef.current) fileInputRef.current.value = '';
       setStatus('success');
     } catch (err) {
+      /* EmailJS reports the real cause on the error object (status + text).
+         Swallowing it made an expired OAuth token look identical to a network
+         blip, so surface it for diagnosis instead of discarding it. */
+      const detail = err && (err.text || err.message || String(err));
+      const status = err && err.status;
+      console.error('[ContactForm] EmailJS send failed', status ? `(${status})` : '', detail);
       setStatus('error');
     }
   };

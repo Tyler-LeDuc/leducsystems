@@ -13,9 +13,9 @@ export const SITE = {
   github: 'https://github.com/tyler-leduc',
   linkedin: 'https://www.linkedin.com/in/tyler-l-60a9451a3/',
   founded: 2026,
-  tagline: 'Software that ships. Built with AI, and built to use it.',
+  tagline: 'Your operation outgrew the spreadsheet. I build what replaces it.',
   description:
-    'Le Duc Systems is a one-person software consultancy. I design, build, and ship production software — and I build the AI features inside it. You work with me directly, from the first call to the last deploy.',
+    'Le Duc Systems builds the internal software operations teams actually run on — dispatch and scheduling, inventory and asset tracking, reporting, and the aging Access database nobody wants to touch. One engineer, working with you directly, from the first call to the last deploy.',
 };
 
 export const NAV = [

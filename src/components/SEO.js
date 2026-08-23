@@ -35,7 +35,7 @@ export default function SEO({ title, description, path = '/' }) {
     const fullTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
     const desc = description || SITE.description;
     const url = `${SITE.url}${path === '/' ? '' : path}`;
-    const image = `${SITE.url}/duck-icon.png`;
+    const image = `${SITE.url}/images/og-card.jpg`;
 
     document.title = fullTitle;
 
@@ -48,6 +48,9 @@ export default function SEO({ title, description, path = '/' }) {
     upsertMeta('property', 'og:description', desc);
     upsertMeta('property', 'og:url', url);
     upsertMeta('property', 'og:image', image);
+    upsertMeta('property', 'og:image:width', '1200');
+    upsertMeta('property', 'og:image:height', '630');
+    upsertMeta('property', 'og:image:alt', `${SITE.name} — ${SITE.tagline}`);
 
     upsertMeta('name', 'twitter:card', 'summary_large_image');
     upsertMeta('name', 'twitter:title', fullTitle);
