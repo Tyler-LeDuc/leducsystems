@@ -9,10 +9,16 @@
   gap: var(--sp-5);
 }
 
-.about-identity__mark {
-  width: 64px;
-  height: 64px;
-  object-fit: contain;
+/* Founder headshot. Square source, rendered as a circle; the fixed aspect-ratio
+   and width/height attrs reserve layout space so the card does not shift on load. */
+.about-identity__photo {
+  width: 112px;
+  height: 112px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  border: 1px solid var(--rule, rgba(255, 255, 255, 0.12));
 }
 
 .about-identity__name {

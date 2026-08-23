@@ -57,11 +57,13 @@ function AboutPage() {
               aria-label={SITE.founder}
             >
               <img
-                className="about-identity__mark"
-                src="/duck-icon.png"
-                alt=""
-                width="64"
-                height="64"
+                className="about-identity__photo"
+                src="/images/tyler-leduc.jpg"
+                alt={SITE.founder}
+                width="660"
+                height="660"
+                loading="lazy"
+                decoding="async"
               />
               <div className="stack stack--xs">
                 <p className="about-identity__name">{SITE.founder}</p>
