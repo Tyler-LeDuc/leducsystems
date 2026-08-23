@@ -41,3 +41,13 @@
 .services-cta__note {
   gap: var(--sp-2);
 }
+
+/* Engagement price. Deliberately prominent — the number is the risk-bounding
+   signal for a buyer with no track record to evaluate. */
+.engagement__price {
+  font-size: var(--fs-h4, 1.25rem);
+  font-weight: 600;
+  color: var(--accent, #5eead4);
+  letter-spacing: var(--ls-snug);
+  margin: 0;
+}

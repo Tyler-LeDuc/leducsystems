@@ -115,12 +115,14 @@ export const HONESTY = {
   ],
 };
 
-/* Engagement models. No prices, ever. */
+/* Engagement models. The Discovery Sprint price is public on purpose: a
+   number bounds the risk for a buyer who has no track record to go on. */
 export const ENGAGEMENTS = [
   {
     id: '01',
     name: 'Discovery Sprint',
     duration: 'About 1 week',
+    price: '$3,500 fixed',
     shape: 'Fixed scope',
     summary:
       'The cheapest way to find out whether the idea is real before anyone commits to building it.',
@@ -137,6 +139,7 @@ export const ENGAGEMENTS = [
     id: '02',
     name: 'Build',
     duration: 'Typically 4–12 weeks',
+    price: 'From $12,000, quoted after Discovery',
     shape: 'Fixed scope, phased',
     summary: 'Design and ship the thing.',
     includes: [
@@ -152,6 +155,7 @@ export const ENGAGEMENTS = [
     id: '03',
     name: 'Ongoing',
     duration: 'Monthly',
+    price: 'From $4,000 / month',
     shape: 'Month to month',
     summary:
       'For teams that have shipped and now need to keep moving.',
@@ -166,7 +170,7 @@ export const ENGAGEMENTS = [
 ];
 
 export const PRICING_NOTE =
-  'Pricing depends on scope, and I would rather quote something real than post a number I would have to walk back. Tell me what you are trying to do and you will get a written estimate.';
+  'The Discovery Sprint is a fixed price because you should be able to tell whether I am in your range without booking a call. Build work is quoted after Discovery, when the scope is actually known — a number before that would be a guess, and you would be the one absorbing it if the guess was wrong.';
 
 export const PROCESS = [
   {

@@ -199,6 +199,8 @@ function ServicesPage() {
                   <span className="pill">{model.shape}</span>
                 </div>
 
+                <p className="engagement__price">{model.price}</p>
+
                 <p className="card__body">{model.summary}</p>
 
                 <div className="stack stack--sm">
