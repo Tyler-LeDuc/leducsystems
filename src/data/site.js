@@ -10,6 +10,8 @@ export const SITE = {
   founder: 'Tyler LeDuc',
   email: 'tyler@leducsystems.com',
   url: 'https://leducsystems.com',
+  github: 'https://github.com/tyler-leduc',
+  linkedin: 'https://www.linkedin.com/in/tyler-l-60a9451a3/',
   founded: 2026,
   tagline: 'Software that ships. Built with AI, and built to use it.',
   description:

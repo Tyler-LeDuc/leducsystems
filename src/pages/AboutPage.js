@@ -95,6 +95,27 @@ function AboutPage() {
                     </a>
                   </dd>
                 </div>
+                <div>
+                  <dt>Elsewhere</dt>
+                  <dd className="cluster">
+                    <a
+                      className="link-underline"
+                      href={SITE.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      GitHub
+                    </a>
+                    <a
+                      className="link-underline"
+                      href={SITE.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      LinkedIn
+                    </a>
+                  </dd>
+                </div>
               </dl>
             </Reveal>
 
@@ -178,17 +199,13 @@ function AboutPage() {
                 delivering the work, and a lot of that organization exists to coordinate itself.
               </p>
               <p className="body">
-                Meanwhile, AI has genuinely changed how much one competent engineer can carry.
-                Not by writing software on its own — that is still not what happens — but by
-                removing the parts of the job that were never the hard part. The judgment, the
-                architecture, the decision about what not to build: those are unchanged, and they
-                are still where projects succeed or fail.
-              </p>
-              <p className="body">
-                Firms that adopted these tools mostly kept the difference. {SITE.name} is an
-                attempt to hand it to the client instead, as smaller engagements, shorter
-                timelines, and a direct line to the person doing the work. If that stops being
-                true, the reason to hire me stops with it.
+                AI has genuinely changed how much one competent engineer can carry — not by
+                writing software on its own, but by removing the parts of the job that were never
+                the hard part. The judgment, the architecture, the decision about what not to
+                build: unchanged, and still where projects succeed or fail. Firms that adopted
+                these tools mostly kept the difference. {SITE.name} hands it to you instead, as
+                smaller engagements, shorter timelines, and a direct line to the person doing the
+                work. If that stops being true, the reason to hire me stops with it.
               </p>
             </Reveal>
           </div>
