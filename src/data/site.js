@@ -21,6 +21,7 @@ export const SITE = {
 export const NAV = [
   { label: 'Home', path: '/' },
   { label: 'Services', path: '/services' },
+  { label: 'Free tool', path: '/tools/schema' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
 ];
