@@ -32,46 +32,47 @@ export const LEGAL_NAV = [
 ];
 
 /* The three-part offer: we use AI, we develop it, and we develop with it. */
+/* Ordered by what the buyer came here for. AI is the third pillar, not the
+   first two — it is how the work gets done and one thing among several that
+   gets built, never the pitch itself. */
 export const PILLARS = [
   {
     id: '01',
-    title: 'Build with AI',
+    title: 'Replace what you outgrew',
     summary:
-      'The practice runs on modern AI tooling, which is why a one-person shop can ship at a pace that used to require a team. The work itself is ordinary, careful software engineering — the tooling just removes the parts that were never the hard part.',
+      'The spreadsheet, the shared Access file, the tool someone built in 2014 and then left. It still works, mostly, and it is now the reason three people spend their mornings copying data between things.',
     deliverables: [
-      'Full-stack web applications',
       'Internal tools and admin systems',
+      'Scheduling, dispatch, and inventory',
       'Operational dashboards and reporting',
-      'APIs and service integrations',
-      'Migrations off legacy systems',
+      'Full-stack web applications',
+      'Roles, permissions, and audit trails',
     ],
   },
   {
     id: '02',
-    title: 'Build AI in',
+    title: 'Get the data out intact',
     summary:
-      'Language-model features inside your product that do real work, wired into your actual data and your actual workflows rather than bolted on as a chat box in the corner.',
+      'Migrations are where these projects actually go wrong. Not the new system — the fifteen years of records with inconsistent dates, duplicate customers, and a notes field holding three different kinds of information.',
     deliverables: [
-      'Assistants and copilots scoped to your domain',
-      'Retrieval and RAG over your own documents',
-      'Document extraction and classification',
-      'Summarization pipelines',
-      'Agents that complete multi-step tasks',
-      'Natural-language search over structured data',
+      'Migrations off Access, spreadsheets, and legacy databases',
+      'Schema design, cleanup, and reconciliation',
+      'Integrations with the systems you already run',
+      'APIs and service integrations',
+      'Reporting that replaces manual exports',
     ],
   },
   {
     id: '03',
-    title: 'Build it to last',
+    title: 'AI where it earns its place',
     summary:
-      'The unglamorous engineering that decides whether an AI feature survives contact with real users. A demo takes an afternoon. Something you can put in front of customers takes this.',
+      'Language-model features wired into your real data and your real workflows, plus the unglamorous engineering that keeps them working. I will tell you when the honest answer is a database query and a form rather than a model.',
     deliverables: [
-      'Evaluation harnesses for model output',
-      'Prompt and output regression testing',
-      'Guardrails and graceful fallbacks',
-      'Token cost and latency control',
-      'Observability and request tracing',
-      'Human-in-the-loop review paths',
+      'Assistants and copilots scoped to your domain',
+      'Retrieval over your own documents',
+      'Document extraction and classification',
+      'Evaluation harnesses and regression testing',
+      'Guardrails, fallbacks, and human review paths',
     ],
   },
 ];
@@ -128,6 +129,7 @@ export const ENGAGEMENTS = [
     summary:
       'The cheapest way to find out whether the idea is real before anyone commits to building it.',
     includes: [
+      'A look at your actual data, and what it will take to move it',
       'A technical plan you can hand to any engineer',
       'An architecture and stack decision with the reasoning written down',
       'A scoped estimate for the build',

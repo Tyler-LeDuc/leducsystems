@@ -74,9 +74,9 @@ export default function HomePage() {
               Three parts, one practice.
             </h2>
             <p className="lede">
-              AI shows up three times in this business: in how the software gets built, in what
-              the software does once it is in front of users, and in the engineering that keeps
-              that second part honest.
+              Most of this work has the same shape. Something the business depends on runs in a
+              spreadsheet or a system nobody wants to open, the workarounds have quietly become
+              somebody's full-time job, and the data underneath is fifteen years of inconsistency.
             </p>
           </Reveal>
 

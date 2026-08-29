@@ -89,10 +89,10 @@ function ServicesPage() {
             <span className="eyebrow">Services</span>
             <h1 className="h1">A deliberately narrow offer</h1>
             <p className="lede">
-              I do three kinds of work: ship production software, build language-model
-              features into it, and do the unglamorous engineering that keeps those
-              features working once real users arrive. Everything on this page is
-              capability and process — what I can build and how an engagement is
+              I do three kinds of work: replace the internal systems an operation has outgrown,
+              move the data into them without losing fifteen years of records, and build
+              language-model features where they genuinely earn their place. Everything on this
+              page is capability and process — what I can build and how an engagement is
               structured — not a claim about somebody else&rsquo;s project.
             </p>
             <p className="body muted">
