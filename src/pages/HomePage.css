@@ -187,3 +187,38 @@
   padding-block: clamp(72px, 9vw, 128px);
   border-top: 1px solid var(--line);
 }
+
+/* Tool band. Two columns on desktop: the pitch, and a sample of the output so
+   the value is legible without clicking through. */
+.home-tool {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--sp-6);
+  align-items: center;
+}
+
+.home-tool__copy {
+  min-width: 0;
+}
+
+.home-tool__preview {
+  margin: 0;
+  padding: var(--sp-4);
+  overflow-x: auto;
+  background: var(--surface-2, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--rule, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-md, 10px);
+  font-family: var(--font-mono, ui-monospace, Consolas, monospace);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: var(--text-lo);
+}
+
+@media (max-width: 860px) {
+  .home-tool {
+    grid-template-columns: 1fr;
+  }
+  .home-tool__preview {
+    display: none;
+  }
+}

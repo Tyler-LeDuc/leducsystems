@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import Reveal from '../components/Reveal';
-import { SITE, DIFFERENTIATORS, HONESTY, RESPONSE_PROMISE } from '../data/site';
+import { SITE, HONESTY, RESPONSE_PROMISE } from '../data/site';
 import './AboutPage.css';
 
 const EARLY_CLIENT_TERMS = [
@@ -250,36 +250,6 @@ function AboutPage() {
               to stop needing to.
             </p>
           </Reveal>
-        </div>
-      </section>
-
-      {/* ── Principles ─────────────────────────────────────────────────── */}
-      <section className="section section--rule" aria-labelledby="about-principles">
-        <div className="container stack stack--lg">
-          <Reveal className="section-head">
-            <p className="eyebrow">Principles</p>
-            <h2 className="h2" id="about-principles">
-              Commitments, not values
-            </h2>
-            <p className="lede">
-              These are the things you can hold me to. Each one is checkable during an engagement,
-              which is the only kind of principle worth publishing.
-            </p>
-          </Reveal>
-
-          <div className="rows">
-            {DIFFERENTIATORS.map((item, index) => (
-              <Reveal className="row" key={item.title} delay={80 + index * 60}>
-                <div className="stack stack--xs">
-                  <span className="card__index">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <h3 className="h4 hi">{item.title}</h3>
-                </div>
-                <p className="body">{item.body}</p>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 

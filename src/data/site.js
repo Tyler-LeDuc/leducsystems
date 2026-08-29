@@ -200,50 +200,53 @@ export const PROCESS = [
   },
 ];
 
+/* Ordered by depth of production experience, not by what sounds current.
+   Java and Spring Boot lead because that is where the most shipped systems
+   are, and burying them to look like a frontend shop would be a lie of
+   emphasis. */
 export const TECH = [
   {
-    group: 'Product & web',
+    group: 'Backend',
     items: [
-      'TypeScript',
-      'React',
-      'Next.js',
-      'Node',
+      'Java & Spring Boot',
+      'Node & TypeScript',
       'Python',
       'REST & GraphQL APIs',
+      'Background jobs & schedulers',
     ],
   },
   {
     group: 'Data',
     items: [
       'PostgreSQL',
+      'Schema design & migrations',
       'Redis',
-      'Vector stores (pgvector, Pinecone)',
-      'ETL',
-      'Data modeling',
+      'ETL and integrations',
+      'pgvector',
+    ],
+  },
+  {
+    group: 'Web',
+    items: ['React', 'Next.js', 'TypeScript', 'Accessible, responsive UI'],
+  },
+  {
+    group: 'Infrastructure',
+    items: [
+      'Docker',
+      'AWS',
+      'Linux',
+      'CI/CD with GitHub Actions',
+      'Infrastructure as code',
+      'Monitoring, logging, tracing',
     ],
   },
   {
     group: 'AI',
     items: [
-      'Claude API',
-      'OpenAI API',
-      'Structured output & tool use',
+      'Claude & OpenAI APIs',
       'RAG and retrieval pipelines',
-      'Embeddings',
+      'Structured output & tool use',
       'Evaluation harnesses',
-      'Prompt versioning',
-      'Agent frameworks',
-    ],
-  },
-  {
-    group: 'Delivery',
-    items: [
-      'AWS',
-      'Vercel',
-      'Docker',
-      'GitHub Actions',
-      'Infrastructure as code',
-      'Monitoring and tracing',
     ],
   },
 ];

@@ -1,27 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import Reveal from '../components/Reveal';
 import {
   SITE,
   PILLARS,
-  PROCESS,
   DIFFERENTIATORS,
   TECH,
-  FAQ,
   RESPONSE_PROMISE,
 } from '../data/site';
 import './HomePage.css';
 
-/* The three questions a stranger asks first. The rest live on /services. */
-const TEASER_IDS = ['new', 'ai-code', 'ownership'];
-const TEASER_FAQ = TEASER_IDS.map((id) => FAQ.find((entry) => entry.id === id)).filter(Boolean);
-
 export default function HomePage() {
-  const [openId, setOpenId] = useState(TEASER_FAQ.length ? TEASER_FAQ[0].id : null);
-
-  const toggle = (id) => setOpenId((current) => (current === id ? null : id));
-
   return (
     <>
       <SEO
@@ -54,8 +44,10 @@ export default function HomePage() {
               <Link className="btn btn--primary btn--lg" to="/contact">
                 Start a project
               </Link>
-              <Link className="btn btn--ghost btn--lg" to="/services">
-                See how I work
+              {/* The tool is the cheapest way for a stranger to find out
+                  whether I know what I am doing. Give it hero billing. */}
+              <Link className="btn btn--ghost btn--lg" to="/tools/schema">
+                Try the free tool
               </Link>
             </div>
           </Reveal>
@@ -110,29 +102,42 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── How I work ─────────────────────────────────────────────────── */}
-      <section className="section" aria-labelledby="process-title">
-        <div className="container stack stack--xl">
-          <Reveal className="section-head">
-            <p className="eyebrow">How I work</p>
-            <h2 id="process-title" className="h2">
-              From the first call to the handover.
-            </h2>
-            <p className="lede">
-              Every engagement runs the same four steps. You always know what happens next, what
-              it costs, and what you walk away with if it stops here.
-            </p>
-          </Reveal>
+      {/* ── The tool ───────────────────────────────────────────────────── */}
+      <section className="section section--alt" aria-labelledby="tool-band-title">
+        <div className="container">
+          <Reveal className="home-tool">
+            <div className="stack stack--sm home-tool__copy">
+              <p className="eyebrow">Try before you talk to me</p>
+              <h2 id="tool-band-title" className="h2">
+                Paste a spreadsheet. Get the database it should be.
+              </h2>
+              <p className="body">
+                A free tool that reads your columns, writes the Postgres schema, and tells you
+                what in the data would break the import — mixed date formats, IDs quietly losing
+                their leading zeros, columns that should be lookup tables. Runs in your browser.
+                Nothing is uploaded.
+              </p>
+              <div className="cluster">
+                <Link className="btn btn--primary" to="/tools/schema">
+                  Open the tool
+                </Link>
+              </div>
+            </div>
 
-          <ol className="home-process">
-            {PROCESS.map((step, i) => (
-              <Reveal as="li" className="home-step" key={step.step} delay={i * 90}>
-                <p className="card__index">{step.step}</p>
-                <h3 className="h4">{step.title}</h3>
-                <p className="card__body">{step.body}</p>
-              </Reveal>
-            ))}
-          </ol>
+            <pre className="home-tool__preview" aria-hidden="true">
+              <code>{`[error] Ship Date
+  Mixed date notations. 4/5/26 is
+  April 5th or May 4th.
+
+[error] Phone
+  Leading zeros dropped by an
+  integer import.
+
+[info]  Status
+  3 distinct values in 6 rows —
+  this is a lookup table.`}</code>
+            </pre>
+          </Reveal>
         </div>
       </section>
 
@@ -160,66 +165,6 @@ export default function HomePage() {
                 <p className="body">{item.body}</p>
               </div>
             ))}
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── FAQ teaser ─────────────────────────────────────────────────── */}
-      <section className="section section--alt" aria-labelledby="faq-title">
-        <div className="container grid grid--sidebar">
-          <Reveal className="sticky-col">
-            <div className="stack">
-              <p className="eyebrow">Straight answers</p>
-              <h2 id="faq-title" className="h2">
-                The questions that come up first.
-              </h2>
-              <p className="body muted">
-                These are the real objections to hiring a one-person shop. The rest of them,
-                including scheduling and what happens if we stop, are answered on the services
-                page.
-              </p>
-              <p>
-                <Link className="link-arrow" to="/services">
-                  Read the rest
-                </Link>
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal as="div" delay={120}>
-            {TEASER_FAQ.map((entry) => {
-              const open = openId === entry.id;
-              return (
-                <div className="qa" data-open={open ? 'true' : 'false'} key={entry.id}>
-                  <h3 className="qa__heading">
-                    <button
-                      type="button"
-                      className="qa__q"
-                      id={`faq-q-${entry.id}`}
-                      aria-expanded={open}
-                      aria-controls={`faq-a-${entry.id}`}
-                      onClick={() => toggle(entry.id)}
-                    >
-                      <span>{entry.question}</span>
-                      <span className="qa__sign" aria-hidden="true">
-                        +
-                      </span>
-                    </button>
-                  </h3>
-                  <div
-                    className="qa__a"
-                    id={`faq-a-${entry.id}`}
-                    role="region"
-                    aria-labelledby={`faq-q-${entry.id}`}
-                    aria-hidden={!open}
-                  >
-                    <div>
-                      <p>{entry.answer}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
           </Reveal>
         </div>
       </section>
