@@ -31,17 +31,17 @@ const ROUTES = {
   '/services': {
     title: 'Services',
     description:
-      'Three kinds of work: production software built with AI, language-model features built into your product, and the evaluation and guardrail engineering that keeps them working. Engagement models, process, and technology.',
+      'Three kinds of work: replacing the internal systems an operation has outgrown, migrating the data into them intact, and building language-model features where they earn their place. Engagement models, pricing, process, and technology.',
   },
   '/about': {
     title: 'About',
     description:
-      'Le Duc Systems is a one-person software consultancy founded in 2026 by Tyler LeDuc. One engineer, direct access, and no invented credentials.',
+      'Le Duc Systems is a one-person software consultancy in Phoenix, Arizona, founded in 2026 by Tyler LeDuc. One engineer, direct access, and no invented credentials.',
   },
   '/contact': {
     title: 'Contact',
     description:
-      'Start a project with Le Duc Systems. Describe what you are building and get a reply within one business day from the person who would do the work.',
+      'Start a project with Le Duc Systems, a one-person software consultancy in Phoenix, Arizona. Describe what you are building and get a reply within one business day from the person who would do the work.',
   },
   '/tools/schema': {
     title: 'Spreadsheet to database schema',

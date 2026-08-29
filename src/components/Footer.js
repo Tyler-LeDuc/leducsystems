@@ -32,9 +32,9 @@ function Footer() {
               <span className="brand__text">Le Duc Systems</span>
             </Link>
             <p className="body body--sm muted">
-              A one-person software consultancy. I design, build, and ship production
-              software, and I build the AI features inside it. Remote-first, US-based,
-              founded {SITE.founded}.
+              A one-person software consultancy building the internal systems operations teams
+              run on, and moving the data into them intact. Based in {SITE.city},{' '}
+              {SITE.region}, working remote across US time zones. Founded {SITE.founded}.
             </p>
             <a className="site-footer__link link-underline" href={`mailto:${SITE.email}`}>
               {SITE.email}

@@ -42,7 +42,7 @@ function AboutPage() {
           <Reveal className="cluster" delay={120}>
             <span className="pill">Headcount: one</span>
             <span className="pill">Founded {SITE.founded}</span>
-            <span className="pill">Remote-first, US-based</span>
+            <span className="pill">{SITE.city}, {SITE.region}</span>
           </Reveal>
         </div>
       </section>
@@ -85,7 +85,9 @@ function AboutPage() {
                 </div>
                 <div>
                   <dt>Working</dt>
-                  <dd>Remote-first, US-based, across US time zones</dd>
+                  <dd>
+                    {SITE.city}, {SITE.region} — remote-first, across US time zones
+                  </dd>
                 </div>
                 <div>
                   <dt>Direct</dt>

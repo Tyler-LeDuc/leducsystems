@@ -12,6 +12,9 @@ export const SITE = {
   url: 'https://leducsystems.com',
   github: 'https://github.com/tyler-leduc',
   linkedin: 'https://www.linkedin.com/in/tyler-l-60a9451a3/',
+  city: 'Phoenix',
+  region: 'Arizona',
+  regionShort: 'AZ',
   founded: 2026,
   tagline: 'Your operation outgrew the spreadsheet. I build what replaces it.',
   description:
@@ -31,7 +34,6 @@ export const LEGAL_NAV = [
   { label: 'Terms of Service', path: '/terms' },
 ];
 
-/* The three-part offer: we use AI, we develop it, and we develop with it. */
 /* Ordered by what the buyer came here for. AI is the third pillar, not the
    first two — it is how the work gets done and one thing among several that
    gets built, never the pitch itself. */
@@ -294,7 +296,7 @@ export const FAQ = [
     id: 'location',
     question: 'Where are you based, and do you work remotely?',
     answer:
-      'Remote-first and US-based, comfortable working across US time zones.',
+      'Based in Phoenix, Arizona. Remote-first, and comfortable working across US time zones.',
   },
 ];
 

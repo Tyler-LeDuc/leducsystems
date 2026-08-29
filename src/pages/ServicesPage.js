@@ -15,11 +15,12 @@ import {
   RESPONSE_PROMISE,
 } from '../data/site';
 
-/* Stable anchors for the three pillars — the footer deep-links to these. */
+/* Stable anchors for the three pillars, so an individual line of work can be
+   linked directly from a proposal or an email. */
 const PILLAR_ANCHORS = {
-  '01': 'build-with-ai',
-  '02': 'build-ai-in',
-  '03': 'build-to-last',
+  '01': 'replace-what-you-outgrew',
+  '02': 'get-the-data-out',
+  '03': 'ai-where-it-earns',
 };
 
 /* When each pillar is the right call, and when it plainly is not. */
@@ -32,15 +33,15 @@ const PILLAR_FIT = {
   },
   '02': {
     fit:
-      'When there is a repetitive judgement call buried in your product or your operations — reading documents, answering the same question in fifty forms, routing work to the right place, drafting a first pass a human then edits — and the data a model would need already exists somewhere you can reach.',
+      'When the new system is not the hard part — the fifteen years of records are. Inconsistent dates, duplicate customers, a notes field holding three different kinds of information, and a spreadsheet somebody maintains by hand that nothing else knows about. Also when two systems you already pay for have never been able to talk to each other.',
     notFit:
-      'When the task has one correct answer that a query, a rule, or a well-designed form would produce. A model is a probabilistic answer to a deterministic question there: more expensive, slower, and less reliable than the boring version. It is also premature if the underlying data is not accessible yet — that is a data project first, and an AI project second.',
+      'When the data is small enough and clean enough that a careful afternoon would do it. Migration work earns its cost at volume and at mess; below that threshold you would be paying me for something you can do yourself, and I will tell you that rather than take the work.',
   },
   '03': {
     fit:
-      'When something already works in a demo and now has to work in front of customers. You need to know when the output is wrong, how often, what it costs per request, how slow it gets under load, and what the product does on the day the model or the API is unavailable.',
+      'When there is a repetitive judgement call buried in your operations — reading documents, answering the same question in fifty forms, routing work to the right place, drafting a first pass a human then edits — and the data a model would need already exists somewhere reachable. Also when something works in a demo and now has to survive real users: knowing when the output is wrong, how often, and what happens the day the API is down.',
     notFit:
-      'As a standalone first purchase when nothing is live. Before there is real usage there is nothing to evaluate against, and a harness built on guesses only measures the guesses. This work belongs alongside a build, or immediately after one.',
+      'When the task has one correct answer that a query, a rule, or a well-designed form would produce. A model is a probabilistic answer to a deterministic question there: more expensive, slower, and less reliable than the boring version. It is also premature if the underlying data is not accessible yet — that is a data project first, and an AI project second.',
   },
 };
 
@@ -77,7 +78,7 @@ function ServicesPage() {
     <>
       <SEO
         title="Services"
-        description="Three kinds of work: production software built with AI, language-model features built into your product, and the evaluation and guardrail engineering that keeps them working. Engagement models, process, and technology."
+        description="Three kinds of work: replacing the internal systems an operation has outgrown, migrating the data into them intact, and building language-model features where they earn their place. Engagement models, pricing, process, and technology."
         path="/services"
       />
 
@@ -123,9 +124,9 @@ function ServicesPage() {
             <span className="eyebrow">What I build</span>
             <h2 className="h2">Three lines of work</h2>
             <p className="body muted">
-              Use AI to build, build AI into the product, and build the parts that decide
-              whether it survives. Most engagements touch two of the three; a few touch
-              all of them.
+              Replace the system, move the data into it intact, and add a model only where one
+              earns its place. Most engagements are the first two; the third comes up less often
+              than the industry would like you to believe.
             </p>
           </Reveal>
 
