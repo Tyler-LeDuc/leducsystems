@@ -68,11 +68,6 @@ const ROUTES = {
     description:
       'Point this at a folder of Excel workbooks and see the dependency map nobody has drawn: which file a dozen reports read from, which links point at a machine that is not there, which workbook exists in eleven copies, and which one person has ever saved it. Reads four small parts per file, entirely in your browser.',
   },
-  '/tools/outreach': {
-    title: 'Cold outreach pipeline',
-    description:
-      'A pipeline tracker for cold outreach: who you contacted, which email in the sequence is due, and the draft ready to paste. Runs entirely in your browser, stores nothing on a server, and imports and exports plain CSV.',
-  },
   '/tools/access': {
     title: 'What is actually in your Access database',
     description:

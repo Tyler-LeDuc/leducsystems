@@ -74,14 +74,6 @@ export const TOOLS = [
       'Paste a block of cells and get the Postgres table it should become, plus the data problems that would break the import.',
     input: 'Pasted cells',
   },
-  {
-    path: '/tools/outreach',
-    name: 'Outreach pipeline',
-    headline: 'Who to email today, and what to send them',
-    summary:
-      'Tracks a multi-touch cold sequence: who is due, which email they get next, and the draft with everything the row knows already filled in.',
-    input: 'A CSV, or nothing',
-  },
 ];
 
 export const LEGAL_NAV = [

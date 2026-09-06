@@ -13,7 +13,6 @@ import SchemaToolPage from './pages/SchemaToolPage';
 import WorkbookToolPage from './pages/WorkbookToolPage';
 import FolderToolPage from './pages/FolderToolPage';
 import AccessToolPage from './pages/AccessToolPage';
-import OutreachToolPage from './pages/OutreachToolPage';
 import ToolsIndexPage from './pages/ToolsIndexPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -79,7 +78,6 @@ export function AppShell() {
           <Route path="/tools/workbook" element={<WorkbookToolPage />} />
           <Route path="/tools/folder" element={<FolderToolPage />} />
           <Route path="/tools/access" element={<AccessToolPage />} />
-          <Route path="/tools/outreach" element={<OutreachToolPage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/terms" element={<TermsOfServicePage />} />
           <Route path="*" element={<NotFoundPage />} />
