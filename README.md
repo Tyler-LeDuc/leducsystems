@@ -97,6 +97,8 @@ Rules that keep this from rotting:
 | `src/utils/vbaProject.js` | MS-OVBA decompression and the VBA module table; recovers macro source |
 | `src/utils/workbookXray.js` | Turns those parsers into the findings shown at `/tools/workbook` |
 | `src/utils/folderScan.js` | Probes a folder of workbooks, builds the dependency graph, and lays it out for `/tools/folder` |
+| `src/utils/accessFile.js` | Jet 3/4 and ACE reader — pages, table definitions, and the catalogue rows that name every object |
+| `src/utils/accessReport.js` | Turns that catalogue into Postgres DDL and the findings shown at `/tools/access` |
 
 ---
 
@@ -184,6 +186,29 @@ Contact address everywhere is **tyler@leducsystems.com**.
 Three pages that do real work in the visitor's browser, listed at `/tools` from the `TOOLS`
 export in `site.js`. They are lead assets: each must be genuinely useful on its own, and
 none of them may upload anything.
+
+### `/tools/access` — what moving off Access would involve
+
+Takes an `.mdb` or `.accdb` and reads its catalogue: the tables, their columns and types, the
+row counts, the relationships, and the inventory of forms, reports, macros and modules. Emits
+Postgres DDL for the tables and a list of what does not convert. Reader in
+`src/utils/accessFile.js`, report in `src/utils/accessReport.js`.
+
+Access is a paged database, not a document, and the format is undocumented by Microsoft in
+practice. The layout here was derived from real files rather than from memory — the offsets
+in `TDEF` and the row format were each anchored against a fixture whose contents were known,
+which is the only way to be sure a byte offset is right. One parser covers Jet 3, Jet 4 and
+ACE; the page layouts are identical and only the header version byte and Jet 3's narrow
+strings differ.
+
+**It never reads the user's data, and the page says so.** The only tables whose rows are read
+are `MSysObjects` and `MSysRelationships`, which describe the database rather than contain
+anyone's records. Everything else comes from table definitions. That claim is the reason
+someone would drop a customer database onto a web page at all, so it must stay true: if a
+change here starts reading user tables, the copy on the page becomes a lie.
+
+The DDL is deliberately partial — no keys, no indexes, no constraints — because Access does
+not record enough about them to generate something trustworthy. The page says that too.
 
 ### `/tools/schema` — spreadsheet to Postgres schema
 

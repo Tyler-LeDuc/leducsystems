@@ -1,0 +1,46 @@
+/* Access exit report. The .tool-* vocabulary (drop zone, findings, fact
+   tiles, datasheet table, SQL block) lives in src/styles/tools.css; this
+   file carries only what this page adds. */
+
+.access-title {
+  max-width: 20ch;
+}
+
+/* The guarantee has to be the loudest thing in the hero: someone is being
+   asked to drop a customer database onto a web page. */
+.access-promise {
+  max-width: 62ch;
+  padding: var(--sp-6);
+  border-left: 2px solid var(--accent-500);
+}
+
+.access-promise__claim {
+  max-width: none;
+  font-size: var(--fs-lg);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-snug);
+}
+
+/* Table and column names are identifiers the reader has to match against
+   their own database, so they keep the case the file uses. */
+.access-name {
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+.access-types {
+  color: var(--text-lo);
+  font-size: var(--fs-xs);
+}
+
+.access-rels {
+  display: grid;
+  gap: var(--sp-1);
+}
+
+.access-rel {
+  color: var(--text-lo);
+  font-size: var(--fs-mono);
+  text-transform: none;
+  overflow-wrap: anywhere;
+}

@@ -59,12 +59,28 @@ export const TOOLS = [
     input: 'A folder of workbooks',
   },
   {
+    path: '/tools/access',
+    name: 'Access exit report',
+    headline: 'What moving off Access would actually involve',
+    summary:
+      'Reads the catalogue of an .mdb or .accdb — never the records — and separates the tables, which convert, from the forms, reports and macros, which do not.',
+    input: 'One .mdb or .accdb',
+  },
+  {
     path: '/tools/schema',
     name: 'Spreadsheet to schema',
     headline: 'The database a spreadsheet should have been',
     summary:
       'Paste a block of cells and get the Postgres table it should become, plus the data problems that would break the import.',
     input: 'Pasted cells',
+  },
+  {
+    path: '/tools/outreach',
+    name: 'Outreach pipeline',
+    headline: 'Who to email today, and what to send them',
+    summary:
+      'Tracks a multi-touch cold sequence: who is due, which email they get next, and the draft with everything the row knows already filled in.',
+    input: 'A CSV, or nothing',
   },
 ];
 

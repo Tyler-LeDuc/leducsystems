@@ -51,7 +51,7 @@ const ROUTES = {
   '/tools': {
     title: 'Free tools',
     description:
-      'Three free tools for looking at the spreadsheets an operation runs on: what is running inside one workbook, which file a whole folder depends on, and the database a spreadsheet should have been. All three run entirely in your browser and upload nothing.',
+      'Free tools for looking at the systems an operation already runs on: what is inside one workbook, which file a whole folder depends on, what moving off Access would involve, and the database a spreadsheet should have been. All of them run entirely in your browser and upload nothing.',
   },
   '/tools/schema': {
     title: 'Spreadsheet to database schema',
@@ -67,6 +67,16 @@ const ROUTES = {
     title: 'Map the spreadsheets your team runs on',
     description:
       'Point this at a folder of Excel workbooks and see the dependency map nobody has drawn: which file a dozen reports read from, which links point at a machine that is not there, which workbook exists in eleven copies, and which one person has ever saved it. Reads four small parts per file, entirely in your browser.',
+  },
+  '/tools/outreach': {
+    title: 'Cold outreach pipeline',
+    description:
+      'A pipeline tracker for cold outreach: who you contacted, which email in the sequence is due, and the draft ready to paste. Runs entirely in your browser, stores nothing on a server, and imports and exports plain CSV.',
+  },
+  '/tools/access': {
+    title: 'What is actually in your Access database',
+    description:
+      'Drop an .mdb or .accdb and see what a migration off Access really involves: the tables and their Postgres schema, the forms, reports, macros and modules that do not convert at all, and the type mismatches that break an import. Runs entirely in your browser — the file is never uploaded.',
   },
   '/privacy': {
     title: 'Privacy Policy',
@@ -150,6 +160,10 @@ function main() {
   console.log(`prerender: wrote ${written.length} routes — ${written.join(', ')}`);
 }
 
-main();
+/* Only when run as a script. The route-coverage test requires this file for
+   its ROUTES table, and a module that writes files and calls process.exit
+   the moment it is imported takes the whole test suite down with it when
+   there is no build to write into. */
+if (require.main === module) main();
 
-module.exports = { ROUTES, render, setMeta };
+module.exports = { ROUTES, render, setMeta, main };
