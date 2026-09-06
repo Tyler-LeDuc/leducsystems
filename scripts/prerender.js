@@ -31,22 +31,32 @@ const ROUTES = {
   '/services': {
     title: 'Services',
     description:
-      'Three kinds of work: replacing the internal systems an operation has outgrown, migrating the data into them intact, and building language-model features where they earn their place. Engagement models, pricing, process, and technology.',
+      'Three lines of work: shipping web and mobile applications, migrating data off spreadsheets and legacy systems intact, and building AI features where they earn their place. Engagement models, pricing, process, and technology.',
+  },
+  '/agencies': {
+    title: 'For agencies',
+    description:
+      'White-label development capacity for digital agencies. Java and Spring Boot, native iOS and Android, React, and legacy migrations — under your brand, on your process, at $95/hr. Based in Phoenix, Arizona.',
   },
   '/about': {
     title: 'About',
     description:
-      'Le Duc Systems is a one-person software consultancy in Phoenix, Arizona, founded in 2026 by Tyler LeDuc. One engineer, direct access, and no invented credentials.',
+      'Le Duc Systems builds custom web and mobile software. Founded 2026 by Tyler LeDuc in Phoenix, Arizona.',
   },
   '/contact': {
     title: 'Contact',
     description:
-      'Start a project with Le Duc Systems, a one-person software consultancy in Phoenix, Arizona. Describe what you are building and get a reply within one business day from the person who would do the work.',
+      'Start a project with Le Duc Systems in Phoenix, Arizona. Describe what you are building and get a reply within one business day from the person who would do the work.',
   },
   '/tools/schema': {
     title: 'Spreadsheet to database schema',
     description:
       'Paste a spreadsheet and get a Postgres schema plus the data problems that would break the import: mixed date formats, identifiers stored as numbers, columns that should be lookup tables. Runs entirely in your browser.',
+  },
+  '/tools/workbook': {
+    title: 'What is running inside your spreadsheet',
+    description:
+      "Drop an Excel workbook and see the software hiding in it: macro code and what it reaches, database connections, Power Query sources, links to other people's machines, and sheets that cannot be unhidden from the menu. Runs entirely in your browser — the file is never uploaded.",
   },
   '/privacy': {
     title: 'Privacy Policy',

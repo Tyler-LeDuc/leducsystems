@@ -45,7 +45,3 @@
   font-weight: 550;
   color: var(--text-hi);
 }
-
-@media (max-width: 620px) {
-  .contact-panel { padding: var(--sp-5); }
-}

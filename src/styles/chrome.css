@@ -127,7 +127,7 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  margin-right: -10px;
+  margin-right: -12px;
   border-radius: var(--r-sm);
   color: var(--text-hi);
   transition: background-color var(--dur) var(--ease);
@@ -312,10 +312,35 @@
 /* Touch targets for the chrome links. */
 @media (pointer: coarse) {
   .nav__link { padding-block: 12px; }
-  .site-footer__link {
+  .site-footer__col .site-footer__link {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
+  }
+  /* The underlined email keeps its rule on the text; the hit area is grown
+     with a pseudo-element instead of a 44px box. */
+  .site-footer__brand .site-footer__link { position: relative; }
+  .site-footer__brand .site-footer__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 44px;
+    transform: translateY(-50%);
+  }
+  /* Standalone link action beside the submit button — same treatment as the
+     footer email above: .link-underline carries its rule as a border-bottom,
+     so a 44px flex box would strand the underline below the text. */
+  .form-actions .link-underline { position: relative; }
+  .form-actions .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 44px;
+    transform: translateY(-50%);
   }
 }
 
@@ -336,7 +361,7 @@
   inset: 0;
   z-index: var(--z-modal);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: var(--sp-5);
   background: var(--scrim);
@@ -354,6 +379,7 @@
   width: 100%;
   max-width: 720px;
   max-height: 88dvh;
+  margin-block: auto;
   background: var(--ink-100);
   border: 1px solid var(--line-strong);
   border-radius: var(--r-xl);
@@ -500,7 +526,7 @@
   width: 38%;
   border-radius: inherit;
   background: linear-gradient(90deg, var(--accent-600), var(--accent-400));
-  animation: form-progress-slide 1.15s var(--ease-inout) infinite;
+  animation: form-progress-slide var(--dur-loop) var(--ease-inout) infinite;
 }
 
 @keyframes form-progress-slide {

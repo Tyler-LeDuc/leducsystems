@@ -17,7 +17,7 @@ export default function ContactPage() {
     <>
       <SEO
         title="Contact"
-        description={`Start a project with ${SITE.name}. Describe what you are building and get a reply within one business day from the person who would do the work.`}
+        description={`Start a project with ${SITE.name} in ${SITE.city}, ${SITE.region}. Describe what you are building and get a reply within one business day from the person who would do the work.`}
         path="/contact"
       />
 
@@ -30,12 +30,11 @@ export default function ContactPage() {
               <div className="stack stack--sm">
                 <p className="eyebrow">Start a project</p>
                 <h1 className="h1 hi" id="contact-title">
-                  Tell me what you are building
+                  Tell us what you are building
                 </h1>
                 <p className="lede">
-                  Describe what you are trying to do and what is in the way. The form goes
-                  straight to my inbox — there is no intake team, no qualification queue, and
-                  nothing automated waiting on the other end.
+                  Describe what you are trying to do and what is in the way. It goes straight to
+                  an engineer — no intake team, no qualification queue.
                 </p>
               </div>
 
@@ -63,14 +62,12 @@ export default function ContactPage() {
                 </p>
                 <p className="body muted">
                   A half-formed idea is a perfectly good starting point. You do not need a
-                  specification, a budget, or a deck to send this. And &ldquo;I do not think you
-                  need this&rdquo; is a real possible answer — if that is what I think, you will
-                  hear it on the call rather than after an invoice.
+                  specification, a budget, or a deck to send this.
                 </p>
               </div>
             </Reveal>
 
-            <Reveal className="panel contact-panel" delay={120}>
+            <Reveal className="panel" delay={120}>
               <div className="stack">
                 <div className="stack stack--xs">
                   <h2 className="h3 hi">Project inquiry</h2>

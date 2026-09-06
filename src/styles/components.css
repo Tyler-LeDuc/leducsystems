@@ -36,6 +36,7 @@
 }
 .cluster--lg { gap: var(--sp-5); }
 .cluster--center { justify-content: center; }
+.cluster--between { justify-content: space-between; align-items: baseline; }
 
 .grid { display: grid; gap: var(--sp-5); }
 .grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -69,7 +70,7 @@
   gap: var(--sp-5);
   text-align: center;
 }
-.cta-block > * { max-width: 58ch; }
+.cta-block > * { max-width: min(100%, 40rem); }
 .cta-block .cluster { justify-content: center; }
 
 /* ── Type ─────────────────────────────────────────────────────────────── */
@@ -172,13 +173,13 @@
   --btn-bd: var(--accent-500);
   box-shadow: var(--shadow-accent);
 }
-.btn--primary:hover { --btn-bg: var(--accent-400); --btn-bd: var(--accent-400); }
+.btn--primary:hover:not(:disabled):not([aria-disabled="true"]) { --btn-bg: var(--accent-400); --btn-bd: var(--accent-400); }
 
 .btn--ghost { --btn-bg: transparent; --btn-fg: var(--text-hi); --btn-bd: var(--line-strong); }
-.btn--ghost:hover { --btn-bg: var(--surface-wash); --btn-bd: var(--line-accent); }
+.btn--ghost:hover:not(:disabled):not([aria-disabled="true"])   { --btn-bg: var(--surface-wash); --btn-bd: var(--line-accent); }
 
 .btn--quiet { --btn-bd: transparent; --btn-fg: var(--text-lo); padding-inline: 12px; }
-.btn--quiet:hover { --btn-fg: var(--text-hi); --btn-bg: var(--surface-wash); }
+.btn--quiet:hover:not(:disabled):not([aria-disabled="true"])   { --btn-fg: var(--text-hi); --btn-bg: var(--surface-wash); }
 
 .btn--lg { padding: 15px 30px; font-size: var(--fs-base); }
 .btn--sm { padding: 9px 16px; font-size: var(--fs-xs); }
@@ -197,10 +198,14 @@
   font-size: var(--fs-sm);
   font-weight: 550;
   color: var(--accent-400);
-  transition: gap var(--dur) var(--ease), color var(--dur) var(--ease);
+  transition: color var(--dur) var(--ease);
 }
-.link-arrow::after { content: "\2192"; }
-.link-arrow:hover { color: var(--accent-300); gap: var(--sp-3); }
+.link-arrow::after {
+  content: "\2192";
+  transition: transform var(--dur) var(--ease);
+}
+.link-arrow:hover { color: var(--accent-300); }
+.link-arrow:hover::after { transform: translateX(4px); }
 
 .link-underline {
   color: var(--text-hi);
@@ -219,14 +224,6 @@
   background: var(--ink-100);
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
-  transition: border-color var(--dur) var(--ease),
-              background-color var(--dur) var(--ease),
-              transform var(--dur) var(--ease);
-}
-.card--interactive:hover {
-  border-color: var(--line-accent);
-  background: var(--ink-150);
-  transform: translateY(-3px);
 }
 .card--flush { background: transparent; border-color: transparent; padding: 0; }
 .card--outline { background: transparent; }
@@ -246,9 +243,15 @@
 
 .panel {
   padding: var(--sp-7);
-  background: var(--ink-050);
+  background: var(--ink-100);
   border: 1px solid var(--line);
   border-radius: var(--r-xl);
+  box-shadow: var(--shadow-md);
+}
+/* 40px of gutter inside a 320px viewport leaves a 240px content column —
+   narrower than a .card in the same slot. */
+@media (max-width: 620px) {
+  .panel { padding: var(--sp-5); }
 }
 
 .note {
@@ -346,7 +349,7 @@
   width: 100%;
   padding: var(--sp-5) 0;
   text-align: left;
-  font-size: var(--fs-lg);
+  font-size: var(--fs-h4);
   font-weight: 550;
   color: var(--text-hi);
   transition: color var(--dur) var(--ease);
@@ -365,10 +368,18 @@
 .qa__a {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows var(--dur-slow) var(--ease);
+  transition: grid-template-rows var(--dur) var(--ease);
 }
 .qa[data-open="true"] .qa__a { grid-template-rows: 1fr; }
-.qa__a > div { overflow: hidden; }
+.qa__a > div {
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+.qa[data-open="true"] .qa__a > div {
+  opacity: 1;
+  transition-delay: 80ms;
+}
 .qa__a p {
   padding-bottom: var(--sp-5);
   font-size: var(--fs-sm);
@@ -417,6 +428,35 @@ select.field__control {
 }
 select.field__control option { background: var(--ink-150); color: var(--text-hi); }
 
+/* The shadow-DOM button inside a file input is UA-styled; give it the same
+   vocabulary as .btn so the one control on the site that speaks a different
+   shape in every engine stops doing that. */
+input[type="file"].field__control {
+  padding: 8px 10px;
+  font-size: var(--fs-xs);
+  color: var(--text-lo);
+  cursor: pointer;
+}
+input[type="file"].field__control::file-selector-button {
+  margin-right: var(--sp-4);
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: var(--fs-xs);
+  font-weight: 550;
+  letter-spacing: var(--ls-wide);
+  color: var(--text-hi);
+  background: var(--ink-200);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-full);
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease),
+              border-color var(--dur) var(--ease);
+}
+input[type="file"].field__control:hover::file-selector-button {
+  background: var(--ink-300);
+  border-color: var(--line-accent);
+}
+
 .field[data-invalid="true"] .field__control {
   border-color: var(--danger);
   background: var(--danger-wash);
@@ -433,6 +473,8 @@ select.field__control option { background: var(--ink-150); color: var(--text-hi)
 @media (max-width: 620px) {
   .form-grid { grid-template-columns: minmax(0, 1fr); }
   .form-grid > .field { grid-column: 1 / -1; }
+  /* iOS Safari zooms the viewport when a focused control computes under 16px. */
+  .field__control { font-size: var(--fs-base); }
 }
 
 .form-status {
@@ -471,13 +513,13 @@ select.field__control option { background: var(--ink-150); color: var(--text-hi)
   pointer-events: none;
   z-index: 0;
   background-image:
-    linear-gradient(to right, var(--line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 68px 68px;
   /* The two #000 stops below are mask alpha stencils, not design colours. */
   mask-image: radial-gradient(ellipse 78% 62% at 50% 34%, #000 20%, transparent 78%);
   -webkit-mask-image: radial-gradient(ellipse 78% 62% at 50% 34%, #000 20%, transparent 78%);
-  opacity: 0.85;
+  opacity: 1;
 }
 
 .layer { position: relative; z-index: 1; }
@@ -486,7 +528,8 @@ select.field__control option { background: var(--ink-150); color: var(--text-hi)
 .reveal {
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity 700ms var(--ease), transform 700ms var(--ease);
+  transition: opacity var(--dur-reveal) var(--ease),
+              transform var(--dur-reveal) var(--ease);
   transition-delay: var(--reveal-delay, 0ms);
 }
 .reveal.is-visible { opacity: 1; transform: none; }

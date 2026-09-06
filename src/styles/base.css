@@ -12,6 +12,8 @@ html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 24px);
+  /* Reserve the scrollbar track so locking body scroll cannot reflow the page. */
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -103,7 +105,13 @@ strong, b { color: var(--text-hi); font-weight: 600; }
   font-weight: 600;
   border-radius: 0 0 var(--r-sm) 0;
 }
-.skip-link:focus { left: 0; }
+.skip-link:focus {
+  left: 0;
+  /* The global ring at outline-offset: 3px paints outside the viewport here.
+     Draw it inside the link's own fill instead. */
+  outline: 2px solid var(--text-on-accent);
+  outline-offset: -5px;
+}
 
 .sr-only {
   position: absolute;
@@ -119,7 +127,9 @@ strong, b { color: var(--text-hi); font-weight: 600; }
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
   }
 }

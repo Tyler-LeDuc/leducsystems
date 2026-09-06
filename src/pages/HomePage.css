@@ -23,7 +23,9 @@
 /* Quiet capability strip that closes the hero — not a logo wall. */
 .home-hero__keys {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* Three columns because TECH has six groups — two full rows, no orphan.
+     If TECH grows to seven or eight, revisit this number. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--sp-5) var(--sp-6);
   margin-top: clamp(48px, 7vw, 88px);
   padding-top: var(--sp-5);
@@ -66,111 +68,6 @@
   border-top: 1px solid var(--line);
 }
 
-/* ── The honest band ──────────────────────────────────────────────────── */
-.home-honest {
-  position: relative;
-  padding: clamp(32px, 5vw, 64px) clamp(24px, 4.5vw, 64px);
-  background: linear-gradient(150deg, var(--ink-150), var(--ink-100) 64%);
-  border: 1px solid var(--line-accent);
-  border-radius: var(--r-xl);
-  overflow: hidden;
-}
-.home-honest::before {
-  content: "";
-  position: absolute;
-  inset-block: 0;
-  left: 0;
-  width: 2px;
-  background: linear-gradient(180deg, var(--accent-400), transparent 82%);
-}
-
-/* Type comes from .h1; only the measure is page-specific. */
-.home-honest__title {
-  max-width: 14ch;
-}
-
-.home-honest__body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-5);
-  max-width: 64ch;
-}
-.home-honest__body p {
-  font-size: var(--fs-lg);
-  line-height: var(--lh-loose);
-  color: var(--text);
-}
-
-.home-honest__sign {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-  padding-top: var(--sp-5);
-  border-top: 1px solid var(--line);
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: var(--ls-mono);
-  text-transform: uppercase;
-  color: var(--text-xlo);
-}
-.home-honest__sign strong { color: var(--text-hi); font-weight: 500; }
-
-/* ── Process ──────────────────────────────────────────────────────────── */
-.home-process {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--sp-6);
-}
-.home-process::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--line);
-}
-
-.home-step {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-3);
-  padding-top: var(--sp-6);
-}
-.home-step::before {
-  content: "";
-  position: absolute;
-  top: -3px;
-  left: 0;
-  width: 7px;
-  height: 7px;
-  border-radius: var(--r-full);
-  background: var(--accent-500);
-  box-shadow: 0 0 0 5px var(--ink-000);
-}
-
-@media (max-width: 860px) {
-  .home-process {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-    padding-left: var(--sp-6);
-  }
-  .home-process::before {
-    top: 0;
-    bottom: 0;
-    right: auto;
-    width: 1px;
-    height: auto;
-  }
-  .home-step { padding-block: var(--sp-5); }
-  .home-step::before {
-    top: calc(var(--sp-5) + 6px);
-    left: calc(var(--sp-6) * -1 - 3px);
-  }
-}
-
 /* ── Differentiators ──────────────────────────────────────────────────── */
 .home-diff__label {
   display: flex;
@@ -193,7 +90,7 @@
 .home-tool {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: var(--sp-6);
+  gap: var(--sp-9);
   align-items: center;
 }
 
@@ -205,12 +102,12 @@
   margin: 0;
   padding: var(--sp-4);
   overflow-x: auto;
-  background: var(--surface-2, rgba(255, 255, 255, 0.03));
-  border: 1px solid var(--rule, rgba(255, 255, 255, 0.12));
-  border-radius: var(--radius-md, 10px);
-  font-family: var(--font-mono, ui-monospace, Consolas, monospace);
-  font-size: 0.8125rem;
-  line-height: 1.7;
+  background: var(--surface-wash);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-code);
   color: var(--text-lo);
 }
 

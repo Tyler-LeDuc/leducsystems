@@ -15,7 +15,7 @@ export default function HomePage() {
   return (
     <>
       <SEO
-        title="Custom internal software for operations teams"
+        title="Custom software, web and mobile applications"
         description={SITE.description}
         path="/"
       />
@@ -44,9 +44,9 @@ export default function HomePage() {
               <Link className="btn btn--primary btn--lg" to="/contact">
                 Start a project
               </Link>
-              {/* The tool is the cheapest way for a stranger to find out
-                  whether I know what I am doing. Give it hero billing. */}
-              <Link className="btn btn--ghost btn--lg" to="/tools/schema">
+              {/* The tools are the cheapest way for a stranger to judge the
+                  work before talking to anyone. Give them hero billing. */}
+              <Link className="btn btn--ghost btn--lg" to="/tools/workbook">
                 Try the free tool
               </Link>
             </div>
@@ -69,14 +69,12 @@ export default function HomePage() {
       <section className="section" aria-labelledby="offer-title">
         <div className="container stack stack--xl">
           <Reveal className="section-head">
-            <p className="eyebrow">The offer</p>
+            <p className="eyebrow">What gets built</p>
             <h2 id="offer-title" className="h2">
-              Three parts, one practice.
+              Three lines of work.
             </h2>
             <p className="lede">
-              Most of this work has the same shape. Something the business depends on runs in a
-              spreadsheet or a system nobody wants to open, the workarounds have quietly become
-              somebody's full-time job, and the data underneath is fifteen years of inconsistency.
+              Most projects are some mix of all three.
             </p>
           </Reveal>
 
@@ -84,7 +82,7 @@ export default function HomePage() {
             {PILLARS.map((pillar, i) => (
               <Reveal
                 as="article"
-                className="card card--interactive home-pillar"
+                className="card home-pillar"
                 key={pillar.id}
                 delay={i * 90}
               >
@@ -107,35 +105,37 @@ export default function HomePage() {
         <div className="container">
           <Reveal className="home-tool">
             <div className="stack stack--sm home-tool__copy">
-              <p className="eyebrow">Try before you talk to me</p>
+              <p className="eyebrow">Free tools</p>
               <h2 id="tool-band-title" className="h2">
-                Paste a spreadsheet. Get the database it should be.
+                Find out what your spreadsheet is really doing.
               </h2>
               <p className="body">
-                A free tool that reads your columns, writes the Postgres schema, and tells you
-                what in the data would break the import — mixed date formats, IDs quietly losing
-                their leading zeros, columns that should be lookup tables. Runs in your browser.
-                Nothing is uploaded.
+                One reads the macros, database connections and broken links hiding inside a
+                workbook. The other turns a pasted spreadsheet into the Postgres schema it should
+                have been. Both run in your browser — nothing is uploaded.
               </p>
               <div className="cluster">
-                <Link className="btn btn--primary" to="/tools/schema">
-                  Open the tool
+                <Link className="btn btn--primary" to="/tools/workbook">
+                  X-ray a workbook
+                </Link>
+                <Link className="btn btn--ghost" to="/tools/schema">
+                  Spreadsheet to schema
                 </Link>
               </div>
             </div>
 
             <pre className="home-tool__preview" aria-hidden="true">
-              <code>{`[error] Ship Date
-  Mixed date notations. 4/5/26 is
-  April 5th or May 4th.
+              <code>{`This is an application.
 
-[error] Phone
-  Leading zeros dropped by an
-  integer import.
+[load-bearing] VBA project
+  2,412 lines of code across
+  9 modules.
 
-[info]  Status
-  3 distinct values in 6 rows —
-  this is a lookup table.`}</code>
+[load-bearing] VBA project
+  Talks to a database.
+
+[load-bearing] External link
+  Reads from a local drive.`}</code>
             </pre>
           </Reveal>
         </div>
@@ -145,13 +145,12 @@ export default function HomePage() {
       <section className="section section--rule" aria-labelledby="diff-title">
         <div className="container stack stack--lg">
           <Reveal className="section-head">
-            <p className="eyebrow">Why this instead of an agency</p>
+            <p className="eyebrow">Why Le Duc Systems</p>
             <h2 id="diff-title" className="h2">
-              What one person is actually better at.
+              Built to move faster than an agency.
             </h2>
             <p className="lede">
-              Not everything — a large program of work wants a large team. These are the places
-              where the small version wins outright.
+              No account managers, no handoffs, no status decks.
             </p>
           </Reveal>
 
@@ -176,11 +175,10 @@ export default function HomePage() {
         <div className="container container--narrow layer">
           <Reveal className="cta-block">
             <h2 id="close-title" className="h2">
-              Tell me what you are trying to build.
+              Tell us what you are trying to build.
             </h2>
             <p className="lede">
-              Thirty minutes, no charge, and a straight answer about whether I am the right
-              person for it. If I am not, I will say so on the call.
+              Thirty minutes, no charge, and a straight answer about fit.
             </p>
             <div className="cluster cluster--center">
               <Link className="btn btn--primary btn--lg" to="/contact">

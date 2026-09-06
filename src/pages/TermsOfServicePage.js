@@ -18,7 +18,7 @@ const SECTIONS = [
         <p>
           These terms apply to your use of the website at{' '}
           <span className="hi">leducsystems.com</span> and to consulting services provided by{' '}
-          {SITE.name} (&ldquo;I&rdquo;, &ldquo;me&rdquo;), a one-person software consultancy run by{' '}
+          {SITE.name} (&ldquo;I&rdquo;, &ldquo;me&rdquo;), a software consultancy operated by{' '}
           {SITE.founder}. By using the site or engaging me for work, you agree to what is written
           here. If you do not, do not use the site and do not engage me.
         </p>
@@ -170,8 +170,8 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          I use AI development tools as part of how the work gets done, and it is part of why a
-          one-person shop can move at this pace. Every line that ships is reviewed, tested, and
+          I use AI development tools as part of how the work gets done, and it is part of why the
+          work moves at this pace. Every line that ships is reviewed, tested, and
           understood, and I am accountable for the result exactly as I would be if I had typed
           every character.
         </p>

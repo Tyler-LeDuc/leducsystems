@@ -18,7 +18,7 @@
   border-radius: 50%;
   object-fit: cover;
   display: block;
-  border: 1px solid var(--rule, rgba(255, 255, 255, 0.12));
+  border: 1px solid var(--line-strong);
 }
 
 .about-identity__name {
@@ -90,5 +90,23 @@
   .about-identity__facts > div {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--sp-1);
+  }
+}
+
+/* The two standalone links in the identity card are controls, not prose.
+   Scoped deliberately so .link-underline inside <p> elsewhere is untouched. */
+@media (pointer: coarse) {
+  /* Grown with a pseudo-element, not a 44px flex box: .link-underline draws
+     its rule as a border-bottom, and a taller box would strand that rule
+     below the text and drop the link off the facts row's shared baseline. */
+  .about-identity__facts .link-underline { position: relative; }
+  .about-identity__facts .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 44px;
+    transform: translateY(-50%);
   }
 }

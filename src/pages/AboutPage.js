@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import Reveal from '../components/Reveal';
-import { SITE, HONESTY, RESPONSE_PROMISE } from '../data/site';
+import { SITE, APPROACH, RESPONSE_PROMISE } from '../data/site';
 import './AboutPage.css';
 
-const EARLY_CLIENT_TERMS = [
-  'A first engagement small enough that walking away costs you a week, not a quarter.',
-  'Direct access to the person writing the code, for the whole engagement.',
+const CLIENT_TERMS = [
+  'A first engagement small enough that walking away costs a week, not a quarter.',
+  'Direct access to the engineer writing the code, for the whole engagement.',
   'Everything produced is yours from the first commit — repository, infrastructure, accounts.',
   RESPONSE_PROMISE,
 ];
@@ -17,7 +17,7 @@ function AboutPage() {
     <>
       <SEO
         title="About"
-        description={`${SITE.name} is a one-person software consultancy founded in ${SITE.founded} by ${SITE.founder}. One engineer, direct access, and no invented credentials.`}
+        description={`${SITE.name} builds custom web and mobile software. Founded ${SITE.founded} by ${SITE.founder} in ${SITE.city}, ${SITE.region}.`}
         path="/about"
       />
 
@@ -29,20 +29,19 @@ function AboutPage() {
         <div className="container layer stack stack--lg">
           <Reveal className="section-head">
             <p className="eyebrow">About</p>
-            <h1 className="h1">
-              One engineer. Founded {SITE.founded}.
-            </h1>
+            <h1 className="h1">Senior engineering, without the agency overhead.</h1>
             <p className="lede">
-              {SITE.name} is one person: {SITE.founder}. That is not a stage the company is
-              trying to grow out of — it is the product. You talk to whoever writes the code,
-              from the first call to the last deploy.
+              {SITE.name} builds custom web and mobile software for companies that need it
+              shipped, not staffed. You work directly with the engineer building it.
             </p>
           </Reveal>
 
           <Reveal className="cluster" delay={120}>
-            <span className="pill">Headcount: one</span>
             <span className="pill">Founded {SITE.founded}</span>
-            <span className="pill">{SITE.city}, {SITE.region}</span>
+            <span className="pill">
+              {SITE.city}, {SITE.region}
+            </span>
+            <span className="pill">Remote across US time zones</span>
           </Reveal>
         </div>
       </section>
@@ -67,7 +66,7 @@ function AboutPage() {
               />
               <div className="stack stack--xs">
                 <p className="about-identity__name">{SITE.founder}</p>
-                <p className="mono">Founder, and the engineer</p>
+                <p className="mono">Founder</p>
               </div>
               <hr className="divider" />
               <dl className="about-identity__facts">
@@ -78,10 +77,6 @@ function AboutPage() {
                 <div>
                   <dt>Founded</dt>
                   <dd>{SITE.founded}</dd>
-                </div>
-                <div>
-                  <dt>Headcount</dt>
-                  <dd>One</dd>
                 </div>
                 <div>
                   <dt>Working</dt>
@@ -125,53 +120,37 @@ function AboutPage() {
               <div className="stack stack--sm">
                 <p className="eyebrow">Who you are hiring</p>
                 <h2 className="h2" id="about-who">
-                  I am the whole company, on purpose
+                  No handoff between the pitch and the build
                 </h2>
               </div>
 
               <p className="body">
-                There is no delivery team behind me and no bench of contractors introduced after
-                the contract is signed. When you buy software from a firm, the person who
-                understands your problem best is usually the person who sold you the work, and
-                that person writes none of the code. Everything they learned about your business
-                has to survive a handoff. Most of it does not.
-              </p>
-              <p className="body">
-                I removed that gap by removing the layer that creates it. You explain the problem
-                once, to the person who will be building the thing, and the same person is
-                accountable for what happens when it meets real users.
+                At most firms, the person who understands your problem best is the person who
+                sold you the work, and that person writes none of the code. Everything they
+                learned has to survive a handoff. Most of it does not. Here, you explain the
+                problem once, to the engineer who builds it.
               </p>
 
-              <h3 className="h4 hi">What I actually do</h3>
+              <h3 className="h4 hi">What gets built</h3>
               <p className="body">
-                I work across the whole stack rather than one slice of it: the interface, the
-                application behind it, the data model underneath, the infrastructure it runs on,
-                and the language-model features wired through all of it. In practice that is
-                TypeScript and React on the front, Node and Python behind it, PostgreSQL and
-                vector stores for data, and deployment on cloud infrastructure you own, with the
-                monitoring and pipelines that make it maintainable after I leave.
+                Full-stack: the interface, the application behind it, the data model underneath,
+                and the infrastructure it runs on. Java and Spring Boot, React and TypeScript,
+                native iOS and Android, PostgreSQL, deployed on cloud accounts you own — with the
+                monitoring and pipelines that keep it maintainable after handover.
               </p>
               <p className="body">
-                The AI work is not a separate department either. I build assistants, retrieval
-                over a company&rsquo;s own documents, extraction and classification, and agents
-                that complete multi-step tasks — and then the harder part: evaluations,
-                guardrails, fallbacks, cost and latency control, and a human review path for the
-                cases a model should not decide alone.
+                AI is one line of work among several: assistants, retrieval over your own
+                documents, extraction and classification, and the harder part behind them —
+                evaluations, guardrails, fallbacks, and a human review path for the cases a model
+                should not decide alone.
               </p>
 
-              <h3 className="h4 hi">How I work</h3>
+              <h3 className="h4 hi">How the work runs</h3>
               <p className="body">
                 Scope goes in writing before anything starts, including what is explicitly out.
-                Work runs in short phases, and there is something running on a real environment
-                at the end of each week rather than a status document. You have access to the
-                repository the entire time. When scope changes, it gets re-quoted before the work
-                happens.
-              </p>
-              <p className="body">
-                I use AI tooling heavily and deliberately, which is a large part of why one
-                person can move at this pace. I read, test, and understand every line before it
-                ships. I am accountable for the output exactly as I would be if I had typed every
-                character of it.
+                Work runs in short phases with something running on a real environment at the end
+                of each week. You have repository access the entire time, and scope changes get
+                re-quoted before the work happens.
               </p>
             </Reveal>
           </div>
@@ -185,72 +164,55 @@ function AboutPage() {
             <Reveal className="stack stack--sm">
               <p className="eyebrow">Why this exists</p>
               <h2 className="h2" id="about-why">
-                The leverage is real. This is an attempt to pass it on.
+                The leverage is real. This passes it on.
               </h2>
               <p className="about-statement">
-                One accountable engineer can now deliver what used to take a team. Someone should
-                price that honestly.
+                Software costs what it costs largely because of the organization delivering it.
               </p>
             </Reveal>
 
             <Reveal className="stack" delay={120}>
               <p className="body">
-                Most companies buying software get a sales team first, and then a rotating cast of
-                engineers they never chose and never interviewed. The relationship they were sold
-                is not the relationship they get. Cost is set by the size of the organization
-                delivering the work, and a lot of that organization exists to coordinate itself.
+                Modern tooling has genuinely changed how much a focused engineering effort can
+                carry — not by writing software on its own, but by removing the parts of the job
+                that were never the hard part. The judgment, the architecture, and the decision
+                about what not to build are unchanged, and still where projects succeed or fail.
               </p>
               <p className="body">
-                AI has genuinely changed how much one competent engineer can carry — not by
-                writing software on its own, but by removing the parts of the job that were never
-                the hard part. The judgment, the architecture, the decision about what not to
-                build: unchanged, and still where projects succeed or fail. Firms that adopted
-                these tools mostly kept the difference. {SITE.name} hands it to you instead, as
-                smaller engagements, shorter timelines, and a direct line to the person doing the
-                work. If that stops being true, the reason to hire me stops with it.
+                Most firms that adopted these tools kept the difference. {SITE.name} hands it to
+                you instead, as smaller engagements, shorter timelines, and a direct line to the
+                person doing the work.
               </p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ── The honest state of things ─────────────────────────────────── */}
-      <section className="section section--rule" aria-labelledby="about-honest">
+      {/* ── How the work runs ──────────────────────────────────────────── */}
+      <section className="section section--rule" aria-labelledby="about-approach">
         <div className="container container--narrow stack stack--lg">
           <Reveal className="stack">
             <div className="stack stack--sm">
-              <p className="eyebrow">{HONESTY.eyebrow}</p>
-              <h2 className="h2" id="about-honest">
-                {HONESTY.title}
+              <p className="eyebrow">{APPROACH.eyebrow}</p>
+              <h2 className="h2" id="about-approach">
+                {APPROACH.title}
               </h2>
             </div>
 
-            {HONESTY.body.map((paragraph) => (
+            {APPROACH.body.map((paragraph) => (
               <p className="body" key={paragraph.slice(0, 32)}>
                 {paragraph}
               </p>
             ))}
-
-            <p className="body">
-              I am aware of how that reads next to a page of logos. I am also aware that a
-              meaningful share of those pages are decorated with work the firm barely touched, and
-              that every consultancy that now has a portfolio spent a stretch not having one. This
-              is that stretch, described accurately.
-            </p>
           </Reveal>
 
           <Reveal className="panel stack" delay={120}>
-            <h3 className="h4 hi">What an early client gets in exchange</h3>
+            <h3 className="h4 hi">What every client gets</h3>
             <ul className="list">
-              {EARLY_CLIENT_TERMS.map((term) => (
+              {CLIENT_TERMS.map((term) => (
                 <li key={term}>{term}</li>
               ))}
             </ul>
-            <p className="body body--sm muted">
-              None of that is a discount for being patient with a beginner. It is the shape of the
-              company, and it is the part most consultancies stop offering once they are big enough
-              to stop needing to.
-            </p>
           </Reveal>
         </div>
       </section>
@@ -262,11 +224,10 @@ function AboutPage() {
             <div className="section-head section-head--center">
               <p className="eyebrow eyebrow--bare">Next step</p>
               <h2 className="h2" id="about-cta">
-                Tell me what you are trying to build
+                Tell us what you are trying to build
               </h2>
               <p className="lede">
-                Thirty minutes, no charge, and a straight answer about whether I am the right
-                person for it. Sometimes the answer is no, and you will hear that too.
+                Thirty minutes, no charge, and a straight answer about fit.
               </p>
             </div>
             <div className="cluster" role="group" aria-label="Contact options">

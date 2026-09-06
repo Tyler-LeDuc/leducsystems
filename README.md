@@ -1,11 +1,13 @@
 # Le Duc Systems
 
-Marketing site for **Le Duc Systems**, a one-person software consultancy run by Tyler LeDuc.
-Live at <https://leducsystems.com>.
+Marketing site for **LeDuc Systems LLC**. Live at <https://leducsystems.com>.
 
-The site is a small static React app: seven routes, a shared design system, one working
-contact form. There is no CMS, no backend, and no database — content lives in a single
-JavaScript module and the form posts directly to EmailJS from the browser.
+The site is a small static React app: nine routes, a shared design system, one working
+contact form, and two free tools that run entirely in the browser. There is no CMS, no
+backend, and no database — content lives in a single JavaScript module and the form posts
+directly to EmailJS from the browser.
+
+`CLAUDE.md` carries the business guardrails and is authoritative where the two disagree.
 
 ---
 
@@ -28,14 +30,21 @@ a concrete reason; the site is deliberately dependency-light.
 ## Routes
 
 ```
-/          Home
-/services  Services — the three-part offer, engagement models, tech, process
-/about     About — Tyler, why the company exists, principles
-/contact   Contact — the form, embedded
-/privacy   Privacy Policy
-/terms     Terms of Service
-*          404
+/                 Home
+/services         Services — the three-part offer, engagement models, tech, process
+/agencies         For agencies — white-label capacity
+/about            About — why the company exists, principles
+/contact          Contact — the form, embedded
+/tools/workbook   Free tool — reads what is running inside an Excel workbook
+/tools/schema     Free tool — pasted spreadsheet to Postgres schema
+/privacy          Privacy Policy
+/terms            Terms of Service
+*                 404
 ```
+
+Every route except `/` and `*` must also appear in `scripts/prerender.js`, which writes a
+real HTML file per route after the build so crawlers get a 200 instead of the GitHub Pages
+404 stub. `src/prerender.test.js` fails if the two lists drift.
 
 `public/404.html` performs the standard GitHub Pages SPA redirect so deep links resolve.
 
@@ -43,13 +52,14 @@ a concrete reason; the site is deliberately dependency-light.
 
 ## Design system
 
-Styles are a four-layer cascade, imported in this exact order by `src/index.css`:
+Styles are a five-layer cascade, imported in this exact order by `src/index.css`:
 
 | File | Role |
 |---|---|
 | `src/styles/tokens.css` | CSS custom properties only — color, type scale, spacing, radii, motion, layout widths |
 | `src/styles/base.css` | Reset and base element typography, focus states, `prefers-reduced-motion` |
 | `src/styles/components.css` | The shared class vocabulary every page composes from — `.section`, `.container`, `.panel`, `.btn`, `.eyebrow`, `.reveal`, and so on |
+| `src/styles/tools.css` | Shared vocabulary for the free tools — `.tool-finding`, `.tool-table`, `.tool-sql`, the paste-field chrome. Both tool pages compose from it |
 | `src/styles/chrome.css` | Header, footer, mobile menu, contact form chrome |
 
 **Read `components.css` before writing JSX.** It is the contract — most layouts are
@@ -78,6 +88,11 @@ Rules that keep this from rotting:
 | `src/components/SEO.js` | Sets `document.title`, meta description, and OG tags per page in `useEffect` — no `react-helmet` |
 | `src/components/Header.js` / `Footer.js` | Site chrome, nav, mobile menu, legal links |
 | `src/App.js` | Router, `ScrollToTop`, EmailJS init. Exports `AppShell` (everything inside the router) so tests can mount it in a `MemoryRouter` |
+| `src/utils/inferSchema.js` | Delimited-text parsing and type inference behind `/tools/schema` |
+| `src/utils/zipReader.js` | ZIP central-directory reader; inflates with the platform's `DecompressionStream`, no library |
+| `src/utils/compoundFile.js` | MS-CFB (OLE compound file) reader — the container `vbaProject.bin` is stored in |
+| `src/utils/vbaProject.js` | MS-OVBA decompression and the VBA module table; recovers macro source |
+| `src/utils/workbookXray.js` | Turns those parsers into the findings shown at `/tools/workbook` |
 
 ---
 
@@ -87,8 +102,9 @@ Rules that keep this from rotting:
 import from it rather than duplicating strings. It exports:
 
 `SITE` (name, founder, email, url, founded, tagline, description) · `NAV` · `LEGAL_NAV` ·
-`PILLARS` (the three-part offer) · `DIFFERENTIATORS` · `HONESTY` · `ENGAGEMENTS` ·
-`PRICING_NOTE` · `PROCESS` · `TECH` · `FAQ` · `RESPONSE_PROMISE`
+`PILLARS` (the three-part offer) · `DIFFERENTIATORS` · `APPROACH` · `ENGAGEMENTS` ·
+`PRICING_NOTE` · `PROCESS` · `TECH` · `FAQ` · `RESPONSE_PROMISE` · `AGENCY` ·
+`AGENCY_TERMS` · `AGENCY_WORK` · `AGENCY_NOT_A_FIT`
 
 To change a headline, an engagement model, a FAQ answer, or the contact email, edit
 `site.js` — not the page components. Long-form legal prose is the exception and lives in
@@ -146,23 +162,76 @@ exists, and the site is usable at 360px, 768px, 1280px, and 1920px.
 
 ## Content rules
 
-This site describes a consultancy that is early and says so. That honesty is the point,
-and it is enforced here because it is easy to erode.
+The honesty rules are defined in `CLAUDE.md` and that file is authoritative. In short:
+nothing on this site may claim a client, testimonial, outcome metric, team member, award,
+or partnership that does not exist, and headcount is not a topic the site discusses in
+either direction. The only numbers permitted are commitments — timelines, engagement
+prices, the one-business-day reply promise, and the founding year.
 
-**Nothing on this site may claim a client, testimonial, metric, or team member that does
-not exist.** Concretely, do not add:
+There is also a hard positioning constraint in `CLAUDE.md` covering a pending patent.
+Read it before writing any copy, including tool example data and meta descriptions.
 
-- Client testimonials, quotes, names, initials, or logos
-- Named or implied past clients
-- Outcome metrics ("reduced X by 37%", "99.9% uptime", "15x faster")
-- Case studies or a portfolio of delivered work
-- Teams, departments, headcount, or "decades of combined experience" — it is one person
-- Awards, certifications, partnerships, years in business, or projects-shipped counts
-- Manufactured scarcity ("only 2 slots left")
+Contact address everywhere is **tyler@leducsystems.com**.
 
-The only numbers permitted are commitments rather than claims: timelines ("about 1 week",
-"4–12 weeks"), the promised reply time (one business day), and the founding year 2024.
+---
 
-If a section feels like it needs proof, use **capability** (what can be built),
-**process** (how the work runs), or **commitment** (what is guaranteed) — never invented
-evidence. Contact address everywhere is **tyler@leducsystems.com**.
+## Free tools
+
+Two pages that do real work in the visitor's browser. Both are lead assets: they must be
+genuinely useful on their own, and neither may upload anything.
+
+### `/tools/schema` — spreadsheet to Postgres schema
+
+Paste delimited text, get a `create table` plus the data problems that would break a real
+import. Logic in `src/utils/inferSchema.js`.
+
+### `/tools/workbook` — what is running inside a workbook
+
+Takes an `.xlsx`/`.xlsm` and reports the software hiding in it: VBA modules and their
+recovered source, what that code reaches (databases, files, mail, the shell, the network),
+`connections.xml` data sources, Power Query M sources, external links pointing at local
+drives and network shares, very-hidden sheets, `#REF!` named ranges, and authorship.
+
+It is built from four dependency-free parsers, in this order:
+
+1. `zipReader.js` — an `.xlsx` is a ZIP of XML parts. Reads the central directory and
+   inflates with the browser's own `DecompressionStream('deflate-raw')`.
+2. `compoundFile.js` — `xl/vbaProject.bin` is not XML; it is an OLE compound file, a small
+   FAT filesystem. Both the sector chain and the mini-stream allocation are needed, because
+   VBA module streams are usually under the 4096-byte cutoff.
+3. `vbaProject.js` — module source is compressed with MS-OVBA, a run-length format whose
+   copy-token bit split changes as each 4096-byte chunk fills. The `dir` stream is walked
+   from the `PROJECTMODULES` anchor rather than from the start, because `PROJECTVERSION`
+   misreports its own size and desynchronises a naive record walk.
+4. `workbookXray.js` — turns all of that into findings and a one-line verdict.
+
+**Constraints when changing them.** No npm dependencies — the point is that this runs
+anywhere with nothing installed. Never assert something about the user's file that the
+parse does not actually support; a false positive costs more credibility than a missed
+finding. Errors are returned as `{ error }` for the page to explain, never thrown.
+
+**Every read is bounded, and the bounds are load-bearing.** This code parses a file chosen
+by a stranger, in their tab, with no server to absorb the damage. Both container formats
+amplify violently, and both did so in review before the caps went in:
+
+| Bound | Where | Why |
+|---|---|---|
+| Inflate stops past `min(32MB, declared × 2)` — 64MB for `vbaProject.bin` | `zipReader.js` | A ZIP entry can declare 512 bytes and expand to a gigabyte |
+| Central-directory names deduplicated | `zipReader.js` | 85-byte duplicate headers made the scanners re-inflate one part hundreds of times |
+| Decompressed chunk capped at 4096 bytes; 32MB per module, 64MB per project | `vbaProject.js` | One copy token restates 4098 bytes from two bytes of input |
+| Directory walk is iterative, with a visited set | `compoundFile.js` | A long sibling chain overflowed the stack and threw past the caller's error handling |
+| DIFAT walk bounded by real sector count, with a visited set | `compoundFile.js` | A self-referencing DIFAT sector is an infinite loop |
+| 512 modules, 4MB of scanned source | `vbaProject.js` | Bounds the per-file work |
+
+When a cap truncates, **say so in the output** — `scan.sourceTruncated` becomes a finding.
+A partial scan that looks like a clean one is the same lie as a false positive.
+
+Verify layout changes with same-origin iframes, not `--window-size`: headless Chrome on
+Windows will not set a viewport below roughly 500px, so media queries silently evaluate at
+the wrong width and a page looks broken when it is not.
+
+Tests live in `src/utils/workbookXray.test.js` and cover the parsers against
+`src/utils/__fixtures__/SimpleMacro.xlsm`, a real macro workbook from the Apache POI
+project (Apache-2.0, attributed in that folder's README). `src/utils/buildTestWorkbook.js`
+assembles real ZIPs in memory for the XML paths. `jsdom` lacks `DecompressionStream` and
+the text codecs, so `src/setupTests.js` borrows Node's.

@@ -1,0 +1,229 @@
+/* =========================================================================
+   Shared vocabulary for the free tools.
+
+   Both tool pages compose from these classes so a finding, a code block or
+   a data table looks the same whichever tool produced it. Page-specific
+   rules stay in the page's own file.
+   ========================================================================= */
+
+.tool-hero {
+  /* Needed for the .bg-glow child; also what .section used to supply. */
+  position: relative;
+  /* Top matches every other hero; bottom stays tight because the input
+     section follows immediately. */
+  padding-block: var(--section-y) var(--sp-7);
+}
+
+
+/* ---- input ---- */
+
+.tool-field {
+  display: block;
+}
+
+.tool-field__label {
+  display: block;
+  margin-bottom: var(--sp-2);
+  color: var(--text-lo);
+  font-size: var(--fs-mono);
+}
+
+.tool-field--inline {
+  max-width: 22rem;
+}
+
+.tool-textarea,
+.tool-input {
+  width: 100%;
+  background: var(--surface-wash);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  color: var(--text-hi);
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: var(--lh-base);
+  padding: var(--sp-3);
+  resize: vertical;
+  transition: border-color var(--dur) var(--ease),
+              background-color var(--dur) var(--ease);
+}
+
+.tool-textarea:hover,
+.tool-input:hover {
+  border-color: var(--line-accent);
+}
+
+.tool-textarea:focus-visible,
+.tool-input:focus-visible {
+  outline: none;
+  border-color: var(--accent-500);
+  background: var(--ink-150);
+  box-shadow: 0 0 0 3px var(--accent-wash);
+}
+
+.tool-input {
+  resize: none;
+}
+
+/* ---- findings ---- */
+
+.tool-counts {
+  gap: var(--sp-2);
+}
+
+.tool-pill--error {
+  border-color: var(--danger-line);
+  color: var(--danger-100);
+}
+
+.tool-pill--warn {
+  border-color: var(--warn-line);
+  color: var(--warn-100);
+}
+
+.tool-pill--info {
+  border-color: var(--line-accent);
+  color: var(--accent-400);
+}
+
+.tool-findings {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.tool-finding {
+  display: grid;
+  /* minmax(0, …) so a long "Connection: …" label cannot widen the track,
+     and the body cell can shrink below its content instead of overflowing. */
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  gap: var(--sp-4);
+  align-items: start;
+  padding: var(--sp-4);
+  border: 1px solid var(--line);
+  border-left-width: 3px;
+  border-radius: var(--r-md);
+  background: var(--surface-wash);
+}
+
+.tool-finding--error {
+  border-left-color: var(--danger);
+}
+.tool-finding--warn {
+  border-left-color: var(--warn);
+}
+.tool-finding--info {
+  border-left-color: var(--accent-400);
+}
+
+.tool-finding__level {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  padding-top: 0.15rem;
+  /* min-width raises the grid item's max-content contribution, so every
+     finding resolves the same first track and the levels read as a column. */
+  min-width: 8.5rem;
+}
+
+.tool-finding__level--error {
+  color: var(--danger-100);
+}
+.tool-finding__level--warn {
+  color: var(--warn-100);
+}
+.tool-finding__level--info {
+  color: var(--accent-400);
+}
+
+/* .mono uppercases, which is right for a label and wrong for a value.
+   These cells carry identifiers the reader has to be able to match against
+   their own file — a VBA module name, a SQL column, a connection name — so
+   they keep the case the file actually uses. */
+.tool-finding__column {
+  color: var(--text-hi);
+  font-size: var(--fs-code);
+  text-transform: none;
+  /* Hard-coded paths and UNC shares have no spaces to break on. */
+  overflow-wrap: anywhere;
+}
+
+.tool-finding .body {
+  overflow-wrap: anywhere;
+}
+
+/* Identifier cells carry values the reader has to be able to read; the
+   table's default muted colour is too faint at this size. */
+.tool-table td.mono {
+  color: var(--text-hi);
+  font-size: var(--fs-code);
+  text-transform: none;
+}
+
+/* ---- table ---- */
+
+.tool-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+
+.tool-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-code);
+  min-width: 40rem;
+}
+
+/* The 40rem floor exists for the schema tool's six-column output. A
+   three-column table has no business demanding it. */
+.tool-table--compact {
+  min-width: 0;
+}
+
+.tool-table th,
+.tool-table td {
+  text-align: left;
+  padding: var(--sp-3);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.tool-table thead th {
+  color: var(--text-lo);
+  font-weight: 500;
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+}
+
+.tool-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+
+
+/* ---- sql ---- */
+
+.tool-sql {
+  margin: 0;
+  padding: var(--sp-4);
+  overflow-x: auto;
+  background: var(--surface-wash);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: var(--lh-code);
+  color: var(--text-hi);
+}
+
+@media (max-width: 620px) {
+  .tool-finding {
+    grid-template-columns: 1fr;
+    gap: var(--sp-2);
+  }
+}

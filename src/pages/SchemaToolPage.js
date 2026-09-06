@@ -15,21 +15,22 @@ import {
    with leading zeros, a status column that wants to be a lookup table, and
    a mostly-empty notes column. Every one of these is a finding. */
 const EXAMPLE = [
-  'Order ID\tCustomer\tShip Date\tPhone\tStatus\tAmount\tNotes',
-  '1001\tAcme Freight\t2026-01-04\t0212345678\tshipped\t$1,240.00\t',
-  '1002\tBorden Logistics\t4/5/26\t0219876543\tshipped\t$880.50\t',
-  '1003\tAcme Freight\t2026-01-06\t0215551234\tpending\t$2,100.00\tleft at door',
-  '1004\tCrossway Haulage\t2026-01-09\t0217654321\tshipped\t$430.25\t',
-  '1005\tBorden Logistics\t12/1/26\t0212223333\tcancelled\t$0.00\t',
-  '1006\tAcme Freight\t2026-01-14\t0219998888\tpending\t$1,675.75\t',
+  'Invoice ID\tCustomer\tIssue Date\tPhone\tStatus\tAmount\tNotes',
+  '1001\tAcme Dental\t2026-01-04\t0212345678\tpaid\t$1,240.00\t',
+  '1002\tBorden Property Group\t4/5/26\t0219876543\tpaid\t$880.50\t',
+  '1003\tAcme Dental\t2026-01-06\t0215551234\tpending\t$2,100.00\tsplit across two POs',
+  '1004\tCrossway Interiors\t2026-01-09\t0217654321\tpaid\t$430.25\t',
+  '1005\tBorden Property Group\t12/1/26\t0212223333\tcancelled\t$0.00\t',
+  '1006\tAcme Dental\t2026-01-14\t0219998888\tpending\t$1,675.75\t',
 ].join('\n');
 
 const LEVEL_LABEL = { error: 'Breaks the import', warn: 'Worth checking', info: 'Opportunity' };
+const LEVEL_ORDER = { error: 0, warn: 1, info: 2 };
 
 export default function SchemaToolPage() {
   const [text, setText] = useState('');
-  const [tableName, setTableName] = useState('orders');
-  const [copied, setCopied] = useState(false);
+  const [tableName, setTableName] = useState('invoices');
+  const [copyState, setCopyState] = useState('idle');
 
   const result = useMemo(() => {
     if (!text.trim()) return null;
@@ -46,17 +47,24 @@ export default function SchemaToolPage() {
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(sql);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      /* Clipboard is blocked in some browsers; the SQL is selectable anyway. */
-      setCopied(false);
+      setCopyState('done');
+    } catch {
+      /* Blocked in insecure contexts and by permission policy; the block
+         is still selectable, so say so rather than doing nothing. */
+      setCopyState('failed');
     }
+    window.setTimeout(() => setCopyState('idle'), 2500);
   };
 
   const counts = result
     ? result.findings.reduce((acc, f) => ({ ...acc, [f.level]: (acc[f.level] || 0) + 1 }), {})
     : {};
+
+  /* Array#sort is stable, so within a severity the analyser's column order
+     is preserved. */
+  const findings = result
+    ? [...result.findings].sort((a, b) => LEVEL_ORDER[a.level] - LEVEL_ORDER[b.level])
+    : [];
 
   return (
     <>
@@ -66,7 +74,7 @@ export default function SchemaToolPage() {
         path="/tools/schema"
       />
 
-      <section className="section tool-hero" aria-labelledby="tool-title">
+      <section className="tool-hero" aria-labelledby="tool-title">
         <div className="bg-glow" aria-hidden="true" />
         <div className="container layer">
           <Reveal className="stack stack--lg">
@@ -105,11 +113,14 @@ export default function SchemaToolPage() {
             <button type="button" className="btn btn--ghost" onClick={() => setText(EXAMPLE)}>
               Load an example
             </button>
-            {text ? (
-              <button type="button" className="btn btn--ghost" onClick={() => setText('')}>
-                Clear
-              </button>
-            ) : null}
+            <button
+              type="button"
+              className="btn btn--ghost"
+              onClick={() => setText('')}
+              disabled={!text}
+            >
+              Clear
+            </button>
           </div>
 
           <label className="tool-field">
@@ -118,7 +129,7 @@ export default function SchemaToolPage() {
               className="tool-textarea"
               value={text}
               onChange={(event) => setText(event.target.value)}
-              placeholder={'Order ID\tCustomer\tShip Date\n1001\tAcme Freight\t2026-01-04'}
+              placeholder={'Invoice ID\tCustomer\tIssue Date\n1001\tAcme Dental\t2026-01-04'}
               spellCheck="false"
               rows={10}
             />
@@ -135,6 +146,14 @@ export default function SchemaToolPage() {
               />
             </label>
           ) : null}
+
+          {/* One live region that stays mounted for the life of the page, so a
+              result that arrives is actually announced. */}
+          <p className="sr-only" role="status">
+            {result && result.columns.length
+              ? `${result.columns.length} columns read from ${result.rowCount} rows. ${result.findings.length} findings.`
+              : ''}
+          </p>
         </div>
       </section>
 
@@ -149,13 +168,13 @@ export default function SchemaToolPage() {
                 <p className="body muted">
                   {result.rowCount} rows, {result.columns.length} columns, read as{' '}
                   {result.delimiter.name}-separated.{' '}
-                  {result.findings.length
-                    ? `${result.findings.length} thing${result.findings.length === 1 ? '' : 's'} worth knowing about.`
+                  {findings.length
+                    ? `${findings.length} thing${findings.length === 1 ? '' : 's'} worth knowing about.`
                     : 'Nothing obviously broken — unusual, and a good sign.'}
                 </p>
               </div>
 
-              {result.findings.length ? (
+              {findings.length ? (
                 <div className="cluster tool-counts">
                   {['error', 'warn', 'info'].map((level) =>
                     counts[level] ? (
@@ -168,7 +187,7 @@ export default function SchemaToolPage() {
               ) : null}
 
               <ul className="tool-findings">
-                {result.findings.map((finding, index) => (
+                {findings.map((finding, index) => (
                   <li key={`${finding.column}-${index}`} className={`tool-finding tool-finding--${finding.level}`}>
                     <span className={`tool-finding__level tool-finding__level--${finding.level}`}>
                       {LEVEL_LABEL[finding.level]}
@@ -192,7 +211,7 @@ export default function SchemaToolPage() {
               <h2 className="h3" id="tool-columns">
                 Columns as read
               </h2>
-              <div className="tool-table-wrap">
+              <div className="tool-table-wrap" tabIndex={0} role="region" aria-label="Columns as read">
                 <table className="tool-table">
                   <thead>
                     <tr>
@@ -214,7 +233,11 @@ export default function SchemaToolPage() {
                           {col.filled}/{col.total}
                         </td>
                         <td>{col.distinct}</td>
-                        <td className="tool-table__sample">{col.samples.join(', ') || '—'}</td>
+                        <td>
+                          <span className="tool-table__sample">
+                            {col.samples.join(', ') || '—'}
+                          </span>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -230,10 +253,10 @@ export default function SchemaToolPage() {
                   The table it should become
                 </h2>
                 <button type="button" className="btn btn--ghost" onClick={copy}>
-                  {copied ? 'Copied' : 'Copy SQL'}
+                  {copyState === 'done' ? 'Copied' : copyState === 'failed' ? 'Select and copy' : 'Copy SQL'}
                 </button>
               </div>
-              <pre className="tool-sql">
+              <pre className="tool-sql" tabIndex={0} role="region" aria-label="Generated SQL">
                 <code>{sql}</code>
               </pre>
               <p className="body muted">
@@ -263,15 +286,15 @@ export default function SchemaToolPage() {
           </p>
           <p className="body">
             This tool finds the common ones in a few seconds so you can see the size of the job
-            before committing to it. It is the first thing I do on a migration, so it seemed worth
-            making it something you can run yourself.
+            before committing to it. It is the first thing we run on a migration, so it seemed
+            worth making it something you can run yourself.
           </p>
           <div className="cluster">
             <Link className="btn btn--primary" to="/contact">
               Talk about your migration
             </Link>
-            <Link className="btn btn--ghost" to="/services">
-              How the work is structured
+            <Link className="btn btn--ghost" to="/tools/workbook">
+              X-ray a workbook
             </Link>
           </div>
           <p className="body muted">

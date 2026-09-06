@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { NAV, SITE } from '../data/site';
 
 const ENGAGE = [
-  { to: '/services#offer', label: 'What I build' },
+  { to: '/services#offer', label: 'What we build' },
   { to: '/services#engagement', label: 'Engagement models' },
-  { to: '/services#process', label: 'How I work' },
+  { to: '/services#process', label: 'How we work' },
   { to: '/services#technology', label: 'Technology' },
+  { to: '/agencies', label: 'For agencies' },
 ];
 
 function Footer() {
@@ -32,9 +33,8 @@ function Footer() {
               <span className="brand__text">Le Duc Systems</span>
             </Link>
             <p className="body body--sm muted">
-              A one-person software consultancy building the internal systems operations teams
-              run on, and moving the data into them intact. Based in {SITE.city},{' '}
-              {SITE.region}, working remote across US time zones. Founded {SITE.founded}.
+              Custom web and mobile applications, internal tools, and data migrations. Based in{' '}
+              {SITE.city}, {SITE.region}, working remote across US time zones.
             </p>
             <a className="site-footer__link link-underline" href={`mailto:${SITE.email}`}>
               {SITE.email}

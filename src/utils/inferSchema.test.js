@@ -96,16 +96,16 @@ describe('toColumnName', () => {
 
 describe('analyse', () => {
   const rows = [
-    ['Order ID', 'Ship Date', 'Phone', 'Status', 'Notes'],
-    ['1001', '2026-01-04', '0212345678', 'shipped', ''],
-    ['1002', '4/5/26', '0219876543', 'shipped', ''],
-    ['1003', '2026-01-06', '0215551234', 'pending', 'left at door'],
+    ['Invoice ID', 'Issue Date', 'Phone', 'Status', 'Notes'],
+    ['1001', '2026-01-04', '0212345678', 'paid', ''],
+    ['1002', '4/5/26', '0219876543', 'paid', ''],
+    ['1003', '2026-01-06', '0215551234', 'pending', 'split across two POs'],
   ];
 
   it('flags mixed date notations in one column', () => {
     const { findings } = analyse(rows);
     expect(
-      findings.some((f) => f.column === 'Ship Date' && /Mixed date notations/.test(f.message))
+      findings.some((f) => f.column === 'Issue Date' && /Mixed date notations/.test(f.message))
     ).toBe(true);
   });
 
@@ -122,7 +122,7 @@ describe('analyse', () => {
 
   it('does not complain when one date format is used consistently', () => {
     const { findings } = analyse([
-      ['Ship Date'],
+      ['Issue Date'],
       ['2026-01-04'],
       ['2026-01-06'],
     ]);
@@ -145,18 +145,18 @@ describe('analyse', () => {
     const { findings } = analyse(rows);
     const pk = findings.filter((f) => /primary key candidate/.test(f.message));
     expect(pk.map((f) => f.column)).not.toContain('Amount');
-    expect(pk.map((f) => f.column)).not.toContain('Ship Date');
+    expect(pk.map((f) => f.column)).not.toContain('Issue Date');
   });
 
   it('spots a low-cardinality column that should be a lookup table', () => {
     const { findings } = analyse([
       ['Customer', 'Status'],
-      ['Acme Freight', 'shipped'],
-      ['Borden Logistics', 'shipped'],
-      ['Acme Freight', 'pending'],
-      ['Crossway Haulage', 'shipped'],
-      ['Borden Logistics', 'cancelled'],
-      ['Acme Freight', 'pending'],
+      ['Acme Dental', 'paid'],
+      ['Borden Property Group', 'paid'],
+      ['Acme Dental', 'pending'],
+      ['Crossway Interiors', 'paid'],
+      ['Borden Property Group', 'cancelled'],
+      ['Acme Dental', 'pending'],
     ]);
     expect(
       findings.some((f) => f.column === 'Status' && /lookup table/.test(f.message))

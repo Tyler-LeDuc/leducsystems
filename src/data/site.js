@@ -1,8 +1,16 @@
 /* =========================================================================
    Le Duc Systems — shared content
    Single source of truth for the words on this site. Pages import from here
-   instead of duplicating strings. Nothing in this file may claim a past
-   client, an outcome metric, a testimonial, a team, or an award.
+   instead of duplicating strings.
+
+   Two rules govern this file:
+   1. Nothing here may claim a client, testimonial, outcome metric, or award
+      that does not exist.
+   2. Nothing here may describe fleet management, logistics, dispatch, or
+      multi-agent AI orchestration as a service line. See CLAUDE.md.
+
+   Copy is deliberately tight. If a sentence can be cut without losing the
+   point, cut it.
    ========================================================================= */
 
 export const SITE = {
@@ -16,15 +24,16 @@ export const SITE = {
   region: 'Arizona',
   regionShort: 'AZ',
   founded: 2026,
-  tagline: 'Your operation outgrew the spreadsheet. I build what replaces it.',
+  tagline: 'Custom software, shipped in weeks.',
   description:
-    'Le Duc Systems builds the internal software operations teams actually run on — dispatch and scheduling, inventory and asset tracking, reporting, and the aging Access database nobody wants to touch. One engineer, working with you directly, from the first call to the last deploy.',
+    'Web and mobile applications, internal tools, and the migrations that get your data out of spreadsheets and legacy systems intact. Senior engineering, working software every week.',
 };
 
 export const NAV = [
   { label: 'Home', path: '/' },
   { label: 'Services', path: '/services' },
-  { label: 'Free tool', path: '/tools/schema' },
+  /* Points at the flagship tool; `match` keeps it current on the other one too. */
+  { label: 'Free tools', path: '/tools/workbook', match: '/tools' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
 ];
@@ -34,93 +43,87 @@ export const LEGAL_NAV = [
   { label: 'Terms of Service', path: '/terms' },
 ];
 
-/* Ordered by what the buyer came here for. AI is the third pillar, not the
-   first two — it is how the work gets done and one thing among several that
-   gets built, never the pitch itself. */
+/* Three service lines. AI is third on purpose: it is one thing among several
+   that gets built, never the pitch itself. */
 export const PILLARS = [
   {
     id: '01',
-    title: 'Replace what you outgrew',
+    title: 'Ship the application',
     summary:
-      'The spreadsheet, the shared Access file, the tool someone built in 2014 and then left. It still works, mostly, and it is now the reason three people spend their mornings copying data between things.',
+      'Web and mobile products, internal tools, and the integrations between systems that were never designed to talk to each other.',
     deliverables: [
-      'Internal tools and admin systems',
-      'Scheduling, dispatch, and inventory',
-      'Operational dashboards and reporting',
       'Full-stack web applications',
+      'Native iOS and Android apps',
+      'Internal tools and admin systems',
+      'Dashboards and reporting',
       'Roles, permissions, and audit trails',
     ],
   },
   {
     id: '02',
-    title: 'Get the data out intact',
+    title: 'Rescue the data',
     summary:
-      'Migrations are where these projects actually go wrong. Not the new system — the fifteen years of records with inconsistent dates, duplicate customers, and a notes field holding three different kinds of information.',
+      'Migrations are where these projects actually break. Not the new system, the fifteen years of records behind it.',
     deliverables: [
-      'Migrations off Access, spreadsheets, and legacy databases',
+      'Migrations off spreadsheets, Access, and legacy databases',
       'Schema design, cleanup, and reconciliation',
       'Integrations with the systems you already run',
-      'APIs and service integrations',
+      'REST and GraphQL APIs',
       'Reporting that replaces manual exports',
     ],
   },
   {
     id: '03',
-    title: 'AI where it earns its place',
+    title: 'AI that earns its place',
     summary:
-      'Language-model features wired into your real data and your real workflows, plus the unglamorous engineering that keeps them working. I will tell you when the honest answer is a database query and a form rather than a model.',
+      'Language models wired into your real data and real workflows, plus a straight answer when a database query would do the job better.',
     deliverables: [
       'Assistants and copilots scoped to your domain',
       'Retrieval over your own documents',
       'Document extraction and classification',
       'Evaluation harnesses and regression testing',
-      'Guardrails, fallbacks, and human review paths',
+      'Guardrails, fallbacks, and human review',
     ],
   },
 ];
 
-/* Honest differentiators — used everywhere a testimonial would normally go. */
 export const DIFFERENTIATORS = [
   {
-    title: 'You talk to the person building it',
+    title: 'You talk to the engineer',
     body:
-      'No account manager, no handoff to a delivery team, no offshore contractors you never meet. The person on the first call is the person writing the code and the person who answers when something breaks.',
+      'The person on your first call is the person writing the code, and the person who answers when something breaks.',
   },
   {
-    title: 'Small first, always',
+    title: 'Start small',
     body:
-      'The first engagement is deliberately short and fixed in scope, so you can find out what working together is actually like before committing to anything large. If it goes badly, it goes badly cheaply.',
+      'The first engagement is short and fixed in scope, so you can judge the work before committing to a build.',
   },
   {
     title: 'You own everything',
     body:
-      'Code in your repository, infrastructure in your cloud accounts, no proprietary runtime and no license to renew. If you decide to stop working with me, nothing stops working.',
+      'Your repository, your cloud accounts, no proprietary runtime and no license to renew.',
   },
   {
-    title: 'AI where it helps, and nowhere else',
+    title: 'Working software, weekly',
     body:
-      'I will tell you when the honest answer is a database query and a form rather than a model. That advice is free, and it comes up more often than the industry likes to admit.',
-  },
-  {
-    title: 'Working software over decks',
-    body:
-      'You see running code on a real environment every week. Progress is something you click on, not something you read about in a status report.',
+      'You see running code on a real environment every week. Progress is something you click, not something you read about.',
   },
 ];
 
-/* The "we are new, and here is what that actually means" section. */
-export const HONESTY = {
-  eyebrow: 'Straight answer',
-  title: 'No case studies yet.',
+/* Sits where a testimonial wall would normally go. Leads with what is
+   committed rather than with what is missing. */
+export const APPROACH = {
+  eyebrow: 'How the work runs',
+  title: 'Judge the work, not the deck.',
   body: [
-    `Le Duc Systems started in ${SITE.founded} and I am taking on my first client engagements now. There is no wall of logos on this page because there is no wall of logos yet — and I would rather show you nothing than show you something invented.`,
-    'What you can judge me on instead: how the work is structured, what the first engagement commits you to, and a real conversation about your problem.',
-    'Early clients get the version of this that most consultancies stop offering once they scale — my full attention, a small first engagement, and a direct line.',
+    'Every engagement opens with a short, fixed-price sprint that ends in a technical plan you own outright, useful whether or not you continue.',
+    'From there you see running code on a real environment every week, in your repository, through to handover.',
+    'And when the honest answer is that you should not build something, you hear it on the call rather than after the invoice.',
   ],
 };
 
-/* Engagement models. The Discovery Sprint price is public on purpose: a
-   number bounds the risk for a buyer who has no track record to go on. */
+/* The Discovery Sprint price is public on purpose: a number lets a buyer
+   bound their risk before booking a call. */
 export const ENGAGEMENTS = [
   {
     id: '01',
@@ -128,17 +131,15 @@ export const ENGAGEMENTS = [
     duration: 'About 1 week',
     price: '$3,500 fixed',
     shape: 'Fixed scope',
-    summary:
-      'The cheapest way to find out whether the idea is real before anyone commits to building it.',
+    summary: 'Find out whether the idea is real before anyone commits to building it.',
     includes: [
-      'A look at your actual data, and what it will take to move it',
+      'A look at your actual data and what it takes to move it',
       'A technical plan you can hand to any engineer',
-      'An architecture and stack decision with the reasoning written down',
+      'An architecture decision with the reasoning written down',
       'A scoped estimate for the build',
-      'Where it settles a question faster than a document, a working prototype of the risky part',
     ],
     outcome:
-      'Ends with a clear recommendation — including "do not build this" if that is the answer.',
+      'Ends in a clear recommendation, including a recommendation not to build when that is the answer.',
   },
   {
     id: '02',
@@ -149,12 +150,11 @@ export const ENGAGEMENTS = [
     summary: 'Design and ship the thing.',
     includes: [
       'Scope agreed up front and broken into phases',
-      'A demo on a real environment at the end of each week',
+      'A demo on a real environment every week',
       'Deployed to your infrastructure, in your accounts',
-      'Handover with documentation, a runbook, and a walkthrough for whoever maintains it next',
+      'Handover with documentation and a runbook',
     ],
-    outcome:
-      'You end with software in production and everything needed to keep running it without me.',
+    outcome: 'You end with software in production and everything needed to keep running it.',
   },
   {
     id: '03',
@@ -162,11 +162,10 @@ export const ENGAGEMENTS = [
     duration: 'Monthly',
     price: 'From $4,000 / month',
     shape: 'Month to month',
-    summary:
-      'For teams that have shipped and now need to keep moving.',
+    summary: 'For teams that have shipped and need to keep moving.',
     includes: [
       'Iteration and new features',
-      'Evaluation and tuning of AI features already live',
+      'Tuning and evaluation of AI features already live',
       'Maintenance and dependency upkeep',
       'An engineer on call for architecture questions',
     ],
@@ -175,39 +174,36 @@ export const ENGAGEMENTS = [
 ];
 
 export const PRICING_NOTE =
-  'The Discovery Sprint is a fixed price because you should be able to tell whether I am in your range without booking a call. Build work is quoted after Discovery, when the scope is actually known — a number before that would be a guess, and you would be the one absorbing it if the guess was wrong.';
+  'Discovery is a fixed price so you can tell whether we are in your range without booking a call. Build work is quoted after Discovery, when the scope is actually known.';
 
 export const PROCESS = [
   {
     step: '01',
     title: 'Call',
     body:
-      'Thirty minutes, no charge. What you are trying to do, what is in the way, and whether I am the right person for it. Sometimes the answer is no, and I will say so.',
+      'Thirty minutes, no charge. What you are building, what is in the way, and whether this is the right fit.',
   },
   {
     step: '02',
     title: 'Scope',
     body:
-      'A written proposal: what gets built, what explicitly does not, the timeline, the price, and what I need from you. Nothing starts until it is agreed.',
+      'A written proposal: what gets built, what explicitly does not, the timeline, and the price. Nothing starts until it is agreed.',
   },
   {
     step: '03',
     title: 'Build',
     body:
-      'Weekly demos on a real environment. You can see the repository the whole time. Changes in scope get re-quoted before the work happens, not after.',
+      'Weekly demos on a real environment, with repository access the whole time. Scope changes get re-quoted before the work, not after.',
   },
   {
     step: '04',
     title: 'Hand over',
     body:
-      'Your repository, your infrastructure, your accounts. Documentation and a walkthrough for whoever owns it next. Ongoing support only if you want it.',
+      'Your repository, your infrastructure, your accounts, plus documentation and a walkthrough. Ongoing support only if you want it.',
   },
 ];
 
-/* Ordered by depth of production experience, not by what sounds current.
-   Java and Spring Boot lead because that is where the most shipped systems
-   are, and burying them to look like a frontend shop would be a lie of
-   emphasis. */
+/* Ordered by depth of production experience, not by what sounds current. */
 export const TECH = [
   {
     group: 'Backend',
@@ -218,6 +214,10 @@ export const TECH = [
       'REST & GraphQL APIs',
       'Background jobs & schedulers',
     ],
+  },
+  {
+    group: 'Mobile',
+    items: ['iOS (Swift)', 'Android (Kotlin)', 'App Store & Play releases'],
   },
   {
     group: 'Data',
@@ -257,47 +257,119 @@ export const TECH = [
 
 export const FAQ = [
   {
-    id: 'new',
-    question: 'You are brand new — why should I take that risk?',
+    id: 'ownership',
+    question: 'Who owns the code?',
     answer:
-      'Because the risk is small and bounded by design. You start with a one-week Discovery Sprint, you own everything from day one, and you walk away with a usable technical plan whether or not you continue. Compare that to a large agency engagement signed off a slide deck.',
+      'You do. It lives in your repository, on your infrastructure, under a normal work-for-hire agreement. No proprietary runtime, nothing that stops working if we part ways.',
   },
   {
     id: 'ai-code',
     question: 'Do you use AI to write my code?',
     answer:
-      'Yes, deliberately, and it is part of why a one-person shop can move at this speed. Every line is reviewed, tested, and understood before it ships — I am accountable for the output exactly as I would be if I had typed every character. If that is a dealbreaker for your compliance posture, say so on the first call and we will talk about what your constraints allow.',
-  },
-  {
-    id: 'ownership',
-    question: 'Who owns the code?',
-    answer:
-      'You do. It lives in your repository, on your infrastructure, in your cloud accounts, under a normal work-for-hire agreement. No proprietary runtime, no license to renew, nothing that stops working if we part ways.',
+      'Yes, deliberately, and it is part of why the work moves at this speed. Every line is reviewed, tested, and understood before it ships. If that conflicts with your compliance posture, raise it on the first call.',
   },
   {
     id: 'exit',
     question: 'What if we start and it is not working out?',
     answer:
-      'Engagements are phased for exactly this reason. There is a natural exit at the end of every phase and you keep everything produced up to that point. Retainers are month to month.',
+      'Engagements are phased for exactly this reason. There is a natural exit at the end of every phase, and you keep everything produced up to that point.',
   },
   {
     id: 'need-ai',
     question: 'Do I actually need AI for this?',
     answer:
-      'Often, no. A lot of what gets pitched as an AI problem is a data problem, a workflow problem, or a missing feature. I will tell you that during the call rather than after the invoice.',
+      'Often, no. A lot of what gets pitched as an AI problem is a data problem or a missing feature. You will hear that during the call rather than after the invoice.',
   },
   {
     id: 'start',
     question: 'How fast can you start?',
     answer:
-      'It depends on what is already in flight. Ask, and you will get a real date rather than "soon".',
+      'It depends on what is already in flight. Ask, and you get a real date rather than a vague "soon".',
   },
   {
     id: 'location',
-    question: 'Where are you based, and do you work remotely?',
-    answer:
-      'Based in Phoenix, Arizona. Remote-first, and comfortable working across US time zones.',
+    question: 'Where are you based?',
+    answer: 'Phoenix, Arizona. Remote-first, and comfortable working across US time zones.',
   },
 ];
 
 export const RESPONSE_PROMISE = 'Every message gets a reply within one business day.';
+
+/* =========================================================================
+   Agency subcontracting — /agencies
+
+   A second audience with a different buying question. Agencies do not need
+   convincing that custom software is worth building; they need to know the
+   rate, the stack, and whether the work stays under their brand. Copy here
+   is blunter and shorter than the rest of the site on purpose.
+
+   This page is deliberately absent from the main nav. It is linked from the
+   footer and sent directly in outreach.
+   ========================================================================= */
+
+export const AGENCY = {
+  eyebrow: 'For agencies',
+  title: 'Development capacity, under your brand.',
+  lede:
+    'You win the work and stay client-facing. We build it. Backend, native mobile, and the migrations nobody on your team wants to take.',
+  rate: '$95/hr',
+  rateNote: 'Or fixed-bid against a defined scope, whichever is easier on your margin.',
+};
+
+export const AGENCY_TERMS = [
+  {
+    title: 'Your brand, start to finish',
+    body:
+      'Work ships under your name. White-label by default, and happy to stay invisible to the end client entirely.',
+  },
+  {
+    title: 'Your process, not ours',
+    body:
+      'Your repo, your board, your standups, your definition of done. No parallel process to manage.',
+  },
+  {
+    title: 'You keep the relationship',
+    body:
+      'No approaching your clients, during or after. Non-solicit in writing if you want it, and NDAs signed same day.',
+  },
+  {
+    title: 'US-based, your timezone',
+    body:
+      'Phoenix, Arizona. Overlapping hours across every US zone, and no handoff lag waiting on a reply overnight.',
+  },
+];
+
+/* The work most often handed to a subcontractor, ordered by how hard it is
+   for a small agency to staff internally. */
+export const AGENCY_WORK = [
+  {
+    title: 'Backend and APIs',
+    body:
+      'Java and Spring Boot, Node and TypeScript, Python. The service behind someone else’s front end, built to a spec or from a wireframe.',
+  },
+  {
+    title: 'Native mobile',
+    body:
+      'iOS in Swift, Android in Kotlin, through App Store and Play release. The usual reason a web shop has to refer a project out.',
+  },
+  {
+    title: 'Legacy migrations',
+    body:
+      'Off Access, spreadsheets, and legacy databases. Schema design, cleanup, reconciliation, and the integrations between systems that never talked.',
+  },
+  {
+    title: 'Full-stack overflow',
+    body:
+      'React and TypeScript front to back when a build slips or a client moves a date up.',
+  },
+];
+
+/* Named plainly so nobody wastes a call. The domain exclusions are a
+   standing commercial constraint — see CLAUDE.md. Do not explain them here;
+   "not a fit" is a complete answer to an agency. */
+export const AGENCY_NOT_A_FIT = [
+  'Fleet, logistics, freight, and dispatch systems',
+  'Multi-agent AI orchestration frameworks',
+  'Staff augmentation through a third-party recruiter or marketplace',
+  'Anything requiring on-site presence outside Phoenix',
+];

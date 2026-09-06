@@ -3,10 +3,17 @@
    components.css. Prefix: .services-
    ========================================================================= */
 
-/* Deep-linked sections and pillars clear the fixed header. */
-.services-anchor {
-  scroll-margin-top: calc(var(--header-h) + var(--sp-5));
-}
+/* base.css sets html { scroll-padding-top: calc(var(--header-h) + 24px) },
+   which already clears the header for every anchor on the site. A
+   scroll-margin here would ADD to that and offset twice. The five section
+   targets also carry --section-y of padding above the heading; cancel it so
+   the heading lands just under the header instead of ~180px below it. */
+.section.services-anchor { scroll-margin-top: calc(var(--section-y) * -1); }
+
+/* The three pillar targets are .row, not .section, so they carry --sp-6 of
+   padding above the heading instead of --section-y. Cancel that instead, so
+   all eight anchors on this page land their heading in the same place. */
+.row.services-anchor { scroll-margin-top: calc(var(--sp-6) * -1); }
 
 /* In-page jump links, built on .pill */
 .services-jump ul {
@@ -21,6 +28,12 @@
   color: var(--accent-300);
   background: var(--accent-wash);
   border-color: var(--line-accent);
+}
+@media (pointer: coarse) {
+  .services-jump__link {
+    min-height: 44px;
+    padding-block: 10px;
+  }
 }
 
 /* Pillar rows: the label column tracks the reader on wide screens via
@@ -44,10 +57,10 @@
 
 /* Engagement price. Deliberately prominent — the number is the risk-bounding
    signal for a buyer with no track record to evaluate. */
-.engagement__price {
-  font-size: var(--fs-h4, 1.25rem);
+.services-engagement__price {
+  font-size: var(--fs-h4);
   font-weight: 600;
-  color: var(--accent, #5eead4);
+  color: var(--accent-400);
   letter-spacing: var(--ls-snug);
   margin: 0;
 }

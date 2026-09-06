@@ -16,7 +16,7 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          {SITE.name} is a one-person software consultancy run by {SITE.founder}. This policy
+          {SITE.name} is a software consultancy operated by {SITE.founder}. This policy
           describes what happens to information collected through the website at{' '}
           <span className="hi">leducsystems.com</span>, including anything you send through the
           contact form on that site.

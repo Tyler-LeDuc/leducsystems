@@ -18,47 +18,47 @@ import {
 /* Stable anchors for the three pillars, so an individual line of work can be
    linked directly from a proposal or an email. */
 const PILLAR_ANCHORS = {
-  '01': 'replace-what-you-outgrew',
-  '02': 'get-the-data-out',
-  '03': 'ai-where-it-earns',
+  '01': 'ship-the-application',
+  '02': 'rescue-the-data',
+  '03': 'ai-that-earns-its-place',
 };
 
 /* When each pillar is the right call, and when it plainly is not. */
 const PILLAR_FIT = {
   '01': {
     fit:
-      'When you already know roughly what has to exist — an internal tool, a customer-facing application, an integration between two systems that do not talk to each other — and the constraint is engineering capacity rather than certainty about the problem.',
+      'When you know roughly what has to exist — an internal tool, a customer-facing app, an integration between two systems that do not talk — and the constraint is engineering capacity.',
     notFit:
-      'When requirements are still moving week to week, or when nobody has decided what the software is actually for. Building first is the expensive way to discover that; start with a Discovery Sprint instead. And if the work genuinely needs several engineers running in parallel to hit a date, one person is not the answer, and I will say so before we start rather than after.',
+      'When requirements are still moving week to week, or nobody has decided what the software is for. Start with a Discovery Sprint instead.',
   },
   '02': {
     fit:
-      'When the new system is not the hard part — the fifteen years of records are. Inconsistent dates, duplicate customers, a notes field holding three different kinds of information, and a spreadsheet somebody maintains by hand that nothing else knows about. Also when two systems you already pay for have never been able to talk to each other.',
+      'When the new system is not the hard part — the fifteen years of records are. Inconsistent dates, duplicate customers, a notes field holding three kinds of information. Also when two systems you already pay for have never been able to talk.',
     notFit:
-      'When the data is small enough and clean enough that a careful afternoon would do it. Migration work earns its cost at volume and at mess; below that threshold you would be paying me for something you can do yourself, and I will tell you that rather than take the work.',
+      'When the data is small enough and clean enough that a careful afternoon would do it. Migration work earns its cost at volume and at mess.',
   },
   '03': {
     fit:
-      'When there is a repetitive judgement call buried in your operations — reading documents, answering the same question in fifty forms, routing work to the right place, drafting a first pass a human then edits — and the data a model would need already exists somewhere reachable. Also when something works in a demo and now has to survive real users: knowing when the output is wrong, how often, and what happens the day the API is down.',
+      'When a repetitive judgement call is buried in your operations — reading documents, triaging requests, drafting a first pass a human then edits — and the data a model needs already exists somewhere reachable. Also when a demo now has to survive real users.',
     notFit:
-      'When the task has one correct answer that a query, a rule, or a well-designed form would produce. A model is a probabilistic answer to a deterministic question there: more expensive, slower, and less reliable than the boring version. It is also premature if the underlying data is not accessible yet — that is a data project first, and an AI project second.',
+      'When the task has one correct answer that a query, a rule, or a well-designed form would produce. It is also premature if the underlying data is not accessible yet — that is a data project first.',
   },
 };
 
 /* Detail that does not fit on the home page version of the process. */
 const PROCESS_DETAIL = {
   '01':
-    'Bring whatever exists — a document, a spreadsheet, a half-built prototype, or three paragraphs in an email. None of it needs to be tidy. You leave with an opinion about what to do next whether or not you hire me.',
+    'Bring whatever exists — a document, a spreadsheet, a half-built prototype, three paragraphs in an email. None of it needs to be tidy. You leave with an opinion about what to do next either way.',
   '02':
-    'The proposal names the phases, what is explicitly out of scope, the assumptions it rests on, and what I need from you and by when: access, data, decisions, and one person who can answer questions. Most projects that slip, slip on that last list.',
+    'The proposal names the phases, what is explicitly out of scope, and what is needed from you and by when: access, data, decisions, and someone who can answer questions. Most projects that slip, slip on that last list.',
   '03':
-    'Repository access from day one and a working environment you can click through every week. Anything that turns out to be harder than scoped gets raised the week it is found, with options, and re-quoted before the work happens.',
+    'Repository access from day one and a working environment you can click through every week. Anything harder than scoped gets raised the week it is found, with options, and re-quoted before the work happens.',
   '04':
-    'Documentation written for whoever inherits it, a runbook for the things that fail at three in the morning, and a walkthrough with the person who will own it. The credentials and infrastructure are already yours, because they were never anywhere else.',
+    'Documentation written for whoever inherits it, a runbook for the things that fail at three in the morning, and a walkthrough with the person who will own it. Credentials and infrastructure were always yours.',
 };
 
 const JUMP_LINKS = [
-  { href: '#offer', label: 'What I build' },
+  { href: '#offer', label: 'What we build' },
   { href: '#engagement', label: 'Engagement models' },
   { href: '#process', label: 'How it runs' },
   { href: '#technology', label: 'Technology' },
@@ -78,7 +78,7 @@ function ServicesPage() {
     <>
       <SEO
         title="Services"
-        description="Three kinds of work: replacing the internal systems an operation has outgrown, migrating the data into them intact, and building language-model features where they earn their place. Engagement models, pricing, process, and technology."
+        description="Three lines of work: shipping web and mobile applications, migrating data off spreadsheets and legacy systems intact, and building AI features where they earn their place. Engagement models, pricing, process, and technology."
         path="/services"
       />
 
@@ -90,16 +90,9 @@ function ServicesPage() {
             <span className="eyebrow">Services</span>
             <h1 className="h1">A deliberately narrow offer</h1>
             <p className="lede">
-              I do three kinds of work: replace the internal systems an operation has outgrown,
-              move the data into them without losing fifteen years of records, and build
-              language-model features where they genuinely earn their place. Everything on this
-              page is capability and process — what I can build and how an engagement is
-              structured — not a claim about somebody else&rsquo;s project.
-            </p>
-            <p className="body muted">
-              A one-person practice earns nothing by pretending to cover everything. If
-              what you need sits outside this, you will hear that on the first call, and
-              where I can I will point you at someone who does it properly.
+              Three lines of work: ship the application, rescue the data, and add AI only where
+              it earns its place. If what you need sits outside that, you will hear it on the
+              first call.
             </p>
           </Reveal>
 
@@ -121,12 +114,11 @@ function ServicesPage() {
       <section id="offer" className="section section--rule services-anchor">
         <div className="container stack stack--xl">
           <Reveal className="section-head">
-            <span className="eyebrow">What I build</span>
+            <span className="eyebrow">What we build</span>
             <h2 className="h2">Three lines of work</h2>
-            <p className="body muted">
-              Replace the system, move the data into it intact, and add a model only where one
-              earns its place. Most engagements are the first two; the third comes up less often
-              than the industry would like you to believe.
+            <p className="lede">
+              Most engagements are the first two. The third comes up less often than the industry
+              would like you to believe.
             </p>
           </Reveal>
 
@@ -177,7 +169,7 @@ function ServicesPage() {
           <Reveal className="section-head">
             <span className="eyebrow">Engagement models</span>
             <h2 className="h2">Three ways to work together</h2>
-            <p className="body muted">
+            <p className="lede">
               Most work starts at 01. Nothing about starting there obliges you to continue
               to the next one, and each model ends at a point where stopping is a normal
               outcome rather than a negotiation.
@@ -200,7 +192,7 @@ function ServicesPage() {
                   <span className="pill">{model.shape}</span>
                 </div>
 
-                <p className="engagement__price">{model.price}</p>
+                <p className="services-engagement__price">{model.price}</p>
 
                 <p className="card__body">{model.summary}</p>
 
@@ -224,20 +216,20 @@ function ServicesPage() {
           <Reveal as="aside" className="panel stack" delay={120} aria-labelledby="pricing-title">
             <span className="eyebrow">Pricing</span>
             <h3 className="h3" id="pricing-title">
-              Why there are no numbers on this page
+              Why some of these are numbers and some are not
             </h3>
             <p className="body">{PRICING_NOTE}</p>
             <p className="body muted">
-              A number printed on a website has to be either high enough to cover the worst
-              version of a project or low enough to be meaningless. Scope, the state of your
-              data, how many decisions are already made, and how much of the integration
-              surface you control move the figure far more than any feature list does.
+              A fixed number for the build would have to be either high enough to cover the worst
+              version of a project or low enough to be meaningless. Scope, the state of your data,
+              how many decisions are already made, and how much of the integration surface you
+              control move that figure far more than any feature list does.
             </p>
             <p className="body muted">
               So the exchange is simple. Describe what you are trying to do, and you get a
               written estimate with the scope it is attached to: what is included, what is
               not, and what would change it. If the honest answer is that the work does not
-              need me, that goes in writing too.
+              need doing, that goes in writing too.
             </p>
             <div className="cluster">
               <Link className="link-arrow" to="/contact">
@@ -254,7 +246,7 @@ function ServicesPage() {
           <Reveal className="section-head">
             <span className="eyebrow">Process</span>
             <h2 className="h2">How an engagement runs</h2>
-            <p className="body muted">
+            <p className="lede">
               The same four steps, in the same order, every time. The point of the order is
               that you can stop after any of them and still be holding something useful.
             </p>
@@ -283,12 +275,10 @@ function ServicesPage() {
         <div className="container stack stack--lg">
           <Reveal className="section-head">
             <span className="eyebrow">Technology</span>
-            <h2 className="h2">What I work with</h2>
-            <p className="body muted">
-              This is a capability list: the tools I build with and keep current on. It is
-              not a record of client work and there are no logos attached to it. Choices are
-              made per project against what you already run, and the boring, well-understood
-              option wins by default.
+            <h2 className="h2">What we work with</h2>
+            <p className="lede">
+              Choices are made per project against what you already run, and the boring,
+              well-understood option wins by default.
             </p>
           </Reveal>
 
@@ -315,9 +305,8 @@ function ServicesPage() {
           <Reveal className="section-head">
             <span className="eyebrow">Questions</span>
             <h2 className="h2">The objections worth raising early</h2>
-            <p className="body muted">
-              These are the questions worth asking anyone you are about to hire, and the
-              answers you would get from me on a call.
+            <p className="lede">
+              The questions worth asking anyone you are about to hire.
             </p>
           </Reveal>
 
@@ -364,7 +353,7 @@ function ServicesPage() {
         <div className="container">
           <Reveal className="panel cta-block">
             <span className="eyebrow eyebrow--bare">Next step</span>
-            <h2 className="h2">Tell me what you are trying to build</h2>
+            <h2 className="h2">Tell us what you are trying to build</h2>
             <p className="lede">
               Thirty minutes, no charge, no deck. If a Discovery Sprint is the right place to
               start, we will scope one. If the honest answer is that you do not need it, you

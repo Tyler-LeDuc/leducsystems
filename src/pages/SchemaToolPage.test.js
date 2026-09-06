@@ -35,7 +35,7 @@ describe('SchemaToolPage', () => {
     fireEvent.click(screen.getByRole('button', { name: /load an example/i }));
 
     const sql = screen.getByText(/create table/, { selector: 'code' }).textContent;
-    expect(sql).toContain('create table orders (');
+    expect(sql).toContain('create table invoices (');
     expect(sql).toContain('generated always as identity primary key');
     /* Flagged for leading zeros, so it must not be emitted as an integer. */
     expect(sql).toMatch(/phone\s+text/);
@@ -46,11 +46,11 @@ describe('SchemaToolPage', () => {
     renderTool();
     fireEvent.click(screen.getByRole('button', { name: /load an example/i }));
 
-    fireEvent.change(screen.getByDisplayValue('orders'), {
-      target: { value: 'Shipment Log' },
+    fireEvent.change(screen.getByDisplayValue('invoices'), {
+      target: { value: 'Invoice Ledger' },
     });
 
-    expect(screen.getByText(/create table shipment_log \(/)).toBeInTheDocument();
+    expect(screen.getByText(/create table invoice_ledger \(/)).toBeInTheDocument();
   });
 
   it('lists every column with its inferred type', () => {

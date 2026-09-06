@@ -1,0 +1,12 @@
+/* Page-specific styles for /agencies.
+
+   Only one rule: the index-over-title label stack used inside .row. The home
+   page has an identical rule as .home-diff__label. Duplicating three
+   properties is cheaper than promoting a two-use pattern into the shared
+   vocabulary in components.css — if a third page needs it, move it there. */
+
+.agencies-work__label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}

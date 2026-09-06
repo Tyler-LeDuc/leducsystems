@@ -5,10 +5,12 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
+import AgenciesPage from './pages/AgenciesPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import SchemaToolPage from './pages/SchemaToolPage';
+import WorkbookToolPage from './pages/WorkbookToolPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import NotFoundPage from './pages/NotFoundPage';
 
@@ -51,9 +53,11 @@ export function AppShell() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/services" element={<ServicesPage />} />
+          <Route path="/agencies" element={<AgenciesPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/tools/schema" element={<SchemaToolPage />} />
+          <Route path="/tools/workbook" element={<WorkbookToolPage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/terms" element={<TermsOfServicePage />} />
           <Route path="*" element={<NotFoundPage />} />

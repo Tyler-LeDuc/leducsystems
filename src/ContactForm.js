@@ -140,7 +140,7 @@ const Field = ({ id, label, required, error, hint, full, children }) => (
     </label>
     {children}
     {error ? (
-      <p className="field__error" id={`${id}-error`}>
+      <p className="field__error" id={`${id}-error`} role="alert">
         {error}
       </p>
     ) : null}
@@ -162,6 +162,7 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
   const refSetters = useRef({});
   const fileInputRef = useRef(null);
   const previouslyFocused = useRef(null);
+  const successRef = useRef(null);
   const overlayPressed = useRef(false);
   const onCloseRef = useRef(onClose);
 
@@ -272,6 +273,16 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
     setFile(null);
     setFileError('');
   }, [embedded, isOpen]);
+
+  /* Success: the form unmounts under the user's focus, so move focus and view to the confirmation. */
+  useEffect(() => {
+    if (status !== 'success') return;
+    const node = successRef.current;
+    if (!node) return;
+    node.focus();
+    /* jsdom does not implement scrollIntoView; guard so tests do not throw. */
+    if (typeof node.scrollIntoView === 'function') node.scrollIntoView({ block: 'center' });
+  }, [status]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -418,7 +429,11 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
   const titleId = `${uid}-title`;
 
   const success = (
-    <div className="form-success" role="status">
+    <div className="form-success" ref={successRef} tabIndex={-1}>
+      {/* The panel itself is not role="status": focus moves onto it, and a
+          live region that is also the focus target is announced twice. This
+          sr-only line carries the announcement instead. */}
+      <p className="sr-only" role="status">Message sent.</p>
       <span className="form-success__mark" aria-hidden="true" />
       <h3 className="h3 hi">Message sent</h3>
       <p className="body muted">
@@ -633,7 +648,7 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
           <a className="link-underline" href={`mailto:${CONTACT_EMAIL}`}>
             {CONTACT_EMAIL}
           </a>{' '}
-          directly and it will reach me either way.
+          directly and it will reach us either way.
         </p>
       ) : null}
 
