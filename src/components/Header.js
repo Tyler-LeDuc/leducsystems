@@ -5,13 +5,10 @@ import ContactForm from '../ContactForm';
 
 const MENU_ID = 'site-mobile-menu';
 
-/* `match` lets one nav item own a whole section: "Free tools" points at
-   the flagship tool but stays current on every /tools/* page, so the nav
-   never goes blank while the reader is still inside that section. */
-function isActivePath(pathname, to, match) {
-  const base = match || to;
-  if (base === '/') return pathname === '/';
-  return pathname === base || pathname.startsWith(`${base}/`);
+function isActivePath(pathname, to) {
+  if (to === '/') return pathname === '/';
+  /* Prefix match, so "Free tools" stays current on every /tools/ page. */
+  return pathname === to || pathname.startsWith(`${to}/`);
 }
 
 function Header() {
@@ -23,7 +20,6 @@ function Header() {
   const items = NAV.map((item) => ({
     to: item.to || item.path || item.href,
     label: item.label || item.name,
-    match: item.match,
   }));
 
   useEffect(() => {
@@ -77,7 +73,7 @@ function Header() {
           <nav className="nav" aria-label="Primary">
             <ul>
               {items.map((item) => {
-                const active = isActivePath(pathname, item.to, item.match);
+                const active = isActivePath(pathname, item.to);
                 return (
                   <li key={item.to}>
                     <Link
@@ -120,7 +116,7 @@ function Header() {
       >
         <ul>
           {items.map((item, index) => {
-            const active = isActivePath(pathname, item.to, item.match);
+            const active = isActivePath(pathname, item.to);
             return (
               <li key={item.to}>
                 <Link

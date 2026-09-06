@@ -32,10 +32,40 @@ export const SITE = {
 export const NAV = [
   { label: 'Home', path: '/' },
   { label: 'Services', path: '/services' },
-  /* Points at the flagship tool; `match` keeps it current on the other one too. */
-  { label: 'Free tools', path: '/tools/workbook', match: '/tools' },
+  { label: 'Free tools', path: '/tools' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
+];
+
+/* The free tools, in the order they are offered. Each one has to be useful
+   on its own without a conversation, and none of them may upload anything —
+   that is the whole proposition. Order is by how sharp the hook is, not by
+   how much work each took. */
+export const TOOLS = [
+  {
+    path: '/tools/workbook',
+    name: 'Workbook x-ray',
+    headline: 'What is running inside one workbook',
+    summary:
+      'Macros and what they reach, database connections, Power Query sources, links to someone else’s drive, sheets that cannot be unhidden from the menu.',
+    input: 'One .xlsx or .xlsm',
+  },
+  {
+    path: '/tools/folder',
+    name: 'Spreadsheet map',
+    headline: 'Which file the whole team depends on',
+    summary:
+      'Reads a folder and draws what links to what: the workbook a dozen reports pull from, links pointing at a machine that is not there, and the same model saved eleven times.',
+    input: 'A folder of workbooks',
+  },
+  {
+    path: '/tools/schema',
+    name: 'Spreadsheet to schema',
+    headline: 'The database a spreadsheet should have been',
+    summary:
+      'Paste a block of cells and get the Postgres table it should become, plus the data problems that would break the import.',
+    input: 'Pasted cells',
+  },
 ];
 
 export const LEGAL_NAV = [

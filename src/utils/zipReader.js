@@ -165,6 +165,111 @@ export function decodeUtf8(bytes) {
  * Open an archive into a small API over its entries. Parts are inflated on
  * demand — a workbook holds hundreds of them and this tool reads about six.
  */
+/* ---------- reading without loading the whole file ---------------------- */
+
+/**
+ * Open an archive over a File or Blob, reading only the bytes it needs.
+ *
+ * The folder scanner looks at four small XML parts in each of possibly
+ * hundreds of workbooks. Pulling every 40MB file into memory to reach 2KB
+ * of XML is what makes that scan impossible, so this reads the tail to find
+ * the central directory and then slices each part out individually. Slices
+ * are lazy — nothing is read until arrayBuffer() is awaited.
+ */
+export async function openZipFromBlob(blob) {
+  const size = blob.size;
+  if (!size || size < 22) return null;
+
+  /* The EOCD is within 64KB of the end, behind a comment of at most that. */
+  const tailLength = Math.min(size, 0xffff + 22);
+  const tail = new Uint8Array(await blob.slice(size - tailLength).arrayBuffer());
+  const tailView = new DataView(tail.buffer, tail.byteOffset, tail.byteLength);
+
+  const eocd = findEndOfCentralDirectory(tailView, tail.length);
+  if (eocd < 0) return null;
+
+  const count = tailView.getUint16(eocd + 10, true);
+  const directorySize = tailView.getUint32(eocd + 12, true);
+  const directoryOffset = tailView.getUint32(eocd + 16, true);
+  if (directoryOffset + directorySize > size) return null;
+
+  /* The directory is usually already inside the tail we read. */
+  const tailStart = size - tailLength;
+  const directory =
+    directoryOffset >= tailStart
+      ? tail.subarray(directoryOffset - tailStart, directoryOffset - tailStart + directorySize)
+      : new Uint8Array(await blob.slice(directoryOffset, directoryOffset + directorySize).arrayBuffer());
+
+  const view = new DataView(directory.buffer, directory.byteOffset, directory.byteLength);
+  const byName = new Map();
+  let at = 0;
+
+  for (let i = 0; i < count; i += 1) {
+    if (at + 46 > directory.length) break;
+    if (view.getUint32(at, true) !== CENTRAL_SIGNATURE) break;
+
+    const nameLength = view.getUint16(at + 28, true);
+    const extraLength = view.getUint16(at + 30, true);
+    const commentLength = view.getUint16(at + 32, true);
+    const name = decodeUtf8(directory.subarray(at + 46, at + 46 + nameLength));
+
+    if (!byName.has(name)) {
+      byName.set(name, {
+        name,
+        method: view.getUint16(at + 10, true),
+        compressedSize: view.getUint32(at + 20, true),
+        uncompressedSize: view.getUint32(at + 24, true),
+        localHeaderOffset: view.getUint32(at + 42, true),
+      });
+    }
+
+    at += 46 + nameLength + extraLength + commentLength;
+  }
+
+  const names = [...byName.keys()];
+
+  const bytesOf = async (name) => {
+    const entry = byName.get(name);
+    if (!entry) return null;
+    if (entry.localHeaderOffset + 30 > size) return null;
+
+    /* The local header repeats the name with its own extra field, whose
+       length routinely differs from the directory's, so the data offset
+       has to come from the header itself. */
+    const head = new DataView(
+      await blob.slice(entry.localHeaderOffset, entry.localHeaderOffset + 30).arrayBuffer()
+    );
+    if (head.byteLength < 30) return null;
+
+    const start =
+      entry.localHeaderOffset + 30 + head.getUint16(26, true) + head.getUint16(28, true);
+    if (start + entry.compressedSize > size) return null;
+
+    const raw = new Uint8Array(await blob.slice(start, start + entry.compressedSize).arrayBuffer());
+    if (entry.method === STORED) return raw;
+    if (entry.method !== DEFLATED) return null;
+
+    const ceiling = limitForPart(entry.name);
+    const limit = Math.min(ceiling, Math.max(entry.uncompressedSize || 0, 1024) * 2);
+    try {
+      return await inflateRaw(raw, limit);
+    } catch (err) {
+      return null;
+    }
+  };
+
+  return {
+    names: () => names,
+    has: (name) => byName.has(name),
+    entry: (name) => byName.get(name) || null,
+    bytes: bytesOf,
+    text: async (name) => {
+      const part = await bytesOf(name);
+      return part ? decodeUtf8(part) : null;
+    },
+  };
+}
+
 export function openZip(bytes) {
   const entries = listEntries(bytes);
 

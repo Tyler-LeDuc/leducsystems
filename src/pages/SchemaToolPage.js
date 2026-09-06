@@ -293,8 +293,8 @@ export default function SchemaToolPage() {
             <Link className="btn btn--primary" to="/contact">
               Talk about your migration
             </Link>
-            <Link className="btn btn--ghost" to="/tools/workbook">
-              X-ray a workbook
+            <Link className="btn btn--ghost" to="/tools">
+              The other free tools
             </Link>
           </div>
           <p className="body muted">

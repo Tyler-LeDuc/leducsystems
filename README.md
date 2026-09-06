@@ -2,8 +2,8 @@
 
 Marketing site for **LeDuc Systems LLC**. Live at <https://leducsystems.com>.
 
-The site is a small static React app: nine routes, a shared design system, one working
-contact form, and two free tools that run entirely in the browser. There is no CMS, no
+The site is a small static React app: eleven routes, a shared design system, one working
+contact form, and three free tools that run entirely in the browser. There is no CMS, no
 backend, and no database — content lives in a single JavaScript module and the form posts
 directly to EmailJS from the browser.
 
@@ -35,7 +35,9 @@ a concrete reason; the site is deliberately dependency-light.
 /agencies         For agencies — white-label capacity
 /about            About — why the company exists, principles
 /contact          Contact — the form, embedded
+/tools            Free tools — the index
 /tools/workbook   Free tool — reads what is running inside an Excel workbook
+/tools/folder     Free tool — maps the dependencies across a folder of workbooks
 /tools/schema     Free tool — pasted spreadsheet to Postgres schema
 /privacy          Privacy Policy
 /terms            Terms of Service
@@ -59,7 +61,7 @@ Styles are a five-layer cascade, imported in this exact order by `src/index.css`
 | `src/styles/tokens.css` | CSS custom properties only — color, type scale, spacing, radii, motion, layout widths |
 | `src/styles/base.css` | Reset and base element typography, focus states, `prefers-reduced-motion` |
 | `src/styles/components.css` | The shared class vocabulary every page composes from — `.section`, `.container`, `.panel`, `.btn`, `.eyebrow`, `.reveal`, and so on |
-| `src/styles/tools.css` | Shared vocabulary for the free tools — `.tool-finding`, `.tool-table`, `.tool-sql`, the paste-field chrome. Both tool pages compose from it |
+| `src/styles/tools.css` | Shared vocabulary for the free tools — `.tool-finding`, `.tool-table`, `.tool-sql`, `.xray-drop`, the paste-field chrome. Every tool page composes from it |
 | `src/styles/chrome.css` | Header, footer, mobile menu, contact form chrome |
 
 **Read `components.css` before writing JSX.** It is the contract — most layouts are
@@ -89,10 +91,12 @@ Rules that keep this from rotting:
 | `src/components/Header.js` / `Footer.js` | Site chrome, nav, mobile menu, legal links |
 | `src/App.js` | Router, `ScrollToTop`, EmailJS init. Exports `AppShell` (everything inside the router) so tests can mount it in a `MemoryRouter` |
 | `src/utils/inferSchema.js` | Delimited-text parsing and type inference behind `/tools/schema` |
-| `src/utils/zipReader.js` | ZIP central-directory reader; inflates with the platform's `DecompressionStream`, no library |
+| `src/utils/ooxml.js` | Shared XML-part helpers both workbook tools use — parse, tag lookup, attribute, text |
+| `src/utils/zipReader.js` | ZIP central-directory reader; inflates with the platform's `DecompressionStream`, no library. `openZipFromBlob` slices a File instead of loading it |
 | `src/utils/compoundFile.js` | MS-CFB (OLE compound file) reader — the container `vbaProject.bin` is stored in |
 | `src/utils/vbaProject.js` | MS-OVBA decompression and the VBA module table; recovers macro source |
 | `src/utils/workbookXray.js` | Turns those parsers into the findings shown at `/tools/workbook` |
+| `src/utils/folderScan.js` | Probes a folder of workbooks, builds the dependency graph, and lays it out for `/tools/folder` |
 
 ---
 
@@ -103,7 +107,7 @@ import from it rather than duplicating strings. It exports:
 
 `SITE` (name, founder, email, url, founded, tagline, description) · `NAV` · `LEGAL_NAV` ·
 `PILLARS` (the three-part offer) · `DIFFERENTIATORS` · `APPROACH` · `ENGAGEMENTS` ·
-`PRICING_NOTE` · `PROCESS` · `TECH` · `FAQ` · `RESPONSE_PROMISE` · `AGENCY` ·
+`PRICING_NOTE` · `PROCESS` · `TECH` · `FAQ` · `RESPONSE_PROMISE` · `TOOLS` · `AGENCY` ·
 `AGENCY_TERMS` · `AGENCY_WORK` · `AGENCY_NOT_A_FIT`
 
 To change a headline, an engagement model, a FAQ answer, or the contact email, edit
@@ -177,13 +181,33 @@ Contact address everywhere is **tyler@leducsystems.com**.
 
 ## Free tools
 
-Two pages that do real work in the visitor's browser. Both are lead assets: they must be
-genuinely useful on their own, and neither may upload anything.
+Three pages that do real work in the visitor's browser, listed at `/tools` from the `TOOLS`
+export in `site.js`. They are lead assets: each must be genuinely useful on its own, and
+none of them may upload anything.
 
 ### `/tools/schema` — spreadsheet to Postgres schema
 
 Paste delimited text, get a `create table` plus the data problems that would break a real
 import. Logic in `src/utils/inferSchema.js`.
+
+### `/tools/folder` — map a whole shared drive
+
+Takes a folder (via `webkitdirectory`) and builds the dependency graph across it: which
+workbook a dozen reports read from, which links point outside the folder, which model exists
+in four copies, and which depended-on file only one person has ever saved. Logic in
+`src/utils/folderScan.js`, drawn with a deterministic force-directed layout in the same file.
+
+Two things make it possible in a tab. It reads through `openZipFromBlob`, which slices the
+central directory and the four parts it needs out of each file rather than loading it — a
+40MB model costs kilobytes. And it never opens a worksheet: everything comes from
+`xl/workbook.xml`, the `externalLinks` rels, `xl/connections.xml` and `docProps/core.xml`.
+That list is printed on the page, because "we only read four parts" is checkable in a way
+that "it stays local" is not.
+
+Match confidence is part of the output, not hidden. A relative link resolves to an exact
+path; an absolute one can only be matched on filename, and the graph draws those differently
+and says so. Where two files share a name it reports the link as ambiguous rather than
+picking one.
 
 ### `/tools/workbook` — what is running inside a workbook
 

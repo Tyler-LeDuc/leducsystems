@@ -22,3 +22,18 @@ if (typeof global.CompressionStream === 'undefined') {
 const { TextEncoder, TextDecoder } = require('node:util');
 if (typeof global.TextEncoder === 'undefined') global.TextEncoder = TextEncoder;
 if (typeof global.TextDecoder === 'undefined') global.TextDecoder = TextDecoder;
+
+// The folder scanner reads workbooks through Blob.slice().arrayBuffer() so
+// it never loads a whole file. Blob.arrayBuffer has been in browsers since
+// 2019; this jsdom predates it, so it is filled in from the FileReader it
+// does implement.
+if (typeof Blob !== 'undefined' && typeof Blob.prototype.arrayBuffer === 'undefined') {
+  Blob.prototype.arrayBuffer = function arrayBuffer() {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsArrayBuffer(this);
+    });
+  };
+}

@@ -11,17 +11,33 @@ import ContactPage from './pages/ContactPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import SchemaToolPage from './pages/SchemaToolPage';
 import WorkbookToolPage from './pages/WorkbookToolPage';
+import FolderToolPage from './pages/FolderToolPage';
+import ToolsIndexPage from './pages/ToolsIndexPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import NotFoundPage from './pages/NotFoundPage';
 
 const EMAILJS_PUBLIC_KEY = 'HIVHympEPP7sMQ_Pl';
+
+/* Anchor ids that have already gone out in proposals and email. The three
+   /services pillar ids were renamed when that copy was rewritten; the links
+   are public and permanent, so old ones must still land on the right section
+   instead of silently dumping the reader at the top of the page.
+   Never remove an entry — only ever add. */
+const LEGACY_ANCHORS = {
+  'replace-what-you-outgrew': 'ship-the-application',
+  'get-the-data-out': 'rescue-the-data',
+  'ai-where-it-earns': 'ai-that-earns-its-place',
+};
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
     if (hash) {
-      const target = document.getElementById(hash.slice(1));
+      const id = hash.slice(1);
+      const target =
+        document.getElementById(id) ||
+        document.getElementById(LEGACY_ANCHORS[id] || '');
       if (target) {
         target.scrollIntoView({ block: 'start' });
         return;
@@ -56,8 +72,10 @@ export function AppShell() {
           <Route path="/agencies" element={<AgenciesPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/tools" element={<ToolsIndexPage />} />
           <Route path="/tools/schema" element={<SchemaToolPage />} />
           <Route path="/tools/workbook" element={<WorkbookToolPage />} />
+          <Route path="/tools/folder" element={<FolderToolPage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/terms" element={<TermsOfServicePage />} />
           <Route path="*" element={<NotFoundPage />} />

@@ -48,6 +48,11 @@ const ROUTES = {
     description:
       'Start a project with Le Duc Systems in Phoenix, Arizona. Describe what you are building and get a reply within one business day from the person who would do the work.',
   },
+  '/tools': {
+    title: 'Free tools',
+    description:
+      'Three free tools for looking at the spreadsheets an operation runs on: what is running inside one workbook, which file a whole folder depends on, and the database a spreadsheet should have been. All three run entirely in your browser and upload nothing.',
+  },
   '/tools/schema': {
     title: 'Spreadsheet to database schema',
     description:
@@ -57,6 +62,11 @@ const ROUTES = {
     title: 'What is running inside your spreadsheet',
     description:
       "Drop an Excel workbook and see the software hiding in it: macro code and what it reaches, database connections, Power Query sources, links to other people's machines, and sheets that cannot be unhidden from the menu. Runs entirely in your browser — the file is never uploaded.",
+  },
+  '/tools/folder': {
+    title: 'Map the spreadsheets your team runs on',
+    description:
+      'Point this at a folder of Excel workbooks and see the dependency map nobody has drawn: which file a dozen reports read from, which links point at a machine that is not there, which workbook exists in eleven copies, and which one person has ever saved it. Reads four small parts per file, entirely in your browser.',
   },
   '/privacy': {
     title: 'Privacy Policy',

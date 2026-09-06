@@ -227,3 +227,89 @@
     gap: var(--sp-2);
   }
 }
+
+/* ---- file / folder input ---------------------------------------------- */
+
+/* Used by both the workbook tool and the folder tool. */
+.tool-drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-8) var(--sp-5);
+  text-align: center;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--surface-wash);
+  transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+}
+
+.tool-drop--over {
+  border-color: var(--accent-400);
+  background: var(--accent-wash);
+}
+
+/* The label is the button; the input inside it stays reachable by keyboard
+   and to assistive technology rather than being display:none.
+
+   The focus ring goes on the label, not the input. The input is
+   opacity: 0 — which paints its outline at zero alpha too — and it fills
+   the label exactly, so an offset outline would also be clipped. Drawing
+   on the label is the only way a keyboard user sees anything at all. */
+.tool-drop__button {
+  position: relative;
+  cursor: pointer;
+}
+
+.tool-drop__button:focus-within {
+  outline: 2px solid var(--accent-400);
+  outline-offset: 3px;
+}
+
+.tool-drop__input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* ---- fact tiles -------------------------------------------------------- */
+
+.tool-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--sp-4);
+  margin: 0;
+}
+
+.tool-fact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  padding: var(--sp-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface-wash);
+}
+
+.tool-fact dt {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--text-lo);
+}
+
+.tool-fact dd {
+  margin: 0;
+  font-size: var(--fs-lg);
+  color: var(--text-hi);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 620px) {
+  .tool-drop {
+    padding: var(--sp-6) var(--sp-4);
+  }
+}

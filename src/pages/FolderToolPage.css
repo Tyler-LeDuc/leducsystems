@@ -1,0 +1,135 @@
+/* Shared-drive map. The .tool-* vocabulary (drop zone, fact tiles,
+   findings) lives in src/styles/tools.css; this file carries the graph and
+   the folder-specific lists. */
+
+.folder-title {
+  max-width: 17ch;
+}
+
+/* ---- the privacy promise ---- */
+
+.folder-promise {
+  border-color: var(--line-accent);
+  background: var(--accent-haze);
+  max-width: 62ch;
+}
+
+.folder-parts {
+  display: grid;
+  gap: var(--sp-1);
+}
+
+.folder-part {
+  color: var(--accent-300);
+  font-size: var(--fs-mono);
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+/* ---- graph ---- */
+
+.folder-graph-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface-wash);
+}
+
+.folder-graph {
+  display: block;
+  width: 100%;
+  /* Below this the labels collide; the wrapper scrolls instead. */
+  min-width: 34rem;
+  height: auto;
+}
+
+.folder-edge {
+  color: var(--text-xlo);
+  stroke: var(--line-strong);
+  stroke-width: 1.25;
+}
+
+.folder-edge--exact {
+  color: var(--accent-400);
+  stroke: var(--accent-400);
+  stroke-opacity: 0.7;
+}
+
+.folder-edge--guess {
+  stroke-dasharray: 4 4;
+  stroke-opacity: 0.5;
+}
+
+.folder-dot {
+  fill: var(--ink-300);
+  stroke: var(--line-strong);
+}
+
+.folder-dot--hub {
+  fill: var(--accent-500);
+  stroke: var(--accent-300);
+}
+
+.folder-node text {
+  fill: var(--text-lo);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  paint-order: stroke;
+  stroke: var(--ink-000);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+/* ---- lists ---- */
+
+.folder-links {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.folder-link {
+  display: grid;
+  gap: var(--sp-1);
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--warn-line);
+  border-radius: var(--r-md);
+  background: var(--surface-wash);
+}
+
+.folder-link__from,
+.folder-link__to {
+  text-transform: none;
+  overflow-wrap: anywhere;
+  font-size: var(--fs-mono);
+}
+
+.folder-link__from {
+  color: var(--text-lo);
+}
+
+.folder-link__to {
+  color: var(--text-hi);
+}
+
+.folder-versions {
+  display: grid;
+  gap: var(--sp-1);
+}
+
+.folder-version {
+  color: var(--text-lo);
+  font-size: var(--fs-mono);
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+.folder-version--newest {
+  color: var(--positive-100);
+}
+
+@media (max-width: 620px) {
+  .folder-promise {
+    padding: var(--sp-4);
+  }
+}

@@ -110,16 +110,16 @@ export default function HomePage() {
                 Find out what your spreadsheet is really doing.
               </h2>
               <p className="body">
-                One reads the macros, database connections and broken links hiding inside a
-                workbook. The other turns a pasted spreadsheet into the Postgres schema it should
-                have been. Both run in your browser — nothing is uploaded.
+                Three free tools: what is running inside one workbook, which file a whole folder
+                depends on, and the database a spreadsheet should have been. All of them run in
+                your browser — nothing is uploaded.
               </p>
               <div className="cluster">
                 <Link className="btn btn--primary" to="/tools/workbook">
                   X-ray a workbook
                 </Link>
-                <Link className="btn btn--ghost" to="/tools/schema">
-                  Spreadsheet to schema
+                <Link className="btn btn--ghost" to="/tools">
+                  All three tools
                 </Link>
               </div>
             </div>

@@ -142,7 +142,7 @@ export default function WorkbookToolPage() {
               painted at zero alpha and the keyboard path would be
               invisible. */}
           <div
-            className={`xray-drop${dragging ? ' xray-drop--over' : ''}`}
+            className={`tool-drop${dragging ? ' tool-drop--over' : ''}`}
             onDragOver={(event) => {
               event.preventDefault();
               setDragging(true);
@@ -152,10 +152,10 @@ export default function WorkbookToolPage() {
           >
             <p className="body hi">Drag a workbook here</p>
             <p className="body--sm muted">or</p>
-            <label className="btn btn--primary xray-drop__button">
+            <label className="btn btn--primary tool-drop__button">
               Choose a file
               <input
-                className="xray-drop__input"
+                className="tool-drop__input"
                 type="file"
                 accept={ACCEPT}
                 onChange={(event) => {
@@ -346,8 +346,8 @@ export default function WorkbookToolPage() {
               <h2 className="h3" id="xray-structure">
                 The file itself
               </h2>
-              <dl className="xray-facts">
-                <div className="xray-fact">
+              <dl className="tool-facts">
+                <div className="tool-fact">
                   <dt>Sheets</dt>
                   <dd>
                     {report.sheets.length}
@@ -356,28 +356,28 @@ export default function WorkbookToolPage() {
                       : ''}
                   </dd>
                 </div>
-                <div className="xray-fact">
+                <div className="tool-fact">
                   <dt>Named ranges</dt>
                   <dd>{report.definedNames.length}</dd>
                 </div>
-                <div className="xray-fact">
+                <div className="tool-fact">
                   <dt>Parts in the file</dt>
                   <dd>{report.partCount}</dd>
                 </div>
                 {report.props.lastModifiedBy ? (
-                  <div className="xray-fact">
+                  <div className="tool-fact">
                     <dt>Last saved by</dt>
                     <dd>{report.props.lastModifiedBy}</dd>
                   </div>
                 ) : null}
                 {report.props.revision ? (
-                  <div className="xray-fact">
+                  <div className="tool-fact">
                     <dt>Revisions</dt>
                     <dd>{report.props.revision}</dd>
                   </div>
                 ) : null}
                 {report.props.editingMinutes ? (
-                  <div className="xray-fact">
+                  <div className="tool-fact">
                     <dt>Time spent editing</dt>
                     {/* Rounding to hours turns every short-lived workbook
                         into "0 hours", which reads as a bug. */}
@@ -415,8 +415,8 @@ export default function WorkbookToolPage() {
             <Link className="btn btn--primary" to="/contact">
               Talk about replacing it
             </Link>
-            <Link className="btn btn--ghost" to="/tools/schema">
-              Try the schema tool
+            <Link className="btn btn--ghost" to="/tools/folder">
+              Map a whole folder
             </Link>
           </div>
           <p className="body muted">

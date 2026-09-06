@@ -18,29 +18,9 @@
 import { openZip, decodeUtf8 } from './zipReader';
 import { readCompoundFile, isCompoundFile } from './compoundFile';
 import { extractModules, scanSource } from './vbaProject';
+import { parseXml, tags, attr } from './ooxml';
 
 export const MAX_BYTES = 80 * 1024 * 1024;
-
-/* ---------- small XML helpers ------------------------------------------ */
-
-function parseXml(text) {
-  if (!text) return null;
-  try {
-    const doc = new DOMParser().parseFromString(text, 'application/xml');
-    return doc.getElementsByTagName('parsererror').length ? null : doc;
-  } catch (err) {
-    return null;
-  }
-}
-
-/* OOXML parts are namespaced inconsistently between producers, so tags are
-   matched on local name rather than by prefix. */
-function tags(doc, localName) {
-  if (!doc) return [];
-  return [...doc.getElementsByTagName('*')].filter((node) => node.localName === localName);
-}
-
-const attr = (node, name) => (node && node.getAttribute ? node.getAttribute(name) : null);
 
 /* ---------- individual readers ------------------------------------------ */
 
