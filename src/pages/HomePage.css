@@ -1,121 +1,608 @@
 /* =========================================================================
    Le Duc Systems — Home page
-   Page-specific layout only. Everything else composes from components.css.
+
+   This is the sales sheet: the statement, the offer, the prices, the process
+   and the stack on one numbered document (00–08). It absorbed the former
+   /services page, so density is the whole point — everything that used to be
+   a column of prose is now a ruled cell, a table row or a mono field.
+
+   The arrival rule for this page: the payload is the statement, and the
+   statement, the way in, the three lines of work and the sheet's own index
+   all sit inside the first screenful. Nothing above waits for a scroll.
+
+   Page layout only. Type, buttons, rows, lists, the disclosure and the datum
+   come from the shared cascade; nothing here restates them.
    ========================================================================= */
 
-/* ── Hero ─────────────────────────────────────────────────────────────── */
+/* ---- Anchors -----------------------------------------------------------
+   base.css sets html { scroll-padding-top: calc(var(--header-h) + 24px) },
+   which already clears the header for every anchor on the site. A positive
+   scroll-margin here would offset twice. Each target also carries its own
+   padding above the heading; cancel exactly that much so all eight anchors
+   land their heading in the same place under the header. */
+.section.home-anchor { scroll-margin-top: calc(var(--section-y) * -1); }
+.section.section--tight.home-anchor { scroll-margin-top: calc(var(--section-y-tight) * -1); }
+.row.home-anchor--row { scroll-margin-top: calc(var(--sp-7) * -1); }
+
+
+/* ── 00 · Masthead ────────────────────────────────────────────────────────
+   Ranged left, no glow, no pill. The band is tuned so the statement, the
+   actions, the offer strip and the index all clear the fold on a laptop —
+   the padding above the title is the first thing that gives. */
 .home-hero {
   position: relative;
   overflow: hidden;
-  padding-block: clamp(72px, 11vw, 148px) clamp(56px, 7vw, 96px);
+  padding-block: clamp(36px, 4.5vw, 64px) clamp(48px, 6vw, 80px);
   border-bottom: 1px solid var(--line);
 }
 
+.home-hero__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-5);
+}
+
+/* The masthead. Held to a measure that balances into two heavy lines rather
+   than running the full sheet width or stacking into four. */
 .home-hero__title {
   max-width: 17ch;
   text-wrap: balance;
 }
 
-.home-hero__lede {
-  max-width: 58ch;
+/* Flex would shrink a hairline to its content width; the datum has to run
+   the whole content column or it is not a datum. */
+.home-hero__head > .datum,
+.home-hero__head > .home-hero__brief {
+  align-self: stretch;
 }
 
-/* Quiet capability strip that closes the hero — not a logo wall. */
-.home-hero__keys {
+.home-hero__brief {
   display: grid;
-  /* Three columns because TECH has six groups — two full rows, no orphan.
-     If TECH grows to seven or eight, revisit this number. */
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--sp-5) var(--sp-6);
-  margin-top: clamp(48px, 7vw, 88px);
-  padding-top: var(--sp-5);
-  border-top: 1px solid var(--line);
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: var(--sp-5) var(--sp-8);
+  align-items: start;
 }
 
-.home-hero__key {
+.home-hero__lede { max-width: 52ch; }
+
+/* The primary way in belongs beside the statement, not at the foot of the
+   sheet. On one line where the column allows it. */
+.cluster.home-hero__actions { align-items: flex-start; }
+
+@media (max-width: 860px) {
+  .home-hero__brief { grid-template-columns: minmax(0, 1fr); }
+}
+
+
+/* ── The offer strip ──────────────────────────────────────────────────────
+   Three numbered cells of one lattice, each a link into its own clause. The
+   first cell of every line stays flush to the left datum, so the strip reads
+   off the same margin as the title above it. */
+.home-offer {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: clamp(28px, 3.5vw, 48px);
+  border-top: 1px solid var(--line-strong);
+}
+.home-offer li { display: flex; }
+
+.home-offer__link {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: var(--sp-2);
+  min-height: 44px;
+  padding: var(--sp-4) var(--sp-5) var(--sp-5);
+  border-bottom: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  transition: background-color var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
+}
+.home-offer li:first-child .home-offer__link {
+  padding-left: 0;
+  border-left: 0;
 }
 
-.home-hero__key-label {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: var(--ls-mono);
-  text-transform: uppercase;
-  color: var(--accent-400);
+.home-offer__label {
+  font-size: var(--fs-lg);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: var(--ls-snug);
+  color: var(--text-hi);
+  transition: color var(--dur) var(--ease);
+}
+.home-offer__num { transition: color var(--dur) var(--ease); }
+
+/* Hovering a cell strikes a signal rule across its top edge — the way a
+   drafter marks the line being read. It is the only accent rule on the
+   sheet at this scroll position, and only ever one at a time. */
+.home-offer__link:hover {
+  background: var(--paper-200);
+  box-shadow: inset 0 2px 0 0 var(--accent-500);
+}
+.home-offer__link:hover .home-offer__label { color: var(--accent-600); }
+.home-offer__link:hover .home-offer__num { color: var(--text-lo); }
+/* The global ring sits outside the box, which would overlap the neighbouring
+   cell in a lattice this tight. Draw it inside instead. */
+.home-offer__link:focus-visible { outline-offset: -2px; }
+
+@media (max-width: 620px) {
+  .home-offer { grid-template-columns: minmax(0, 1fr); }
+  .home-offer .home-offer__link {
+    padding-left: 0;
+    border-left: 0;
+  }
 }
 
-.home-hero__key-items {
+
+/* ── The sheet's index ────────────────────────────────────────────────────
+   A thin contents bar hung directly off the offer strip above it, so a
+   reader can reach the prices, the process or the stack without scrolling
+   to look for them. Same lattice, half the height. */
+.home-contents {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+.home-contents li { display: flex; }
+
+.home-contents__link {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--sp-2);
+  min-height: 44px;
+  padding: var(--sp-3) var(--sp-4) var(--sp-4);
+  border-bottom: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  transition: background-color var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
+}
+.home-contents li:first-child .home-contents__link {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.home-contents__label {
   font-size: var(--fs-xs);
-  line-height: var(--lh-base);
-  color: var(--text-xlo);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: var(--ls-snug);
+  color: var(--text-hi);
+  transition: color var(--dur) var(--ease);
 }
+.home-contents__num { transition: color var(--dur) var(--ease); }
+
+.home-contents__link:hover {
+  background: var(--paper-200);
+  box-shadow: inset 0 2px 0 0 var(--accent-500);
+}
+.home-contents__link:hover .home-contents__label { color: var(--accent-600); }
+.home-contents__link:hover .home-contents__num { color: var(--text-lo); }
+.home-contents__link:focus-visible { outline-offset: -2px; }
+
+@media (max-width: 960px) {
+  .home-contents { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .home-contents li:nth-child(4n + 1) .home-contents__link {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .home-contents li:not(:nth-child(4n + 1)) .home-contents__link {
+    padding-left: var(--sp-4);
+    border-left: 1px solid var(--line);
+  }
+}
+@media (max-width: 620px) {
+  .home-contents { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-contents li:nth-child(2n + 1) .home-contents__link {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .home-contents li:not(:nth-child(2n + 1)) .home-contents__link {
+    padding-left: var(--sp-4);
+    border-left: 1px solid var(--line);
+  }
+}
+
+
+/* ── Section title block ──────────────────────────────────────────────────
+   A drawing's title block: the ordinal and its label in the narrow column,
+   the heading and lede in the wide one, and the datum ruled under both. The
+   column widths and the inner hairline offset match .row, so a heading sits
+   directly above the prose it introduces. */
+.home-head {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 2fr);
+  column-gap: var(--sp-5);
+  align-items: baseline;
+}
+
+.home-head__meta { grid-column: 1; }
+
+.home-head__title,
+.home-head__lede {
+  grid-column: 2;
+  padding-left: var(--sp-5);
+}
+
+.home-head > .datum {
+  grid-column: 1 / -1;
+  margin-top: var(--sp-5);
+}
+
+.home-head__lede { margin-top: var(--sp-5); }
+.home-head__title { max-width: 24ch; }
 
 @media (max-width: 720px) {
-  .home-hero__keys { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-head { grid-template-columns: minmax(0, 1fr); }
+  .home-head__title,
+  .home-head__lede {
+    grid-column: 1;
+    padding-left: 0;
+  }
+  .home-head__title { margin-top: var(--sp-3); }
 }
 
-/* ── Pillars ──────────────────────────────────────────────────────────── */
-.home-pillar {
+
+/* ── 01 · Lines of work ───────────────────────────────────────────────────
+   Ruled rows with boxed callouts. Inside the wide column the summary and the
+   deliverables sit side by side so a row stays a band, not a page. */
+.home-pillar { padding-block: var(--sp-7); }
+
+.home-pillar__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--sp-5);
-  padding: var(--sp-7) var(--sp-6);
+  align-items: start;
 }
 
+.home-pillar__summary { max-width: 42ch; }
+
+/* Ruled off from the summary on the same offset .row uses inside itself, so
+   the whole page reads on one set of vertical lines. */
 .home-pillar__list {
-  margin-top: auto;
-  padding-top: var(--sp-5);
-  border-top: 1px solid var(--line);
+  padding-left: var(--sp-5);
+  border-left: 1px solid var(--line);
 }
 
-/* ── Differentiators ──────────────────────────────────────────────────── */
-.home-diff__label {
+@media (max-width: 960px) {
+  .home-pillar__body { grid-template-columns: minmax(0, 1fr); }
+  .home-pillar__list {
+    padding-left: 0;
+    padding-top: var(--sp-5);
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+
+
+/* ── The cell lattice ─────────────────────────────────────────────────────
+   The page's compression device, used three times: four claims, four process
+   steps, six technology groups. A statement that would have been a paragraph
+   becomes one cell of a ruled grid. Cells are divided by hairlines rather
+   than by whitespace, and the first cell of each line stays flush left. */
+.home-cells {
+  display: grid;
+  border-top: 1px solid var(--line-strong);
+}
+.home-cells--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.home-cells--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.home-cell {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-2);
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5) var(--sp-6);
+  border-bottom: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.home-cells--4 > .home-cell:nth-child(4n + 1),
+.home-cells--3 > .home-cell:nth-child(3n + 1) {
+  padding-left: 0;
+  border-left: 0;
 }
 
-/* ── Closing band ─────────────────────────────────────────────────────── */
-/* The aside uses .sticky-col and the inner block uses .cta-block; both live
-   in components.css because every page needs them. */
-.home-close {
-  position: relative;
-  overflow: hidden;
-  padding-block: clamp(72px, 9vw, 128px);
-  border-top: 1px solid var(--line);
+.home-cell__title {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: var(--ls-snug);
+  color: var(--text-hi);
 }
-
-/* Tool band. Two columns on desktop: the pitch, and a sample of the output so
-   the value is legible without clicking through. */
-.home-tool {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: var(--sp-9);
-  align-items: center;
+.home-cell__body {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-base);
+  color: var(--text-lo);
 }
-
-.home-tool__copy {
-  min-width: 0;
-}
-
-.home-tool__preview {
-  margin: 0;
-  padding: var(--sp-4);
-  overflow-x: auto;
-  background: var(--surface-wash);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--r-md);
-  font-family: var(--font-mono);
-  font-size: var(--fs-xs);
+/* .code sets mono at reading size; only the leading needs tightening so a
+   wrapped cell stays a block of data rather than a paragraph. */
+.home-cell__items {
   line-height: var(--lh-code);
   color: var(--text-lo);
 }
 
+/* The flush-left cells change with the column count, and the rule that sets
+   them carries a :nth-child. Every override below has to match that weight
+   or the old line's first cell keeps its flush edge — hence :nth-child(n). */
+@media (max-width: 960px) {
+  .home-cells--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-cells--4 > .home-cell:nth-child(n) {
+    padding-left: var(--sp-5);
+    border-left: 1px solid var(--line);
+  }
+  .home-cells--4 > .home-cell:nth-child(2n + 1) {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+@media (max-width: 860px) {
+  .home-cells--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-cells--3 > .home-cell:nth-child(n) {
+    padding-left: var(--sp-5);
+    border-left: 1px solid var(--line);
+  }
+  .home-cells--3 > .home-cell:nth-child(2n + 1) {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+@media (max-width: 620px) {
+  .home-cells--3,
+  .home-cells--4 { grid-template-columns: minmax(0, 1fr); }
+  .home-cells > .home-cell:nth-child(n) {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+
+/* ── 03 · Engagement models ───────────────────────────────────────────────
+   A comparison table rather than three tall cards: price, term and contents
+   line up down a column so the models can be read against each other. Fixed
+   layout so the columns hold their proportions whatever the copy does. */
+.home-eng {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.home-eng th,
+.home-eng td {
+  text-align: left;
+  vertical-align: top;
+  font-weight: 400;
+  padding: var(--sp-5) var(--sp-5) var(--sp-6);
+  border-bottom: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  overflow-wrap: break-word;
+}
+/* The first cell of every row stays flush to the left datum. */
+.home-eng tr > *:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.home-eng tr > *:last-child { padding-right: 0; }
+
+.home-eng thead th {
+  padding-block: var(--sp-3);
+  border-bottom: 1px solid var(--line-strong);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--text-xlo);
+}
+.home-eng thead th:nth-child(1) { width: 25%; }
+.home-eng thead th:nth-child(2) { width: 16%; }
+.home-eng thead th:nth-child(3) { width: 15%; }
+.home-eng thead th:nth-child(4) { width: 44%; }
+
+.home-eng__model {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+}
+.home-eng__name {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: var(--ls-snug);
+  color: var(--text-hi);
+}
+.home-eng__summary {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-base);
+  color: var(--text-lo);
+}
+
+/* A datasheet figure: mono, tabular, set in ink so it reads as a specified
+   value rather than a headline. */
+.home-eng__price {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  font-weight: 500;
+  line-height: var(--lh-code);
+  letter-spacing: var(--ls-normal);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-hi);
+}
+
+.home-eng__term {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-2);
+}
+.home-eng__term-lead { color: var(--text-lo); }
+
+.home-eng__end {
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-base);
+  color: var(--text-lo);
+}
+.home-eng__end .mono {
+  display: block;
+  margin-bottom: var(--sp-1);
+}
+
+/* Below this the four columns stop being readable, so each model becomes a
+   stacked block with its field names carried by the cells themselves. The
+   header row is only hidden visually — the roles written into the markup
+   keep the table, row and cell semantics intact under display: block. */
+@media (max-width: 860px) {
+  .home-eng,
+  .home-eng thead,
+  .home-eng tbody,
+  .home-eng tr,
+  .home-eng th,
+  .home-eng td {
+    display: block;
+    width: 100%;
+  }
+  .home-eng thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .home-eng tbody tr {
+    padding-block: var(--sp-6);
+    border-top: 1px solid var(--line);
+  }
+  .home-eng tbody tr:first-child { border-top: 1px solid var(--line-strong); }
+  .home-eng tbody tr:last-child { border-bottom: 1px solid var(--line); }
+  .home-eng th,
+  .home-eng td {
+    padding: 0;
+    border: 0;
+  }
+  .home-eng td { margin-top: var(--sp-5); }
+  .home-eng td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: var(--sp-2);
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono);
+    font-weight: 500;
+    letter-spacing: var(--ls-caps);
+    text-transform: uppercase;
+    color: var(--text-xlo);
+  }
+}
+
+/* The pricing note is a sub-clause of the table, so it is set as one more
+   ruled row on the same lattice rather than as a panel competing with it. */
+.home-pricing {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 2fr);
+  column-gap: var(--sp-5);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--line-strong);
+}
+.home-pricing__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  padding-left: var(--sp-5);
+  border-left: 1px solid var(--line);
+}
+
+@media (max-width: 720px) {
+  .home-pricing {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--sp-3);
+  }
+  .home-pricing__body {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+
+/* ── 06 · Tool band ───────────────────────────────────────────────────────
+   Pitch on the left, an excerpt of the tool's real output on the right. */
+.home-tool {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--sp-9);
+  align-items: start;
+}
+
+.home-tool__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+  align-items: flex-start;
+}
+
 @media (max-width: 860px) {
   .home-tool {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-7);
   }
-  .home-tool__preview {
-    display: none;
-  }
+}
+
+/* A datasheet excerpt: a white plate under a heavy top edge, its lines
+   numbered down a ruled gutter. Findings are set in ink, the rest is
+   secondary — severity is never carried by colour alone. */
+.home-spec {
+  background: var(--paper-100);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--text-hi);
+  overflow-x: auto;
+}
+
+.home-spec__listing {
+  counter-reset: home-spec-line;
+  padding-block: var(--sp-4);
+}
+
+.home-spec__line {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--sp-4);
+  counter-increment: home-spec-line;
+  padding-inline: var(--sp-4);
+  /* An empty line still has to hold the gutter rule open. */
+  min-height: calc(var(--fs-code) * var(--lh-code));
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: var(--lh-code);
+  color: var(--text-lo);
+  white-space: pre;
+}
+
+/* The gutter. Each number's box stretches the full row, so the rules stack
+   into one continuous line down the plate. */
+.home-spec__line::before {
+  content: counter(home-spec-line, decimal-leading-zero);
+  padding-right: var(--sp-3);
+  border-right: 1px solid var(--line);
+  font-size: var(--fs-mono);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--text-xlo);
+}
+
+.home-spec__line[data-flag="true"] {
+  color: var(--text-hi);
+  font-weight: 500;
+}
+
+
+/* ── 08 · Closing band ────────────────────────────────────────────────────
+   .cta-block already draws the band's heavy top rule and ranges it left, so
+   the section only has to give it air. */
+.home-close {
+  padding-block: clamp(56px, 7vw, 96px) clamp(72px, 9vw, 120px);
+  border-top: 1px solid var(--line);
 }

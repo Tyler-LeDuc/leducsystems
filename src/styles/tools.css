@@ -1,21 +1,156 @@
 /* =========================================================================
    Shared vocabulary for the free tools.
 
-   Both tool pages compose from these classes so a finding, a code block or
-   a data table looks the same whichever tool produced it. Page-specific
-   rules stay in the page's own file.
+   The tools are the most data-dense surfaces on the site, so they are also
+   the most literal reading of the direction: this is a spec sheet. Findings
+   are numbered rows under hairlines, not cards. The table is a datasheet —
+   mono column heads, tabular figures, a lattice of rules. The drop zone is
+   an area placed on a drawing, corner ticks and all.
+
+   Every tool page composes from these classes so a section head, a finding,
+   a code block or a data table looks the same whichever tool produced it.
+   Page-specific rules stay in the page's own file.
+
+   There is deliberately NO hero here any more. Each tool page opens on its
+   own input control with the title compressed to a strip above it, and each
+   owns that strip in its own file — .schema-open, .xray-open, .folder-open,
+   .access-open. The .tool-hero block that used to sit at the top of this
+   file put a full title block in front of the one control the page exists
+   for, and every page had stopped using it.
+
+   Type tokens that only the tools need: --fs-code and --lh-code for data,
+   --ls-caps for every mono label.
    ========================================================================= */
 
-.tool-hero {
-  /* Needed for the .bg-glow child; also what .section used to supply. */
-  position: relative;
-  /* Top matches every other hero; bottom stays tight because the input
-     section follows immediately. */
-  padding-block: var(--section-y) var(--sp-7);
+/* ---- section heads -----------------------------------------------------
+   A tool page is one numbered document: the hero is 00 and every section
+   below it takes the next number, set in the left margin with the datum
+   ruled under the whole head. This is the only section head the tools use,
+   so a heading on the schema tool and a heading on the folder tool are the
+   same object rather than two drawings of one. */
+
+.tool-head {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--sp-3) var(--sp-4);
+}
+
+.tool-head > .ordinal {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.tool-head > * {
+  grid-column: 2;
+}
+
+/* The rule runs the full width of the head, ordinal column included. */
+.tool-head > .datum {
+  grid-column: 1 / -1;
+  margin-top: var(--sp-1);
+}
+
+/* A head that also carries a control — copy, clear — ranges it right,
+   against the end of the datum it sits on. */
+.tool-head--action {
+  grid-template-columns: 3.5rem minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.tool-head--action > .btn {
+  grid-column: 3;
+}
+
+/* Where the section carries a label as well as a number, the two stack in
+   the margin like a note beside a drawing. */
+.tool-head__mark {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* Two class selectors, so the rung wins over .mono's --text-xlo whichever
+   order the CSS chunks land in. */
+.tool-head__mark .tool-head__tag {
+  color: var(--text-lo);
+}
+
+@media (max-width: 620px) {
+  .tool-head,
+  .tool-head--action {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .tool-head > *,
+  .tool-head > .ordinal,
+  .tool-head__mark {
+    grid-column: 1;
+  }
+
+  .tool-head > .ordinal,
+  .tool-head__mark {
+    grid-row: auto;
+  }
+
+  .tool-head__mark {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--sp-3);
+  }
+
+  .tool-head--action > .btn {
+    grid-column: 1;
+    justify-self: start;
+  }
+}
+
+/* ---- the promise -------------------------------------------------------
+   Every tool makes the same undertaking — nothing leaves the browser — and
+   it is worth nothing if each page words it in its own shape. All four
+   annotate it in the margin, on one hairline, in mono.
+
+   The heavier .tool-promise stamp that used to live beside this — white
+   stock behind a 2px accent rule — is gone. Every page now spends its one
+   accent on the input control itself, so a second accent rule in the same
+   viewport was the promise arguing with the button. */
+
+.tool-note {
+  max-width: 56ch;
+  padding-left: var(--sp-4);
+  border-left: 1px solid var(--line-strong);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-base);
+  color: var(--text-lo);
+}
+
+/* Identifiers the reader has to match against their own file — a module
+   name, a table, a path — keep the case and spacing the file uses, which
+   .mono's uppercasing and caps tracking would destroy. Every tool page has
+   at least one of these, so the rule lives here once. */
+.tool-ident {
+  font-size: var(--fs-code);
+  letter-spacing: var(--ls-normal);
+  text-transform: none;
+  overflow-wrap: anywhere;
+  /* Set here rather than with .hi: .mono is declared later in the cascade
+     and wins the tie, so the utility class alone leaves these at xlo. */
+  color: var(--text-hi);
+}
+
+.tool-ident--lo {
+  color: var(--text-lo);
 }
 
 
-/* ---- input ---- */
+/* ---- input -------------------------------------------------------------
+   A field on a form that was printed, not a rounded chat box: the label
+   sits on its own hairline and the control is a square well beneath it. */
 
 .tool-field {
   display: block;
@@ -23,67 +158,89 @@
 
 .tool-field__label {
   display: block;
-  margin-bottom: var(--sp-2);
-  color: var(--text-lo);
+  margin-bottom: var(--sp-3);
+  padding-bottom: var(--sp-2);
+  border-bottom: 1px solid var(--line);
+  color: var(--text-xlo);
+  font-family: var(--font-mono);
   font-size: var(--fs-mono);
-}
-
-.tool-field--inline {
-  max-width: 22rem;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
 }
 
 .tool-textarea,
 .tool-input {
   width: 100%;
-  background: var(--surface-wash);
+  max-width: 100%;
+  display: block;
+  background: var(--paper-100);
   border: 1px solid var(--line-strong);
-  border-radius: var(--r-md);
+  border-radius: 0;
   color: var(--text-hi);
   font-family: var(--font-mono);
   font-size: var(--fs-code);
-  line-height: var(--lh-base);
-  padding: var(--sp-3);
+  line-height: var(--lh-code);
+  padding: var(--sp-3) var(--sp-4);
   resize: vertical;
   transition: border-color var(--dur) var(--ease),
               background-color var(--dur) var(--ease);
 }
 
+.tool-textarea::placeholder,
+.tool-input::placeholder {
+  color: var(--text-xlo);
+}
+
 .tool-textarea:hover,
 .tool-input:hover {
-  border-color: var(--line-accent);
+  border-color: var(--line-heavy);
 }
 
 .tool-textarea:focus-visible,
 .tool-input:focus-visible {
-  outline: none;
+  outline: 2px solid var(--accent-500);
+  outline-offset: 0;
   border-color: var(--accent-500);
-  background: var(--ink-150);
-  box-shadow: 0 0 0 3px var(--accent-wash);
+  background: var(--paper-100);
 }
 
 .tool-input {
   resize: none;
 }
 
-/* ---- findings ---- */
+/* ---- findings ----------------------------------------------------------
+   Severity used to be carried by colour alone, which is both an
+   accessibility problem and the wrong look. It is now structural: a mono
+   label spelling the level out, a numbered ordinal, and a 2px rule down the
+   left edge. Colour is the last of the three signals, not the only one. */
 
 .tool-counts {
   gap: var(--sp-2);
 }
 
+/* Square count chips that read as the table's legend. The severity swatch
+   is the thick left edge, matched to the rule on the rows below. */
+.tool-pill {
+  border-radius: 0;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--paper-100);
+  border: 1px solid var(--line);
+  border-left-width: 2px;
+  color: var(--text-hi);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+}
+
 .tool-pill--error {
-  border-color: var(--danger-line);
-  color: var(--danger-100);
+  border-left-color: var(--danger);
 }
 
 .tool-pill--warn {
-  border-color: var(--warn-line);
-  color: var(--warn-100);
+  border-left-color: var(--warn);
 }
 
 .tool-pill--info {
-  border-color: var(--line-accent);
-  color: var(--accent-400);
+  border-left-color: var(--line-heavy);
 }
 
 .tool-findings {
@@ -91,21 +248,35 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: var(--sp-3);
+  gap: 0;
+  counter-reset: finding;
+  border-top: 1px solid var(--line-strong);
 }
 
 .tool-finding {
+  counter-increment: finding;
   display: grid;
-  /* minmax(0, …) so a long "Connection: …" label cannot widen the track,
-     and the body cell can shrink below its content instead of overflowing. */
-  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  /* Ordinal, level, body. minmax(0, …) on the last two so a long
+     "Breaks the import" label cannot widen its track and the body cell can
+     shrink below its content instead of overflowing. */
+  grid-template-columns: max-content minmax(0, max-content) minmax(0, 1fr);
   gap: var(--sp-4);
   align-items: start;
-  padding: var(--sp-4);
-  border: 1px solid var(--line);
-  border-left-width: 3px;
-  border-radius: var(--r-md);
-  background: var(--surface-wash);
+  padding: var(--sp-4) var(--sp-4) var(--sp-4) var(--sp-5);
+  border-bottom: 1px solid var(--line);
+  border-left: 2px solid var(--line);
+  background: transparent;
+}
+
+/* The ordinal. Findings arrive ranked worst-first, so the number is real
+   information — it is the reader's place in the queue. */
+.tool-finding::before {
+  content: counter(finding, decimal-leading-zero);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-caps);
+  color: var(--text-xlo);
+  padding-top: 0.2rem;
 }
 
 .tool-finding--error {
@@ -114,8 +285,11 @@
 .tool-finding--warn {
   border-left-color: var(--warn);
 }
+/* "Noted" / "Opportunity" is not a severity, and painting a column of them
+   orange would spend the one accent on the quietest thing on the page. Its
+   rule is ink. */
 .tool-finding--info {
-  border-left-color: var(--accent-400);
+  border-left-color: var(--line-heavy);
 }
 
 .tool-finding__level {
@@ -123,7 +297,8 @@
   font-size: var(--fs-mono);
   letter-spacing: var(--ls-caps);
   text-transform: uppercase;
-  padding-top: 0.15rem;
+  padding-top: 0.2rem;
+  color: var(--text-hi);
   /* min-width raises the grid item's max-content contribution, so every
      finding resolves the same first track and the levels read as a column. */
   min-width: 8.5rem;
@@ -136,16 +311,17 @@
   color: var(--warn-100);
 }
 .tool-finding__level--info {
-  color: var(--accent-400);
+  color: var(--text-lo);
 }
 
-/* .mono uppercases, which is right for a label and wrong for a value.
-   These cells carry identifiers the reader has to be able to match against
-   their own file — a VBA module name, a SQL column, a connection name — so
-   they keep the case the file actually uses. */
+/* .mono uppercases and tracks wide, which is right for a label and wrong
+   for a value. These cells carry identifiers the reader has to be able to
+   match against their own file — a VBA module name, a SQL column, a
+   connection name — so they keep the case and the spacing the file uses. */
 .tool-finding__column {
   color: var(--text-hi);
   font-size: var(--fs-code);
+  letter-spacing: var(--ls-normal);
   text-transform: none;
   /* Hard-coded paths and UNC shares have no spaces to break on. */
   overflow-wrap: anywhere;
@@ -155,26 +331,29 @@
   overflow-wrap: anywhere;
 }
 
-/* Identifier cells carry values the reader has to be able to read; the
-   table's default muted colour is too faint at this size. */
-.tool-table td.mono {
-  color: var(--text-hi);
-  font-size: var(--fs-code);
-  text-transform: none;
-}
-
-/* ---- table ---- */
+/* ---- table -------------------------------------------------------------
+   A datasheet: mono heads in small caps over a strong rule, hairline rows,
+   a decorative lattice between columns, and figures that line up because
+   they are tabular. Row rules OR zebra, never both — these are the rules. */
 
 .tool-table-wrap {
   overflow-x: auto;
   border: 1px solid var(--line);
-  border-radius: var(--r-md);
+  border-radius: 0;
+  background: var(--paper-100);
+}
+
+/* The wrap is focusable so a keyboard user can scroll it; it has to say so. */
+.tool-table-wrap:focus-visible {
+  outline: 2px solid var(--accent-500);
+  outline-offset: 2px;
 }
 
 .tool-table {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--fs-code);
+  font-variant-numeric: tabular-nums;
   min-width: 40rem;
 }
 
@@ -187,51 +366,97 @@
 .tool-table th,
 .tool-table td {
   text-align: left;
-  padding: var(--sp-3);
+  padding: var(--sp-2) var(--sp-4);
   border-bottom: 1px solid var(--line);
+  /* The lattice. Kept at --grid-line so the columns whisper and the rows
+     still carry the structure. */
+  border-right: 1px solid var(--grid-line);
   white-space: nowrap;
 }
 
+.tool-table th:last-child,
+.tool-table td:last-child {
+  border-right: 0;
+}
+
 .tool-table thead th {
-  color: var(--text-lo);
-  font-weight: 500;
+  padding-block: var(--sp-3);
+  background: var(--paper-050);
+  color: var(--text-xlo);
+  font-family: var(--font-mono);
+  font-weight: 400;
   font-size: var(--fs-mono);
   letter-spacing: var(--ls-caps);
   text-transform: uppercase;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.tool-table tbody tr:hover td {
+  background: var(--paper-200);
 }
 
 .tool-table tbody tr:last-child td {
   border-bottom: 0;
 }
 
+/* Identifier cells carry values the reader has to be able to read; the
+   table's default muted colour is too faint at this size, and .mono's
+   tracking is wrong for a name. */
+.tool-table td.mono {
+  color: var(--text-hi);
+  font-size: var(--fs-code);
+  letter-spacing: var(--ls-normal);
+  text-transform: none;
+}
 
 
-/* ---- sql ---- */
+/* ---- sql ---------------------------------------------------------------
+   A code block printed on paper. It scrolls inside its own box rather than
+   pushing the page sideways at 360px. */
 
 .tool-sql {
   margin: 0;
-  padding: var(--sp-4);
+  max-width: 100%;
+  padding: var(--sp-4) var(--sp-5);
   overflow-x: auto;
-  background: var(--surface-wash);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--r-md);
+  background: var(--paper-050);
+  border: 1px solid var(--line);
+  border-radius: 0;
   font-family: var(--font-mono);
   font-size: var(--fs-code);
   line-height: var(--lh-code);
   color: var(--text-hi);
+  tab-size: 2;
+}
+
+.tool-sql:focus-visible {
+  outline: 2px solid var(--accent-500);
+  outline-offset: 2px;
 }
 
 @media (max-width: 620px) {
   .tool-finding {
-    grid-template-columns: 1fr;
-    gap: var(--sp-2);
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: var(--sp-2) var(--sp-3);
+  }
+
+  /* The body drops to its own full-width row under the ordinal + level. */
+  .tool-finding > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .tool-finding__level {
+    min-width: 0;
   }
 }
 
-/* ---- file / folder input ---------------------------------------------- */
+/* ---- file / folder input -----------------------------------------------
+   An area placed on a drawing: hairline dashes, corner ticks, and the
+   accepted formats set in mono like a note in the margin. */
 
 /* Used by both the workbook tool and the folder tool. */
 .tool-drop {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -239,14 +464,69 @@
   padding: var(--sp-8) var(--sp-5);
   text-align: center;
   border: 1px dashed var(--line-strong);
-  border-radius: var(--r-md);
-  background: var(--surface-wash);
-  transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+  border-radius: 0;
+  background: var(--paper-050);
+  transition: border-color var(--dur-fast) var(--ease),
+              background-color var(--dur-fast) var(--ease);
 }
 
+/* Registration marks, top-left and bottom-right. */
+.tool-drop::before,
+.tool-drop::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+
+.tool-drop::before {
+  top: var(--sp-2);
+  left: var(--sp-2);
+  border-top: 1px solid var(--line-strong);
+  border-left: 1px solid var(--line-strong);
+}
+
+.tool-drop::after {
+  bottom: var(--sp-2);
+  right: var(--sp-2);
+  border-bottom: 1px solid var(--line-strong);
+  border-right: 1px solid var(--line-strong);
+}
+
+/* The instruction, the conjunction and the format note are all metadata
+   about the target, so all three are mono. */
+.tool-drop .body {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--text-hi);
+}
+
+/* --text-lo, not --text-xlo: the drop zone sits on --paper-050, where the
+   metadata rung falls to about 4:1 — fine for an ordinal nobody has to
+   read, wrong for the line telling you which formats and what size limit
+   actually work. */
+.tool-drop .body--sm {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--text-lo);
+}
+
+/* Dragging over: the dashes close up to a solid accent rule and the area
+   fills. Two changes, so the state does not rest on colour alone. */
 .tool-drop--over {
-  border-color: var(--accent-400);
+  border-style: solid;
+  border-color: var(--accent-500);
   background: var(--accent-wash);
+}
+
+.tool-drop--over::before,
+.tool-drop--over::after {
+  border-color: var(--accent-500);
 }
 
 /* The label is the button; the input inside it stays reachable by keyboard
@@ -262,7 +542,7 @@
 }
 
 .tool-drop__button:focus-within {
-  outline: 2px solid var(--accent-400);
+  outline: 2px solid var(--accent-500);
   outline-offset: 3px;
 }
 
@@ -274,23 +554,23 @@
   cursor: pointer;
 }
 
-/* ---- fact tiles -------------------------------------------------------- */
+/* ---- fact tiles --------------------------------------------------------
+   Not tiles any more — columns of a spec block. Each fact is a mono label
+   over a large figure, sitting under its own hairline. */
 
 .tool-facts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--sp-5) var(--sp-6);
   margin: 0;
 }
 
 .tool-fact {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-1);
-  padding: var(--sp-4);
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
-  background: var(--surface-wash);
+  gap: var(--sp-2);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--line-strong);
 }
 
 .tool-fact dt {
@@ -298,12 +578,15 @@
   font-size: var(--fs-mono);
   letter-spacing: var(--ls-caps);
   text-transform: uppercase;
-  color: var(--text-lo);
+  color: var(--text-xlo);
 }
 
 .tool-fact dd {
   margin: 0;
-  font-size: var(--fs-lg);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-snug);
+  font-variant-numeric: tabular-nums;
   color: var(--text-hi);
   overflow-wrap: anywhere;
 }
@@ -311,5 +594,10 @@
 @media (max-width: 620px) {
   .tool-drop {
     padding: var(--sp-6) var(--sp-4);
+  }
+
+  .tool-table th,
+  .tool-table td {
+    padding: var(--sp-2) var(--sp-3);
   }
 }

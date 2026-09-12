@@ -1,5 +1,11 @@
 /* =========================================================================
    Le Duc Systems — Base / reset / typography
+
+   The document layer. This file sets the sheet the whole site is printed
+   on: warm paper, ink text, tabular figures so numbers align down a
+   column, and headings that are tight and quiet rather than loud.
+   Everything here is unprefixed and global — page-specific rules do not
+   belong in this file.
    ========================================================================= */
 
 *,
@@ -14,17 +20,24 @@ html {
   scroll-padding-top: calc(var(--header-h) + 24px);
   /* Reserve the scrollbar track so locking body scroll cannot reflow the page. */
   scrollbar-gutter: stable;
+  /* Firefox: a thin ink rule on paper, not a chrome-grey slab. */
+  scrollbar-width: thin;
+  scrollbar-color: var(--paper-300) var(--paper-050);
 }
 
 body {
   min-height: 100dvh;
-  background: var(--ink-000);
+  background: var(--paper-000);
   color: var(--text);
   font-family: var(--font-sans);
   font-size: var(--fs-base);
   line-height: var(--lh-base);
   font-weight: 400;
   letter-spacing: var(--ls-normal);
+  /* This is a document. Figures are tabular so prices, counts and dates
+     line up vertically wherever they stack; kerning and ligatures stay on
+     for the prose. */
+  font-feature-settings: 'kern' 1, 'liga' 1, 'tnum' 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -46,6 +59,10 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: var(--ls-snug);
   text-wrap: balance;
 }
+
+/* The big two set tighter — at display sizes the default tracking opens
+   up and the masthead stops reading as one word-shape. */
+h1, h2 { letter-spacing: var(--ls-tight); }
 
 p { text-wrap: pretty; }
 
@@ -71,29 +88,40 @@ button { cursor: pointer; }
 
 strong, b { color: var(--text-hi); font-weight: 600; }
 
+/* Selection is a highlighter pass over paper: a wash of the signal
+   colour, with the text darkened to the heading rung so it stays legible
+   through it. */
 ::selection {
   background: var(--accent-wash2);
   color: var(--text-hi);
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent-400);
+  outline: 2px solid var(--accent-500);
   outline-offset: 3px;
-  border-radius: var(--r-xs);
 }
 :focus:not(:focus-visible) { outline: none; }
 
-/* Scrollbar ---------------------------------------------------------------- */
-::-webkit-scrollbar { width: 11px; height: 11px; }
-::-webkit-scrollbar-track { background: var(--ink-000); }
-::-webkit-scrollbar-thumb {
-  background: var(--ink-300);
-  border: 3px solid var(--ink-000);
-  border-radius: var(--r-full);
+/* Scrollbar ----------------------------------------------------------------
+   Re-cut for paper. The track is the banded paper step so it reads as part
+   of the sheet's margin; the thumb is a flat ink-tinted bar with a paper
+   inset instead of a rounded pill. */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track {
+  background: var(--paper-050);
+  border-left: 1px solid var(--line);
 }
-::-webkit-scrollbar-thumb:hover { background: var(--ink-400); }
+::-webkit-scrollbar-thumb {
+  background: var(--paper-300);
+  border: 3px solid var(--paper-050);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-xlo); }
+::-webkit-scrollbar-corner { background: var(--paper-050); }
 
-/* Skip link ---------------------------------------------------------------- */
+/* Skip link ----------------------------------------------------------------
+   A square signal block flush into the top-left corner of the sheet — no
+   radius, no float, the same rectangle every other button on the site is. */
 .skip-link {
   position: absolute;
   left: -9999px;
@@ -102,13 +130,19 @@ strong, b { color: var(--text-hi); font-weight: 600; }
   padding: 12px 20px;
   background: var(--accent-500);
   color: var(--text-on-accent);
-  font-weight: 600;
-  border-radius: 0 0 var(--r-sm) 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  border: 0;
+  border-radius: 0;
 }
 .skip-link:focus {
   left: 0;
-  /* The global ring at outline-offset: 3px paints outside the viewport here.
-     Draw it inside the link's own fill instead. */
+  /* The global ring at outline-offset: 3px paints outside the viewport here,
+     and an accent ring on an accent fill is invisible. Draw it inside the
+     link's own fill instead. */
   outline: 2px solid var(--text-on-accent);
   outline-offset: -5px;
 }

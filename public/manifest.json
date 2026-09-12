@@ -1,23 +1,35 @@
 {
   "short_name": "Le Duc Systems",
   "name": "Le Duc Systems",
-  "description": "A one-person software consultancy. Production software, and the AI features inside it.",
+  "description": "Custom software delivery: web and mobile applications, internal tools, and data migrations off spreadsheets and legacy systems.",
   "icons": [
     {
-      "src": "duck_icon.ico",
-      "sizes": "16x16 24x24 32x32 48x48 64x64 128x128 256x256",
+      "src": "favicon.ico",
+      "sizes": "16x16 32x32 48x48",
       "type": "image/x-icon"
     },
     {
-      "src": "duck-icon.png",
+      "src": "leduc-mark-square.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "logo192.png",
       "type": "image/png",
-      "sizes": "1024x1024",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
       "purpose": "any"
     }
   ],
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "theme_color": "#06070A",
-  "background_color": "#06070A"
+  "theme_color": "#FAF8F3",
+  "background_color": "#FAF8F3"
 }

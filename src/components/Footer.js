@@ -1,12 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { NAV, SITE } from '../data/site';
+import { LEGAL_NAV, NAV, SITE } from '../data/site';
 
+/* Deep links into the home page's numbered clauses. These used to point at
+   /services#…; that route now only redirects here, so linking through it
+   from our own footer bounced every visitor through a second navigation.
+   The ids are the ones HomePage renders — see CONTENTS there.
+
+   /agencies is in this column on purpose: it is deliberately absent from
+   NAV, and the footer is the one place on the site that links it. */
 const ENGAGE = [
-  { to: '/services#offer', label: 'What we build' },
-  { to: '/services#engagement', label: 'Engagement models' },
-  { to: '/services#process', label: 'How we work' },
-  { to: '/services#technology', label: 'Technology' },
+  { to: '/#offer', label: 'What we build' },
+  { to: '/#engagement', label: 'Engagement models' },
+  { to: '/#process', label: 'How we work' },
+  { to: '/#technology', label: 'Technology' },
   { to: '/agencies', label: 'For agencies' },
 ];
 
@@ -25,7 +32,7 @@ function Footer() {
             <Link to="/" className="brand" aria-label="Le Duc Systems, home">
               <img
                 className="brand__mark"
-                src="/duck-icon.png"
+                src="/leduc-mark.svg"
                 alt=""
                 width="30"
                 height="30"
@@ -61,12 +68,11 @@ function Footer() {
 
           <div className="site-footer__col">
             <h2 className="site-footer__title">Legal</h2>
-            <Link className="site-footer__link" to="/privacy">
-              Privacy Policy
-            </Link>
-            <Link className="site-footer__link" to="/terms">
-              Terms of Service
-            </Link>
+            {LEGAL_NAV.map((item) => (
+              <Link key={item.path} className="site-footer__link" to={item.path}>
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
 

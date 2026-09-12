@@ -1,108 +1,271 @@
 /* =========================================================================
-   Le Duc Systems — Legal document pages (/privacy, /terms)
-   Long-form reading layout. Composed from components.css; only the pieces
-   that genuinely do not exist there live here.
+   Le Duc Systems — Legal appendices (/privacy, /terms)
+
+   These two pages arrive on their own navigation. The fold carries an
+   appendix mark, a one-line title block and the full contents lattice —
+   every clause visible and clickable before anything scrolls. The prose
+   follows underneath, hung off a mono ordinal in the left gutter.
+
+   Everything general — .datum, .note, .list, .btn, .cta-block — comes from
+   components.css. Only the sheet's own furniture lives here.
    ========================================================================= */
 
-.legal-hero {
+/* ── Front matter ─────────────────────────────────────────────────────────
+   Tight at the top: the sheet is an index, not a hero, so it opens on a
+   single strip rather than a stacked title block. */
+.legal-front {
+  padding-top: var(--sp-7);
   padding-bottom: var(--section-y-tight);
 }
 
-.legal-hero__meta {
+.legal-front__head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--sp-5) var(--sp-6);
+}
+
+/* The appendix mark: a drawn plate carrying the sheet's letter. Nothing
+   else on the site sets a single glyph this large. */
+.legal-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4) var(--sp-2);
+  border: 1px solid var(--line-strong);
+}
+.legal-mark__glyph {
+  font-family: var(--font-mono);
+  font-size: clamp(2.5rem, 6vw, 3.75rem);
+  font-weight: 500;
+  line-height: 0.86;
+  letter-spacing: var(--ls-normal);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-hi);
+}
+
+.legal-front__title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  min-width: 0;
+}
+
+/* Field/value pairs on one line, mono both sides, as on a revision block. */
+.legal-front__fields {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: var(--sp-3) var(--sp-5);
+  align-items: baseline;
+  gap: var(--sp-2) var(--sp-5);
+  margin: 0;
+}
+.legal-front__fields > div {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+}
+.legal-front__fields dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  letter-spacing: var(--ls-normal);
+  color: var(--text-hi);
+}
+
+/* The one action on the sheet, level with the title rather than parked at
+   the bottom of the document. */
+.legal-front__act {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+}
+
+/* Doubled selector so the offset survives whatever order the cascade loads
+   components.css in. This is the one datum in the section. */
+.legal-front__datum.datum {
+  margin-top: var(--sp-6);
+}
+
+/* ── Contents lattice ─────────────────────────────────────────────────────
+   The payload. Clauses flow down columns and across, ruled between every
+   entry and down each gutter, so the block reads as a table on the sheet. */
+.legal-index {
+  margin-top: var(--sp-5);
+}
+.legal-index__label {
+  margin-bottom: var(--sp-3);
+}
+
+.legal-index__list {
+  columns: 3;
+  column-gap: var(--sp-7);
+  column-rule: 1px solid var(--line);
+  border-top: 1px solid var(--line);
+}
+.legal-index__item {
+  -webkit-column-break-inside: avoid;
+  break-inside: avoid;
+  min-width: 0;
+}
+
+.legal-index__link {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--sp-2);
+  padding-block: 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--fs-sm);
+  line-height: 1.35;
+  color: var(--text-lo);
+  transition: color var(--dur) var(--ease),
+              border-color var(--dur) var(--ease);
+}
+.legal-index__link:hover {
+  color: var(--text-hi);
+  border-bottom-color: var(--line-heavy);
+}
+
+.legal-index__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-xlo);
+  transition: color var(--dur) var(--ease);
+}
+.legal-index__link:hover .legal-index__num { color: var(--text-hi); }
+
+@media (pointer: coarse) {
+  .legal-index__link { min-height: 44px; align-items: center; }
+}
+
+@media (max-width: 960px) {
+  .legal-index__list { columns: 2; column-gap: var(--sp-6); }
+}
+@media (max-width: 860px) {
+  .legal-front__head { grid-template-columns: auto minmax(0, 1fr); }
+  .legal-front__act {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--sp-5);
+  }
+}
+@media (max-width: 620px) {
+  .legal-front__head { grid-template-columns: minmax(0, 1fr); }
+  .legal-mark {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--sp-4);
+    padding: var(--sp-2) var(--sp-4);
+  }
+  .legal-mark__glyph { font-size: var(--fs-h3); line-height: 1.1; }
+  .legal-index__list { columns: 1; column-rule: none; }
+}
+
+/* ── Document ─────────────────────────────────────────────────────────────
+   Left-ranged under the front matter, held to a reading measure so the
+   sheet keeps a wide right margin rather than centring itself. */
+.legal-body {
+  max-width: min(100%, 880px);
 }
 
 .legal-summary {
   align-items: flex-start;
+  margin-bottom: var(--sp-8);
 }
 .legal-summary p {
-  max-width: 66ch;
+  max-width: 68ch;
   line-height: var(--lh-loose);
 }
 
-/* ── Table of contents ────────────────────────────────────────────────── */
-.legal-toc {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-4);
-}
-.legal-toc__list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--sp-2) var(--sp-6);
-}
-@media (max-width: 620px) {
-  .legal-toc__list { grid-template-columns: minmax(0, 1fr); }
-}
-.legal-toc__link {
-  display: flex;
-  gap: var(--sp-3);
-  align-items: baseline;
-  padding-block: 6px;
-  font-size: var(--fs-sm);
-  color: var(--text-lo);
-  transition: color var(--dur) var(--ease);
-}
-.legal-toc__link:hover { color: var(--accent-300); }
-@media (pointer: coarse) {
-  .legal-toc__link { min-height: 44px; align-items: center; }
-}
-.legal-toc__num {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: var(--ls-mono);
-  color: var(--text-xlo);
-  flex: none;
-}
-.legal-toc__link:hover .legal-toc__num { color: var(--accent-400); }
-
-/* ── Document body ────────────────────────────────────────────────────── */
+/* Ordinal hangs in the left gutter; title and prose share the measure
+   column, so every clause starts on the same two vertical datums. */
 .legal-doc {
   display: flex;
   flex-direction: column;
 }
 
-.legal-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-4);
+.legal-clause {
+  display: grid;
+  grid-template-columns: minmax(0, 4.5rem) minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: var(--sp-5);
   padding-block: var(--sp-7);
   border-top: 1px solid var(--line);
 }
-.legal-doc > .legal-section:first-child {
+.legal-doc > .legal-clause:first-child {
   border-top: 0;
   padding-top: 0;
 }
-
-/* Type comes from .h3; this only lays the number out beside the title. */
-.legal-section__title {
-  display: flex;
-  align-items: baseline;
-  gap: var(--sp-4);
+.legal-doc > .legal-clause:last-child {
+  border-bottom: 1px solid var(--line);
 }
-.legal-section__num {
-  flex: none;
+
+.legal-clause__num {
+  grid-column: 1;
+  grid-row: 1;
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
   font-weight: 500;
-  letter-spacing: var(--ls-mono);
-  color: var(--accent-400);
+  letter-spacing: var(--ls-caps);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-xlo);
+  transition: color var(--dur) var(--ease);
+}
+/* Arriving from the contents marks the clause you asked for — the one place
+   on the sheet where a number is allowed to be orange. */
+.legal-clause:target .legal-clause__num { color: var(--accent-600); }
+
+.legal-clause__title {
+  grid-column: 2;
+  grid-row: 1;
 }
 
-.legal-section p {
+.legal-clause__body {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  margin-top: var(--sp-4);
+}
+.legal-clause__body p {
   max-width: 70ch;
   line-height: var(--lh-loose);
+  color: var(--text);
 }
-.legal-section .list li {
+.legal-clause__body .list li {
   max-width: 68ch;
   font-size: var(--fs-base);
   color: var(--text);
 }
-.legal-section .legal-fineprint {
+
+/* A disclaimer, set the way one is boxed off in a printed contract. */
+.legal-fineprint {
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--paper-050);
+  border-left: 2px solid var(--line-strong);
   font-size: var(--fs-sm);
   letter-spacing: var(--ls-wide);
+  line-height: var(--lh-base);
   color: var(--text-lo);
+}
+
+@media (max-width: 620px) {
+  .legal-clause {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--sp-2);
+  }
+  .legal-clause__num,
+  .legal-clause__title,
+  .legal-clause__body { grid-column: 1; }
+  .legal-clause__num { grid-row: 1; }
+  .legal-clause__title { grid-row: 2; }
+  .legal-clause__body { grid-row: 3; margin-top: var(--sp-3); }
 }

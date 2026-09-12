@@ -12,8 +12,8 @@
     </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#06070A" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#FAF8F3" />
+    <meta name="color-scheme" content="light" />
     <meta name="robots" content="index, follow" />
 
     <title>Custom software, web and mobile applications &mdash; Le Duc Systems</title>
@@ -24,16 +24,18 @@
     <meta name="author" content="Tyler LeDuc" />
     <link rel="canonical" href="https://leducsystems.com/" />
 
-    <!-- Icons -->
-    <link rel="icon" href="%PUBLIC_URL%/duck_icon.ico" sizes="any" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/duck-icon.png" />
+    <!-- Icons. The SVG is the real mark and wins wherever it is supported;
+         favicon.ico carries 16/32/48 rasters for everything older. -->
+    <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/leduc-mark.svg" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
     <!-- Typography (required by src/styles/tokens.css) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400..600&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
 
@@ -112,7 +114,7 @@
           "Database design and data migration",
           "AI product engineering"
         ],
-        "logo": "https://leducsystems.com/duck-icon.png",
+        "logo": "https://leducsystems.com/logo512.png",
         "image": "https://leducsystems.com/images/og-card.jpg"
       }
     </script>

@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
-import ServicesPage from './pages/ServicesPage';
 import AgenciesPage from './pages/AgenciesPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
@@ -29,6 +28,15 @@ const LEGACY_ANCHORS = {
   'get-the-data-out': 'rescue-the-data',
   'ai-where-it-earns': 'ai-that-earns-its-place',
 };
+
+/* /services was folded into the home page. The route survives as a redirect
+   because the URL is public and prerendered, and the hash rides along so
+   /services#rescue-the-data still lands on that section — now at
+   /#rescue-the-data. LEGACY_ANCHORS above then covers the older ids too. */
+function ServicesRedirect() {
+  const { hash } = useLocation();
+  return <Navigate to={{ pathname: '/', hash }} replace />;
+}
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -69,7 +77,7 @@ export function AppShell() {
       <main id="main" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services" element={<ServicesRedirect />} />
           <Route path="/agencies" element={<AgenciesPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />

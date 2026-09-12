@@ -1,47 +1,236 @@
 /* =========================================================================
-   Contact page — the little that cannot be composed from components.css
+   Contact — the conversion sheet.
+
+   Amendment 01: the payload is the hero, and here the payload is the form.
+   So the page opens on a two-line ruled title block — tag over h1, reply
+   stamp fenced to the right, closed by the page's one datum — and the
+   form's first fields sit in the first screenful beneath it. Everything
+   that explains the form (the lede, the sequence, the plain-email
+   fallback) is demoted to a ruled margin column beside it, and stacks
+   BELOW it once the columns collapse. Nothing is allowed in front of it.
+
+   Composed from components.css and the form shell in chrome.css — nothing
+   here restates them.
    ========================================================================= */
 
-.contact-hero {
+.contact-sheet {
   overflow: hidden;
+  /* The masthead is a strip, not a hero: the section's full top measure
+     would push the first field below the fold on a 800px-tall viewport. */
+  padding-top: var(--sp-7);
 }
 
-/* Numbered "what happens next" list. */
-.contact-steps {
-  counter-reset: contact-step;
+/* ── Title strip ──────────────────────────────────────────────────────── */
+/* A drawing's title block: the ordinal tag over an h1 set at heading — not
+   display — scale, with the reply commitment fenced off to the right the
+   way a title block separates a field from its value. Two lines of type
+   total. The h1 is deliberately not the largest thing on this page; the
+   form is. */
+.contact-strip__line {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--sp-5);
+  padding-bottom: var(--sp-4);
+}
+
+.contact-strip__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+}
+
+.contact-strip__title {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: var(--ls-tight);
+}
+
+.contact-strip__promise {
+  max-width: 30ch;
+  padding-left: var(--sp-5);
+  border-left: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--text-lo);
+}
+
+/* ── Body lattice ─────────────────────────────────────────────────────── */
+/* Form left and wide, margin notes right and narrow, the gutter between
+   them drawn rather than implied. Not .grid--sidebar: that ratio puts the
+   wide cell second, and the form has to come first in the DOM. */
+.contact-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: var(--sp-7);
+  align-items: start;
+  margin-top: var(--sp-6);
+}
+
+/* ── Form cell ────────────────────────────────────────────────────────── */
+/* The sheet's headline object: white stock, closed at the top by a heavier
+   ink rule so it reads as the thing the page is for. */
+.contact-form {
   display: flex;
   flex-direction: column;
   gap: var(--sp-5);
+  align-self: start;
+  border-top: 2px solid var(--text-hi);
+}
+/* Doubled specificity so the 2px top rule cannot be re-padded by .panel,
+   whichever order the two sheets land in. */
+.panel.contact-form { padding-top: calc(var(--sp-6) - 1px); }
+
+/* A single mono line. Anything taller here is measured in lost fields. */
+.contact-form__head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  padding-bottom: var(--sp-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.contact-form__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--text-hi);
+  padding-left: var(--sp-3);
+  border-left: 1px solid var(--line);
+}
+
+/* ── Margin column ────────────────────────────────────────────────────── */
+.contact-aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-7);
+  padding-left: var(--sp-7);
+  border-left: 1px solid var(--line);
+}
+
+/* Doubled so it beats .body's own measure regardless of sheet order. */
+.contact-aside .contact-aside__lede { max-width: 42ch; }
+
+.contact-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-4);
+}
+
+/* The clause label reads at the heading rung, not the caption rung — it is
+   a section title set in mono, not metadata. */
+.contact-block__label {
+  color: var(--text-hi);
+}
+
+/* ── Numbered sequence ────────────────────────────────────────────────── */
+/* Hairline rows with a mono ordinal in the margin. Not two cards, and no
+   boxed counter — the rules do the separating. */
+.contact-steps {
+  counter-reset: contact-step;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
 }
 
 .contact-steps li {
   counter-increment: contact-step;
-  position: relative;
-  min-height: 28px;
-  padding-left: 46px;
+  display: grid;
+  grid-template-columns: 3.5ch minmax(0, 1fr);
+  gap: var(--sp-4);
+  padding-block: var(--sp-4);
+  border-top: 1px solid var(--line);
 }
+.contact-steps li:first-child { border-top-color: var(--line-strong); }
+.contact-steps li:last-child  { border-bottom: 1px solid var(--line); }
 
 .contact-steps li::before {
   content: counter(contact-step, decimal-leading-zero);
-  position: absolute;
-  left: 0;
-  top: -1px;
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
-  letter-spacing: var(--ls-mono);
-  color: var(--accent-400);
-  background: var(--ink-100);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--r-xs);
-  text-indent: var(--ls-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-xlo);
+  /* Sits on the baseline of the first line of the title beside it. */
+  line-height: 1.95;
+}
+
+.contact-steps__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
 }
 
 .contact-steps__title {
   font-size: var(--fs-base);
   font-weight: 550;
+  line-height: 1.35;
   color: var(--text-hi);
+}
+
+.contact-steps__body {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-base);
+  color: var(--text-lo);
+  max-width: 46ch;
+}
+
+/* ── Plain-email fallback ─────────────────────────────────────────────── */
+.contact-note {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--line);
+}
+.contact-note .body { font-size: var(--fs-sm); }
+
+/* ── Narrower ─────────────────────────────────────────────────────────── */
+/* Once the columns stack, the vertical rule lies down with them — and the
+   margin notes land after the form, never before it. */
+@media (max-width: 960px) {
+  .contact-body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-8);
+    margin-top: var(--sp-5);
+  }
+  .contact-aside {
+    gap: var(--sp-7);
+    padding-left: 0;
+    border-left: 0;
+  }
+  .contact-aside .contact-aside__lede { max-width: 62ch; }
+}
+
+/* The reply stamp cannot hold a second column at this measure, so it drops
+   under the h1 and its fencing rule turns horizontal. */
+@media (max-width: 860px) {
+  .contact-strip__line {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-4);
+  }
+  .contact-strip__promise {
+    max-width: 46ch;
+    padding-left: 0;
+    padding-top: var(--sp-3);
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 620px) {
+  .contact-sheet { padding-top: var(--sp-6); }
+  .contact-strip__title { font-size: var(--fs-xl); }
+  .contact-steps li { gap: var(--sp-3); }
+  .panel.contact-form { padding-top: calc(var(--sp-5) - 1px); }
 }

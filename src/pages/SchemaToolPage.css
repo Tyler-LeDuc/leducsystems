@@ -1,17 +1,226 @@
-/* Spreadsheet-to-schema tool. The shared .tool-* vocabulary lives in
-   src/styles/tools.css, which both tool pages draw from; only what is
-   genuinely specific to this page stays here. */
+/* =========================================================================
+   Spreadsheet-to-schema tool.
 
-.tool-hero__title {
-  max-width: 16ch;
+   The shared .tool-* vocabulary lives in src/styles/tools.css: the numbered
+   section head, the datasheet table, the SQL block, the marginal note.
+   Every tool page draws from it, and only what is genuinely specific to
+   this page stays here — the column table's row ordinals and the raised
+   DDL plate. The table and the SQL are the payload; the prose around them
+   is caption.
+   ========================================================================= */
+
+/* ---- the arrival -------------------------------------------------------
+   The tool is the page, so the page opens on the control. There is no
+   shared tool hero any more: a full title block above the paste field
+   pushes the one thing this page exists for below the fold.
+
+   What is left of the masthead is a single strip — ordinal, label, title —
+   ruled off by the section's one datum, with the field directly under it
+   and the prose ranged beside it in a second column. The workbook, folder
+   and Access tools open on the same skeleton, so the set reads as one
+   family of instruments.
+
+   The accent budget for this viewport is spent on "Load an example": the
+   note beside it is ruled in ink, and the call to action is a ghost. */
+
+.schema-open {
+  /* Tight, not the standard --section-y: every pixel above the field is a
+     pixel of it lost off the bottom of an 800px viewport. */
+  padding-block: var(--sp-6) var(--sp-8);
+}
+
+.schema-open__strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-3) var(--sp-6);
+}
+
+.schema-open__title {
+  max-width: 26ch;
+  text-wrap: balance;
+}
+
+.schema-open__rule {
+  margin-top: var(--sp-4);
+  margin-bottom: var(--sp-6);
+}
+
+/* Control column first and wider: it is the payload. The brief is the
+   narrower column, fenced off by the hairline it hangs on. */
+.schema-open__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: var(--sp-7);
+  align-items: start;
+}
+
+.schema-open__control,
+.schema-open__brief {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-5);
+}
+
+.schema-open__control > .schema-input,
+.schema-open__control > .schema-open__hint,
+.schema-open__brief > .lede,
+.schema-open__brief > .tool-note {
+  align-self: stretch;
+}
+
+.schema-open__brief {
+  padding-left: var(--sp-7);
+  border-left: 1px solid var(--line);
+}
+
+/* Instruction, not metadata, so it stays in the sans — but small and
+   quiet, because it is a footnote to a field the reader can already use. */
+.schema-open__hint {
+  max-width: 62ch;
+  font-size: var(--fs-xs);
+  line-height: var(--lh-base);
+  color: var(--text-lo);
+}
+
+@media (max-width: 860px) {
+  .schema-open__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-6);
+  }
+
+  /* Stacked, the fence between the columns becomes a rule above the
+     brief — the same separation drawn the other way round. */
+  .schema-open__brief {
+    padding-left: 0;
+    padding-top: var(--sp-5);
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 620px) {
+  .schema-open {
+    padding-block: var(--sp-5) var(--sp-7);
+  }
+
+  .schema-open__rule {
+    margin-top: var(--sp-3);
+    margin-bottom: var(--sp-5);
+  }
+
+  /* Scoped to the arrival, so the table-name input further down keeps the
+     shared sizing. iOS Safari zooms the viewport when a focused control
+     computes under 16px, and this field is now the first thing on the
+     page; the height cap stops ten 17px rows pushing it off the fold. */
+  .schema-open__control .tool-textarea {
+    font-size: var(--fs-base);
+    height: 12rem;
+  }
+}
+
+/* The instrument reading under a heading: mono, tabular, no adjectives. */
+.schema-readout {
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: var(--lh-base);
+  letter-spacing: var(--ls-normal);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-hi);
+}
+
+/* ---- fields ------------------------------------------------------------
+   The label and the controls that act on the field share one rule, so the
+   whole assembly reads as a field on a printed form. */
+
+.schema-input {
+  display: block;
+}
+
+.schema-input--inline {
+  max-width: 24rem;
+}
+
+.schema-input__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding-bottom: var(--sp-2);
+  margin-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.schema-input__label {
+  color: var(--text-xlo);
+}
+
+/* ---- the column table --------------------------------------------------
+   The datasheet proper. A heavier frame than the shared wrap, opened by a
+   title rule in full ink, because on this page the table is the product. */
+
+.tool-table-wrap.schema-table-wrap {
+  border-color: var(--line-strong);
+  border-top: 2px solid var(--text-hi);
+}
+
+/* Rows number themselves, so the reader can say "row 04" out loud. The
+   counter lives in CSS rather than in a seventh column: it is a reading
+   aid, not data the table is reporting. */
+.schema-table tbody {
+  counter-reset: schema-row;
+}
+
+.schema-table tbody tr {
+  counter-increment: schema-row;
+}
+
+.schema-table td.schema-table__header {
+  color: var(--text-hi);
+}
+
+.schema-table td.schema-table__header::before {
+  content: counter(schema-row, decimal-leading-zero);
+  display: inline-block;
+  width: 2rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-caps);
+  color: var(--text-xlo);
+}
+
+/* Keeps the "Header" column head over its values rather than over the
+   ordinals that precede them. */
+.schema-table thead th:first-child {
+  text-indent: 2rem;
+}
+
+/* Counts are quantities: right-ranged so the digits line up in a column,
+   and set in mono at reading size rather than as a label. */
+.schema-table th.schema-table__num,
+.schema-table td.schema-table__num {
+  text-align: right;
+}
+
+.schema-table td.schema-table__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  letter-spacing: var(--ls-normal);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-lo);
 }
 
 /* Out-specifies `.tool-table td.mono` in tools.css, which sets --text-hi on
-   every identifier cell; the type column is the one that stays accented.
+   every identifier cell; the type column is the one that stays accented,
+   because the inferred type is the thing this table exists to report.
+   --accent-600, not 400: at 14px on white the 400 lands at 3.6:1, well
+   under the floor for a column of data somebody has to read.
    The extra .mono keeps this a specificity win rather than an import-order
    one, so a future CSS-chunk reorder cannot silently flip the colour. */
 .tool-table td.mono.tool-table__type {
-  color: var(--accent-400);
+  color: var(--accent-600);
 }
 
 /* max-width on a <td> is ignored in table-layout: auto, so the cap and the
@@ -23,4 +232,25 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   color: var(--text-lo);
+}
+
+/* ---- the DDL -----------------------------------------------------------
+   The other half of the output, and the half people copy. It is raised off
+   the banded section onto white and given the same heavy title rule as the
+   table, so the two outputs read as one pair. */
+
+.tool-sql.schema-sql {
+  background: var(--paper-100);
+  border-color: var(--line-strong);
+  border-top: 2px solid var(--text-hi);
+}
+
+@media (max-width: 620px) {
+  .schema-table td.schema-table__header::before {
+    width: 1.75rem;
+  }
+
+  .schema-table thead th:first-child {
+    text-indent: 1.75rem;
+  }
 }

@@ -244,34 +244,50 @@ export default function PrivacyPolicyPage() {
         path="/privacy"
       />
 
-      <section className="section legal-hero">
-        <div className="bg-glow" aria-hidden="true" />
-        <div className="container container--narrow layer stack stack--lg">
-          <Reveal className="stack">
-            <p className="eyebrow">Legal</p>
-            <h1 className="h1">Privacy Policy</h1>
-            <div className="legal-hero__meta">
-              <span className="pill">Last updated: {LAST_UPDATED}</span>
-              <span className="mono">{SITE.name}</span>
+      <section className="section legal-front">
+        <div className="container">
+          <Reveal className="legal-front__head">
+            <p className="legal-mark">
+              <span className="mono">Appendix</span>
+              <span className="legal-mark__glyph">A</span>
+            </p>
+            <div className="legal-front__title">
+              <h1 className="h2">Privacy Policy</h1>
+              <dl className="legal-front__fields">
+                <div>
+                  <dt className="mono">Issued by</dt>
+                  <dd>{SITE.name}</dd>
+                </div>
+                <div>
+                  <dt className="mono">Last updated</dt>
+                  <dd>{LAST_UPDATED}</dd>
+                </div>
+              </dl>
             </div>
-            <div className="note legal-summary">
-              <p>
-                <strong>The short version:</strong> this site collects nothing except what you
-                choose to type into the contact form, plus ordinary traffic statistics from Google
-                Analytics. Your message is emailed to me and used to reply to you. Nothing is sold,
-                nothing is shared beyond the two services named below, and you can have anything
-                you sent me deleted by asking.
-              </p>
+            <div className="legal-front__act">
+              <Link className="btn btn--primary" to="/contact">
+                Start a project
+              </Link>
+              <a className="link-arrow" href={MAILTO}>
+                Email {SITE.email}
+              </a>
             </div>
           </Reveal>
 
-          <Reveal className="legal-toc" delay={90} as="nav" aria-label="Sections of this policy">
-            <p className="mono">Contents</p>
-            <ul className="legal-toc__list">
+          <hr className="datum legal-front__datum" />
+
+          <Reveal
+            as="nav"
+            className="legal-index"
+            delay={60}
+            aria-label="Sections of this policy"
+          >
+            <p className="mono legal-index__label">Contents</p>
+            <ul className="legal-index__list">
               {SECTIONS.map((section, i) => (
-                <li key={section.id}>
-                  <a className="legal-toc__link" href={`#${section.id}`}>
-                    <span className="legal-toc__num">{num(i)}</span>
+                <li className="legal-index__item" key={section.id}>
+                  <a className="legal-index__link" href={`#${section.id}`}>
+                    <span className="legal-index__num">{num(i)}</span>
                     <span>{section.title}</span>
                   </a>
                 </li>
@@ -282,30 +298,47 @@ export default function PrivacyPolicyPage() {
       </section>
 
       <section className="section section--rule section--tight">
-        <div className="container container--narrow">
-          <Reveal as="article" className="legal-doc" delay={60}>
+        <div className="container">
+          <Reveal className="note legal-summary legal-body">
+            <p>
+              <strong>The short version:</strong> this site collects nothing except what you choose
+              to type into the contact form, plus ordinary traffic statistics from Google
+              Analytics. Your message is emailed to me and used to reply to you. Nothing is sold,
+              nothing is shared beyond the two services named below, and you can have anything you
+              sent me deleted by asking.
+            </p>
+          </Reveal>
+
+          <Reveal as="article" className="legal-doc legal-body" delay={60}>
             {SECTIONS.map((section, i) => (
               <section
                 key={section.id}
                 id={section.id}
-                className="legal-section"
+                className="legal-clause"
                 aria-labelledby={`${section.id}-title`}
               >
-                <h2 className="h3 legal-section__title" id={`${section.id}-title`}>
-                  <span className="legal-section__num">{num(i)}</span>
-                  <span>{section.title}</span>
+                <span className="legal-clause__num" aria-hidden="true">
+                  {num(i)}
+                </span>
+                <h2 className="h3 legal-clause__title" id={`${section.id}-title`}>
+                  {section.title}
                 </h2>
-                {section.content}
+                <div className="legal-clause__body">{section.content}</div>
               </section>
             ))}
           </Reveal>
         </div>
       </section>
 
-      <section className="section section--rule section--tight">
-        <div className="container container--narrow">
-          <Reveal className="stack">
-            <p className="eyebrow">Next</p>
+      <section className="section section--tight">
+        <div className="container">
+          <Reveal className="cta-block legal-body">
+            <p className="eyebrow">
+              {/* The closing clause of the sheet, so it takes the number
+                  after the last one rather than a mark of its own. */}
+              <span className="ordinal">{num(SECTIONS.length)}</span>
+              <span>Next</span>
+            </p>
             <h2 className="h2">Still have a question about your data?</h2>
             <p className="lede">
               Ask me directly rather than guessing at what a policy page means. {RESPONSE_PROMISE}
@@ -318,7 +351,7 @@ export default function PrivacyPolicyPage() {
                 Email {SITE.email}
               </a>
             </div>
-            <p className="body--sm dim">
+            <p className="body--sm muted">
               See also the{' '}
               <Link className="link-underline" to="/terms">
                 Terms of Service

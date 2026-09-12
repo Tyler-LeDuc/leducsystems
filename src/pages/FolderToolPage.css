@@ -1,38 +1,188 @@
-/* Shared-drive map. The .tool-* vocabulary (drop zone, fact tiles,
-   findings) lives in src/styles/tools.css; this file carries the graph and
-   the folder-specific lists. */
+/* =========================================================================
+   Shared-drive map — page-specific rules only.
 
-.folder-title {
-  max-width: 17ch;
+   The shared .tool-* vocabulary (drop zone, field label, marginal note,
+   fact columns, findings, datasheet table) lives in src/styles/tools.css
+   and this page composes from it. What is left here is its arrival, the
+   drawing itself — the dependency graph plotted on gridded paper — and the
+   ruled lists, none of which any other page has.
+
+   Everything here is a rule or a mono row. There are no boxes on this page
+   except the notice, and that one is a stamped block on purpose.
+
+   A note on selectors: these lists are also `.list.list--plain`, whose
+   `.list li` rules outrank a single page class. Where a row has to win, it
+   is scoped through its list (`.folder-parts .folder-part`) rather than
+   given an !important.
+   ========================================================================= */
+
+/* ---- the arrival -------------------------------------------------------
+   The tool is the page, so the page opens on the control. There is no
+   shared tool hero any more: a full title block above the picker puts the
+   one thing this page exists for below the fold.
+
+   What is left of the masthead is a single strip — ordinal, label, title —
+   ruled off by the section's one datum, with the picker directly under it
+   and the prose ranged beside it in a second column. The workbook, schema
+   and Access tools open on the same skeleton, so the set reads as one
+   family of instruments.
+
+   The accent budget for this viewport is spent on "Choose a folder": the
+   notice beside it is ruled in ink, and the call to action is a ghost. */
+
+.folder-open {
+  /* Tight, not the standard --section-y: every pixel above the picker is a
+     pixel of it lost off the bottom of an 800px viewport. */
+  padding-block: var(--sp-6) var(--sp-8);
 }
 
-/* ---- the privacy promise ---- */
-
-.folder-promise {
-  border-color: var(--line-accent);
-  background: var(--accent-haze);
-  max-width: 62ch;
+.folder-open__strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-3) var(--sp-6);
 }
+
+/* Short measure so the title breaks into two lines at most and never
+   crowds the ordinal beside it. */
+.folder-open__title {
+  max-width: 26ch;
+  text-wrap: balance;
+}
+
+.folder-open__rule {
+  margin-top: var(--sp-4);
+  margin-bottom: var(--sp-6);
+}
+
+/* Control column first and wider: it is the payload. The brief is the
+   narrower column, fenced off by the hairline it hangs on. */
+.folder-open__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: var(--sp-7);
+  align-items: start;
+}
+
+.folder-open__control,
+.folder-open__brief {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-5);
+}
+
+/* Both columns range their children left, which sizes them to their
+   content. The blocks that carry a rule, a border or a full-width well
+   have to be a decision rather than a by-product of their text length. */
+.folder-open__control > .tool-field,
+.folder-open__control > .form-status,
+.folder-open__brief > .lede,
+.folder-open__brief > .tool-note {
+  align-self: stretch;
+}
+
+.folder-open__brief {
+  padding-left: var(--sp-7);
+  border-left: 1px solid var(--line);
+}
+
+/* The undertaking and the schedule of parts hang on one rule, so the
+   lettered rows read as the list the sentence above them promised rather
+   than as a second, unrelated block. */
+.folder-open__promise {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+@media (max-width: 860px) {
+  .folder-open__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-6);
+  }
+
+  /* Stacked, the fence between the columns becomes a rule above the
+     brief — the same separation drawn the other way round. */
+  .folder-open__brief {
+    padding-left: 0;
+    padding-top: var(--sp-5);
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 620px) {
+  .folder-open {
+    padding-block: var(--sp-5) var(--sp-7);
+  }
+
+  .folder-open__rule {
+    margin-top: var(--sp-3);
+    margin-bottom: var(--sp-5);
+  }
+}
+
+/* Metadata about the scan in progress, set as metadata. */
+.folder-progress {
+  color: var(--text-xlo);
+}
+
+/* ---- the parts it reads -------------------------------------------------
+   "It's all local" is not checkable and a list of four filenames is, so
+   the parts are set out as lettered rows rather than described. */
 
 .folder-parts {
   display: grid;
-  gap: var(--sp-1);
+  gap: 0;
+  counter-reset: part;
+  border-top: 1px solid var(--line-strong);
 }
 
-.folder-part {
-  color: var(--accent-300);
-  font-size: var(--fs-mono);
+/* A lettered ordinal in the margin, then the part name in normal-case mono
+   so the reader can match it against what is actually inside their file. */
+.folder-parts .folder-part {
+  counter-increment: part;
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  gap: var(--sp-2);
+  padding: var(--sp-2) 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: var(--lh-base);
+  letter-spacing: var(--ls-normal);
   text-transform: none;
+  color: var(--text-hi);
   overflow-wrap: anywhere;
 }
 
-/* ---- graph ---- */
+.folder-parts .folder-part::before {
+  display: block;
+  content: counter(part, upper-alpha);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-caps);
+  color: var(--text-xlo);
+}
+
+/* ---- the drawing --------------------------------------------------------
+   Plotted on gridded paper, the lattice drawn at --grid-line so it sits
+   under the plot rather than competing with it. */
 
 .folder-graph-wrap {
   overflow-x: auto;
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
-  background: var(--surface-wash);
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background-color: var(--paper-100);
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* The wrap is focusable so a keyboard user can scroll it; it has to say so. */
+.folder-graph-wrap:focus-visible {
+  outline: 2px solid var(--accent-500);
+  outline-offset: 2px;
 }
 
 .folder-graph {
@@ -43,65 +193,81 @@
   height: auto;
 }
 
+/* Edges are ink. They are structure, not signal — the accent on this page
+   belongs to the hubs, and painting the arrows orange as well would spend
+   it twice. Certainty is carried by the dash pattern first and the weight
+   second, so the distinction survives without colour. */
 .folder-edge {
-  color: var(--text-xlo);
+  color: var(--text-lo);
   stroke: var(--line-strong);
   stroke-width: 1.25;
 }
 
 .folder-edge--exact {
-  color: var(--accent-400);
-  stroke: var(--accent-400);
-  stroke-opacity: 0.7;
+  color: var(--text-hi);
+  stroke: var(--text-hi);
+  stroke-opacity: 0.75;
 }
 
 .folder-edge--guess {
   stroke-dasharray: 4 4;
-  stroke-opacity: 0.5;
+  stroke-opacity: 0.55;
 }
 
+/* An ordinary file is an open circle. A file that other files read from is
+   a filled signal dot — that is the whole point of the drawing, and it is
+   the one thing on the sheet worth the accent. */
 .folder-dot {
-  fill: var(--ink-300);
-  stroke: var(--line-strong);
+  fill: var(--paper-100);
+  stroke: var(--text-hi);
+  stroke-width: 1.25;
 }
 
 .folder-dot--hub {
   fill: var(--accent-500);
-  stroke: var(--accent-300);
+  stroke: var(--accent-600);
 }
 
 .folder-node text {
-  fill: var(--text-lo);
+  fill: var(--text-hi);
   font-family: var(--font-mono);
   font-size: 10px;
+  /* The halo knocks the grid out from behind a label, the way a callout is
+     masked out of the hatching on a real drawing. */
   paint-order: stroke;
-  stroke: var(--ink-000);
+  stroke: var(--paper-100);
   stroke-width: 3px;
   stroke-linejoin: round;
 }
 
-/* ---- lists ---- */
+/* ---- links that leave the folder ----------------------------------------
+   Two ruled columns: where the link is, and where it points. One amber
+   rule runs down the whole list rather than one per row — the flag belongs
+   to the finding, not to every line of it. */
 
 .folder-links {
   display: grid;
-  gap: var(--sp-3);
+  gap: 0;
+  border-top: 1px solid var(--line-strong);
+  border-left: 2px solid var(--warn-line);
 }
 
-.folder-link {
+.folder-links .folder-link {
   display: grid;
-  gap: var(--sp-1);
-  padding: var(--sp-3) var(--sp-4);
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--warn-line);
-  border-radius: var(--r-md);
-  background: var(--surface-wash);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: var(--sp-1) var(--sp-5);
+  padding: var(--sp-3) 0 var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--line);
 }
 
 .folder-link__from,
 .folder-link__to {
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: var(--lh-base);
+  letter-spacing: var(--ls-normal);
   text-transform: none;
   overflow-wrap: anywhere;
-  font-size: var(--fs-mono);
 }
 
 .folder-link__from {
@@ -112,24 +278,57 @@
   color: var(--text-hi);
 }
 
-.folder-versions {
-  display: grid;
-  gap: var(--sp-1);
+/* The connector, drawn rather than written, so the second column reads as
+   the destination of the row and not as an unrelated second path. */
+.folder-link__to::before {
+  content: '\2192\00a0';
+  color: var(--text-xlo);
 }
 
-.folder-version {
-  color: var(--text-lo);
-  font-size: var(--fs-mono);
+/* ---- duplicate clusters -------------------------------------------------
+   Each cluster is a block opened by its own rule. No fill and no border
+   box: the heading rule is enough to group the rows under it. */
+
+.folder-cluster {
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--line-strong);
+}
+
+.folder-cluster__head {
+  max-width: none;
+  font-weight: 500;
+}
+
+.folder-versions {
+  display: grid;
+  gap: 0;
+}
+
+/* Every row reserves the marker gutter so the paths stay in one column
+   whether or not a row is flagged. */
+.folder-versions .folder-version {
+  padding: var(--sp-2) 0 var(--sp-2) var(--sp-4);
+  border-bottom: 1px solid var(--grid-line);
+  border-left: 2px solid transparent;
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: var(--lh-base);
+  letter-spacing: var(--ls-normal);
   text-transform: none;
+  color: var(--text-lo);
   overflow-wrap: anywhere;
 }
 
-.folder-version--newest {
-  color: var(--positive-100);
+/* The newest copy is already named in the text, so the marker is a tick in
+   the margin and a step up the ink scale — not a colour carrying it alone. */
+.folder-versions .folder-version--newest {
+  border-left-color: var(--text-hi);
+  color: var(--text-hi);
 }
 
-@media (max-width: 620px) {
-  .folder-promise {
-    padding: var(--sp-4);
+@media (max-width: 720px) {
+  .folder-links .folder-link {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
+

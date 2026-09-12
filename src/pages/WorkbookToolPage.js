@@ -107,89 +107,111 @@ export default function WorkbookToolPage() {
         path="/tools/workbook"
       />
 
-      <section className="tool-hero" aria-labelledby="xray-title">
-        <div className="bg-glow" aria-hidden="true" />
+      {/* The arrival. The title is compressed to a single ruled strip so the
+          drop zone — the whole reason the page exists — is the thing you
+          land on, with the explanation ranged beside it rather than in
+          front of it. */}
+      <section className="section xray-open" aria-labelledby="xray-title">
+        <div className="bg-grid" aria-hidden="true" />
         <div className="container layer">
-          <Reveal className="stack stack--lg">
-            <div className="stack stack--sm">
-              <p className="eyebrow">A free tool</p>
-              <h1 id="xray-title" className="display xray-title">
-                What is running inside your spreadsheet.
-              </h1>
+          <Reveal className="xray-open__strip">
+            <p className="eyebrow">
+              <span className="ordinal">00</span>
+              <span>A free tool</span>
+            </p>
+            <h1 id="xray-title" className="h3 xray-open__title">
+              What is running inside your spreadsheet.
+            </h1>
+          </Reveal>
+
+          <hr className="datum xray-open__rule" />
+
+          <div className="xray-open__grid">
+            <div className="xray-open__control">
+              <div className="tool-field">
+                <p className="tool-field__label">Choose a workbook</p>
+
+                {/* The drop zone is decoration around a real file input. The
+                    wrapping label gives the input its accessible name, and
+                    the focus ring is drawn on that label via :focus-within —
+                    the input itself is transparent, so an outline on it would
+                    be painted at zero alpha and the keyboard path would be
+                    invisible. */}
+                <div
+                  className={`tool-drop${dragging ? ' tool-drop--over' : ''}`}
+                  onDragOver={(event) => {
+                    event.preventDefault();
+                    setDragging(true);
+                  }}
+                  onDragLeave={onDragLeave}
+                  onDrop={onDrop}
+                >
+                  <p className="body hi">Drag a workbook here</p>
+                  <p className="body--sm muted">or</p>
+                  <label className="btn btn--primary tool-drop__button">
+                    Choose a file
+                    <input
+                      className="tool-drop__input"
+                      type="file"
+                      accept={ACCEPT}
+                      onChange={(event) => {
+                        const file = event.target.files && event.target.files[0];
+                        /* Cleared so that choosing the same file again fires a
+                           fresh change event — otherwise a re-check after
+                           fixing the file in Excel silently does nothing. */
+                        event.target.value = '';
+                        analyse(file);
+                      }}
+                    />
+                  </label>
+                  <p className="body--sm muted">
+                    .xlsx and .xlsm, up to {Math.round(MAX_BYTES / 1024 / 1024)}MB
+                  </p>
+                </div>
+              </div>
+
+              {/* The read is fast on a small file and long on a 40MB one, so
+                  the wait gets a real indeterminate rule rather than a word
+                  that might flash past. */}
+              {state.status === 'reading' ? (
+                <div className="xray-reading" aria-hidden="true">
+                  <p className="code xray-reading__line">Reading {state.name}…</p>
+                  <span className="xray-progress" />
+                </div>
+              ) : null}
+
+              {state.status === 'error' ? (
+                <p className="form-status form-status--error" role="alert">
+                  {state.message}
+                </p>
+              ) : null}
+
+              {/* One live region that stays mounted for the life of the page.
+                  Announcing from a node that unmounts the moment the report
+                  arrives means the result is never read out at all. */}
+              <p className="sr-only" role="status">
+                {state.status === 'reading' ? `Reading ${state.name}.` : ''}
+                {report ? `${state.name}: ${report.verdict.title} ${plural(report.findings.length, 'finding')}.` : ''}
+              </p>
+            </div>
+
+            {/* Beside the control, never in front of it: what the tool is
+                for, the way to hand the file to a person instead, and the
+                undertaking that nothing leaves the browser. */}
+            <div className="xray-open__brief">
               <p className="lede">
                 Somewhere in your organization is a workbook that stopped being a workbook years
                 ago — drop it here and see what it actually does.
               </p>
-              <p className="body muted">
+              <Link className="btn btn--ghost" to="/contact">
+                Talk about replacing it
+              </Link>
+              <p className="tool-note">
                 It runs entirely in your browser. The file is never uploaded, and there is no
                 server to upload it to — the parsing happens in the page you are reading.
               </p>
             </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section section--rule" aria-labelledby="xray-input">
-        <div className="container stack stack--lg">
-          <h2 className="h3" id="xray-input">
-            Choose a workbook
-          </h2>
-
-          {/* The drop zone is decoration around a real file input. The
-              wrapping label gives the input its accessible name, and the
-              focus ring is drawn on that label via :focus-within — the
-              input itself is transparent, so an outline on it would be
-              painted at zero alpha and the keyboard path would be
-              invisible. */}
-          <div
-            className={`tool-drop${dragging ? ' tool-drop--over' : ''}`}
-            onDragOver={(event) => {
-              event.preventDefault();
-              setDragging(true);
-            }}
-            onDragLeave={onDragLeave}
-            onDrop={onDrop}
-          >
-            <p className="body hi">Drag a workbook here</p>
-            <p className="body--sm muted">or</p>
-            <label className="btn btn--primary tool-drop__button">
-              Choose a file
-              <input
-                className="tool-drop__input"
-                type="file"
-                accept={ACCEPT}
-                onChange={(event) => {
-                  const file = event.target.files && event.target.files[0];
-                  /* Cleared so that choosing the same file again fires a
-                     fresh change event — otherwise a re-check after fixing
-                     the file in Excel silently does nothing. */
-                  event.target.value = '';
-                  analyse(file);
-                }}
-              />
-            </label>
-            <p className="body--sm dim">.xlsx and .xlsm, up to {Math.round(MAX_BYTES / 1024 / 1024)}MB</p>
           </div>
-
-          {state.status === 'reading' ? (
-            <p className="body muted" aria-hidden="true">
-              Reading {state.name}…
-            </p>
-          ) : null}
-
-          {state.status === 'error' ? (
-            <p className="form-status form-status--error" role="alert">
-              {state.message}
-            </p>
-          ) : null}
-
-          {/* One live region that stays mounted for the life of the page.
-              Announcing from a node that unmounts the moment the report
-              arrives means the result is never read out at all. */}
-          <p className="sr-only" role="status">
-            {state.status === 'reading' ? `Reading ${state.name}.` : ''}
-            {report ? `${state.name}: ${report.verdict.title} ${plural(report.findings.length, 'finding')}.` : ''}
-          </p>
         </div>
       </section>
 
@@ -197,13 +219,18 @@ export default function WorkbookToolPage() {
         <>
           <section className="section section--rule section--alt" aria-labelledby="xray-verdict">
             <div className="container stack stack--lg">
-              <div className="stack stack--sm">
-                <p className="eyebrow">{state.name}</p>
+              {/* The report's title block: ordinal in the margin, the file
+                  name set as the identifier it is, the verdict as the
+                  headline, and the datum ruling the whole thing off. */}
+              <div className="tool-head">
+                <span className="ordinal">01</span>
+                <p className="code tool-ident tool-ident--lo">{state.name}</p>
                 <h2 className="h2" id="xray-verdict">
                   {report.verdict.title}
                 </h2>
-                <p className="lede">{report.verdict.body}</p>
+                <hr className="datum" />
               </div>
+              <p className="lede">{report.verdict.body}</p>
 
               {findings.length ? (
                 <>
@@ -235,7 +262,7 @@ export default function WorkbookToolPage() {
                   </ul>
                 </>
               ) : (
-                <p className="body muted">
+                <p className="body muted xray-clear">
                   {report.vba
                     ? 'Nothing further to report — but see the verdict above.'
                     : 'Nothing to report. No macros, no connections, no external links, nothing hidden.'}
@@ -247,10 +274,12 @@ export default function WorkbookToolPage() {
           {report.vba && report.vba.modules.length ? (
             <section className="section section--rule" aria-labelledby="xray-code">
               <div className="container stack stack--lg">
-                <div className="stack stack--sm">
+                <div className="tool-head">
+                  <span className="ordinal">02</span>
                   <h2 className="h3" id="xray-code">
                     The code
                   </h2>
+                  <hr className="datum" />
                   <p className="body muted">
                     {plural(report.vba.scan.codeLines, 'line')} of VBA across{' '}
                     {plural(report.vba.scan.modulesWithCode, 'module')} that carry code, and{' '}
@@ -291,7 +320,7 @@ export default function WorkbookToolPage() {
                       ))}
                     </ul>
                     {report.vba.scan.paths.length > 12 ? (
-                      <p className="body--sm dim">
+                      <p className="body--sm muted">
                         and {report.vba.scan.paths.length - 12} more.
                       </p>
                     ) : null}
@@ -304,48 +333,60 @@ export default function WorkbookToolPage() {
           {report.connections.length || report.powerQuery ? (
             <section className="section section--rule section--alt" aria-labelledby="xray-systems">
               <div className="container stack stack--lg">
-                <h2 className="h3" id="xray-systems">
-                  What it connects to
-                </h2>
+                <div className="tool-head">
+                  <span className="ordinal">03</span>
+                  <h2 className="h3" id="xray-systems">
+                    What it connects to
+                  </h2>
+                  <hr className="datum" />
+                </div>
 
-                {report.connections.slice(0, MAX_ROWS).map((connection, index) => (
-                  <div key={`${connection.name}-${index}`} className="panel stack stack--xs">
-                    <p className="mono xray-name">{connection.name}</p>
-                    <p className="body">
-                      {connection.provider ? `${connection.provider} · ` : ''}
-                      {connection.server || 'unnamed source'}
-                      {connection.database ? ` · ${connection.database}` : ''}
-                    </p>
-                    {connection.command ? (
-                      <pre className="tool-sql xray-query" tabIndex={0} role="region" aria-label={`Query behind ${connection.name}`}>
-                        <code>{connection.command}</code>
-                      </pre>
-                    ) : null}
-                  </div>
-                ))}
+                {/* Each source is a ruled entry lettered down the margin, not
+                    a card: the same shape a schedule takes on a drawing. */}
+                <ol className="xray-sources">
+                  {report.connections.slice(0, MAX_ROWS).map((connection, index) => (
+                    <li key={`${connection.name}-${index}`} className="xray-source">
+                      <p className="mono tool-ident">{connection.name}</p>
+                      <p className="body">
+                        {connection.provider ? `${connection.provider} · ` : ''}
+                        {connection.server || 'unnamed source'}
+                        {connection.database ? ` · ${connection.database}` : ''}
+                      </p>
+                      {connection.command ? (
+                        <pre className="tool-sql xray-query" tabIndex={0} role="region" aria-label={`Query behind ${connection.name}`}>
+                          <code>{connection.command}</code>
+                        </pre>
+                      ) : null}
+                    </li>
+                  ))}
 
-                {report.powerQuery ? (
-                  <div className="panel stack stack--xs">
-                    <p className="mono xray-name">Power Query</p>
-                    <p className="body">
-                      {report.powerQuery.queries.length
-                        ? `${plural(report.powerQuery.queries.length, 'query')}: ${report.powerQuery.queries.join(', ')}`
-                        : 'Present, with no named queries.'}
-                    </p>
-                    {report.powerQuery.sources.length ? (
-                      <p className="body muted">Reading from {report.powerQuery.sources.join(', ')}.</p>
-                    ) : null}
-                  </div>
-                ) : null}
+                  {report.powerQuery ? (
+                    <li className="xray-source">
+                      <p className="mono tool-ident">Power Query</p>
+                      <p className="body">
+                        {report.powerQuery.queries.length
+                          ? `${plural(report.powerQuery.queries.length, 'query')}: ${report.powerQuery.queries.join(', ')}`
+                          : 'Present, with no named queries.'}
+                      </p>
+                      {report.powerQuery.sources.length ? (
+                        <p className="body muted">Reading from {report.powerQuery.sources.join(', ')}.</p>
+                      ) : null}
+                    </li>
+                  ) : null}
+                </ol>
               </div>
             </section>
           ) : null}
 
           <section className="section section--rule" aria-labelledby="xray-structure">
             <div className="container stack stack--lg">
-              <h2 className="h3" id="xray-structure">
-                The file itself
-              </h2>
+              <div className="tool-head">
+                <span className="ordinal">04</span>
+                <h2 className="h3" id="xray-structure">
+                  The file itself
+                </h2>
+                <hr className="datum" />
+              </div>
               <dl className="tool-facts">
                 <div className="tool-fact">
                   <dt>Sheets</dt>
@@ -392,11 +433,15 @@ export default function WorkbookToolPage() {
 
       <section className="section section--rule" aria-labelledby="xray-why">
         <div className="container container--narrow stack stack--lg">
-          <div className="stack stack--sm">
-            <p className="eyebrow">Why this exists</p>
+          <div className="tool-head">
+            <span className="tool-head__mark">
+              <span className="ordinal">05</span>
+              <span className="mono tool-head__tag">Why this exists</span>
+            </span>
             <h2 className="h3" id="xray-why">
               The spreadsheet stopped being a spreadsheet years ago.
             </h2>
+            <hr className="datum" />
           </div>
           <p className="body">
             Nobody decides to build critical software in Excel. It happens one macro at a time,
@@ -411,27 +456,29 @@ export default function WorkbookToolPage() {
             reaches, and whose name the file carries — which is the information you need before
             deciding whether to replace it.
           </p>
-          <div className="cluster">
-            <Link className="btn btn--primary" to="/contact">
-              Talk about replacing it
-            </Link>
-            <Link className="btn btn--ghost" to="/tools/folder">
-              Map a whole folder
-            </Link>
+          <div className="cta-block">
+            <div className="cluster">
+              <Link className="btn btn--primary" to="/contact">
+                Talk about replacing it
+              </Link>
+              <Link className="btn btn--ghost" to="/tools/folder">
+                Map a whole folder
+              </Link>
+            </div>
+            <p className="body muted xray-credit">
+              Built by {SITE.founder}. The workbook, compound file, and VBA decoders are plain
+              JavaScript with unit tests and no dependencies —{' '}
+              <a
+                className="link-underline"
+                href={`${SITE.github}/leducsystems`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                read them on GitHub
+              </a>
+              .
+            </p>
           </div>
-          <p className="body muted">
-            Built by {SITE.founder}. The workbook, compound file, and VBA decoders are plain
-            JavaScript with unit tests and no dependencies —{' '}
-            <a
-              className="link-underline"
-              href={`${SITE.github}/leducsystems`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              read them on GitHub
-            </a>
-            .
-          </p>
         </div>
       </section>
     </>

@@ -123,95 +123,110 @@ export default function FolderToolPage() {
         path="/tools/folder"
       />
 
-      <section className="tool-hero" aria-labelledby="folder-title">
-        <div className="bg-glow" aria-hidden="true" />
+      {/* The arrival. The masthead is compressed to a single ruled strip so
+          the folder picker — the whole reason the page exists — is what you
+          land on, with the undertaking ranged beside it rather than stacked
+          in front of it. */}
+      <section className="section folder-open" aria-labelledby="folder-title">
+        <div className="bg-grid" aria-hidden="true" />
         <div className="container layer">
-          <Reveal className="stack stack--lg">
-            <div className="stack stack--sm">
-              <p className="eyebrow">A free tool</p>
-              <h1 id="folder-title" className="display folder-title">
-                Map the spreadsheets your team runs on.
-              </h1>
+          <Reveal className="folder-open__strip">
+            <p className="eyebrow">
+              <span className="ordinal">00</span>
+              <span>A free tool</span>
+            </p>
+            <h1 id="folder-title" className="h3 folder-open__title">
+              Map the spreadsheets your team runs on.
+            </h1>
+          </Reveal>
+
+          <hr className="datum folder-open__rule" />
+
+          <div className="folder-open__grid">
+            <div className="folder-open__control">
+              <div className="tool-field">
+                <p className="tool-field__label">Point it at a folder</p>
+
+                <div className="tool-drop">
+                  <p className="body hi">Pick the folder your team keeps its spreadsheets in</p>
+                  <label className="btn btn--primary tool-drop__button">
+                    Choose a folder
+                    <input
+                      className="tool-drop__input"
+                      type="file"
+                      /* Non-standard attributes, but the only way to pick a
+                         folder from a file input; supported in every desktop
+                         browser. */
+                      webkitdirectory=""
+                      directory=""
+                      multiple
+                      onChange={(event) => {
+                        /* The FileList is live: clearing the input empties
+                           it, so the files have to be copied out before the
+                           reset that lets the same folder be picked again. */
+                        const files = [...event.target.files];
+                        event.target.value = '';
+                        scan(files);
+                      }}
+                    />
+                  </label>
+                  <p className="body--sm muted">
+                    Subfolders included. Up to {MAX_FILES.toLocaleString()} workbooks.
+                  </p>
+                </div>
+              </div>
+
+              {state.status === 'scanning' ? (
+                <p className="mono folder-progress" aria-hidden="true">
+                  Reading {state.done} of {state.total}…
+                </p>
+              ) : null}
+
+              {state.status === 'error' ? (
+                <p className="form-status form-status--error" role="alert">
+                  {state.message}
+                </p>
+              ) : null}
+
+              <p className="sr-only" role="status">
+                {state.status === 'scanning'
+                  ? `Reading ${state.done} of ${state.total} workbooks.`
+                  : ''}
+                {map
+                  ? `Scanned ${plural(map.counts.files, 'workbook')}. ${plural(map.dependedOn.length, 'file')} are read by others.`
+                  : ''}
+              </p>
+            </div>
+
+            {/* Beside the control, never in front of it. This asks someone
+                to point a website at their company's shared drive, so the
+                undertaking is specific and the parts it reads are set out
+                as lettered rows rather than described. Ruled in ink: the
+                one accent fill in this viewport is the picker. */}
+            <div className="folder-open__brief">
               <p className="lede">
                 Point this at the folder your operation actually lives in, and see which files
                 everything else depends on.
               </p>
+              <Link className="btn btn--ghost" to="/contact">
+                Start a project
+              </Link>
+              <div className="tool-note folder-open__promise">
+                <p>
+                  Nothing is uploaded. Nothing is even read in full. A workbook is a ZIP file.
+                  This opens each one and reads {PARTS_READ.length} small XML parts out of it —
+                  never the cells, never the contents:
+                </p>
+                <ul className="list list--plain folder-parts">
+                  {PARTS_READ.map((part) => (
+                    <li key={part} className="folder-part">
+                      {part}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-
-            {/* The privacy claim is the loudest thing on the page on purpose:
-                this asks someone to point a website at their company's
-                shared drive, and a vague reassurance would not be enough. */}
-            <div className="panel folder-promise stack stack--sm">
-              <p className="body hi">Nothing is uploaded. Nothing is even read in full.</p>
-              <p className="body--sm muted">
-                A workbook is a ZIP file. This opens each one and reads {PARTS_READ.length} small
-                XML parts out of it — never the cells, never the contents:
-              </p>
-              <ul className="list list--plain folder-parts">
-                {PARTS_READ.map((part) => (
-                  <li key={part} className="mono folder-part">
-                    {part}
-                  </li>
-                ))}
-              </ul>
-              <p className="body--sm muted">
-                A 40MB model costs a few kilobytes of reading. There is no server here to send
-                anything to — the whole scan happens in this page.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section section--rule" aria-labelledby="folder-input">
-        <div className="container stack stack--lg">
-          <h2 className="h3" id="folder-input">
-            Point it at a folder
-          </h2>
-
-          <div className="tool-drop">
-            <p className="body hi">Pick the folder your team keeps its spreadsheets in</p>
-            <label className="btn btn--primary tool-drop__button">
-              Choose a folder
-              <input
-                className="tool-drop__input"
-                type="file"
-                /* Non-standard attributes, but the only way to pick a folder
-                   from a file input; supported in every desktop browser. */
-                webkitdirectory=""
-                directory=""
-                multiple
-                onChange={(event) => {
-                  /* The FileList is live: clearing the input empties it, so
-                     the files have to be copied out before the reset that
-                     lets the same folder be picked again. */
-                  const files = [...event.target.files];
-                  event.target.value = '';
-                  scan(files);
-                }}
-              />
-            </label>
-            <p className="body--sm dim">
-              Subfolders included. Up to {MAX_FILES.toLocaleString()} workbooks.
-            </p>
           </div>
-
-          {state.status === 'scanning' ? (
-            <p className="body muted" aria-hidden="true">
-              Reading {state.done} of {state.total}…
-            </p>
-          ) : null}
-
-          {state.status === 'error' ? (
-            <p className="form-status form-status--error" role="alert">
-              {state.message}
-            </p>
-          ) : null}
-
-          <p className="sr-only" role="status">
-            {state.status === 'scanning' ? `Reading ${state.done} of ${state.total} workbooks.` : ''}
-            {map ? `Scanned ${plural(map.counts.files, 'workbook')}. ${plural(map.dependedOn.length, 'file')} are read by others.` : ''}
-          </p>
         </div>
       </section>
 
@@ -219,11 +234,15 @@ export default function FolderToolPage() {
         <>
           <section className="section section--rule section--alt" aria-labelledby="folder-summary">
             <div className="container stack stack--lg">
-              <h2 className="h2" id="folder-summary">
-                {map.counts.files === 0
-                  ? 'Nothing readable in that folder.'
-                  : `${plural(map.counts.files, 'workbook')}, ${megabytes(map.counts.bytes)}.`}
-              </h2>
+              <div className="tool-head">
+                <span className="ordinal">01</span>
+                <h2 className="h2" id="folder-summary">
+                  {map.counts.files === 0
+                    ? 'Nothing readable in that folder.'
+                    : `${plural(map.counts.files, 'workbook')}, ${megabytes(map.counts.bytes)}.`}
+                </h2>
+                <hr className="datum" />
+              </div>
 
               <dl className="tool-facts">
                 <Fact label="Read by another file" value={map.dependedOn.length} />
@@ -233,7 +252,7 @@ export default function FolderToolPage() {
               </dl>
 
               {state.skipped > 0 || state.unreadable > 0 ? (
-                <p className="body--sm dim">
+                <p className="body--sm muted">
                   {state.skipped > 0
                     ? `${plural(state.skipped, 'workbook')} past the ${MAX_FILES.toLocaleString()} cap were not read. `
                     : ''}
@@ -248,10 +267,12 @@ export default function FolderToolPage() {
           {graph ? (
             <section className="section section--rule" aria-labelledby="folder-graph">
               <div className="container stack stack--lg">
-                <div className="stack stack--sm">
+                <div className="tool-head">
+                  <span className="ordinal">02</span>
                   <h2 className="h3" id="folder-graph">
                     What reads from what
                   </h2>
+                  <hr className="datum" />
                   <p className="body muted">
                     An arrow points from a workbook to the one it pulls numbers out of. Only the{' '}
                     {plural(graph.nodes.length, 'file')} with links are drawn.
@@ -312,7 +333,7 @@ export default function FolderToolPage() {
                   </svg>
                 </div>
 
-                <p className="body--sm dim">
+                <p className="body--sm muted">
                   A solid arrow is a link this tool resolved exactly. A faint one was matched on
                   filename alone, because the workbook stores an absolute path that is not inside
                   the folder you picked — treat those as likely, not certain.
@@ -322,9 +343,9 @@ export default function FolderToolPage() {
           ) : null}
 
           {map.dependedOn.length ? (
-            <Section id="folder-hubs" title="If one of these goes, other files break">
+            <Section id="folder-hubs" ordinal="03" title="If one of these goes, other files break">
               <div className="tool-table-wrap" tabIndex={0} role="region" aria-label="Files read by other files">
-                <table className="tool-table">
+                <table className="tool-table tool-table--compact">
                   <thead>
                     <tr>
                       <th scope="col">File</th>
@@ -349,6 +370,7 @@ export default function FolderToolPage() {
           {map.outside.length ? (
             <Section
               id="folder-outside"
+              ordinal="04"
               title="Links pointing somewhere else"
               lede="These read from a file that is not in the folder you picked. Some are on a server; some are on one person's machine."
               alt
@@ -356,13 +378,13 @@ export default function FolderToolPage() {
               <ul className="list list--plain folder-links">
                 {map.outside.slice(0, 25).map((link, index) => (
                   <li key={`${link.from}-${index}`} className="folder-link">
-                    <p className="mono folder-link__from">{link.from}</p>
-                    <p className="mono folder-link__to">{link.target}</p>
+                    <p className="folder-link__from">{link.from}</p>
+                    <p className="folder-link__to">{link.target}</p>
                   </li>
                 ))}
               </ul>
               {map.outside.length > 25 ? (
-                <p className="body--sm dim">and {map.outside.length - 25} more.</p>
+                <p className="body--sm muted">and {map.outside.length - 25} more.</p>
               ) : null}
             </Section>
           ) : null}
@@ -370,13 +392,14 @@ export default function FolderToolPage() {
           {map.versions.length ? (
             <Section
               id="folder-versions"
+              ordinal="05"
               title="One workbook, several copies"
               lede="Same filename underneath the version suffixes, and the same sheets inside. Only the newest is likely to be the real one."
             >
-              <div className="stack stack--sm">
+              <div className="stack">
                 {map.versions.slice(0, 8).map((cluster) => (
-                  <div key={cluster.key} className="panel stack stack--xs">
-                    <p className="body hi">
+                  <div key={cluster.key} className="folder-cluster stack stack--xs">
+                    <p className="body hi folder-cluster__head">
                       {cluster.members.length} copies of “{cluster.key}”
                     </p>
                     <ul className="list list--plain folder-versions">
@@ -390,7 +413,7 @@ export default function FolderToolPage() {
                         return (
                           <li
                             key={member.path}
-                            className={`mono folder-version${isNewest ? ' folder-version--newest' : ''}`}
+                            className={`folder-version${isNewest ? ' folder-version--newest' : ''}`}
                           >
                             {member.path}
                             {isNewest ? ' — newest' : ''}
@@ -399,7 +422,7 @@ export default function FolderToolPage() {
                       })}
                     </ul>
                     {cluster.datedNewest ? null : (
-                      <p className="body--sm dim">
+                      <p className="body--sm muted">
                         These all carry the same modified date, so which one is current is not
                         something the files can tell you.
                       </p>
@@ -411,7 +434,7 @@ export default function FolderToolPage() {
           ) : null}
 
           {map.oneAuthor.length || map.applications.length || map.stale.length ? (
-            <Section id="folder-risk" title="Worth knowing" alt>
+            <Section id="folder-risk" ordinal="06" title="Worth knowing" alt>
               <ul className="tool-findings">
                 {map.oneAuthor.length ? (
                   <Finding level="error" where="Key person">
@@ -447,11 +470,15 @@ export default function FolderToolPage() {
 
       <section className="section section--rule" aria-labelledby="folder-why">
         <div className="container container--narrow stack stack--lg">
-          <div className="stack stack--sm">
-            <p className="eyebrow">Why this exists</p>
+          <div className="tool-head">
+            <span className="tool-head__mark">
+              <span className="ordinal">07</span>
+              <span className="mono tool-head__tag">Why this exists</span>
+            </span>
             <h2 className="h3" id="folder-why">
               Nobody drew this map, and everybody relies on it.
             </h2>
+            <hr className="datum" />
           </div>
           <p className="body">
             Shared drives grow the way cities do. One workbook starts pulling a number from
@@ -464,27 +491,29 @@ export default function FolderToolPage() {
             whole folder, which is the only view that tells you what would actually break. This
             reads the folder and draws it.
           </p>
-          <div className="cluster">
-            <Link className="btn btn--primary" to="/contact">
-              Talk about consolidating this
-            </Link>
-            <Link className="btn btn--ghost" to="/tools/workbook">
-              Look inside one workbook
-            </Link>
+          <div className="cta-block">
+            <div className="cluster">
+              <Link className="btn btn--primary" to="/contact">
+                Talk about consolidating this
+              </Link>
+              <Link className="btn btn--ghost" to="/tools/workbook">
+                Look inside one workbook
+              </Link>
+            </div>
+            <p className="body muted">
+              Built by {SITE.founder}. The scanner and the graph are plain JavaScript with unit
+              tests and no dependencies —{' '}
+              <a
+                className="link-underline"
+                href={`${SITE.github}/leducsystems`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                read them on GitHub
+              </a>
+              .
+            </p>
           </div>
-          <p className="body muted">
-            Built by {SITE.founder}. The scanner and the graph are plain JavaScript with unit tests
-            and no dependencies —{' '}
-            <a
-              className="link-underline"
-              href={`${SITE.github}/leducsystems`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              read them on GitHub
-            </a>
-            .
-          </p>
         </div>
       </section>
     </>
@@ -502,14 +531,19 @@ function Fact({ label, value }) {
   );
 }
 
-function Section({ id, title, lede, alt, children }) {
+function Section({ id, ordinal, title, lede, alt, children }) {
   return (
     <section className={`section section--rule${alt ? ' section--alt' : ''}`} aria-labelledby={id}>
       <div className="container stack stack--lg">
-        <div className="stack stack--sm">
+        {/* .tool-head is the shared section head every tool page uses: the
+            ordinal in the margin, the heading, and exactly one datum
+            directly beneath it. */}
+        <div className="tool-head">
+          <span className="ordinal">{ordinal}</span>
           <h2 className="h3" id={id}>
             {title}
           </h2>
+          <hr className="datum" />
           {lede ? <p className="body muted">{lede}</p> : null}
         </div>
         {children}

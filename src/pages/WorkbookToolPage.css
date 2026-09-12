@@ -1,36 +1,246 @@
 /* Workbook x-ray tool. The shared .tool-* vocabulary lives in
-   src/styles/tools.css — including the drop zone and the fact tiles, which
-   the folder tool composes from too. This file carries only what this page
-   adds. */
+   src/styles/tools.css — the numbered section head (.tool-head), the
+   marginal note, the drop zone, the findings rows, the datasheet table, the
+   SQL block, the fact columns and the identifier styling all come from
+   there, and the other tools compose from the same file. This page adds
+   only what nothing else has: its arrival, the read progress rule and the
+   lettered schedule of what the workbook reaches. */
 
-.xray-title {
-  max-width: 18ch;
+/* ---- the arrival -------------------------------------------------------
+   The tool is the page, so the page opens on the control. There is no
+   shared tool hero any more: a full title block above the drop zone
+   pushes the one thing this page exists for below the fold, which is the
+   whole failure this layout exists to fix.
+
+   What is left of the masthead is a single strip — ordinal, label, title —
+   ruled off by the section's one datum, with the drop zone directly under
+   it and the prose ranged beside it in a second column. The schema, folder
+   and Access tools open on the same skeleton, so the set reads as one
+   family of instruments.
+
+   The accent budget for this viewport is spent on "Choose a file": the
+   note beside it is ruled in ink, and the call to action is a ghost. */
+
+.xray-open {
+  /* Tight, not the standard --section-y: every pixel above the drop zone
+     is a pixel of it lost off the bottom of an 800px viewport. */
+  padding-block: var(--sp-6) var(--sp-8);
 }
 
-.xray-paths {
+.xray-open__strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-3) var(--sp-6);
+}
+
+/* Short measure so the title breaks into two lines at most and never
+   crowds the ordinal beside it. */
+.xray-open__title {
+  max-width: 26ch;
+  text-wrap: balance;
+}
+
+.xray-open__rule {
+  margin-top: var(--sp-4);
+  margin-bottom: var(--sp-6);
+}
+
+/* Control column first and wider: it is the payload. The brief is the
+   narrower column, fenced off by the hairline it hangs on. */
+.xray-open__grid {
   display: grid;
-  gap: var(--sp-2);
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: var(--sp-7);
+  align-items: start;
 }
 
-/* Names the reader has to match against their own file keep their case. */
-.xray-name {
-  text-transform: none;
-  overflow-wrap: anywhere;
-  /* Set here, not with .hi: .mono is declared later in components.css and
-     wins the tie, so the utility class alone leaves these at --text-xlo. */
-  color: var(--text-hi);
+.xray-open__control,
+.xray-open__brief {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-5);
 }
 
-/* A filesystem path is case-bearing and must be readable verbatim. */
-.xray-path {
-  overflow-wrap: anywhere;
+.xray-open__control > .tool-field,
+.xray-open__control > .xray-reading,
+.xray-open__control > .form-status,
+.xray-open__brief > .lede,
+.xray-open__brief > .tool-note {
+  align-self: stretch;
+}
+
+.xray-open__brief {
+  padding-left: var(--sp-7);
+  border-left: 1px solid var(--line);
+}
+
+@media (max-width: 860px) {
+  .xray-open__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-6);
+  }
+
+  /* Stacked, the fence between the columns becomes a rule above the
+     brief — the same separation drawn the other way round. */
+  .xray-open__brief {
+    padding-left: 0;
+    padding-top: var(--sp-5);
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 620px) {
+  .xray-open {
+    padding-block: var(--sp-5) var(--sp-7);
+  }
+
+  .xray-open__rule {
+    margin-top: var(--sp-3);
+    margin-bottom: var(--sp-5);
+  }
+}
+
+/* ---- reading -----------------------------------------------------------
+   A 40MB workbook takes long enough that a static word reads as a hang.
+   The bar is ink, not accent: the one accent fill in this viewport is the
+   button the reader just pressed. */
+
+.xray-reading {
+  display: grid;
+  gap: var(--sp-3);
+  max-width: 32rem;
+}
+
+.xray-reading__line {
   color: var(--text-lo);
-  font-size: var(--fs-xs);
-  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+.xray-progress {
+  position: relative;
+  display: block;
+  height: 2px;
+  overflow: hidden;
+  background: var(--paper-300);
+}
+
+.xray-progress::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 26%;
+  background: var(--line-heavy);
+  animation: xray-sweep var(--dur-loop) var(--ease-inout) infinite;
+}
+
+@keyframes xray-sweep {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(485%); }
+}
+
+/* A sweeping bar with the global 0.01ms duration override lands wherever
+   its last frame falls, which looks like a stalled read. Hold it solid. */
+@media (prefers-reduced-motion: reduce) {
+  .xray-progress::after {
+    width: 100%;
+    animation: none;
+  }
+}
+
+/* ---- source schedule ---------------------------------------------------
+   Connections and Power Query are one lettered schedule of everything the
+   workbook reaches — ruled entries, not panels. Letters here, decimals on
+   the findings above, so the two lists never look like one sequence. */
+
+.xray-sources {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: source;
+  border-top: 1px solid var(--line-strong);
+}
+
+.xray-source {
+  counter-increment: source;
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  gap: var(--sp-3) var(--sp-4);
+  padding-block: var(--sp-5);
+  border-bottom: 1px solid var(--line);
+}
+
+.xray-source::before {
+  content: counter(source, upper-alpha);
+  grid-column: 1;
+  grid-row: 1;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  color: var(--text-xlo);
+  padding-top: 0.2rem;
+}
+
+.xray-source > * {
+  grid-column: 2;
 }
 
 .xray-query {
   font-size: var(--fs-xs);
   max-height: 14rem;
   overflow: auto;
+}
+
+@media (max-width: 620px) {
+  .xray-source {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-2);
+  }
+
+  .xray-source::before,
+  .xray-source > * {
+    grid-column: 1;
+  }
+
+  .xray-source::before {
+    grid-row: auto;
+    padding-top: 0;
+  }
+}
+
+/* ---- paths -------------------------------------------------------------
+   A filesystem path is case-bearing and must be readable verbatim, so it
+   loses .mono's uppercasing and tracking. The list is a ruled register. */
+
+.xray-paths {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+/* Scoped to the list so it outranks .list li, which is a class plus a type
+   and would otherwise hold the paths at --fs-sm. */
+.xray-paths .xray-path {
+  padding-block: var(--sp-2);
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-normal);
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+/* A clean file still gets a ruled statement, so the "nothing found" case
+   reads as a result rather than as a section that failed to render. */
+.xray-clear {
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--line-strong);
+}
+
+.xray-credit {
+  font-size: var(--fs-sm);
 }

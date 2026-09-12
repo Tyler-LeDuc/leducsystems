@@ -2,8 +2,8 @@
 
 Marketing site for **LeDuc Systems LLC**. Live at <https://leducsystems.com>.
 
-The site is a small static React app: eleven routes, a shared design system, one working
-contact form, and three free tools that run entirely in the browser. There is no CMS, no
+The site is a small static React app: twelve routes, a shared design system, one working
+contact form, and four free tools that run entirely in the browser. There is no CMS, no
 backend, and no database — content lives in a single JavaScript module and the form posts
 directly to EmailJS from the browser.
 
@@ -30,23 +30,33 @@ a concrete reason; the site is deliberately dependency-light.
 ## Routes
 
 ```
-/                 Home
-/services         Services — the three-part offer, engagement models, tech, process
+/                 Home — the statement, the offer, prices, process, stack, FAQ
+/services         Redirect to `/`, hash preserved. No page of its own
 /agencies         For agencies — white-label capacity
 /about            About — why the company exists, principles
 /contact          Contact — the form, embedded
 /tools            Free tools — the index
 /tools/workbook   Free tool — reads what is running inside an Excel workbook
 /tools/folder     Free tool — maps the dependencies across a folder of workbooks
+/tools/access     Free tool — what moving off an Access database would involve
 /tools/schema     Free tool — pasted spreadsheet to Postgres schema
 /privacy          Privacy Policy
 /terms            Terms of Service
 *                 404
 ```
 
+`/services` was folded into the home page. The route survives because the URL is public
+and prerendered, so it redirects to `/` carrying its hash — `/services#rescue-the-data`
+still lands on that section. `LEGACY_ANCHORS` in `src/App.js` maps the three older pillar
+ids onto the current ones on top of that, and `src/App.test.js` covers all three. Never
+remove an entry from that map; only add. Nothing inside the site should link through
+`/services` — link the home anchor directly.
+
 Every route except `/` and `*` must also appear in `scripts/prerender.js`, which writes a
 real HTML file per route after the build so crawlers get a 200 instead of the GitHub Pages
-404 stub. `src/prerender.test.js` fails if the two lists drift.
+404 stub. `src/prerender.test.js` fails if the two lists drift. `public/sitemap.xml` is the
+third place a route has to be listed — except `/services`, which is deliberately absent
+because it is not a canonical URL.
 
 `public/404.html` performs the standard GitHub Pages SPA redirect so deep links resolve.
 
@@ -61,7 +71,7 @@ Styles are a five-layer cascade, imported in this exact order by `src/index.css`
 | `src/styles/tokens.css` | CSS custom properties only — color, type scale, spacing, radii, motion, layout widths |
 | `src/styles/base.css` | Reset and base element typography, focus states, `prefers-reduced-motion` |
 | `src/styles/components.css` | The shared class vocabulary every page composes from — `.section`, `.container`, `.panel`, `.btn`, `.eyebrow`, `.reveal`, and so on |
-| `src/styles/tools.css` | Shared vocabulary for the free tools — `.tool-finding`, `.tool-table`, `.tool-sql`, `.xray-drop`, the paste-field chrome. Every tool page composes from it |
+| `src/styles/tools.css` | Shared vocabulary for the free tools — `.tool-head`, `.tool-finding`, `.tool-table`, `.tool-sql`, `.tool-drop`, the paste-field chrome. Every tool page composes from it. It holds no hero: each tool page opens on its own input control and owns the title strip above it |
 | `src/styles/chrome.css` | Header, footer, mobile menu, contact form chrome |
 
 **Read `components.css` before writing JSX.** It is the contract — most layouts are
@@ -183,9 +193,11 @@ Contact address everywhere is **tyler@leducsystems.com**.
 
 ## Free tools
 
-Three pages that do real work in the visitor's browser, listed at `/tools` from the `TOOLS`
+Four pages that do real work in the visitor's browser, listed at `/tools` from the `TOOLS`
 export in `site.js`. They are lead assets: each must be genuinely useful on its own, and
-none of them may upload anything.
+none of them may upload anything. Each opens on its own input control — the drop zone or
+the paste field has to be usable without scrolling, because a hero in front of it defeats
+the point of having the tool.
 
 ### `/tools/access` — what moving off Access would involve
 

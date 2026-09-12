@@ -1,12 +1,222 @@
-/* Page-specific styles for /agencies.
+/* Page styles for /agencies — the rate sheet.
 
-   Only one rule: the index-over-title label stack used inside .row. The home
-   page has an identical rule as .home-diff__label. Duplicating three
-   properties is cheaper than promoting a two-use pattern into the shared
-   vocabulary in components.css — if a third page needs it, move it there. */
+   This page sells subcontract capacity to a different audience than the rest
+   of the site, and the question that audience arrives with is "what does an
+   hour cost". So the page opens on the answer: one bordered sheet holding a
+   title-block strip, the rate at display scale in mono, and the h1 set small
+   beside the figure rather than above it. Nothing has to be scrolled to
+   price us.
 
-.agencies-work__label {
+   Everything else composes from components.css. Nothing here restates a
+   shared rule — these are only the parts a rate card needs that no other
+   page does. */
+
+/* ── 00 The rate card ─────────────────────────────────────────────────────
+   Pulled up tight under the masthead: the payload is the arrival, so the
+   sheet starts a little below the header rather than a screen below it. */
+.section.agencies-masthead {
+  padding-top: var(--sp-7);
+  padding-bottom: var(--section-y-tight);
+}
+
+.agencies-sheet {
+  background: var(--paper-100);
+  border: 1px solid var(--line);
+}
+
+/* The standing facts, set as adjacent cells of a drawing's title block:
+   mono, ruled off from each other, no fill of their own. Its bottom edge is
+   this section's datum — the one heavy rule, closing the title strip rather
+   than sitting under a headline. */
+.agencies-stamp {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--line-heavy);
+}
+.agencies-stamp > li {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-5);
+  border-left: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--text-lo);
+}
+.agencies-stamp > li:first-child { border-left: 0; }
+
+/* The figure cell and the title cell, divided by the same hairline that
+   frames the sheet. */
+.agencies-sheet__body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+}
+
+.agencies-rate {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-2);
+  gap: var(--sp-4);
+  padding: var(--sp-6);
+}
+
+/* The one loud number on the site. Loud through scale and mono, not colour:
+   display size, tabular figures, set solid. */
+.agencies-rate__figure {
+  font-family: var(--font-mono);
+  font-size: var(--fs-display);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-hi);
+}
+/* Filed under the figure the way a unit note is filed under a dimension. */
+.agencies-rate__note {
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-base);
+  color: var(--text-lo);
+  max-width: 40ch;
+}
+.agencies-rate__why {
+  font-size: var(--fs-xs);
+  line-height: var(--lh-base);
+  color: var(--text-xlo);
+  max-width: 44ch;
+}
+
+/* The h1 is deliberately not the largest thing here — it labels the figure. */
+.agencies-sheet__title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-5);
+  padding: var(--sp-6);
+  border-left: 1px solid var(--line);
+}
+.agencies-sheet__h1 {
+  font-size: var(--fs-h3);
+  line-height: 1.14;
+  letter-spacing: var(--ls-snug);
+  color: var(--text-hi);
+  max-width: 22ch;
+}
+/* Scoped so it outranks .lede regardless of which sheet loads first. */
+.agencies-sheet__title .agencies-sheet__lede {
+  font-size: var(--fs-base);
+  max-width: 46ch;
+}
+
+/* Below this the two cells cannot both hold their content, so the sheet
+   becomes two stacked rows and every vertical divider turns horizontal. */
+@media (max-width: 860px) {
+  .agencies-sheet__body { grid-template-columns: minmax(0, 1fr); }
+  .agencies-sheet__title {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+@media (max-width: 620px) {
+  .agencies-stamp > li {
+    flex: 1 1 100%;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .agencies-stamp > li:first-child { border-top: 0; }
+  .agencies-rate,
+  .agencies-sheet__title { padding: var(--sp-5); }
+}
+
+/* ── 01 The work, and what is ruled out ──────────────────────────────────
+   The ruled rows carry the work; the exclusions run beside them in a narrow
+   column so the two answers arrive together instead of a screen apart. The
+   rows themselves are .row + .ordinal--boxed from components.css. */
+.agencies-scope {
+  display: grid;
+  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+  gap: var(--sp-9);
+  align-items: start;
+}
+@media (max-width: 960px) {
+  .agencies-scope {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-7);
+  }
+}
+
+/* The exclusions, filed under a heavy rule the way a "does not apply" note
+   is filed on a spec. */
+.agencies-fit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  padding-top: var(--sp-5);
+  border-top: 2px solid var(--text-hi);
+}
+.agencies-fit__list { gap: 0; }
+.agencies-fit__list li {
+  padding-block: var(--sp-3);
+  border-top: 1px solid var(--line);
+}
+.agencies-fit__list li:first-child { border-top: 0; }
+/* A struck cross replaces the em-rule leader: these are the lines ruled out. */
+.agencies-fit__list li::before {
+  content: "\00D7";
+  top: calc(var(--sp-3) + 0.18em);
+  width: auto;
+  height: auto;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: 1;
+  color: var(--text-xlo);
+}
+.agencies-fit__list li:first-child::before { top: 0.18em; }
+
+/* ── 02 Terms ────────────────────────────────────────────────────────────
+   Four cards, but drawn as one lattice: the gap is closed and the cells are
+   divided by the same hairline that frames them, so the block reads as a
+   ruled table of terms rather than four objects floating apart. */
+.agencies-terms {
+  gap: 0;
+  background: var(--paper-100);
+  border: 1px solid var(--line);
+}
+.agencies-terms > .card {
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.agencies-terms > .card:nth-child(-n + 2) { border-top: 0; }
+.agencies-terms > .card:nth-child(odd)    { border-left: 0; }
+
+/* Below 620px .grid--2 collapses to one column, so every divider that was
+   vertical becomes horizontal. */
+@media (max-width: 620px) {
+  .agencies-terms > .card,
+  .agencies-terms > .card:nth-child(-n + 2) {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .agencies-terms > .card:first-child { border-top: 0; }
+}
+
+/* ── 03 Next step ────────────────────────────────────────────────────────
+   The trial run sits beside the closing block rather than in a section of
+   its own, on a hairline that lines up with the cta-block's heavy one. */
+.agencies-close { align-items: start; }
+.agencies-trial {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--line);
 }

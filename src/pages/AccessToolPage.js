@@ -85,84 +85,96 @@ export default function AccessToolPage() {
         path="/tools/access"
       />
 
-      <section className="tool-hero" aria-labelledby="access-title">
+      {/* The arrival. Someone lands here to open a database, so the page
+          opens on the file control: the masthead is compressed to a single
+          ruled strip and everything else is ranged beside the control, not
+          stacked in front of it. */}
+      <section className="section access-open" aria-labelledby="access-title">
         <div className="bg-grid" aria-hidden="true" />
         <div className="container layer">
-          <Reveal className="stack stack--lg">
-            <div className="stack stack--sm">
-              <p className="eyebrow">A free tool</p>
-              <h1 id="access-title" className="display access-title">
-                What is actually in your Access database.
-              </h1>
+          <Reveal className="access-open__strip">
+            <p className="eyebrow">
+              <span className="ordinal">00</span>
+              <span>A free tool</span>
+            </p>
+            <h1 id="access-title" className="h3 access-open__title">
+              What is actually in your Access database.
+            </h1>
+          </Reveal>
+
+          <hr className="datum access-open__rule" />
+
+          <div className="access-open__grid">
+            <div className="access-open__control">
+              <div className="tool-field">
+                <p className="tool-field__label">Open a database</p>
+
+                <div className="tool-drop">
+                  <p className="body hi">Drop the file here</p>
+                  <p className="body--sm muted">or</p>
+                  <label className="btn btn--primary tool-drop__button">
+                    Choose a database
+                    <input
+                      className="tool-drop__input"
+                      type="file"
+                      accept={ACCEPT}
+                      onChange={(event) => {
+                        const file = event.target.files && event.target.files[0];
+                        event.target.value = '';
+                        analyse(file);
+                      }}
+                    />
+                  </label>
+                  <p className="body--sm muted">
+                    .mdb and .accdb, Access 97 onwards, up to{' '}
+                    {Math.round(MAX_BYTES / 1024 / 1024)}MB
+                  </p>
+                </div>
+              </div>
+
+              {state.status === 'reading' ? (
+                <p className="body muted" aria-hidden="true">
+                  Reading {state.name}…
+                </p>
+              ) : null}
+
+              {state.status === 'error' ? (
+                <p className="form-status form-status--error" role="alert">
+                  {state.message}
+                </p>
+              ) : null}
+
+              <p className="sr-only" role="status">
+                {state.status === 'reading' ? `Reading ${state.name}.` : ''}
+                {report
+                  ? `${state.name}: ${report.verdict.title} ${plural(report.findings.length, 'finding')}.`
+                  : ''}
+              </p>
+            </div>
+
+            {/* Beside the control, never in front of it: what the tool is
+                for, the way to hand the work to a person instead, and the
+                undertaking — which has to be specific to be worth anything,
+                because this asks someone to open a customer database on a
+                web page. It is ruled in ink: the one accent fill in this
+                viewport belongs to the control. */}
+            <div className="access-open__brief">
               <p className="lede">
                 Drop the .mdb or .accdb your business still runs on, and see what moving off it
                 would really involve.
               </p>
-            </div>
-
-            {/* Someone is being asked to drop a customer database onto a web
-                page. The guarantee has to be specific to be worth anything. */}
-            <div className="access-promise stack stack--sm">
-              <p className="body hi access-promise__claim">The file is never uploaded, and the records are never read.</p>
-              <p className="body--sm muted">
-                An Access file is a paged database. This reads its catalogue — the table
-                definitions, the column types, the row counts, and the list of forms, reports and
-                modules. The only rows it reads are the two system tables that describe the
-                database itself. Your customers, your invoices, your staff: never opened.
-              </p>
-              <p className="body--sm muted">
-                It all happens in this page. There is no server here to send a database to.
+              <Link className="btn btn--ghost" to="/contact">
+                Start a project
+              </Link>
+              <p className="tool-note">
+                The file is never uploaded, and the records are never read. This reads its
+                catalogue — the table definitions, the column types, the row counts, and the list
+                of forms, reports and modules. The only rows it reads are the two system tables
+                that describe the database itself. Your customers, your invoices, your staff:
+                never opened.
               </p>
             </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section section--rule" aria-labelledby="access-input">
-        <div className="container stack stack--lg">
-          <h2 className="h3" id="access-input">
-            Open a database
-          </h2>
-
-          <div className="tool-drop">
-            <p className="body hi">Drop the file here</p>
-            <p className="body--sm muted">or</p>
-            <label className="btn btn--primary tool-drop__button">
-              Choose a database
-              <input
-                className="tool-drop__input"
-                type="file"
-                accept={ACCEPT}
-                onChange={(event) => {
-                  const file = event.target.files && event.target.files[0];
-                  event.target.value = '';
-                  analyse(file);
-                }}
-              />
-            </label>
-            <p className="body--sm dim">
-              .mdb and .accdb, Access 97 onwards, up to {Math.round(MAX_BYTES / 1024 / 1024)}MB
-            </p>
           </div>
-
-          {state.status === 'reading' ? (
-            <p className="body muted" aria-hidden="true">
-              Reading {state.name}…
-            </p>
-          ) : null}
-
-          {state.status === 'error' ? (
-            <p className="form-status form-status--error" role="alert">
-              {state.message}
-            </p>
-          ) : null}
-
-          <p className="sr-only" role="status">
-            {state.status === 'reading' ? `Reading ${state.name}.` : ''}
-            {report
-              ? `${state.name}: ${report.verdict.title} ${plural(report.findings.length, 'finding')}.`
-              : ''}
-          </p>
         </div>
       </section>
 
@@ -170,13 +182,15 @@ export default function AccessToolPage() {
         <>
           <section className="section section--rule section--alt" aria-labelledby="access-verdict">
             <div className="container stack stack--lg">
-              <div className="stack stack--sm">
-                <p className="eyebrow">
+              <div className="tool-head">
+                <span className="ordinal">01</span>
+                <p className="code tool-ident tool-ident--lo">
                   {state.name} · {report.version}
                 </p>
                 <h2 className="h2" id="access-verdict">
                   {report.verdict.title}
                 </h2>
+                <hr className="datum" />
                 <p className="lede">{report.verdict.body}</p>
               </div>
 
@@ -223,10 +237,12 @@ export default function AccessToolPage() {
           {report.tables.length ? (
             <section className="section section--rule" aria-labelledby="access-tables">
               <div className="container stack stack--lg">
-                <div className="stack stack--sm">
+                <div className="tool-head">
+                  <span className="ordinal">02</span>
                   <h2 className="h3" id="access-tables">
                     The tables
                   </h2>
+                  <hr className="datum" />
                   <p className="body muted">
                     Row counts come from each table&rsquo;s own definition, not from reading the
                     rows.
@@ -246,7 +262,7 @@ export default function AccessToolPage() {
                     <tbody>
                       {report.tables.slice(0, MAX_TABLES).map((table) => (
                         <tr key={table.name}>
-                          <td className="mono access-name">{table.name}</td>
+                          <td className="mono tool-ident">{table.name}</td>
                           <td>{table.columns.length}</td>
                           <td>{table.rowCount == null ? '—' : table.rowCount.toLocaleString()}</td>
                           <td className="access-types">
@@ -261,7 +277,7 @@ export default function AccessToolPage() {
                 </div>
 
                 {report.tables.length > MAX_TABLES ? (
-                  <p className="body--sm dim">
+                  <p className="body--sm muted">
                     and {report.tables.length - MAX_TABLES} more, all of them in the schema below.
                   </p>
                 ) : null}
@@ -272,9 +288,13 @@ export default function AccessToolPage() {
           {report.relationships.length ? (
             <section className="section section--rule section--alt" aria-labelledby="access-rels">
               <div className="container stack stack--lg">
-                <h2 className="h3" id="access-rels">
-                  What joins to what
-                </h2>
+                <div className="tool-head">
+                  <span className="ordinal">03</span>
+                  <h2 className="h3" id="access-rels">
+                    What joins to what
+                  </h2>
+                  <hr className="datum" />
+                </div>
                 <ul className="list list--plain access-rels">
                   {report.relationships.slice(0, 40).map((relationship, index) => (
                     <li key={`${relationship.from}-${index}`} className="mono access-rel">
@@ -293,13 +313,15 @@ export default function AccessToolPage() {
           {report.sql ? (
             <section className="section section--rule" aria-labelledby="access-sql">
               <div className="container stack stack--lg">
-                <div className="cluster cluster--between">
+                <div className="tool-head tool-head--action">
+                  <span className="ordinal">04</span>
                   <h2 className="h3" id="access-sql">
                     The schema it should become
                   </h2>
-                  <button type="button" className="btn btn--ghost" onClick={copySql}>
+                  <button type="button" className="btn btn--ghost btn--sm" onClick={copySql}>
                     Copy SQL
                   </button>
+                  <hr className="datum" />
                 </div>
                 <pre className="tool-sql" tabIndex={0} role="region" aria-label="Generated schema">
                   <code>{report.sql}</code>
@@ -317,11 +339,15 @@ export default function AccessToolPage() {
 
       <section className="section section--rule" aria-labelledby="access-why">
         <div className="container container--narrow stack stack--lg">
-          <div className="stack stack--sm">
-            <p className="eyebrow">Why this exists</p>
+          <div className="tool-head">
+            <span className="tool-head__mark">
+              <span className="ordinal">05</span>
+              <span className="mono tool-head__tag">Why this exists</span>
+            </span>
             <h2 className="h3" id="access-why">
               The data is the part everyone worries about, and the part that moves fine.
             </h2>
+            <hr className="datum" />
           </div>
           <p className="body">
             Access quotes go wrong in a predictable way. Someone counts the tables, multiplies by a
@@ -333,27 +359,29 @@ export default function AccessToolPage() {
             This reads the file and separates the two halves, so the conversation starts from what
             is actually in there rather than from a guess.
           </p>
-          <div className="cluster">
-            <Link className="btn btn--primary" to="/contact">
-              Talk about moving off Access
-            </Link>
-            <Link className="btn btn--ghost" to="/tools">
-              The other free tools
-            </Link>
+          <div className="cta-block">
+            <div className="cluster">
+              <Link className="btn btn--primary" to="/contact">
+                Talk about moving off Access
+              </Link>
+              <Link className="btn btn--ghost" to="/tools">
+                The other free tools
+              </Link>
+            </div>
+            <p className="body muted">
+              Built by {SITE.founder}. The Jet and ACE reader is plain JavaScript with unit tests
+              against a real database, and no dependencies —{' '}
+              <a
+                className="link-underline"
+                href={`${SITE.github}/leducsystems`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                read it on GitHub
+              </a>
+              .
+            </p>
           </div>
-          <p className="body muted">
-            Built by {SITE.founder}. The Jet and ACE reader is plain JavaScript with unit tests
-            against a real database, and no dependencies —{' '}
-            <a
-              className="link-underline"
-              href={`${SITE.github}/leducsystems`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              read it on GitHub
-            </a>
-            .
-          </p>
         </div>
       </section>
     </>

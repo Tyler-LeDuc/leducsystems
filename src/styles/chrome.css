@@ -1,7 +1,13 @@
 /* =========================================================================
    Le Duc Systems — Chrome
    Header, navigation, mobile menu, footer, modal, and form shell.
-   Shared across the app. Tokens only — no colors outside the token set.
+
+   DIRECTION: the chrome is the titleblock and colophon of a drawing sheet.
+   The header is a solid paper bar ruled off from the page — no glass, no
+   blur, no shadow. The footer is a set of hairline-ruled columns with mono
+   headings. Nothing here floats; everything is registered to a rule.
+
+   Tokens only — no colors outside the token set.
    ========================================================================= */
 
 /* ── App shell ────────────────────────────────────────────────────────── */
@@ -10,6 +16,9 @@
 }
 
 /* ── Header ───────────────────────────────────────────────────────────── */
+/* Solid paper, one hairline at the bottom edge. Scrolling does not add a
+   shadow — it darkens the rule, the way a sheet edge reads when a page is
+   lifted off the stack. */
 .site-header {
   position: fixed;
   top: 0;
@@ -17,25 +26,18 @@
   right: 0;
   z-index: var(--z-header);
   height: var(--header-h);
-  background: color-mix(in srgb, var(--ink-000) 72%, transparent);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  backdrop-filter: blur(14px) saturate(140%);
-  border-bottom: 1px solid transparent;
-  transition: background-color var(--dur) var(--ease),
-              border-color var(--dur) var(--ease),
-              box-shadow var(--dur) var(--ease);
+  background: var(--paper-000);
+  border-bottom: 1px solid var(--line);
+  transition: border-color var(--dur) var(--ease);
 }
 .site-header--scrolled {
-  background: color-mix(in srgb, var(--ink-000) 90%, transparent);
-  border-bottom-color: var(--line);
-  box-shadow: var(--shadow-sm);
+  border-bottom-color: var(--line-strong);
 }
 
 .site-header__inner {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--sp-5);
+  align-items: stretch;
+  gap: 0;
   height: 100%;
   width: 100%;
   max-width: var(--container);
@@ -44,37 +46,53 @@
 }
 
 /* ── Brand ────────────────────────────────────────────────────────────── */
+/* A stamp, not a logo: the mark boxed in a hairline, the wordmark set in
+   mono at caps tracking. */
 .brand {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-3);
   flex: none;
   color: var(--text-hi);
-  transition: opacity var(--dur) var(--ease);
+  transition: color var(--dur) var(--ease);
 }
-.brand:hover { opacity: 0.86; }
+.brand:hover { color: var(--accent-600); }
 
 .brand__mark {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   flex: none;
   object-fit: contain;
+  padding: 2px;
+  border: 1px solid var(--line);
+  background: var(--paper-100);
 }
 
 .brand__text {
-  font-size: var(--fs-base);
-  font-weight: 600;
-  letter-spacing: var(--ls-snug);
-  color: var(--text-hi);
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  line-height: 1;
+  color: currentColor;
   white-space: nowrap;
 }
 
+/* The header brand sits in its own titleblock cell, ruled off from the nav. */
+.site-header .brand {
+  align-self: stretch;
+  padding-right: var(--sp-5);
+  border-right: 1px solid var(--line);
+}
+
 /* ── Desktop navigation ───────────────────────────────────────────────── */
+/* Ranged left off the brand rule, not centred in the bar. */
 .nav {
   display: flex;
   align-items: center;
-  gap: var(--sp-6);
-  margin-inline: auto;
+  margin-left: var(--sp-6);
+  margin-right: auto;
 }
 .nav ul {
   display: flex;
@@ -85,9 +103,12 @@
 .nav__link {
   position: relative;
   display: inline-block;
-  padding-block: 6px;
-  font-size: var(--fs-sm);
+  padding-block: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
   font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
   color: var(--text-lo);
   transition: color var(--dur) var(--ease);
 }
@@ -98,7 +119,7 @@
   right: 0;
   bottom: 0;
   height: 1px;
-  background: var(--accent-400);
+  background: var(--accent-500);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform var(--dur) var(--ease);
@@ -116,6 +137,7 @@
   align-items: center;
   gap: var(--sp-3);
   flex: none;
+  align-self: center;
 }
 
 /* ── Menu toggle ──────────────────────────────────────────────────────── */
@@ -127,34 +149,44 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  margin-right: -12px;
-  border-radius: var(--r-sm);
+  border: 1px solid var(--line);
+  background: transparent;
   color: var(--text-hi);
-  transition: background-color var(--dur) var(--ease);
+  transition: background-color var(--dur) var(--ease),
+              border-color var(--dur) var(--ease);
 }
-.menu-toggle:hover { background: var(--ink-150); }
+.menu-toggle:hover {
+  background: var(--paper-200);
+  border-color: var(--line-strong);
+}
+.menu-toggle[aria-expanded="true"] {
+  background: var(--paper-200);
+  border-color: var(--line-strong);
+}
 
 .menu-toggle__bar {
   display: block;
-  width: 20px;
-  height: 1.5px;
+  width: 18px;
+  height: 1px;
   background: currentColor;
-  border-radius: var(--r-full);
   transition: transform var(--dur) var(--ease-inout),
               opacity var(--dur-fast) var(--ease-inout);
 }
 .menu-toggle[aria-expanded="true"] .menu-toggle__bar:nth-child(1) {
-  transform: translateY(6.5px) rotate(45deg);
+  transform: translateY(6px) rotate(45deg);
 }
 .menu-toggle[aria-expanded="true"] .menu-toggle__bar:nth-child(2) {
   opacity: 0;
   transform: scaleX(0.4);
 }
 .menu-toggle[aria-expanded="true"] .menu-toggle__bar:nth-child(3) {
-  transform: translateY(-6.5px) rotate(-45deg);
+  transform: translateY(-6px) rotate(-45deg);
 }
 
 /* ── Mobile menu ──────────────────────────────────────────────────────── */
+/* Full-bleed paper. Rows are separated by hairlines that run edge to edge,
+   each numbered with a mono ordinal in the left margin — an index, not a
+   list of buttons. */
 .mobile-menu {
   position: fixed;
   top: var(--header-h);
@@ -164,15 +196,15 @@
   z-index: var(--z-menu);
   display: none;
   flex-direction: column;
-  gap: var(--sp-1);
-  padding: var(--sp-6) var(--gutter) var(--sp-9);
+  gap: 0;
+  padding: 0 0 var(--sp-9);
   overflow-y: auto;
   overscroll-behavior: contain;
-  background: var(--ink-000);
+  background: var(--paper-000);
   border-top: 1px solid var(--line);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-10px);
+  transform: translateY(-8px);
   pointer-events: none;
   transition: opacity var(--dur) var(--ease),
               transform var(--dur) var(--ease),
@@ -191,32 +223,52 @@
 .mobile-menu ul {
   display: flex;
   flex-direction: column;
+  counter-reset: mobile-nav;
 }
+.mobile-menu li { counter-increment: mobile-nav; }
 
 .mobile-menu__link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 3.5ch minmax(0, 1fr);
+  align-items: baseline;
   gap: var(--sp-4);
-  padding-block: var(--sp-4);
-  min-height: 56px;
+  padding: var(--sp-5) var(--gutter);
+  min-height: 64px;
   font-size: var(--fs-h3);
-  font-weight: 550;
-  letter-spacing: var(--ls-snug);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
   color: var(--text-lo);
   border-bottom: 1px solid var(--line);
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(10px);
   transition: color var(--dur) var(--ease),
+              background-color var(--dur) var(--ease),
               opacity var(--dur-slow) var(--ease),
               transform var(--dur-slow) var(--ease);
 }
-.mobile-menu__link:hover,
-.mobile-menu__link[aria-current="page"] { color: var(--text-hi); }
+/* The ordinal. Ink, never accent — it numbers the row, it does not signal. */
+.mobile-menu__link::before {
+  content: counter(mobile-nav, decimal-leading-zero);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 400;
+  letter-spacing: var(--ls-mono);
+  line-height: inherit;
+  color: var(--text-xlo);
+  transition: color var(--dur) var(--ease);
+}
+.mobile-menu__link:hover { color: var(--text-hi); }
+.mobile-menu__link[aria-current="page"] {
+  color: var(--text-hi);
+  background: var(--paper-050);
+}
+.mobile-menu__link[aria-current="page"]::before { color: var(--text-hi); }
+
 .mobile-menu--open .mobile-menu__link {
   opacity: 1;
   transform: none;
-  transition-delay: 0s, var(--menu-delay, 0ms), var(--menu-delay, 0ms);
+  transition-delay: 0s, 0s, var(--menu-delay, 0ms), var(--menu-delay, 0ms);
 }
 
 .mobile-menu__actions {
@@ -224,8 +276,9 @@
   flex-direction: column;
   gap: var(--sp-3);
   margin-top: var(--sp-7);
+  padding-inline: var(--gutter);
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(10px);
   transition: opacity var(--dur-slow) var(--ease),
               transform var(--dur-slow) var(--ease);
 }
@@ -241,19 +294,25 @@
   .nav__actions .btn { display: none; }
   .menu-toggle { display: flex; }
   .mobile-menu { display: flex; }
+  /* Nothing left to rule off from once the nav goes. */
+  .site-header .brand { border-right: 0; padding-right: 0; }
+  .site-header__inner { justify-content: space-between; }
 }
 
 /* ── Footer ───────────────────────────────────────────────────────────── */
+/* The colophon. Ruled columns, mono headings numbered like clauses, every
+   line ranged left off its own rule. */
 .site-footer {
-  background: var(--ink-050);
-  border-top: 1px solid var(--line);
+  background: var(--paper-050);
+  border-top: 1px solid var(--line-strong);
 }
 
 .site-footer__top {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
-  gap: var(--sp-7);
-  padding-block: var(--sp-9);
+  grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+  gap: 0;
+  padding-block: var(--sp-9) var(--sp-8);
+  counter-reset: colophon;
 }
 
 .site-footer__brand {
@@ -261,24 +320,42 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--sp-4);
-  max-width: 38ch;
+  max-width: 40ch;
+  padding-right: var(--sp-8);
 }
 
 .site-footer__col {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--sp-3);
+  gap: var(--sp-2);
+  counter-increment: colophon;
+  padding-inline: var(--sp-5) var(--sp-4);
+  border-left: 1px solid var(--line);
+}
+/* Clause number above the ruled heading. Plain zero-padded decimals, the
+   same ordinal form every page spine and every CSS counter on the site
+   uses — the colophon is not a different numbering system. */
+.site-footer__col::before {
+  content: counter(colophon, decimal-leading-zero);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  color: var(--text-xlo);
+  margin-bottom: var(--sp-2);
 }
 
 .site-footer__title {
+  align-self: stretch;
+  padding-bottom: var(--sp-2);
+  margin-bottom: var(--sp-2);
+  border-bottom: 1px solid var(--line);
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
   font-weight: 500;
   letter-spacing: var(--ls-mono);
   text-transform: uppercase;
-  color: var(--text-xlo);
-  margin-bottom: var(--sp-1);
+  color: var(--text-hi);
 }
 
 .site-footer__link {
@@ -292,20 +369,23 @@
 
 .site-footer__bottom {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--sp-3) var(--sp-6);
   padding-block: var(--sp-5);
   border-top: 1px solid var(--line);
-  font-size: var(--fs-xs);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
   color: var(--text-xlo);
 }
 
 .site-footer__legal {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: baseline;
   gap: var(--sp-5);
 }
 
@@ -344,8 +424,20 @@
   }
 }
 
+/* Below the widest breakpoint the vertical rules stop paying their way —
+   the columns stack, so the hairlines lie down with them. */
 @media (max-width: 960px) {
-  .site-footer__top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer__top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-7) var(--sp-6);
+  }
+  .site-footer__brand { padding-right: 0; }
+  .site-footer__col {
+    padding-inline: 0;
+    padding-top: var(--sp-5);
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
 }
 @media (max-width: 720px) {
   .site-footer__top {
@@ -356,6 +448,7 @@
 }
 
 /* ── Modal ────────────────────────────────────────────────────────────── */
+/* A sheet laid on a dimmed page. No blur, no radius, no lift. */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -365,8 +458,6 @@
   justify-content: center;
   padding: var(--sp-5);
   background: var(--scrim);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
   overflow-y: auto;
   overscroll-behavior: contain;
   animation: modal-overlay-in var(--dur) var(--ease) both;
@@ -380,26 +471,27 @@
   max-width: 720px;
   max-height: 88dvh;
   margin-block: auto;
-  background: var(--ink-100);
+  background: var(--paper-100);
   border: 1px solid var(--line-strong);
-  border-radius: var(--r-xl);
-  box-shadow: var(--shadow-lg);
   overflow: hidden;
   animation: modal-in var(--dur-slow) var(--ease) both;
 }
 
+/* The head is the sheet's titleblock: banded paper, closed off by the one
+   heavy datum rule this surface is allowed. */
 .modal__head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--sp-5);
   flex: none;
-  padding: var(--sp-6) var(--sp-6) var(--sp-5);
-  border-bottom: 1px solid var(--line);
+  padding: var(--sp-5) var(--sp-6);
+  background: var(--paper-050);
+  border-bottom: 1px solid var(--line-heavy);
 }
 
 .modal__title {
-  font-size: var(--fs-h3);
+  font-size: var(--fs-h4);
   font-weight: 600;
   line-height: var(--lh-snug);
   letter-spacing: var(--ls-snug);
@@ -412,13 +504,19 @@
   width: 44px;
   height: 44px;
   flex: none;
-  margin: -10px -10px 0 0;
-  border-radius: var(--r-full);
+  margin: -10px -14px -10px 0;
+  border: 1px solid transparent;
   color: var(--text-lo);
-  transition: color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+  transition: color var(--dur) var(--ease),
+              background-color var(--dur) var(--ease),
+              border-color var(--dur) var(--ease);
 }
-.modal__close:hover { color: var(--text-hi); background: var(--ink-200); }
-.modal__close svg { width: 18px; height: 18px; }
+.modal__close:hover {
+  color: var(--text-hi);
+  background: var(--paper-200);
+  border-color: var(--line);
+}
+.modal__close svg { width: 16px; height: 16px; }
 
 .modal__body {
   flex: 1 1 auto;
@@ -435,9 +533,8 @@
     height: 100dvh;
     max-height: 100dvh;
     border: 0;
-    border-radius: 0;
   }
-  .modal__head { padding: var(--sp-5) var(--sp-5) var(--sp-4); }
+  .modal__head { padding: var(--sp-4) var(--sp-5); }
   .modal__body { padding: var(--sp-5); }
 }
 
@@ -445,8 +542,9 @@
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+/* Fade and a short rise. No scale — a sheet does not grow. */
 @keyframes modal-in {
-  from { opacity: 0; transform: translateY(18px) scale(0.985); }
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -458,63 +556,68 @@
   gap: var(--sp-5);
 }
 
+/* Actions are ruled off from the fields, the way a form's signature block
+   sits below a hairline. Ranged left, matching the field grid above it. */
 .form-actions {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  gap: var(--sp-4);
-  padding-top: var(--sp-1);
+  gap: var(--sp-5);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--line);
 }
 @media (max-width: 620px) {
   .form-actions {
     flex-direction: column-reverse;
     align-items: stretch;
     justify-content: flex-start;
+    gap: var(--sp-4);
   }
   .form-actions > * { width: 100%; }
   .form-actions .btn { width: 100%; }
 }
 
+/* Ranged left, not a centred confirmation card. */
 .form-success {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--sp-4);
-  padding-block: var(--sp-8);
-  text-align: center;
+  padding-block: var(--sp-7) var(--sp-8);
+  text-align: left;
 }
-.form-success > * { max-width: 52ch; }
+.form-success > * { max-width: 56ch; }
 
 .form-success__mark {
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
+  width: 40px;
+  height: 40px;
   flex: none;
-  border-radius: var(--r-full);
   background: var(--accent-wash);
   border: 1px solid var(--line-accent);
-  color: var(--accent-300);
-  font-size: var(--fs-xl);
+  color: var(--accent-600);
+  font-family: var(--font-mono);
+  font-size: var(--fs-lg);
   line-height: 1;
-  animation: success-mark-in var(--dur-slow) var(--ease) both;
+  animation: success-mark-in var(--dur) var(--ease) both;
 }
 .form-success__mark:empty::after { content: "\2713"; }
-.form-success__mark svg { width: 24px; height: 24px; }
+.form-success__mark svg { width: 20px; height: 20px; }
 
 @keyframes success-mark-in {
-  from { opacity: 0; transform: scale(0.7); }
-  to   { opacity: 1; transform: none; }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-/* Indeterminate submit progress bar. */
+/* Indeterminate submit progress bar — a square tick running a hairline
+   track, not a glowing pill. */
 .form-progress {
   position: relative;
   width: 100%;
   height: 2px;
   flex: none;
-  border-radius: var(--r-full);
   background: var(--line);
   overflow: hidden;
 }
@@ -523,13 +626,12 @@
   position: absolute;
   inset-block: 0;
   left: 0;
-  width: 38%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--accent-600), var(--accent-400));
+  width: 22%;
+  background: var(--accent-500);
   animation: form-progress-slide var(--dur-loop) var(--ease-inout) infinite;
 }
 
 @keyframes form-progress-slide {
   from { transform: translateX(-100%); }
-  to   { transform: translateX(363%); }
+  to   { transform: translateX(555%); }
 }

@@ -1,46 +1,138 @@
-/* Access exit report. The .tool-* vocabulary (drop zone, findings, fact
-   tiles, datasheet table, SQL block) lives in src/styles/tools.css; this
-   file carries only what this page adds. */
+/* Access exit report — page-specific rules only.
 
-.access-title {
-  max-width: 20ch;
+   Everything structural comes from src/styles/tools.css: the numbered
+   section head (.tool-head), the field label, the drop zone, the marginal
+   note, the findings rows, the fact columns, the datasheet table, the SQL
+   block and the identifier cells. This page composes from all of it.
+
+   What is left here is its arrival, and the one thing no other tool has:
+   the schedule of what joins to what. */
+
+/* ---- the arrival -------------------------------------------------------
+   The tool is the page, so the page opens on the control. There is no
+   shared tool hero any more: a full title block above the drop zone puts
+   the one thing this page exists for below the fold.
+
+   What is left of the masthead is a single strip — ordinal, label, title —
+   ruled off by the section's one datum, with the drop zone directly under
+   it and the prose ranged beside it in a second column. The workbook,
+   folder and schema tools open on the same skeleton, so the set reads as
+   one family of instruments.
+
+   The accent budget for this viewport is spent on "Choose a database": the
+   note beside it is ruled in ink, and the call to action is a ghost. */
+
+.access-open {
+  /* Tight, not the standard --section-y: every pixel above the drop zone
+     is a pixel of it lost off the bottom of an 800px viewport. */
+  padding-block: var(--sp-6) var(--sp-8);
 }
 
-/* The guarantee has to be the loudest thing in the hero: someone is being
-   asked to drop a customer database onto a web page. */
-.access-promise {
-  max-width: 62ch;
-  padding: var(--sp-6);
-  border-left: 2px solid var(--accent-500);
+.access-open__strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-3) var(--sp-6);
 }
 
-.access-promise__claim {
-  max-width: none;
-  font-size: var(--fs-lg);
-  line-height: var(--lh-snug);
-  letter-spacing: var(--ls-snug);
+/* Short measure so the title breaks into two lines at most and never
+   crowds the ordinal beside it. */
+.access-open__title {
+  max-width: 26ch;
+  text-wrap: balance;
 }
 
-/* Table and column names are identifiers the reader has to match against
-   their own database, so they keep the case the file uses. */
-.access-name {
-  text-transform: none;
-  overflow-wrap: anywhere;
+.access-open__rule {
+  margin-top: var(--sp-4);
+  margin-bottom: var(--sp-6);
 }
+
+/* Control column first and wider: it is the payload. The brief is the
+   narrower column, fenced off by the hairline it hangs on. */
+.access-open__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: var(--sp-7);
+  align-items: start;
+}
+
+.access-open__control,
+.access-open__brief {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-5);
+}
+
+/* Both columns range their children left, which sizes them to their
+   content. The blocks that carry a rule, a border or a full-width well
+   have to be a decision rather than a by-product of their text length. */
+.access-open__control > .tool-field,
+.access-open__control > .form-status,
+.access-open__brief > .lede,
+.access-open__brief > .tool-note {
+  align-self: stretch;
+}
+
+.access-open__brief {
+  padding-left: var(--sp-7);
+  border-left: 1px solid var(--line);
+}
+
+@media (max-width: 860px) {
+  .access-open__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-6);
+  }
+
+  /* Stacked, the fence between the columns becomes a rule above the
+     brief — the same separation drawn the other way round. */
+  .access-open__brief {
+    padding-left: 0;
+    padding-top: var(--sp-5);
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 620px) {
+  .access-open {
+    padding-block: var(--sp-5) var(--sp-7);
+  }
+
+  .access-open__rule {
+    margin-top: var(--sp-3);
+    margin-bottom: var(--sp-5);
+  }
+}
+
+/* ---- the schedule of tables --------------------------------------------- */
 
 .access-types {
   color: var(--text-lo);
   font-size: var(--fs-xs);
 }
 
+/* ---- what joins to what -------------------------------------------------
+   A ruled register, set the same way the workbook tool sets its register of
+   hard-coded paths: one row per relationship, hairline between, identifiers
+   in the case the database actually uses.
+
+   Scoped through the list so it outranks `.list li` — a class plus a type,
+   which would otherwise hold these rows at --fs-sm in secondary ink. */
+
 .access-rels {
   display: grid;
-  gap: var(--sp-1);
+  gap: 0;
+  border-top: 1px solid var(--line-strong);
 }
 
-.access-rel {
-  color: var(--text-lo);
-  font-size: var(--fs-mono);
+.access-rels .access-rel {
+  padding-block: var(--sp-2);
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-normal);
   text-transform: none;
   overflow-wrap: anywhere;
 }

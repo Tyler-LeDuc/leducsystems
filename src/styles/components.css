@@ -1,5 +1,19 @@
 /* =========================================================================
    Le Duc Systems — Component & utility vocabulary
+
+   The shared language of the site: an engineering document set in warm paper
+   and black ink. Structure is carried by hairline rules, ordinal numbering
+   and a strict grid — never by cards floating on glow.
+
+   Four habits this file enforces:
+     1. Rules, not boxes. A list of three things is three ruled rows.
+     2. Mono carries every ordinal, label, unit and caption.
+     3. One accent. Signal orange marks what is interactive, nothing else.
+     4. Accent as INK is --accent-600; accent as a FILL, rule or focus ring
+        is --accent-500. The 500 is drawn to be seen as an area — as type on
+        paper it lands a shade under the contrast floor, and the 600 clears
+        it comfortably. Never set --accent-500 as a text colour.
+
    Every page is built from these classes. Do not write inline style objects.
    ========================================================================= */
 
@@ -19,7 +33,7 @@
 }
 .section--tight { padding-block: var(--section-y-tight); }
 .section--flush-top { padding-top: 0; }
-.section--alt  { background: var(--ink-050); }
+.section--alt  { background: var(--paper-050); }
 .section--rule { border-top: 1px solid var(--line); }
 
 .stack { display: flex; flex-direction: column; gap: var(--sp-5); }
@@ -35,7 +49,6 @@
   gap: var(--sp-3);
 }
 .cluster--lg { gap: var(--sp-5); }
-.cluster--center { justify-content: center; }
 .cluster--between { justify-content: space-between; align-items: baseline; }
 
 .grid { display: grid; gap: var(--sp-5); }
@@ -62,37 +75,81 @@
   margin: 0;
 }
 
-/* Closing call to action. Every page ends with one of these. */
+/* The datum. An 0.85-alpha near-black rule that sits directly under a section
+   heading and runs the full width of the content column. Exactly one per
+   major section — nothing else on the site draws this weight. It is what
+   makes a page read as a drawing sheet rather than a web page. */
+.datum {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--line-heavy);
+}
+.datum--soft { background: var(--line-strong); }
+
+/* Closing call to action. Every page ends with one of these: a left-ranged
+   band opened by its own datum, never a centred column of buttons. */
 .cta-block {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--sp-5);
-  text-align: center;
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--line-heavy);
+  text-align: left;
 }
-.cta-block > * { max-width: min(100%, 40rem); }
-.cta-block .cluster { justify-content: center; }
+.cta-block > * { max-width: min(100%, 52ch); }
+.cta-block > .cluster,
+.cta-block > .datum { max-width: 100%; }
+.cta-block .cluster { justify-content: flex-start; }
 
 /* ── Type ─────────────────────────────────────────────────────────────── */
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-2);
+/* A mono ordinal: 00, 01, A, B. Sits above or to the left of the thing it
+   numbers. This is the site's counting device — it replaced the eyebrow. */
+.ordinal {
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
   font-weight: 500;
-  letter-spacing: var(--ls-mono);
+  letter-spacing: var(--ls-caps);
+  font-variant-numeric: tabular-nums;
   text-transform: uppercase;
-  color: var(--accent-400);
+  color: var(--text-xlo);
 }
-.eyebrow::before {
-  content: "";
-  width: 22px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.55;
+.ordinal--hi { color: var(--text-hi); }
+/* A callout balloon, as on a drawing: the number boxed by a hairline. */
+.ordinal--boxed {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  padding: 3px 6px;
+  color: var(--text-hi);
+  border: 1px solid var(--line-strong);
 }
-.eyebrow--bare::before { display: none; }
+
+/* Retained class name, new idea: an ordinal + label pair, no leading dash. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  color: var(--text-xlo);
+}
+/* When a page supplies an ordinal, the label after it is fenced off by a
+   hairline — the way a field is separated from its value on a title block. */
+.eyebrow > .ordinal + * {
+  padding-left: var(--sp-3);
+  border-left: 1px solid var(--line);
+}
+.eyebrow--bare { gap: var(--sp-2); }
 
 .display {
   font-size: var(--fs-display);
@@ -101,37 +158,55 @@
   letter-spacing: var(--ls-tight);
   color: var(--text-hi);
 }
-.h1 { font-size: var(--fs-h1); line-height: 1.08; letter-spacing: var(--ls-tight); }
-.h2 { font-size: var(--fs-h2); line-height: 1.14; letter-spacing: var(--ls-tight); }
-.h3 { font-size: var(--fs-h3); line-height: 1.25; letter-spacing: var(--ls-snug); }
-.h4 { font-size: var(--fs-h4); line-height: 1.35; letter-spacing: var(--ls-snug); }
+.h1 { font-size: var(--fs-h1); line-height: 1.02; letter-spacing: var(--ls-tight); color: var(--text-hi); }
+.h2 { font-size: var(--fs-h2); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--text-hi); }
+.h3 { font-size: var(--fs-h3); line-height: 1.2; letter-spacing: var(--ls-snug); color: var(--text-hi); }
+.h4 { font-size: var(--fs-h4); line-height: 1.3; letter-spacing: var(--ls-snug); color: var(--text-hi); }
 
 .lede {
   font-size: var(--fs-lg);
   line-height: var(--lh-loose);
   color: var(--text-lo);
-  max-width: 62ch;
+  max-width: 56ch;
 }
-.body     { font-size: var(--fs-base); color: var(--text); max-width: 68ch; }
+.body     { font-size: var(--fs-base); color: var(--text); max-width: 68ch; line-height: var(--lh-base); }
 .body--sm { font-size: var(--fs-sm); }
 .muted    { color: var(--text-lo); }
 .dim      { color: var(--text-xlo); }
 .hi       { color: var(--text-hi); }
-.accent   { color: var(--accent-400); }
+.accent   { color: var(--accent-600); }
 .mono {
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
-  letter-spacing: var(--ls-mono);
+  letter-spacing: var(--ls-caps);
+  font-variant-numeric: tabular-nums;
   text-transform: uppercase;
   color: var(--text-xlo);
 }
-.center { text-align: center; }
-.center .lede, .center .body { margin-inline: auto; }
-
-.section-head { display: flex; flex-direction: column; gap: var(--sp-4); max-width: 66ch; }
-.section-head--center { align-items: center; text-align: center; margin-inline: auto; }
+/* Identifiers and data read in normal case at reading size, not as a label. */
+.code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  letter-spacing: var(--ls-normal);
+  color: var(--text);
+}
+/* Ranged left, with no opt-out. The `.center` and `.section-head--center`
+   utilities that used to live here had no consumers left and existed only
+   to make it easy to put a hero or a call to action back in the middle of
+   the page, which is the single thing this direction is most against. */
+.section-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  max-width: 66ch;
+  text-align: left;
+}
+.section-head > .datum { margin-block: var(--sp-1); }
 
 /* ── Buttons ──────────────────────────────────────────────────────────── */
+/* Rectangular, flat, sentence case. Hover moves colour and border — never
+   the button itself. */
 .btn {
   --btn-bg: transparent;
   --btn-fg: var(--text-hi);
@@ -140,48 +215,52 @@
   align-items: center;
   justify-content: center;
   gap: var(--sp-2);
-  padding: 12px 22px;
+  padding: 13px 24px;
   font-size: var(--fs-sm);
-  font-weight: 550;
+  font-weight: 500;
   letter-spacing: var(--ls-wide);
-  line-height: 1;
+  text-transform: none;
+  line-height: 1.15;
   white-space: nowrap;
   max-width: 100%;
   color: var(--btn-fg);
   background: var(--btn-bg);
   border: 1px solid var(--btn-bd);
-  border-radius: var(--r-full);
+  border-radius: 0;
   cursor: pointer;
-  transition: transform var(--dur) var(--ease),
-              background-color var(--dur) var(--ease),
+  transition: background-color var(--dur) var(--ease),
               border-color var(--dur) var(--ease),
-              box-shadow var(--dur) var(--ease),
               color var(--dur) var(--ease);
 }
-.btn:hover { transform: translateY(-1px); }
-.btn:active { transform: translateY(0); }
 .btn:disabled,
 .btn[aria-disabled="true"] {
   opacity: 0.45;
   cursor: not-allowed;
-  transform: none;
 }
 
+/* Filled with --accent-600, not --accent-500: the label is 15px, so it needs
+   4.5:1, and --text-on-accent sits at 4.3:1 on 500 against 5.9:1 on 600. */
 .btn--primary {
-  --btn-bg: var(--accent-500);
+  --btn-bg: var(--accent-600);
   --btn-fg: var(--text-on-accent);
-  --btn-bd: var(--accent-500);
-  box-shadow: var(--shadow-accent);
+  --btn-bd: var(--accent-600);
 }
-.btn--primary:hover:not(:disabled):not([aria-disabled="true"]) { --btn-bg: var(--accent-400); --btn-bd: var(--accent-400); }
+.btn--primary:hover:not(:disabled):not([aria-disabled="true"]) { --btn-bg: var(--accent-700); --btn-bd: var(--accent-700); }
+.btn--primary:active:not(:disabled):not([aria-disabled="true"]) { --btn-bg: var(--accent-700); --btn-bd: var(--accent-700); filter: brightness(0.9); }
+/* An accent fill needs its ring drawn inside, in the text colour. */
+.btn--primary:focus-visible {
+  outline: 2px solid var(--text-on-accent);
+  outline-offset: -5px;
+}
 
 .btn--ghost { --btn-bg: transparent; --btn-fg: var(--text-hi); --btn-bd: var(--line-strong); }
-.btn--ghost:hover:not(:disabled):not([aria-disabled="true"])   { --btn-bg: var(--surface-wash); --btn-bd: var(--line-accent); }
+.btn--ghost:hover:not(:disabled):not([aria-disabled="true"])   { --btn-bg: var(--paper-200); --btn-bd: var(--line-heavy); }
+.btn--ghost:active:not(:disabled):not([aria-disabled="true"])  { --btn-bg: var(--paper-300); }
 
 .btn--quiet { --btn-bd: transparent; --btn-fg: var(--text-lo); padding-inline: 12px; }
 .btn--quiet:hover:not(:disabled):not([aria-disabled="true"])   { --btn-fg: var(--text-hi); --btn-bg: var(--surface-wash); }
 
-.btn--lg { padding: 15px 30px; font-size: var(--fs-base); }
+.btn--lg { padding: 16px 32px; font-size: var(--fs-base); }
 .btn--sm { padding: 9px 16px; font-size: var(--fs-xs); }
 .btn--block { width: 100%; }
 
@@ -196,57 +275,84 @@
   align-items: center;
   gap: var(--sp-2);
   font-size: var(--fs-sm);
-  font-weight: 550;
-  color: var(--accent-400);
+  font-weight: 500;
+  letter-spacing: var(--ls-wide);
+  color: var(--accent-600);
   transition: color var(--dur) var(--ease);
 }
 .link-arrow::after {
   content: "\2192";
-  transition: transform var(--dur) var(--ease);
+  transition: transform var(--dur-fast) var(--ease);
 }
-.link-arrow:hover { color: var(--accent-300); }
-.link-arrow:hover::after { transform: translateX(4px); }
+.link-arrow:hover { color: var(--accent-700); }
+.link-arrow:hover::after { transform: translateX(3px); }
 
 .link-underline {
   color: var(--text-hi);
-  border-bottom: 1px solid var(--line-accent);
+  border-bottom: 1px solid var(--line-strong);
   transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
-.link-underline:hover { color: var(--accent-300); border-color: var(--accent-400); }
+.link-underline:hover { color: var(--accent-600); border-color: var(--accent-500); }
 
 /* ── Surfaces ─────────────────────────────────────────────────────────── */
+/* Reach for a card only when the content genuinely is a discrete object —
+   a pricing tier, a tool. Three related statements are three ruled rows. */
 .card {
   position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--sp-4);
   padding: var(--sp-6);
-  background: var(--ink-100);
+  background: var(--paper-100);
   border: 1px solid var(--line);
-  border-radius: var(--r-lg);
+  border-radius: 0;
+  box-shadow: none;
+  transition: border-color var(--dur) var(--ease),
+              background-color var(--dur) var(--ease);
 }
 .card--flush { background: transparent; border-color: transparent; padding: 0; }
 .card--outline { background: transparent; }
+/* The sheet's headline object: same paper, a heavier rule across the top. */
 .card--feature {
-  background: linear-gradient(160deg, var(--ink-150), var(--ink-100) 62%);
+  background: var(--paper-100);
+  border-color: var(--line-strong);
+  border-top: 2px solid var(--text-hi);
+  padding-top: calc(var(--sp-6) - 1px);
+}
+.card--interactive:hover {
+  background: var(--paper-200);
   border-color: var(--line-strong);
 }
 
+/* A drawing callout: the mono ordinal that names the object it sits on. */
 .card__index {
+  align-self: flex-start;
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
-  letter-spacing: var(--ls-mono);
-  color: var(--accent-400);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  color: var(--text-xlo);
 }
-.card__title { font-size: var(--fs-h4); color: var(--text-hi); font-weight: 600; }
+.card > .card__index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  padding: 3px 6px;
+  color: var(--text-hi);
+  border: 1px solid var(--line-strong);
+}
+.card__title { font-size: var(--fs-h4); color: var(--text-hi); font-weight: 600; letter-spacing: var(--ls-snug); }
 .card__body  { font-size: var(--fs-sm); color: var(--text-lo); line-height: var(--lh-base); }
 
 .panel {
   padding: var(--sp-7);
-  background: var(--ink-100);
+  background: var(--paper-100);
   border: 1px solid var(--line);
-  border-radius: var(--r-xl);
-  box-shadow: var(--shadow-md);
+  border-radius: 0;
+  box-shadow: none;
 }
 /* 40px of gutter inside a 320px viewport leaves a 240px content column —
    narrower than a .card in the same slot. */
@@ -254,14 +360,17 @@
   .panel { padding: var(--sp-5); }
 }
 
+/* A marginal note, marked the way a correction is marked on a proof. */
 .note {
   display: flex;
   gap: var(--sp-4);
   padding: var(--sp-5) var(--sp-6);
   background: var(--accent-wash);
   border: 1px solid var(--line-accent);
-  border-radius: var(--r-md);
+  border-left: 2px solid var(--accent-500);
+  border-radius: 0;
   font-size: var(--fs-sm);
+  line-height: var(--lh-base);
   color: var(--text);
 }
 
@@ -269,36 +378,38 @@
   display: inline-flex;
   align-items: center;
   gap: var(--sp-2);
-  padding: 6px 13px;
+  padding: 5px 10px;
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
-  letter-spacing: var(--ls-wide);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
   color: var(--text-lo);
-  background: var(--ink-100);
+  background: transparent;
   border: 1px solid var(--line);
-  border-radius: var(--r-full);
+  border-radius: 0;
   white-space: nowrap;
 }
 .pill--accent {
-  color: var(--accent-300);
+  color: var(--accent-600);
   background: var(--accent-wash);
   border-color: var(--line-accent);
 }
 
 .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: var(--r-full);
+  width: 7px;
+  height: 7px;
+  border-radius: 0;
   background: var(--positive);
-  box-shadow: 0 0 0 3px var(--positive-glow);
   flex: none;
 }
 
 /* ── Lists ────────────────────────────────────────────────────────────── */
+/* A spec-sheet list: an em-rule leader, not a bullet. */
 .list { display: flex; flex-direction: column; gap: var(--sp-3); }
 .list li {
   position: relative;
-  padding-left: 26px;
+  padding-left: 28px;
   font-size: var(--fs-sm);
   color: var(--text-lo);
   line-height: var(--lh-base);
@@ -306,32 +417,72 @@
 .list li::before {
   content: "";
   position: absolute;
-  left: 4px;
-  top: 0.62em;
-  width: 7px;
-  height: 7px;
-  border: 1px solid var(--accent-400);
-  border-radius: 2px;
-  transform: rotate(45deg);
+  left: 0;
+  top: 0.72em;
+  width: 16px;
+  height: 1px;
+  background: var(--line-strong);
+}
+/* Numbered variant, for anything that is genuinely a sequence. */
+.list--num { counter-reset: list-num; }
+.list--num li { counter-increment: list-num; padding-left: 34px; }
+.list--num li::before {
+  content: counter(list-num, decimal-leading-zero);
+  top: 0.1em;
+  width: auto;
+  height: auto;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-xlo);
 }
 .list--plain li { padding-left: 0; }
 .list--plain li::before { display: none; }
 
+/* ── Ruled rows ───────────────────────────────────────────────────────── */
+/* The primary layout device. A narrow mono label column and a wide prose
+   column, ruled off from each other and from their neighbours. Prefer this
+   over three equal cards for anything that is a set of statements. */
 .rows { display: flex; flex-direction: column; }
 .row {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 2fr);
-  gap: var(--sp-6);
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 2fr);
+  gap: var(--sp-5);
   padding-block: var(--sp-6);
   border-top: 1px solid var(--line);
 }
+.rows > .row:first-child { border-top-color: var(--line-strong); }
 .rows > .row:last-child { border-bottom: 1px solid var(--line); }
+/* The hairline between the label column and the prose it labels. */
+.row > *:nth-child(2) {
+  padding-left: var(--sp-5);
+  border-left: 1px solid var(--line);
+}
+.row__label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-2);
+}
+.row__body { font-size: var(--fs-base); color: var(--text); line-height: var(--lh-base); max-width: 62ch; }
+
 @media (max-width: 720px) {
   .row { grid-template-columns: minmax(0, 1fr); gap: var(--sp-3); }
+  .row > *:nth-child(2) { padding-left: 0; border-left: 0; }
 }
 
 /* ── Disclosure (FAQ) ─────────────────────────────────────────────────── */
-.qa { border-top: 1px solid var(--line); }
+/* Document rows: hairline separated, each question carrying a mono ordinal
+   and a drawn +/- rather than a rotating glyph. The counter is implicit on
+   the root, so questions number themselves in document order. */
+.qa {
+  counter-increment: qa;
+  border-top: 1px solid var(--line);
+}
+.qa:first-child { border-top-color: var(--line-strong); }
 .qa:last-child { border-bottom: 1px solid var(--line); }
 /* The heading that carries the question exists for structure only; the type
    is set by .qa__q on the button inside it. */
@@ -342,29 +493,62 @@
   line-height: inherit;
 }
 .qa__q {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--sp-5);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--sp-4);
   width: 100%;
   padding: var(--sp-5) 0;
   text-align: left;
-  font-size: var(--fs-h4);
-  font-weight: 550;
+  font-size: var(--fs-lg);
+  font-weight: 500;
+  letter-spacing: var(--ls-snug);
+  line-height: 1.35;
   color: var(--text-hi);
   transition: color var(--dur) var(--ease);
 }
-.qa__q:hover { color: var(--accent-300); }
-.qa__sign {
-  flex: none;
-  width: 22px;
-  height: 22px;
-  display: grid;
-  place-items: center;
-  color: var(--accent-400);
-  transition: transform var(--dur) var(--ease);
+.qa__q::before {
+  content: counter(qa, decimal-leading-zero);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-xlo);
+  padding-top: 0.42em;
+  transition: color var(--dur) var(--ease);
 }
-.qa[data-open="true"] .qa__sign { transform: rotate(45deg); }
+.qa__q:hover { color: var(--accent-600); }
+.qa__q:hover::before { color: var(--text-lo); }
+
+/* Drawn glyph: two bars, the vertical one withdrawn when the row is open. */
+.qa__sign {
+  position: relative;
+  flex: none;
+  width: 13px;
+  height: 13px;
+  margin-top: 0.42em;
+  font-size: 0;
+  color: transparent;
+}
+.qa__sign::before,
+.qa__sign::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: var(--text-hi);
+  transform: translate(-50%, -50%);
+}
+.qa__sign::before { width: 13px; height: 1px; }
+.qa__sign::after {
+  width: 1px;
+  height: 13px;
+  transition: opacity var(--dur) var(--ease);
+}
+.qa[data-open="true"] .qa__sign::after { opacity: 0; }
+.qa[data-open="true"] .qa__q::before { color: var(--text-hi); }
+
 .qa__a {
   display: grid;
   grid-template-rows: 0fr;
@@ -382,9 +566,14 @@
 }
 .qa__a p {
   padding-bottom: var(--sp-5);
+  padding-left: calc(var(--fs-mono) * 2 + var(--sp-4));
   font-size: var(--fs-sm);
   color: var(--text-lo);
+  line-height: var(--lh-base);
   max-width: 70ch;
+}
+@media (max-width: 620px) {
+  .qa__a p { padding-left: 0; }
 }
 
 /* ── Forms ────────────────────────────────────────────────────────────── */
@@ -392,28 +581,29 @@
 .field__label {
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
-  letter-spacing: var(--ls-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
   text-transform: uppercase;
   color: var(--text-lo);
 }
-.field__req { color: var(--accent-400); }
+.field__req { color: var(--accent-600); }
 .field__control {
   width: 100%;
-  padding: 13px 15px;
+  padding: 13px 14px;
   font-size: var(--fs-sm);
   color: var(--text-hi);
-  background: var(--ink-100);
+  background: var(--paper-100);
   border: 1px solid var(--line-strong);
-  border-radius: var(--r-sm);
-  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+  border-radius: 0;
+  transition: border-color var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
 }
 .field__control::placeholder { color: var(--text-xlo); }
-.field__control:hover { border-color: var(--line-accent); }
+.field__control:hover { border-color: var(--line-heavy); }
 .field__control:focus {
   outline: none;
   border-color: var(--accent-500);
-  background: var(--ink-150);
-  box-shadow: 0 0 0 3px var(--accent-wash);
+  box-shadow: 0 0 0 2px var(--accent-wash2);
 }
 textarea.field__control { min-height: 132px; resize: vertical; line-height: var(--lh-base); }
 select.field__control {
@@ -426,7 +616,7 @@ select.field__control {
   padding-right: 40px;
   cursor: pointer;
 }
-select.field__control option { background: var(--ink-150); color: var(--text-hi); }
+select.field__control option { background: var(--paper-100); color: var(--text-hi); }
 
 /* The shadow-DOM button inside a file input is UA-styled; give it the same
    vocabulary as .btn so the one control on the site that speaks a different
@@ -442,26 +632,26 @@ input[type="file"].field__control::file-selector-button {
   padding: 8px 16px;
   font-family: inherit;
   font-size: var(--fs-xs);
-  font-weight: 550;
+  font-weight: 500;
   letter-spacing: var(--ls-wide);
   color: var(--text-hi);
-  background: var(--ink-200);
+  background: var(--paper-200);
   border: 1px solid var(--line-strong);
-  border-radius: var(--r-full);
+  border-radius: 0;
   cursor: pointer;
   transition: background-color var(--dur) var(--ease),
               border-color var(--dur) var(--ease);
 }
 input[type="file"].field__control:hover::file-selector-button {
-  background: var(--ink-300);
-  border-color: var(--line-accent);
+  background: var(--paper-300);
+  border-color: var(--line-heavy);
 }
 
 .field[data-invalid="true"] .field__control {
   border-color: var(--danger);
   background: var(--danger-wash);
 }
-.field__error { font-size: var(--fs-xs); color: var(--danger); }
+.field__error { font-size: var(--fs-xs); color: var(--danger-100); }
 .field__hint  { font-size: var(--fs-xs); color: var(--text-xlo); }
 
 .form-grid {
@@ -480,33 +670,16 @@ input[type="file"].field__control:hover::file-selector-button {
 .form-status {
   padding: var(--sp-4) var(--sp-5);
   font-size: var(--fs-sm);
-  border-radius: var(--r-sm);
+  border-radius: 0;
   border: 1px solid;
+  border-left-width: 2px;
 }
-.form-status--error { color: var(--danger-100); background: var(--danger-wash); border-color: var(--danger-line); }
-.form-status--ok    { color: var(--positive-100); background: var(--positive-wash); border-color: var(--positive-line); }
+.form-status--error { color: var(--danger-100); background: var(--danger-wash); border-color: var(--danger-line); border-left-color: var(--danger); }
+.form-status--ok    { color: var(--positive-100); background: var(--positive-wash); border-color: var(--positive-line); border-left-color: var(--positive); }
 
 /* ── Decorative layers ────────────────────────────────────────────────── */
-.bg-glow {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-}
-.bg-glow::before {
-  content: "";
-  position: absolute;
-  top: -32%;
-  left: 50%;
-  width: min(1100px, 130vw);
-  aspect-ratio: 1;
-  transform: translateX(-50%);
-  background: radial-gradient(circle, var(--accent-glow) 0%, var(--accent-haze) 42%, transparent 68%);
-  opacity: 0.5;
-  filter: blur(20px);
-}
-
+/* Drafting paper: a fine minor grid inside a coarser major one, both drawn
+   at --grid-line so they sit under the type rather than beside it. */
 .bg-grid {
   position: absolute;
   inset: 0;
@@ -514,12 +687,14 @@ input[type="file"].field__control:hover::file-selector-button {
   z-index: 0;
   background-image:
     linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: 68px 68px;
-  /* The two #000 stops below are mask alpha stencils, not design colours. */
-  mask-image: radial-gradient(ellipse 78% 62% at 50% 34%, #000 20%, transparent 78%);
-  -webkit-mask-image: radial-gradient(ellipse 78% 62% at 50% 34%, #000 20%, transparent 78%);
-  opacity: 1;
+  background-size: 96px 96px, 96px 96px, 16px 16px, 16px 16px;
+  background-position: 0 0;
+  /* The #000 stops below are mask alpha stencils, not design colours. */
+  mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 92%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 92%);
 }
 
 .layer { position: relative; z-index: 1; }
@@ -527,14 +702,14 @@ input[type="file"].field__control:hover::file-selector-button {
 /* ── Reveal on scroll ─────────────────────────────────────────────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(10px);
   transition: opacity var(--dur-reveal) var(--ease),
               transform var(--dur-reveal) var(--ease);
   transition-delay: var(--reveal-delay, 0ms);
 }
 .reveal.is-visible { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
 }
 
 /* ── Touch targets ────────────────────────────────────────────────────── */

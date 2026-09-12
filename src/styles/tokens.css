@@ -1,92 +1,118 @@
 /* =========================================================================
    Le Duc Systems — Design Tokens
    Single source of truth for color, type, space, motion.
+
+   DIRECTION: engineering document. The site should read like a well-set
+   technical specification — warm paper, black ink, one signal colour, and
+   structure carried by hairline rules and ordinal numbering rather than by
+   cards, glows or shadows.
+
+   Three rules this file exists to enforce:
+     1. NO ROUNDED CORNERS. Every radius token is 0. This is deliberate.
+     2. NO GLOW, NO SOFT SHADOW. Depth comes from rules and paper steps.
+     3. ONE accent. Signal orange marks what is interactive or load-bearing,
+        and nothing else. If everything is orange, nothing is.
    ========================================================================= */
 
 :root {
-  /* ---- Canvas ---------------------------------------------------------- */
-  --ink-000: #06070A;   /* deepest — page background */
-  --ink-050: #0A0C11;   /* section alt */
-  --ink-100: #0F1218;   /* surface */
-  --ink-150: #141821;   /* raised surface */
-  --ink-200: #1B2029;   /* hover surface */
-  --ink-300: #262C38;   /* strong border */
-  --ink-400: #333B4A;   /* scrollbar thumb, hovered */
+  /* ---- Paper ----------------------------------------------------------
+     A warm stock, stepped four ways. --paper-000 is the page; --paper-100
+     is the raised surface (what used to be a card); --paper-050 bands a
+     section off; --paper-200 is a pressed/hover state. */
+  --paper-000: #FAF8F3;   /* page */
+  --paper-050: #F4F1E9;   /* banded section */
+  --paper-100: #FFFFFF;   /* raised surface */
+  --paper-200: #EDE9DF;   /* hover / inset */
+  --paper-300: #E2DDD1;   /* pressed, table stripe */
 
-  --surface-wash: rgba(255, 255, 255, 0.04);  /* quiet hover fill */
-  --scrim:        rgba(3, 5, 9, 0.72);        /* modal backdrop */
+  --surface-wash: rgba(18, 17, 15, 0.035);  /* quiet hover fill */
+  --scrim:        rgba(18, 17, 15, 0.42);   /* modal backdrop */
 
-  /* ---- Hairlines ------------------------------------------------------- */
-  --line:        rgba(255, 255, 255, 0.11);
-  --line-strong: rgba(255, 255, 255, 0.19);
-  --line-accent: rgba(61, 155, 240, 0.34);
-  --grid-line:   rgba(255, 255, 255, 0.055);  /* decorative .bg-grid lattice — deliberately NOT --line */
+  /* ---- Rules ----------------------------------------------------------
+     Ink at low alpha, not grey: a rule on warm paper must stay warm. */
+  --line:        rgba(18, 17, 15, 0.16);
+  --line-strong: rgba(18, 17, 15, 0.30);
+  --line-heavy:  rgba(18, 17, 15, 0.85);  /* the one-per-section datum rule */
+  --line-accent: rgba(212, 69, 31, 0.42);
+  --grid-line:   rgba(18, 17, 15, 0.05);  /* decorative lattice only */
 
-  /* ---- Text ------------------------------------------------------------ */
-  --text-hi:  #F4F6F9;
-  --text:     #C6CEDA;
-  --text-lo:  #8B95A5;
-  --text-xlo: #757E90;
-  --text-on-accent: #04101E;
+  /* ---- Ink ------------------------------------------------------------
+     Four rungs, each a real step. Ratios below are measured against
+     --paper-000 / --paper-050 / --paper-200 — the three surfaces text
+     actually lands on. Every rung clears 4.5:1 on all three, including the
+     bottom one, because --text-xlo carries every ordinal and table head on
+     the site and those are set at 12px. */
+  --text-hi:  #12110F;   /* 17.0 / 16.0 / 14.8 — headings, the datum */
+  --text:     #322E29;   /* 11.2 / 10.5 /  9.7 — body */
+  --text-lo:  #5E574D;   /*  6.7 /  6.3 /  5.9 — secondary, ledes */
+  --text-xlo: #6F675A;   /*  5.3 /  4.9 /  4.6 — metadata, captions */
+  --text-on-accent: #FFF8F5;
 
-  /* ---- Accent (derived from the logo blue) ----------------------------- */
-  --accent-100: #D6E9FC;
-  --accent-300: #7CBCF6;
-  --accent-400: #4FA6F2;
-  --accent-500: #2E8BE6;   /* primary */
-  --accent-600: #1E6FC4;
-  --accent-700: #17569A;
+  /* ---- Accent — signal orange -----------------------------------------
+     Borrowed from safety and drafting marks: the colour you use to point at
+     one thing.
 
-  --accent-wash:  rgba(46, 139, 230, 0.10);
-  --accent-wash2: rgba(46, 139, 230, 0.18);
-  --accent-glow:  rgba(46, 139, 230, 0.38);
-  --accent-haze:  rgba(46, 139, 230, 0.08);
+     THE SPLIT THAT MATTERS: --accent-500 is only ever a FILL, a rule, or a
+     focus ring — as text on paper it is 4.2:1 and fails AA. Accent as INK is
+     always --accent-600 (5.9:1). A primary button is an --accent-600 fill so
+     its label clears 5.9:1; on --accent-500 the same label sits at 4.3:1. */
+  --accent-300: #F08A67;
+  --accent-400: #E25C33;
+  --accent-500: #D4451F;   /* primary */
+  --accent-600: #B03615;
+  --accent-700: #8A2A10;
 
-  /* ---- Support --------------------------------------------------------- */
-  --positive:      #3FC08A;
-  --positive-100:  #B7EFD5;
-  --positive-wash: rgba(63, 192, 138, 0.10);
-  --positive-line: rgba(63, 192, 138, 0.35);
-  --positive-glow: rgba(63, 192, 138, 0.16);
-  --warn:          #E8B24B;
-  --warn-100:      #F6DCA6;
-  --warn-line:     rgba(232, 178, 75, 0.35);
-  --danger:        #F0616B;
-  --danger-100:    #FFC7CB;
-  --danger-wash:   rgba(240, 97, 107, 0.12);
-  --danger-line:   rgba(240, 97, 107, 0.35);
+  --accent-wash:  rgba(212, 69, 31, 0.07);
+  --accent-wash2: rgba(212, 69, 31, 0.14);
 
-  /* ---- Type ------------------------------------------------------------ */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-               'Helvetica Neue', Arial, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono',
+  /* ---- Support --------------------------------------------------------
+     Kept desaturated so none of them competes with the accent for signal. */
+  --positive:      #1B6B44;
+  --positive-100:  #0E3D26;
+  --positive-wash: rgba(27, 107, 68, 0.08);
+  --positive-line: rgba(27, 107, 68, 0.32);
+  --warn:          #8A6100;
+  --warn-100:      #513900;
+  --warn-line:     rgba(138, 97, 0, 0.32);
+  --danger:        #A32116;
+  --danger-100:    #6B140D;
+  --danger-wash:   rgba(163, 33, 22, 0.07);
+  --danger-line:   rgba(163, 33, 22, 0.32);
+
+  /* ---- Type -----------------------------------------------------------
+     IBM Plex: drawn for a technology company, with a mono that is a true
+     sibling of the sans rather than an afterthought. The mono is not
+     decoration here — it carries every number, label and identifier. */
+  --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+               Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, 'SF Mono',
                Menlo, Consolas, monospace;
 
   --fs-mono:    0.75rem;
   --fs-xs:      0.8125rem;
-  --fs-code:    0.875rem;   /* tool output: code blocks, data tables, identifier cells */
+  --fs-code:    0.875rem;
   --fs-sm:      0.9375rem;
   --fs-base:    1.0625rem;
-  --fs-lg:      1.1875rem;
+  --fs-lg:      1.25rem;
   --fs-xl:      1.5rem;
   --fs-h4:      clamp(1.25rem, 1.6vw, 1.4375rem);
-  --fs-h3:      clamp(1.5rem, 2.2vw, 1.8125rem);
-  --fs-h2:      clamp(1.875rem, 3.6vw, 2.75rem);
-  --fs-h1:      clamp(2.25rem, 5vw, 3.5rem);
-  --fs-display: clamp(2.625rem, 6.4vw, 4.75rem);
+  --fs-h3:      clamp(1.5rem, 2.2vw, 1.875rem);
+  --fs-h2:      clamp(2rem, 4vw, 3rem);
+  --fs-h1:      clamp(2.5rem, 6vw, 4.25rem);
+  --fs-display: clamp(3rem, 8.5vw, 6.5rem);
 
-  --lh-tight: 1.06;
-  --lh-snug:  1.22;
-  --lh-base:  1.62;
-  --lh-code:  1.7;   /* code blocks — looser than body, tighter than --lh-loose */
-  --lh-loose: 1.75;
+  --lh-tight: 0.96;   /* display only — set solid, like a masthead */
+  --lh-snug:  1.14;
+  --lh-base:  1.6;
+  --lh-code:  1.7;
+  --lh-loose: 1.72;
 
-  --ls-tight:  -0.032em;
-  --ls-snug:   -0.018em;
+  --ls-tight:  -0.028em;
+  --ls-snug:   -0.014em;
   --ls-normal: 0;
   --ls-wide:   0.02em;
-  --ls-caps:   0.04em;  /* data-dense uppercase labels inside the tools; site chrome uses --ls-mono */
-  --ls-mono:   0.13em;
+  --ls-caps:   0.06em;
+  --ls-mono:   0.14em;
 
   /* ---- Space ----------------------------------------------------------- */
   --sp-1:  4px;
@@ -101,38 +127,42 @@
   --sp-10: 96px;
   --sp-11: 128px;
 
-  --section-y:       clamp(72px, 9vw, 132px);
+  --section-y:       clamp(72px, 9vw, 136px);
   --section-y-tight: clamp(48px, 6vw, 84px);
 
-  /* ---- Shape ----------------------------------------------------------- */
-  --r-xs:   6px;
-  --r-sm:   8px;
-  --r-md:   12px;
-  --r-lg:   16px;
-  --r-xl:   22px;
-  --r-full: 999px;
+  /* ---- Shape ----------------------------------------------------------
+     All zero, on purpose. A drawing has corners. Do not reintroduce a
+     radius here to "soften" something — soften it with space instead. */
+  --r-xs:   0;
+  --r-sm:   0;
+  --r-md:   0;
+  --r-lg:   0;
+  --r-xl:   0;
+  --r-full: 0;
 
-  /* ---- Elevation ------------------------------------------------------- */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.6);
-  --shadow-lg: 0 24px 60px -20px rgba(0, 0, 0, 0.75);
-  --shadow-accent: 0 12px 32px -12px var(--accent-glow);
+  /* ---- Elevation ------------------------------------------------------
+     There is no elevation. These remain so existing rules resolve, but
+     they are flat by design; separation is a rule, not a blur. */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-accent: none;
 
   /* ---- Motion ---------------------------------------------------------- */
   --ease:       cubic-bezier(0.22, 1, 0.36, 1);
   --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
-  --dur-fast: 140ms;
-  --dur:      240ms;
-  --dur-slow: 520ms;
-  --dur-reveal: 700ms;   /* scroll reveal — deliberately slower than --dur-slow */
-  --dur-loop:   1.15s;   /* indeterminate progress cycle */
+  --dur-fast: 120ms;
+  --dur:      200ms;
+  --dur-slow: 420ms;
+  --dur-reveal: 620ms;
+  --dur-loop:   1.15s;
 
   /* ---- Layout ---------------------------------------------------------- */
-  --container:        1180px;
-  --container-narrow: 760px;
-  --container-wide:   1360px;
-  --gutter: clamp(20px, 4vw, 40px);
-  --header-h: 68px;
+  --container:        1240px;
+  --container-narrow: 720px;
+  --container-wide:   1440px;
+  --gutter: clamp(20px, 4vw, 48px);
+  --header-h: 64px;
 
   --z-header: 100;
   --z-menu:   140;

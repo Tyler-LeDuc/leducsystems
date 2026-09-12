@@ -25,13 +25,17 @@ const BUILD = path.join(__dirname, '..', 'build');
 const SITE_NAME = 'Le Duc Systems';
 const ORIGIN = 'https://leducsystems.com';
 
-/* path -> { title, description }. Title is rendered as "<title> — Le Duc
-   Systems", matching what src/components/SEO.js does at runtime. */
+/* path -> { title, description, canonical? }. Title is rendered as
+   "<title> — Le Duc Systems", matching what src/components/SEO.js does at
+   runtime. An optional `canonical` points the canonical link and og:url at a
+   different path — used by routes that still exist and must still serve a
+   200, but are no longer the canonical URL for their content. */
 const ROUTES = {
   '/services': {
-    title: 'Services',
+    title: 'Services have moved to the home page',
     description:
-      'Three lines of work: shipping web and mobile applications, migrating data off spreadsheets and legacy systems intact, and building AI features where they earn their place. Engagement models, pricing, process, and technology.',
+      'The services page is now part of the Le Duc Systems home page: what gets built, engagement models, pricing, process, and technology are all there.',
+    canonical: '/',
   },
   '/agencies': {
     title: 'For agencies',
@@ -51,7 +55,7 @@ const ROUTES = {
   '/tools': {
     title: 'Free tools',
     description:
-      'Free tools for looking at the systems an operation already runs on: what is inside one workbook, which file a whole folder depends on, what moving off Access would involve, and the database a spreadsheet should have been. All of them run entirely in your browser and upload nothing.',
+      'Free tools that run entirely in your browser: what is inside one workbook, which file a whole folder depends on, what moving off Access would involve, and the database a spreadsheet should have been. Nothing is uploaded.',
   },
   '/tools/schema': {
     title: 'Spreadsheet to database schema',
@@ -116,7 +120,9 @@ function setMeta(html, attrName, key, value) {
 
 function render(template, routePath, meta) {
   const fullTitle = `${meta.title} — ${SITE_NAME}`;
-  const url = `${ORIGIN}${routePath}`;
+  /* A route may declare a different canonical path when it exists only to
+     redirect. Everything that points search engines at a page uses it. */
+  const url = `${ORIGIN}${meta.canonical || routePath}`;
 
   let html = template;
   html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${attr(fullTitle)}</title>`);

@@ -31,7 +31,6 @@ export const SITE = {
 
 export const NAV = [
   { label: 'Home', path: '/' },
-  { label: 'Services', path: '/services' },
   { label: 'Free tools', path: '/tools' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
@@ -410,4 +409,15 @@ export const AGENCY_NOT_A_FIT = [
   'Multi-agent AI orchestration frameworks',
   'Staff augmentation through a third-party recruiter or marketplace',
   'Anything requiring on-site presence outside Phoenix',
+];
+
+/* Games released on itch.io under the personal handle "raxeris". Real,
+   shipped, and linked to the live store pages — which is the whole reason
+   they are allowed here. Facts only: title, slug, and the numeric id of the
+   itch.io embed widget. Do NOT add ratings, download counts, review quotes
+   or awards; those are outcome metrics, and this site does not publish them
+   (see CLAUDE.md). Order is newest first. */
+export const GAMES = [
+  { title: 'Emberleaf', slug: 'emberleaf', url: 'https://raxeris.itch.io/emberleaf', embedId: '4964683' },
+  { title: 'Veilborne', slug: 'veilborne', url: 'https://raxeris.itch.io/veilborne', embedId: '4530651' },
 ];

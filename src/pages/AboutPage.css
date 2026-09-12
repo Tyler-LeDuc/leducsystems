@@ -1,106 +1,323 @@
 /* =========================================================================
-   About page — page-specific styles only.
-   Everything else composes from components.css.
+   About — page-specific styles only.
+
+   The page arrives on its identity block. Not a headline followed by a
+   scroll: a drawing-sheet title block, opened by a heavy ink rule, with the
+   portrait in the left cell and the compressed title, the ruled facts and
+   the primary action in the right. Everything below it — rows, the datum,
+   buttons, lists — comes from components.css.
    ========================================================================= */
 
-/* Identity block — stands in for a photograph, of which there is none.
-   Surface comes from .card.card--feature, stickiness from .sticky-col. */
-.about-identity {
-  gap: var(--sp-5);
+/* The front matter opens tight so the whole block clears the fold. The
+   section's own class is doubled up to outrank .section's padding. */
+.section.about-front {
+  padding-top: var(--sp-7);
+  padding-bottom: var(--section-y-tight);
 }
 
-/* Founder headshot. Square source, rendered as a circle; the fixed aspect-ratio
-   and width/height attrs reserve layout space so the card does not shift on load. */
-.about-identity__photo {
-  width: 112px;
-  height: 112px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  object-fit: cover;
+/* ── Title block ──────────────────────────────────────────────────────────
+   Two cells and a full-width foot, ruled off from each other. The 2px ink
+   rule across the top is what marks it as the sheet's title block. */
+.about-block {
+  display: grid;
+  grid-template-columns: minmax(0, 216px) minmax(0, 1fr);
+  background: var(--paper-100);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--text-hi);
+}
+
+/* ── Portrait cell ──────────────────────────────────────────────────────── */
+.about-block__portrait {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  margin: 0;
+  padding: var(--sp-5);
+  border-right: 1px solid var(--line);
+}
+
+/* Square source, framed square. The aspect-ratio plus the width/height
+   attributes reserve layout space so the block does not shift on load. */
+.about-block__photo {
   display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
   border: 1px solid var(--line-strong);
+  border-radius: 0;
 }
 
-.about-identity__name {
-  font-size: var(--fs-h3);
+.about-block__id {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  min-width: 0;
+}
+
+.about-block__name {
+  font-size: var(--fs-lg);
   font-weight: 600;
+  line-height: var(--lh-snug);
   letter-spacing: var(--ls-snug);
   color: var(--text-hi);
 }
 
-.about-identity__facts {
+/* ── Title cell ───────────────────────────────────────────────────────────
+   The h1 is compressed on purpose: on this page the payload is the block,
+   not the headline, so the title sits at heading-3 scale and hands the
+   screenful to the facts underneath it. */
+.about-block__title {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-3);
-}
-
-.about-identity__facts > div {
-  display: grid;
-  grid-template-columns: 11ch minmax(0, 1fr);
+  align-items: flex-start;
   gap: var(--sp-4);
-  align-items: baseline;
+  min-width: 0;
+  padding: var(--sp-5) var(--sp-6);
 }
 
-.about-identity__facts dt {
+.about-block__h1 {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  color: var(--text-hi);
+  max-width: 30ch;
+}
+
+.about-block__title > .datum { margin-block: var(--sp-1); }
+
+/* ── Ruled facts ──────────────────────────────────────────────────────────
+   Two fields to a line, each a hairline-separated cell, mono label against
+   its entry the way a title block sets a field against its value. */
+.about-block__facts {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.about-block__fact {
+  display: grid;
+  grid-template-columns: 9ch minmax(0, 1fr);
+  gap: var(--sp-3);
+  align-items: baseline;
+  padding-block: var(--sp-3);
+  padding-right: var(--sp-5);
+  border-top: 1px solid var(--line);
+}
+/* The vertical rule of the lattice. Fields are ordered so that every cell
+   landing in the second column is an even child. */
+.about-block__fact:nth-child(2n) {
+  padding-left: var(--sp-5);
+  padding-right: 0;
+  border-left: 1px solid var(--line);
+}
+.about-block__fact--wide {
+  grid-column: 1 / -1;
+  padding-right: 0;
+}
+
+.about-block__fact dt {
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
-  letter-spacing: var(--ls-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
   text-transform: uppercase;
   color: var(--text-xlo);
 }
 
-.about-identity__facts dd {
+.about-block__fact dd {
   font-size: var(--fs-sm);
   color: var(--text);
   overflow-wrap: anywhere;
 }
 
-/* Founding statement pull line. */
+/* ── Foot: the lede and the primary action ────────────────────────────────
+   The one action a visitor should be able to take without scrolling, on the
+   same ruled row as the sentence that explains the offer. */
+.about-block__foot {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-5);
+  padding: var(--sp-5) var(--sp-6);
+  border-top: 1px solid var(--line-strong);
+}
+
+.about-block__lede {
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  color: var(--text-lo);
+  max-width: 60ch;
+}
+
+/* ── Ruled-row headings ───────────────────────────────────────────────────
+   The h3 inside a .row__label is a field name, not a headline, so it is set
+   in mono at label size beneath its ordinal. */
+.about-rowhead {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  line-height: var(--lh-base);
+  text-transform: uppercase;
+  color: var(--text-hi);
+}
+
+/* ── Founding statement ───────────────────────────────────────────────────
+   A pull line marked with an ink rule. Deliberately not orange: rules and
+   decoration are ink here, and the page's one accent is the CTA button. */
 .about-statement {
+  margin-top: var(--sp-2);
+  padding-left: var(--sp-5);
   font-size: var(--fs-h3);
-  font-weight: 550;
+  font-weight: 600;
   line-height: var(--lh-snug);
   letter-spacing: var(--ls-snug);
   color: var(--text-hi);
-  max-width: 34ch;
-  padding-left: var(--sp-5);
-  border-left: 2px solid var(--accent-500);
+  max-width: 30ch;
+  border-left: 2px solid var(--text-hi);
 }
 
+/* ── Numbered clauses ─────────────────────────────────────────────────────
+   Three clauses across a lattice rather than three paragraphs down a
+   column: the whole approach is taken in at a glance. The number is a CSS
+   counter so the markup stays plain paragraphs. */
+.about-clauses {
+  counter-reset: clause;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line);
+}
+
+.about-clause {
+  counter-increment: clause;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-5) var(--sp-5) var(--sp-6);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-base);
+  color: var(--text);
+  border-left: 1px solid var(--line);
+}
+.about-clauses > .about-clause:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.about-clauses > .about-clause:last-child { padding-right: 0; }
+
+.about-clause::before {
+  content: counter(clause, decimal-leading-zero);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  color: var(--text-xlo);
+}
+
+/* ── Terms of engagement ──────────────────────────────────────────────────
+   Ruled rows rather than a panel. Opened by a strong rule, not the datum —
+   the datum is already spent on this section's heading. */
+.about-terms {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--line-strong);
+}
+
+.about-terms__title {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  line-height: var(--lh-base);
+  text-transform: uppercase;
+  color: var(--text-hi);
+}
+
+/* Selectors are doubled up so they outrank .list / .list--num regardless of
+   which stylesheet the bundler emits first. */
+.about-terms .about-terms__list { gap: 0; }
+.about-terms .about-terms__list li {
+  padding-block: var(--sp-3);
+  color: var(--text);
+  border-top: 1px solid var(--line);
+}
+.about-terms .about-terms__list li:last-child { border-bottom: 1px solid var(--line); }
+/* .list--num draws its ordinal absolutely against the top of the item, so it
+   has to be pushed down by the row padding to stay on the first line. */
+.about-terms .about-terms__list li::before { top: calc(var(--sp-3) + 0.1em); }
+
+/* ── Responsive ───────────────────────────────────────────────────────────
+   Breakpoints match the shared cascade. */
 @media (max-width: 960px) {
-  .about-identity {
-    position: static;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--sp-5);
-  }
-  .about-identity__facts {
-    flex: 1 1 320px;
-    min-width: 0;
-  }
   .about-statement { max-width: none; }
+  .about-block { grid-template-columns: minmax(0, 176px) minmax(0, 1fr); }
+  .about-block__title { padding: var(--sp-5); }
+  .about-block__foot { padding: var(--sp-5); }
+}
+
+@media (max-width: 720px) {
+  /* The clause lattice becomes a ruled stack; the rules move from the
+     column edges to between the rows. */
+  .about-clauses { grid-template-columns: minmax(0, 1fr); }
+  .about-clause {
+    padding: var(--sp-5) 0;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .about-clauses > .about-clause:first-child {
+    padding-top: var(--sp-5);
+    border-top: 0;
+  }
 }
 
 @media (max-width: 620px) {
-  .about-identity {
-    flex-direction: column;
-    align-items: flex-start;
+  /* The title block collapses to one column: the portrait becomes a header
+     strip with the name beside it, then the title, facts and action. */
+  .about-block { grid-template-columns: minmax(0, 1fr); }
+  .about-block__portrait {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--sp-4);
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
   }
-  .about-identity__facts > div {
+  .about-block__photo { width: 92px; flex: none; }
+
+  .about-block__fact,
+  .about-block__fact:nth-child(2n) {
+    grid-column: 1 / -1;
     grid-template-columns: minmax(0, 1fr);
     gap: var(--sp-1);
+    padding-inline: 0;
+    border-left: 0;
+  }
+
+  .about-block__foot .btn { width: 100%; }
+
+  .about-statement {
+    padding-left: var(--sp-4);
+    font-size: var(--fs-xl);
   }
 }
 
-/* The two standalone links in the identity card are controls, not prose.
+/* The standalone links in the facts lattice are controls, not prose.
    Scoped deliberately so .link-underline inside <p> elsewhere is untouched. */
 @media (pointer: coarse) {
   /* Grown with a pseudo-element, not a 44px flex box: .link-underline draws
      its rule as a border-bottom, and a taller box would strand that rule
-     below the text and drop the link off the facts row's shared baseline. */
-  .about-identity__facts .link-underline { position: relative; }
-  .about-identity__facts .link-underline::after {
+     below the text and drop the link off the fact row's shared baseline. */
+  .about-block__fact .link-underline { position: relative; }
+  .about-block__fact .link-underline::after {
     content: "";
     position: absolute;
     left: 0;
@@ -108,5 +325,70 @@
     top: 50%;
     height: 44px;
     transform: translateY(-50%);
+  }
+}
+
+/* ── Side work: shipped games ─────────────────────────────────────────────
+   A register of releases: a ruled row per game, mono metadata in the label
+   column, the live itch.io widget in the wide one. The widget ships at a
+   fixed 552px, which would blow past a 360px viewport, so the iframe is
+   fluid and only capped at the embed's natural width. */
+.about-releases {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-release {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 2fr);
+  gap: var(--sp-5);
+  align-items: start;
+  padding-block: var(--sp-6);
+  border-top: 1px solid var(--line);
+}
+.about-releases > .about-release:first-child { border-top-color: var(--line-strong); }
+.about-releases > .about-release:last-child { border-bottom: 1px solid var(--line); }
+
+.about-release__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-2);
+}
+
+.about-release__title {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-snug);
+  color: var(--text-hi);
+}
+
+.about-release__handle {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--text-xlo);
+}
+
+/* The frame is ours; the widget inside it is theirs. */
+.about-release__embed {
+  min-width: 0;
+  border: 1px solid var(--line);
+}
+.about-release__embed iframe {
+  display: block;
+  width: 100%;
+  max-width: 552px;
+  height: 167px;
+  border: 0;
+}
+
+@media (max-width: 720px) {
+  .about-release {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-4);
   }
 }

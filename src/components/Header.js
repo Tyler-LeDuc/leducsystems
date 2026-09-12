@@ -62,7 +62,7 @@ function Header() {
           <Link to="/" className="brand" aria-label="Le Duc Systems, home">
             <img
               className="brand__mark"
-              src="/duck-icon.png"
+              src="/leduc-mark.svg"
               alt=""
               width="30"
               height="30"
@@ -90,7 +90,14 @@ function Header() {
           </nav>
 
           <div className="nav__actions">
-            <button type="button" className="btn btn--primary btn--sm" onClick={openContact}>
+            {/* Ghost, not primary. The header is fixed, so an accent fill up
+                here would sit on screen alongside whichever accent fill the
+                page itself is showing — two signals in every viewport. The
+                header's one accent is the rule under the current nav link;
+                the page keeps the fill. The mobile menu is a different case:
+                it covers the page, so nothing competes and its call to
+                action stays primary. */}
+            <button type="button" className="btn btn--ghost btn--sm" onClick={openContact}>
               Start a project
             </button>
             <button

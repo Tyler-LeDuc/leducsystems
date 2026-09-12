@@ -74,86 +74,98 @@ export default function SchemaToolPage() {
         path="/tools/schema"
       />
 
-      <section className="tool-hero" aria-labelledby="tool-title">
-        <div className="bg-glow" aria-hidden="true" />
+      {/* The arrival. The masthead is compressed to a single ruled strip so
+          the paste field is what you land on, with the explanation ranged
+          beside it rather than stacked in front of it. Same skeleton as the
+          workbook tool — the two are one pair of instruments. */}
+      <section className="section schema-open" aria-labelledby="tool-title">
+        <div className="bg-grid" aria-hidden="true" />
         <div className="container layer">
-          <Reveal className="stack stack--lg">
-            <div className="stack stack--sm">
-              <p className="eyebrow">A free tool</p>
-              <h1 id="tool-title" className="display tool-hero__title">
-                Spreadsheet to schema.
-              </h1>
+          <Reveal className="schema-open__strip">
+            <p className="eyebrow">
+              <span className="ordinal">00</span>
+              <span>A free tool</span>
+            </p>
+            <h1 id="tool-title" className="h3 schema-open__title">
+              Spreadsheet to schema.
+            </h1>
+          </Reveal>
+
+          <hr className="datum schema-open__rule" />
+
+          <div className="schema-open__grid">
+            <div className="schema-open__control">
+              {/* Label and controls share one rule, so the whole thing reads
+                  as a field on a printed form rather than a chat box with a
+                  toolbar. "Load an example" is the accent fill in this
+                  viewport: it is the one press that makes the tool show its
+                  own output without the reader finding a file first. */}
+              <div className="schema-input">
+                <div className="schema-input__bar">
+                  <label className="mono schema-input__label" htmlFor="schema-data">
+                    Paste your data
+                  </label>
+                  <div className="cluster">
+                    <button
+                      type="button"
+                      className="btn btn--primary btn--sm"
+                      onClick={() => setText(EXAMPLE)}
+                    >
+                      Load an example
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn--ghost btn--sm"
+                      onClick={() => setText('')}
+                      disabled={!text}
+                    >
+                      Clear
+                    </button>
+                  </div>
+                </div>
+                <textarea
+                  id="schema-data"
+                  className="tool-textarea"
+                  value={text}
+                  onChange={(event) => setText(event.target.value)}
+                  placeholder={'Invoice ID\tCustomer\tIssue Date\n1001\tAcme Dental\t2026-01-04'}
+                  spellCheck="false"
+                  rows={10}
+                />
+              </div>
+
+              <p className="schema-open__hint">
+                Copy a block of cells straight out of Excel or Google Sheets, including the header
+                row. Tabs, commas, semicolons, and pipes all work.
+              </p>
+
+              {/* One live region that stays mounted for the life of the page,
+                  so a result that arrives is actually announced. */}
+              <p className="sr-only" role="status">
+                {result && result.columns.length
+                  ? `${result.columns.length} columns read from ${result.rowCount} rows. ${result.findings.length} findings.`
+                  : ''}
+              </p>
+            </div>
+
+            {/* Beside the control, never in front of it: what the tool is
+                for, the way to hand the work to a person instead, and the
+                undertaking that nothing leaves the browser. */}
+            <div className="schema-open__brief">
               <p className="lede">
                 Paste the spreadsheet your operation actually runs on. You get the Postgres table
                 it should become, and — more usefully — the list of things in the data that would
                 break the import.
               </p>
-              <p className="body muted">
+              <Link className="btn btn--ghost" to="/contact">
+                Talk about your migration
+              </Link>
+              <p className="tool-note">
                 It runs entirely in your browser. Nothing is uploaded, nothing is stored, and
                 there is no server to send it to.
               </p>
             </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section section--rule" aria-labelledby="tool-input">
-        <div className="container stack stack--lg">
-          <div className="stack stack--sm">
-            <h2 className="h3" id="tool-input">
-              Paste your data
-            </h2>
-            <p className="body muted">
-              Copy a block of cells straight out of Excel or Google Sheets, including the header
-              row. Tabs, commas, semicolons, and pipes all work.
-            </p>
           </div>
-
-          <div className="cluster">
-            <button type="button" className="btn btn--ghost" onClick={() => setText(EXAMPLE)}>
-              Load an example
-            </button>
-            <button
-              type="button"
-              className="btn btn--ghost"
-              onClick={() => setText('')}
-              disabled={!text}
-            >
-              Clear
-            </button>
-          </div>
-
-          <label className="tool-field">
-            <span className="mono tool-field__label">Spreadsheet data</span>
-            <textarea
-              className="tool-textarea"
-              value={text}
-              onChange={(event) => setText(event.target.value)}
-              placeholder={'Invoice ID\tCustomer\tIssue Date\n1001\tAcme Dental\t2026-01-04'}
-              spellCheck="false"
-              rows={10}
-            />
-          </label>
-
-          {result && result.columns.length ? (
-            <label className="tool-field tool-field--inline">
-              <span className="mono tool-field__label">Table name</span>
-              <input
-                className="tool-input"
-                value={tableName}
-                onChange={(event) => setTableName(event.target.value)}
-                spellCheck="false"
-              />
-            </label>
-          ) : null}
-
-          {/* One live region that stays mounted for the life of the page, so a
-              result that arrives is actually announced. */}
-          <p className="sr-only" role="status">
-            {result && result.columns.length
-              ? `${result.columns.length} columns read from ${result.rowCount} rows. ${result.findings.length} findings.`
-              : ''}
-          </p>
         </div>
       </section>
 
@@ -161,13 +173,18 @@ export default function SchemaToolPage() {
         <>
           <section className="section section--rule section--alt" aria-labelledby="tool-findings">
             <div className="container stack stack--lg">
-              <div className="stack stack--sm">
+              <div className="tool-head">
+                <span className="ordinal">01</span>
                 <h2 className="h3" id="tool-findings">
                   What is wrong with this data
                 </h2>
-                <p className="body muted">
+                <hr className="datum" />
+                {/* The instrument reading, set as one: mono, tabular, terse. */}
+                <p className="schema-readout">
                   {result.rowCount} rows, {result.columns.length} columns, read as{' '}
-                  {result.delimiter.name}-separated.{' '}
+                  {result.delimiter.name}-separated.
+                </p>
+                <p className="body muted">
                   {findings.length
                     ? `${findings.length} thing${findings.length === 1 ? '' : 's'} worth knowing about.`
                     : 'Nothing obviously broken — unusual, and a good sign.'}
@@ -208,31 +225,40 @@ export default function SchemaToolPage() {
 
           <section className="section section--rule" aria-labelledby="tool-columns">
             <div className="container stack stack--lg">
-              <h2 className="h3" id="tool-columns">
-                Columns as read
-              </h2>
-              <div className="tool-table-wrap" tabIndex={0} role="region" aria-label="Columns as read">
-                <table className="tool-table">
+              <div className="tool-head">
+                <span className="ordinal">02</span>
+                <h2 className="h3" id="tool-columns">
+                  Columns as read
+                </h2>
+                <hr className="datum" />
+              </div>
+              <div
+                className="tool-table-wrap schema-table-wrap"
+                tabIndex={0}
+                role="region"
+                aria-label="Columns as read"
+              >
+                <table className="tool-table schema-table">
                   <thead>
                     <tr>
                       <th scope="col">Header</th>
                       <th scope="col">Column</th>
                       <th scope="col">Type</th>
-                      <th scope="col">Filled</th>
-                      <th scope="col">Distinct</th>
+                      <th scope="col" className="schema-table__num">Filled</th>
+                      <th scope="col" className="schema-table__num">Distinct</th>
                       <th scope="col">Sample</th>
                     </tr>
                   </thead>
                   <tbody>
                     {result.columns.map((col) => (
                       <tr key={col.name}>
-                        <td>{col.header}</td>
+                        <td className="schema-table__header">{col.header}</td>
                         <td className="mono">{col.name}</td>
                         <td className="mono tool-table__type">{col.sqlType}</td>
-                        <td>
+                        <td className="schema-table__num">
                           {col.filled}/{col.total}
                         </td>
-                        <td>{col.distinct}</td>
+                        <td className="schema-table__num">{col.distinct}</td>
                         <td>
                           <span className="tool-table__sample">
                             {col.samples.join(', ') || '—'}
@@ -248,19 +274,38 @@ export default function SchemaToolPage() {
 
           <section className="section section--rule section--alt" aria-labelledby="tool-sql">
             <div className="container stack stack--lg">
-              <div className="cluster cluster--between">
+              <div className="tool-head tool-head--action">
+                <span className="ordinal">03</span>
                 <h2 className="h3" id="tool-sql">
                   The table it should become
                 </h2>
-                <button type="button" className="btn btn--ghost" onClick={copy}>
+                <button type="button" className="btn btn--ghost btn--sm" onClick={copy}>
                   {copyState === 'done' ? 'Copied' : copyState === 'failed' ? 'Select and copy' : 'Copy SQL'}
                 </button>
+                <hr className="datum" />
               </div>
-              <pre className="tool-sql" tabIndex={0} role="region" aria-label="Generated SQL">
+
+              {/* The name lives with the DDL it renames, not three sections up. */}
+              <div className="schema-input schema-input--inline">
+                <div className="schema-input__bar">
+                  <label className="mono schema-input__label" htmlFor="schema-table-name">
+                    Table name
+                  </label>
+                </div>
+                <input
+                  id="schema-table-name"
+                  className="tool-input"
+                  value={tableName}
+                  onChange={(event) => setTableName(event.target.value)}
+                  spellCheck="false"
+                />
+              </div>
+
+              <pre className="tool-sql schema-sql" tabIndex={0} role="region" aria-label="Generated SQL">
                 <code>{sql}</code>
               </pre>
               <p className="body muted">
-                Postgres syntax. The surrogate key and <span className="mono">imported_at</span>{' '}
+                Postgres syntax. The surrogate key and <span className="code">imported_at</span>{' '}
                 column are added deliberately — you want a stable identifier that is not one of
                 your business fields, and you want to know when a row arrived.
               </p>
@@ -271,44 +316,50 @@ export default function SchemaToolPage() {
 
       <section className="section section--rule" aria-labelledby="tool-why">
         <div className="container container--narrow stack stack--lg">
-          <div className="stack stack--sm">
-            <p className="eyebrow">Why this exists</p>
+          <div className="tool-head">
+            <span className="tool-head__mark">
+              <span className="ordinal">04</span>
+              <span className="mono tool-head__tag">Why this exists</span>
+            </span>
             <h2 className="h3" id="tool-why">
               The schema is the easy part.
             </h2>
+            <hr className="datum" />
           </div>
           <p className="body">
             Every spreadsheet-to-database migration looks like a one-day job until someone opens
             the data. Dates entered three different ways. Phone numbers that lost their leading
             zero the moment Excel decided they were numbers. A status column with four real values
             and eleven spellings of them. That is where the weeks go, not the{' '}
-            <span className="mono">create table</span>.
+            <span className="code">create table</span>.
           </p>
           <p className="body">
             This tool finds the common ones in a few seconds so you can see the size of the job
             before committing to it. It is the first thing we run on a migration, so it seemed
             worth making it something you can run yourself.
           </p>
-          <div className="cluster">
-            <Link className="btn btn--primary" to="/contact">
-              Talk about your migration
-            </Link>
-            <Link className="btn btn--ghost" to="/tools">
-              The other free tools
-            </Link>
+          <div className="cta-block">
+            <div className="cluster">
+              <Link className="btn btn--primary" to="/contact">
+                Talk about your migration
+              </Link>
+              <Link className="btn btn--ghost" to="/tools">
+                The other free tools
+              </Link>
+            </div>
+            <p className="body muted">
+              Built by {SITE.founder}. The inference logic is plain JavaScript with unit tests —{' '}
+              <a
+                className="link-underline"
+                href={`${SITE.github}/leducsystems`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                read it on GitHub
+              </a>
+              .
+            </p>
           </div>
-          <p className="body muted">
-            Built by {SITE.founder}. The inference logic is plain JavaScript with unit tests —{' '}
-            <a
-              className="link-underline"
-              href={`${SITE.github}/leducsystems`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              read it on GitHub
-            </a>
-            .
-          </p>
         </div>
       </section>
     </>
