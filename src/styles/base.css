@@ -1,11 +1,11 @@
 /* =========================================================================
    LeDuc Systems — Base / reset / typography
 
-   The document layer. This file sets the sheet the whole site is printed
-   on: warm paper, ink text, tabular figures so numbers align down a
-   column, and headings that are tight and quiet rather than loud.
-   Everything here is unprefixed and global — page-specific rules do not
-   belong in this file.
+   The document layer. This file sets the surface the whole site sits on:
+   warm bright paper, tabular figures so numbers align down a column — now
+   in service of a playful, colorful indie-game direction rather than a
+   quiet technical one. Everything here is unprefixed and global —
+   page-specific rules do not belong in this file.
    ========================================================================= */
 
 *,
@@ -114,7 +114,7 @@ strong, b { color: var(--text-hi); font-weight: 600; }
 ::-webkit-scrollbar-thumb {
   background: var(--paper-300);
   border: 3px solid var(--paper-050);
-  border-radius: 0;
+  border-radius: var(--r-full);
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-xlo); }
 ::-webkit-scrollbar-corner { background: var(--paper-050); }
@@ -136,7 +136,7 @@ strong, b { color: var(--text-hi); font-weight: 600; }
   letter-spacing: var(--ls-caps);
   text-transform: uppercase;
   border: 0;
-  border-radius: 0;
+  border-radius: var(--r-sm);
 }
 .skip-link:focus {
   left: 0;

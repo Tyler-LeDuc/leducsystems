@@ -4,7 +4,6 @@ import emailjs from '@emailjs/browser';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
-import GamesPage from './pages/GamesPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
@@ -49,7 +48,6 @@ export function AppShell() {
       <main id="main" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/games" element={<GamesPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />

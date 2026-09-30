@@ -81,11 +81,12 @@
   flex-direction: column;
   gap: var(--sp-5);
   align-self: start;
-  border-top: 2px solid var(--text-hi);
+  border-top: 4px solid var(--accent-500);
+  border-radius: var(--r-lg);
 }
-/* Doubled specificity so the 2px top rule cannot be re-padded by .panel,
+/* Doubled specificity so the top rule cannot be re-padded by .panel,
    whichever order the two sheets land in. */
-.panel.contact-form { padding-top: calc(var(--sp-6) - 1px); }
+.panel.contact-form { padding-top: calc(var(--sp-6) - 3px); }
 
 /* A single mono line. Anything taller here is measured in lost fields. */
 .contact-form__head {
@@ -165,5 +166,5 @@
 @media (max-width: 620px) {
   .contact-sheet { padding-top: var(--sp-6); }
   .contact-strip__title { font-size: var(--fs-xl); }
-  .panel.contact-form { padding-top: calc(var(--sp-5) - 1px); }
+  .panel.contact-form { padding-top: calc(var(--sp-5) - 3px); }
 }

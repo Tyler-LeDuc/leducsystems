@@ -106,7 +106,7 @@ function AboutPage() {
                 I write software for a living, and {SITE.name} is what happens to it after hours:
                 small games, released under the handle {SITE.itchioHandle}.
               </p>
-              <Link className="btn btn--primary" to="/games">
+              <Link className="btn btn--primary" to="/#games">
                 See the games
               </Link>
             </div>

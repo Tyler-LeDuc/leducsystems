@@ -1,18 +1,21 @@
 /* =========================================================================
    LeDuc Systems — Component & utility vocabulary
 
-   The shared language of the site: an engineering document set in warm paper
-   and black ink. Structure is carried by hairline rules, ordinal numbering
-   and a strict grid — never by cards floating on glow.
+   The shared language of a playful, colorful indie-game site: rounded
+   shapes, soft tactile shadows, and a small deliberate set of accent
+   colours (pink-red primary, violet secondary, amber for sparing highlights)
+   used with intent rather than one signal colour or rainbow chaos.
 
-   Four habits this file enforces:
-     1. Rules, not boxes. A list of three things is three ruled rows.
-     2. Mono carries every ordinal, label, unit and caption.
-     3. One accent. Signal orange marks what is interactive, nothing else.
-     4. Accent as INK is --accent-600; accent as a FILL, rule or focus ring
+   Habits this file keeps:
+     1. Mono still carries genre tags, small labels and identifiers — a
+        deliberate nerdy contrast against the playful display headings.
+     2. Accent as INK is --accent-600; accent as a FILL, rule or focus ring
         is --accent-500. The 500 is drawn to be seen as an area — as type on
         paper it lands a shade under the contrast floor, and the 600 clears
         it comfortably. Never set --accent-500 as a text colour.
+     3. Depth now comes from colour, roundness and soft shadow, not just
+        hairline rules — but rules and ruled rows are still a fine layout
+        device where a set of statements is genuinely a sequence.
 
    Every page is built from these classes. Do not write inline style objects.
    ========================================================================= */
@@ -75,20 +78,20 @@
   margin: 0;
 }
 
-/* The datum. An 0.85-alpha near-black rule that sits directly under a section
-   heading and runs the full width of the content column. Exactly one per
-   major section — nothing else on the site draws this weight. It is what
-   makes a page read as a drawing sheet rather than a web page. */
+/* The datum. A short, rounded, colourful accent bar that sits directly
+   under a section heading — a signature mark rather than a full-width
+   technical rule. Exactly one per major section. */
 .datum {
   display: block;
-  width: 100%;
-  height: 1px;
+  width: 56px;
+  height: 5px;
   margin: 0;
   padding: 0;
   border: 0;
-  background: var(--line-heavy);
+  border-radius: var(--r-full);
+  background: var(--accent-500);
 }
-.datum--soft { background: var(--line-strong); }
+.datum--soft { background: var(--accent2-500); }
 
 /* Closing call to action. Every page ends with one of these: a left-ranged
    band opened by its own datum, never a centred column of buttons. */
@@ -116,18 +119,19 @@
   letter-spacing: var(--ls-caps);
   font-variant-numeric: tabular-nums;
   text-transform: uppercase;
-  color: var(--text-xlo);
+  color: var(--accent-600);
 }
 .ordinal--hi { color: var(--text-hi); }
-/* A callout balloon, as on a drawing: the number boxed by a hairline. */
+/* A filled, rounded chip — a colourful signature mark, not a hairline box. */
 .ordinal--boxed {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: 28px;
   padding: 3px 6px;
-  color: var(--text-hi);
-  border: 1px solid var(--line-strong);
+  color: var(--text-on-accent);
+  background: var(--accent-500);
+  border-radius: var(--r-full);
 }
 
 /* Retained class name, new idea: an ordinal + label pair, no leading dash. */
@@ -143,25 +147,25 @@
   text-transform: uppercase;
   color: var(--text-xlo);
 }
-/* When a page supplies an ordinal, the label after it is fenced off by a
-   hairline — the way a field is separated from its value on a title block. */
+/* When a page supplies an ordinal, a plain gap separates it from the label —
+   friendlier than a fenced field/value divider. */
 .eyebrow > .ordinal + * {
-  padding-left: var(--sp-3);
-  border-left: 1px solid var(--line);
+  padding-left: var(--sp-2);
 }
 .eyebrow--bare { gap: var(--sp-2); }
 
 .display {
+  font-family: var(--font-display);
   font-size: var(--fs-display);
   font-weight: 600;
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-tight);
   color: var(--text-hi);
 }
-.h1 { font-size: var(--fs-h1); line-height: 1.02; letter-spacing: var(--ls-tight); color: var(--text-hi); }
-.h2 { font-size: var(--fs-h2); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--text-hi); }
-.h3 { font-size: var(--fs-h3); line-height: 1.2; letter-spacing: var(--ls-snug); color: var(--text-hi); }
-.h4 { font-size: var(--fs-h4); line-height: 1.3; letter-spacing: var(--ls-snug); color: var(--text-hi); }
+.h1 { font-family: var(--font-display); font-size: var(--fs-h1); line-height: 1.02; letter-spacing: var(--ls-tight); color: var(--text-hi); }
+.h2 { font-family: var(--font-display); font-size: var(--fs-h2); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--text-hi); }
+.h3 { font-family: var(--font-display); font-size: var(--fs-h3); line-height: 1.2; letter-spacing: var(--ls-snug); color: var(--text-hi); }
+.h4 { font-family: var(--font-display); font-size: var(--fs-h4); line-height: 1.3; letter-spacing: var(--ls-snug); color: var(--text-hi); }
 
 .lede {
   font-size: var(--fs-lg);
@@ -205,8 +209,8 @@
 .section-head > .datum { margin-block: var(--sp-1); }
 
 /* ── Buttons ──────────────────────────────────────────────────────────── */
-/* Rectangular, flat, sentence case. Hover moves colour and border — never
-   the button itself. */
+/* Pill-shaped, sentence case, with a soft shadow that lifts on hover — a
+   tactile, game-UI feel rather than a flat rectangle. */
 .btn {
   --btn-bg: transparent;
   --btn-fg: var(--text-hi);
@@ -226,11 +230,13 @@
   color: var(--btn-fg);
   background: var(--btn-bg);
   border: 1px solid var(--btn-bd);
-  border-radius: 0;
+  border-radius: var(--r-full);
   cursor: pointer;
   transition: background-color var(--dur) var(--ease),
               border-color var(--dur) var(--ease),
-              color var(--dur) var(--ease);
+              color var(--dur) var(--ease),
+              transform var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
 }
 .btn:disabled,
 .btn[aria-disabled="true"] {
@@ -244,8 +250,14 @@
   --btn-bg: var(--accent-600);
   --btn-fg: var(--text-on-accent);
   --btn-bd: var(--accent-600);
+  box-shadow: var(--shadow-sm);
 }
-.btn--primary:hover:not(:disabled):not([aria-disabled="true"]) { --btn-bg: var(--accent-700); --btn-bd: var(--accent-700); }
+.btn--primary:hover:not(:disabled):not([aria-disabled="true"]) {
+  --btn-bg: var(--accent-700);
+  --btn-bd: var(--accent-700);
+  box-shadow: var(--shadow-accent);
+  transform: translateY(-2px);
+}
 .btn--primary:active:not(:disabled):not([aria-disabled="true"]) { --btn-bg: var(--accent-700); --btn-bd: var(--accent-700); filter: brightness(0.9); }
 /* An accent fill needs its ring drawn inside, in the text colour. */
 .btn--primary:focus-visible {
@@ -254,7 +266,7 @@
 }
 
 .btn--ghost { --btn-bg: transparent; --btn-fg: var(--text-hi); --btn-bd: var(--line-strong); }
-.btn--ghost:hover:not(:disabled):not([aria-disabled="true"])   { --btn-bg: var(--paper-200); --btn-bd: var(--line-heavy); }
+.btn--ghost:hover:not(:disabled):not([aria-disabled="true"])   { --btn-bg: var(--paper-200); --btn-bd: var(--line-heavy); box-shadow: var(--shadow-sm); }
 .btn--ghost:active:not(:disabled):not([aria-disabled="true"])  { --btn-bg: var(--paper-300); }
 
 .btn--quiet { --btn-bd: transparent; --btn-fg: var(--text-lo); padding-inline: 12px; }
@@ -305,26 +317,28 @@
   padding: var(--sp-6);
   background: var(--paper-100);
   border: 1px solid var(--line);
-  border-radius: 0;
-  box-shadow: none;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
   transition: border-color var(--dur) var(--ease),
-              background-color var(--dur) var(--ease);
+              background-color var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
 }
-.card--flush { background: transparent; border-color: transparent; padding: 0; }
-.card--outline { background: transparent; }
-/* The sheet's headline object: same paper, a heavier rule across the top. */
+.card--flush { background: transparent; border-color: transparent; padding: 0; box-shadow: none; }
+.card--outline { background: transparent; box-shadow: none; }
+/* The sheet's headline object: same paper, a colourful accent stripe across the top. */
 .card--feature {
   background: var(--paper-100);
   border-color: var(--line-strong);
-  border-top: 2px solid var(--text-hi);
-  padding-top: calc(var(--sp-6) - 1px);
+  border-top: 4px solid var(--accent-500);
+  padding-top: calc(var(--sp-6) - 3px);
 }
 .card--interactive:hover {
   background: var(--paper-200);
   border-color: var(--line-strong);
+  box-shadow: var(--shadow-md);
 }
 
-/* A drawing callout: the mono ordinal that names the object it sits on. */
+/* A filled numbered chip that names the object it sits on. */
 .card__index {
   align-self: flex-start;
   font-family: var(--font-mono);
@@ -341,8 +355,9 @@
   justify-content: center;
   min-width: 28px;
   padding: 3px 6px;
-  color: var(--text-hi);
-  border: 1px solid var(--line-strong);
+  color: var(--text-on-accent);
+  background: var(--accent-500);
+  border-radius: var(--r-full);
 }
 .card__title { font-size: var(--fs-h4); color: var(--text-hi); font-weight: 600; letter-spacing: var(--ls-snug); }
 .card__body  { font-size: var(--fs-sm); color: var(--text-lo); line-height: var(--lh-base); }
@@ -351,8 +366,8 @@
   padding: var(--sp-7);
   background: var(--paper-100);
   border: 1px solid var(--line);
-  border-radius: 0;
-  box-shadow: none;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
 }
 /* 40px of gutter inside a 320px viewport leaves a 240px content column —
    narrower than a .card in the same slot. */
@@ -368,7 +383,7 @@
   background: var(--accent-wash);
   border: 1px solid var(--line-accent);
   border-left: 2px solid var(--accent-500);
-  border-radius: 0;
+  border-radius: var(--r-md);
   font-size: var(--fs-sm);
   line-height: var(--lh-base);
   color: var(--text);
@@ -387,7 +402,7 @@
   color: var(--text-lo);
   background: transparent;
   border: 1px solid var(--line);
-  border-radius: 0;
+  border-radius: var(--r-full);
   white-space: nowrap;
 }
 .pill--accent {
@@ -399,7 +414,7 @@
 .dot {
   width: 7px;
   height: 7px;
-  border-radius: 0;
+  border-radius: var(--r-full);
   background: var(--positive);
   flex: none;
 }
@@ -421,7 +436,7 @@
   top: 0.72em;
   width: 16px;
   height: 1px;
-  background: var(--line-strong);
+  background: var(--accent-400);
 }
 /* Numbered variant, for anything that is genuinely a sequence. */
 .list--num { counter-reset: list-num; }
@@ -437,7 +452,7 @@
   font-weight: 500;
   letter-spacing: var(--ls-caps);
   font-variant-numeric: tabular-nums;
-  color: var(--text-xlo);
+  color: var(--accent-600);
 }
 .list--plain li { padding-left: 0; }
 .list--plain li::before { display: none; }
@@ -537,7 +552,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  background: var(--text-hi);
+  background: var(--accent-600);
   transform: translate(-50%, -50%);
 }
 .qa__sign::before { width: 13px; height: 1px; }
@@ -594,7 +609,7 @@
   color: var(--text-hi);
   background: var(--paper-100);
   border: 1px solid var(--line-strong);
-  border-radius: 0;
+  border-radius: var(--r-md);
   transition: border-color var(--dur) var(--ease),
               box-shadow var(--dur) var(--ease);
 }
@@ -637,7 +652,7 @@ input[type="file"].field__control::file-selector-button {
   color: var(--text-hi);
   background: var(--paper-200);
   border: 1px solid var(--line-strong);
-  border-radius: 0;
+  border-radius: var(--r-full);
   cursor: pointer;
   transition: background-color var(--dur) var(--ease),
               border-color var(--dur) var(--ease);
@@ -670,7 +685,7 @@ input[type="file"].field__control:hover::file-selector-button {
 .form-status {
   padding: var(--sp-4) var(--sp-5);
   font-size: var(--fs-sm);
-  border-radius: 0;
+  border-radius: var(--r-md);
   border: 1px solid;
   border-left-width: 2px;
 }

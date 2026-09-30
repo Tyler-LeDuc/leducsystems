@@ -2,10 +2,10 @@
    LeDuc Systems — Chrome
    Header, navigation, mobile menu, footer, modal, and form shell.
 
-   DIRECTION: the chrome is the titleblock and colophon of a drawing sheet.
-   The header is a solid paper bar ruled off from the page — no glass, no
-   blur, no shadow. The footer is a set of hairline-ruled columns with mono
-   headings. Nothing here floats; everything is registered to a rule.
+   DIRECTION: playful and colorful, same as the rest of the site now. The
+   header is a solid paper bar; the footer is a set of columns with mono
+   headings and a colourful counter. Rounded shapes and soft shadow are
+   welcome here too — the modal in particular should feel lifted, not flat.
 
    Tokens only — no colors outside the token set.
    ========================================================================= */
@@ -65,6 +65,7 @@
   object-fit: contain;
   padding: 2px;
   border: 1px solid var(--line);
+  border-radius: var(--r-sm);
   background: var(--paper-100);
 }
 
@@ -255,7 +256,7 @@
   font-weight: 400;
   letter-spacing: var(--ls-mono);
   line-height: inherit;
-  color: var(--text-xlo);
+  color: var(--accent-600);
   transition: color var(--dur) var(--ease);
 }
 .mobile-menu__link:hover { color: var(--text-hi); }
@@ -341,7 +342,7 @@
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
   letter-spacing: var(--ls-mono);
-  color: var(--text-xlo);
+  color: var(--accent-600);
   margin-bottom: var(--sp-2);
 }
 
@@ -448,7 +449,9 @@
 }
 
 /* ── Modal ────────────────────────────────────────────────────────────── */
-/* A sheet laid on a dimmed page. No blur, no radius, no lift. */
+/* A rounded card lifted off a dimmed page with a soft shadow — full-bleed
+   and square-cornered only on the smallest screens, where it fills the
+   whole viewport. */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -473,6 +476,8 @@
   margin-block: auto;
   background: var(--paper-100);
   border: 1px solid var(--line-strong);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
   animation: modal-in var(--dur-slow) var(--ease) both;
 }
@@ -533,6 +538,7 @@
     height: 100dvh;
     max-height: 100dvh;
     border: 0;
+    border-radius: 0;
   }
   .modal__head { padding: var(--sp-4) var(--sp-5); }
   .modal__body { padding: var(--sp-5); }

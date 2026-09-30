@@ -4,8 +4,10 @@
    The masthead states the pitch (from the itch.io bio), a numbered
    philosophy clause explains the constraint every game shares, the two
    best-performing releases (by real itch.io analytics) get a real embed,
-   and a short FAQ answers what's worth asking before Games/About/Contact
-   take over the rest.
+   the rest of the catalogue follows as a card grid, and a short FAQ
+   answers what's worth asking before About/Contact take over the rest.
+   This page used to be split across Home and a separate /games route —
+   now it is one scrolling page.
 
    Page layout only. Type, buttons, rows, lists, the disclosure and the datum
    come from the shared cascade; nothing here restates them.
@@ -192,6 +194,39 @@
     grid-template-columns: minmax(0, 1fr);
     gap: var(--sp-4);
   }
+}
+
+
+/* ── 03 · Everything else — the rest of the catalogue ─────────────────────
+   Moved here from the old standalone /games page, now one scrolling page. */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-5);
+}
+
+.games-card {
+  gap: var(--sp-3);
+}
+
+.games-card__genre {
+  align-self: flex-start;
+}
+
+.games-card__blurb {
+  flex: 1;
+}
+
+.games-card__link {
+  align-self: flex-start;
+}
+
+@media (max-width: 960px) {
+  .games-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .games-grid { grid-template-columns: minmax(0, 1fr); }
 }
 
 

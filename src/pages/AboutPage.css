@@ -16,14 +16,16 @@
 }
 
 /* ── Title block ──────────────────────────────────────────────────────────
-   Two cells and a full-width foot, ruled off from each other. The 2px ink
-   rule across the top is what marks it as the sheet's title block. */
+   Two cells and a full-width foot, ruled off from each other. The colourful
+   top stripe is what marks it as the page's headline object. */
 .about-block {
   display: grid;
   grid-template-columns: minmax(0, 216px) minmax(0, 1fr);
   background: var(--paper-100);
   border: 1px solid var(--line);
-  border-top: 2px solid var(--text-hi);
+  border-top: 4px solid var(--accent-500);
+  border-radius: var(--r-lg);
+  overflow: hidden;
 }
 
 /* ── Portrait cell ──────────────────────────────────────────────────────── */

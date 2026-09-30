@@ -6,6 +6,7 @@ import { SITE, GAMES, FEATURED_SLUGS, PHILOSOPHY, FAQ } from '../data/site';
 import './HomePage.css';
 
 const FEATURED = GAMES.filter((game) => FEATURED_SLUGS.includes(game.slug));
+const REST = GAMES.filter((game) => !FEATURED_SLUGS.includes(game.slug));
 
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState([]);
@@ -41,7 +42,7 @@ export default function HomePage() {
               <p className="lede home-hero__lede">{SITE.description}</p>
 
               <div className="cluster home-hero__actions">
-                <Link className="btn btn--primary btn--lg" to="/games">
+                <Link className="btn btn--primary btn--lg" to="/#games">
                   See all {GAMES.length} games
                 </Link>
                 <a
@@ -128,16 +129,50 @@ export default function HomePage() {
               </article>
             ))}
           </Reveal>
+        </div>
+      </section>
 
-          <Reveal delay={120}>
-            <Link className="link-arrow" to="/games">
-              See the other {GAMES.length - FEATURED.length} games
-            </Link>
+      {/* ── 03 · Everything else ──────────────────────────────────────────
+          Full catalogue, moved here from the old standalone /games page —
+          this is now one scrolling page, not two. */}
+      <section
+        id="games"
+        className="section section--rule section--alt"
+        aria-labelledby="games-all"
+      >
+        <div className="container stack stack--lg">
+          <Reveal className="home-head">
+            <p className="eyebrow home-head__meta">
+              <span className="ordinal">03</span>
+              <span>Everything else</span>
+            </p>
+            <h2 id="games-all" className="h2 home-head__title">
+              The rest of the catalogue.
+            </h2>
+            <hr className="datum" />
+          </Reveal>
+
+          <Reveal as="ul" className="games-grid" delay={80}>
+            {REST.map((game) => (
+              <li className="card games-card" key={game.slug}>
+                <span className="pill games-card__genre">{game.genre}</span>
+                <h3 className="card__title games-card__title">{game.title}</h3>
+                <p className="card__body games-card__blurb">{game.blurb}</p>
+                <a
+                  className="link-arrow games-card__link"
+                  href={game.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Play on itch.io
+                </a>
+              </li>
+            ))}
           </Reveal>
         </div>
       </section>
 
-      {/* ── 03 · Questions ─────────────────────────────────────────────── */}
+      {/* ── 04 · Questions ─────────────────────────────────────────────── */}
       <section
         id="faq"
         className="section section--tight section--rule"
@@ -146,7 +181,7 @@ export default function HomePage() {
         <div className="container stack stack--lg">
           <Reveal className="home-head">
             <p className="eyebrow home-head__meta">
-              <span className="ordinal">03</span>
+              <span className="ordinal">04</span>
               <span>Questions</span>
             </p>
             <h2 id="faq-title" className="h2 home-head__title">
@@ -193,11 +228,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 04 · Closing call to action ────────────────────────────────── */}
+      {/* ── 05 · Closing call to action ────────────────────────────────── */}
       <section className="home-close" aria-labelledby="close-title">
         <div className="container">
           <Reveal className="cta-block">
-            <p className="ordinal">04</p>
+            <p className="ordinal">05</p>
             <h2 id="close-title" className="h2">
               Say hi, or tell me what broke.
             </h2>

@@ -31,11 +31,6 @@ const ORIGIN = 'https://leducsystems.com';
    different path — used by routes that still exist and must still serve a
    200, but are no longer the canonical URL for their content. */
 const ROUTES = {
-  '/games': {
-    title: 'Games',
-    description:
-      'Every game released on itch.io under the handle raxeris. Free to play, right in the browser.',
-  },
   '/about': {
     title: 'About',
     description:

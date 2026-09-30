@@ -36,7 +36,7 @@ export const SITE = {
 
 export const NAV = [
   { label: 'Home', path: '/' },
-  { label: 'Games', path: '/games' },
+  { label: 'Games', path: '/#games' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
 ];
