@@ -45,7 +45,7 @@ describe('prerender route coverage', () => {
 describe('prerender output', () => {
   const template = [
     '<html><head>',
-    '<title>Le Duc Systems &mdash; original</title>',
+    '<title>LeDuc Systems &mdash; original</title>',
     '<meta name="description" content="original" />',
     '<link rel="canonical" href="https://leducsystems.com/" />',
     '<meta property="og:title" content="original" />',
@@ -57,7 +57,7 @@ describe('prerender output', () => {
   const html = toHtml(template, '/about', { title: 'About', description: 'About the practice.' });
 
   it('rewrites the title in the SEO component format', () => {
-    expect(html).toContain('<title>About — Le Duc Systems</title>');
+    expect(html).toContain('<title>About — LeDuc Systems</title>');
   });
 
   it('rewrites the canonical to the route', () => {
@@ -66,7 +66,7 @@ describe('prerender output', () => {
 
   it('rewrites description and open graph tags', () => {
     expect(html).toContain('content="About the practice."');
-    expect(html).toContain('content="About — Le Duc Systems"');
+    expect(html).toContain('content="About — LeDuc Systems"');
     expect(html).toContain('content="https://leducsystems.com/about"');
   });
 

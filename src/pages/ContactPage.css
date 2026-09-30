@@ -119,72 +119,6 @@
 /* Doubled so it beats .body's own measure regardless of sheet order. */
 .contact-aside .contact-aside__lede { max-width: 42ch; }
 
-.contact-block {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--sp-4);
-}
-
-/* The clause label reads at the heading rung, not the caption rung — it is
-   a section title set in mono, not metadata. */
-.contact-block__label {
-  color: var(--text-hi);
-}
-
-/* ── Numbered sequence ────────────────────────────────────────────────── */
-/* Hairline rows with a mono ordinal in the margin. Not two cards, and no
-   boxed counter — the rules do the separating. */
-.contact-steps {
-  counter-reset: contact-step;
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-}
-
-.contact-steps li {
-  counter-increment: contact-step;
-  display: grid;
-  grid-template-columns: 3.5ch minmax(0, 1fr);
-  gap: var(--sp-4);
-  padding-block: var(--sp-4);
-  border-top: 1px solid var(--line);
-}
-.contact-steps li:first-child { border-top-color: var(--line-strong); }
-.contact-steps li:last-child  { border-bottom: 1px solid var(--line); }
-
-.contact-steps li::before {
-  content: counter(contact-step, decimal-leading-zero);
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  font-weight: 500;
-  letter-spacing: var(--ls-caps);
-  font-variant-numeric: tabular-nums;
-  color: var(--text-xlo);
-  /* Sits on the baseline of the first line of the title beside it. */
-  line-height: 1.95;
-}
-
-.contact-steps__text {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-}
-
-.contact-steps__title {
-  font-size: var(--fs-base);
-  font-weight: 550;
-  line-height: 1.35;
-  color: var(--text-hi);
-}
-
-.contact-steps__body {
-  font-size: var(--fs-sm);
-  line-height: var(--lh-base);
-  color: var(--text-lo);
-  max-width: 46ch;
-}
-
 /* ── Plain-email fallback ─────────────────────────────────────────────── */
 .contact-note {
   display: flex;
@@ -231,6 +165,5 @@
 @media (max-width: 620px) {
   .contact-sheet { padding-top: var(--sp-6); }
   .contact-strip__title { font-size: var(--fs-xl); }
-  .contact-steps li { gap: var(--sp-3); }
   .panel.contact-form { padding-top: calc(var(--sp-5) - 1px); }
 }

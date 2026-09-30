@@ -5,7 +5,7 @@ import Reveal from '../components/Reveal';
 import { SITE, RESPONSE_PROMISE } from '../data/site';
 import './LegalPage.css';
 
-const LAST_UPDATED = 'August 19, 2026';
+const LAST_UPDATED = 'September 30, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
 
@@ -16,15 +16,10 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          {SITE.name} is a software consultancy operated by {SITE.founder}. This policy
-          describes what happens to information collected through the website at{' '}
-          <span className="hi">leducsystems.com</span>, including anything you send through the
-          contact form on that site.
-        </p>
-        <p>
-          Work performed for a client is governed by the written agreement for that engagement,
-          not by this page. Where that agreement says something different about handling your
-          data, the agreement controls.
+          {SITE.name} is a personal site run by {SITE.founder} for the games released on itch.io
+          under the handle {SITE.itchioHandle}. This policy describes what happens to information
+          collected through the website at <span className="hi">leducsystems.com</span>, including
+          anything you send through the contact form on that site.
         </p>
       </>
     ),
@@ -40,9 +35,8 @@ const SECTIONS = [
         </p>
         <ul className="list">
           <li>Your name and email address</li>
-          <li>Your company name and, if you provide it, your phone number</li>
-          <li>Company size, project type, and timeline, where you select them</li>
-          <li>The description of what you are trying to build</li>
+          <li>Which game you are writing about, if you fill that in — it is optional</li>
+          <li>The message itself</li>
           <li>Any file you choose to attach</li>
         </ul>
         <p>
@@ -195,9 +189,9 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          This site is aimed at businesses and is not directed at children under 13. I do not
-          knowingly collect information from them. If you believe a child has sent something
-          through the form, email me and I will delete it.
+          This site is not directed at children under 13. I do not knowingly collect information
+          from them. If you believe a child has sent something through the form, email me and I
+          will delete it.
         </p>
       </>
     ),
@@ -240,7 +234,7 @@ export default function PrivacyPolicyPage() {
     <>
       <SEO
         title="Privacy Policy"
-        description="What Le Duc Systems collects through this website: contact form submissions delivered by EmailJS and Google Analytics traffic data. Nothing else, and nothing sold."
+        description="What LeDuc Systems collects through this website: contact form submissions delivered by EmailJS and Google Analytics traffic data. Nothing else, and nothing sold."
         path="/privacy"
       />
 
@@ -266,7 +260,7 @@ export default function PrivacyPolicyPage() {
             </div>
             <div className="legal-front__act">
               <Link className="btn btn--primary" to="/contact">
-                Start a project
+                Get in touch
               </Link>
               <a className="link-arrow" href={MAILTO}>
                 Email {SITE.email}
@@ -345,7 +339,7 @@ export default function PrivacyPolicyPage() {
             </p>
             <div className="cluster">
               <Link className="btn btn--primary btn--lg" to="/contact">
-                Start a project
+                Get in touch
               </Link>
               <a className="link-arrow" href={MAILTO}>
                 Email {SITE.email}

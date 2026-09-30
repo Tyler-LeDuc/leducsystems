@@ -2,19 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { LEGAL_NAV, NAV, SITE } from '../data/site';
 
-/* Deep links into the home page's numbered clauses. These used to point at
-   /services#…; that route now only redirects here, so linking through it
-   from our own footer bounced every visitor through a second navigation.
-   The ids are the ones HomePage renders — see CONTENTS there.
-
-   /agencies is in this column on purpose: it is deliberately absent from
-   NAV, and the footer is the one place on the site that links it. */
-const ENGAGE = [
-  { to: '/#offer', label: 'What we build' },
-  { to: '/#engagement', label: 'Engagement models' },
-  { to: '/#process', label: 'How we work' },
-  { to: '/#technology', label: 'Technology' },
-  { to: '/agencies', label: 'For agencies' },
+const ELSEWHERE = [
+  { href: SITE.itchio, label: 'itch.io' },
+  { href: SITE.github, label: 'GitHub' },
+  { href: SITE.linkedin, label: 'LinkedIn' },
 ];
 
 function Footer() {
@@ -29,7 +20,7 @@ function Footer() {
       <div className="container">
         <div className="site-footer__top">
           <div className="site-footer__brand">
-            <Link to="/" className="brand" aria-label="Le Duc Systems, home">
+            <Link to="/" className="brand" aria-label={`${SITE.name}, home`}>
               <img
                 className="brand__mark"
                 src="/leduc-mark.svg"
@@ -37,11 +28,11 @@ function Footer() {
                 width="30"
                 height="30"
               />
-              <span className="brand__text">Le Duc Systems</span>
+              <span className="brand__text">{SITE.name}</span>
             </Link>
             <p className="body body--sm muted">
-              Custom web and mobile applications, internal tools, and data migrations. Based in{' '}
-              {SITE.city}, {SITE.region}, working remote across US time zones.
+              Small, fast, slightly unhinged browser games, shipped on itch.io under the handle{' '}
+              {SITE.itchioHandle}. Based in {SITE.city}, {SITE.region}.
             </p>
             <a className="site-footer__link link-underline" href={`mailto:${SITE.email}`}>
               {SITE.email}
@@ -58,11 +49,17 @@ function Footer() {
           </div>
 
           <div className="site-footer__col">
-            <h2 className="site-footer__title">Engage</h2>
-            {ENGAGE.map((item) => (
-              <Link key={item.to} className="site-footer__link" to={item.to}>
+            <h2 className="site-footer__title">Elsewhere</h2>
+            {ELSEWHERE.map((item) => (
+              <a
+                key={item.href}
+                className="site-footer__link"
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {item.label}
-              </Link>
+              </a>
             ))}
           </div>
 
@@ -77,8 +74,8 @@ function Footer() {
         </div>
 
         <div className="site-footer__bottom">
-          <p>&copy; {year} Le Duc Systems</p>
-          <p className="site-footer__legal">Built and shipped by Tyler LeDuc.</p>
+          <p>&copy; {year} {SITE.name}</p>
+          <p className="site-footer__legal">Made by {SITE.founder}.</p>
         </div>
       </div>
     </footer>

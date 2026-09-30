@@ -153,131 +153,12 @@
   max-width: 60ch;
 }
 
-/* ── Ruled-row headings ───────────────────────────────────────────────────
-   The h3 inside a .row__label is a field name, not a headline, so it is set
-   in mono at label size beneath its ordinal. */
-.about-rowhead {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  font-weight: 500;
-  letter-spacing: var(--ls-caps);
-  line-height: var(--lh-base);
-  text-transform: uppercase;
-  color: var(--text-hi);
-}
-
-/* ── Founding statement ───────────────────────────────────────────────────
-   A pull line marked with an ink rule. Deliberately not orange: rules and
-   decoration are ink here, and the page's one accent is the CTA button. */
-.about-statement {
-  margin-top: var(--sp-2);
-  padding-left: var(--sp-5);
-  font-size: var(--fs-h3);
-  font-weight: 600;
-  line-height: var(--lh-snug);
-  letter-spacing: var(--ls-snug);
-  color: var(--text-hi);
-  max-width: 30ch;
-  border-left: 2px solid var(--text-hi);
-}
-
-/* ── Numbered clauses ─────────────────────────────────────────────────────
-   Three clauses across a lattice rather than three paragraphs down a
-   column: the whole approach is taken in at a glance. The number is a CSS
-   counter so the markup stays plain paragraphs. */
-.about-clauses {
-  counter-reset: clause;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid var(--line-strong);
-  border-bottom: 1px solid var(--line);
-}
-
-.about-clause {
-  counter-increment: clause;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--sp-3);
-  padding: var(--sp-5) var(--sp-5) var(--sp-6);
-  font-size: var(--fs-sm);
-  line-height: var(--lh-base);
-  color: var(--text);
-  border-left: 1px solid var(--line);
-}
-.about-clauses > .about-clause:first-child {
-  padding-left: 0;
-  border-left: 0;
-}
-.about-clauses > .about-clause:last-child { padding-right: 0; }
-
-.about-clause::before {
-  content: counter(clause, decimal-leading-zero);
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  font-weight: 500;
-  letter-spacing: var(--ls-caps);
-  font-variant-numeric: tabular-nums;
-  text-transform: uppercase;
-  color: var(--text-xlo);
-}
-
-/* ── Terms of engagement ──────────────────────────────────────────────────
-   Ruled rows rather than a panel. Opened by a strong rule, not the datum —
-   the datum is already spent on this section's heading. */
-.about-terms {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-4);
-  padding-top: var(--sp-5);
-  border-top: 1px solid var(--line-strong);
-}
-
-.about-terms__title {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  font-weight: 500;
-  letter-spacing: var(--ls-caps);
-  line-height: var(--lh-base);
-  text-transform: uppercase;
-  color: var(--text-hi);
-}
-
-/* Selectors are doubled up so they outrank .list / .list--num regardless of
-   which stylesheet the bundler emits first. */
-.about-terms .about-terms__list { gap: 0; }
-.about-terms .about-terms__list li {
-  padding-block: var(--sp-3);
-  color: var(--text);
-  border-top: 1px solid var(--line);
-}
-.about-terms .about-terms__list li:last-child { border-bottom: 1px solid var(--line); }
-/* .list--num draws its ordinal absolutely against the top of the item, so it
-   has to be pushed down by the row padding to stay on the first line. */
-.about-terms .about-terms__list li::before { top: calc(var(--sp-3) + 0.1em); }
-
 /* ── Responsive ───────────────────────────────────────────────────────────
    Breakpoints match the shared cascade. */
 @media (max-width: 960px) {
-  .about-statement { max-width: none; }
   .about-block { grid-template-columns: minmax(0, 176px) minmax(0, 1fr); }
   .about-block__title { padding: var(--sp-5); }
   .about-block__foot { padding: var(--sp-5); }
-}
-
-@media (max-width: 720px) {
-  /* The clause lattice becomes a ruled stack; the rules move from the
-     column edges to between the rows. */
-  .about-clauses { grid-template-columns: minmax(0, 1fr); }
-  .about-clause {
-    padding: var(--sp-5) 0;
-    border-left: 0;
-    border-top: 1px solid var(--line);
-  }
-  .about-clauses > .about-clause:first-child {
-    padding-top: var(--sp-5);
-    border-top: 0;
-  }
 }
 
 @media (max-width: 620px) {
@@ -303,11 +184,6 @@
   }
 
   .about-block__foot .btn { width: 100%; }
-
-  .about-statement {
-    padding-left: var(--sp-4);
-    font-size: var(--fs-xl);
-  }
 }
 
 /* The standalone links in the facts lattice are controls, not prose.
@@ -325,70 +201,5 @@
     top: 50%;
     height: 44px;
     transform: translateY(-50%);
-  }
-}
-
-/* ── Side work: shipped games ─────────────────────────────────────────────
-   A register of releases: a ruled row per game, mono metadata in the label
-   column, the live itch.io widget in the wide one. The widget ships at a
-   fixed 552px, which would blow past a 360px viewport, so the iframe is
-   fluid and only capped at the embed's natural width. */
-.about-releases {
-  display: flex;
-  flex-direction: column;
-}
-
-.about-release {
-  display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(0, 2fr);
-  gap: var(--sp-5);
-  align-items: start;
-  padding-block: var(--sp-6);
-  border-top: 1px solid var(--line);
-}
-.about-releases > .about-release:first-child { border-top-color: var(--line-strong); }
-.about-releases > .about-release:last-child { border-bottom: 1px solid var(--line); }
-
-.about-release__meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--sp-2);
-}
-
-.about-release__title {
-  font-size: var(--fs-h4);
-  font-weight: 600;
-  line-height: var(--lh-snug);
-  letter-spacing: var(--ls-snug);
-  color: var(--text-hi);
-}
-
-.about-release__handle {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  font-weight: 500;
-  letter-spacing: var(--ls-caps);
-  text-transform: uppercase;
-  color: var(--text-xlo);
-}
-
-/* The frame is ours; the widget inside it is theirs. */
-.about-release__embed {
-  min-width: 0;
-  border: 1px solid var(--line);
-}
-.about-release__embed iframe {
-  display: block;
-  width: 100%;
-  max-width: 552px;
-  height: 167px;
-  border: 0;
-}
-
-@media (max-width: 720px) {
-  .about-release {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--sp-4);
   }
 }

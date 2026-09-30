@@ -7,7 +7,6 @@ const MENU_ID = 'site-mobile-menu';
 
 function isActivePath(pathname, to) {
   if (to === '/') return pathname === '/';
-  /* Prefix match, so "Free tools" stays current on every /tools/ page. */
   return pathname === to || pathname.startsWith(`${to}/`);
 }
 
@@ -59,7 +58,7 @@ function Header() {
     <>
       <header className={`site-header${scrolled ? ' site-header--scrolled' : ''}`}>
         <div className="site-header__inner">
-          <Link to="/" className="brand" aria-label="Le Duc Systems, home">
+          <Link to="/" className="brand" aria-label={`${SITE.name}, home`}>
             <img
               className="brand__mark"
               src="/leduc-mark.svg"
@@ -67,7 +66,7 @@ function Header() {
               width="30"
               height="30"
             />
-            <span className="brand__text">Le Duc Systems</span>
+            <span className="brand__text">{SITE.name}</span>
           </Link>
 
           <nav className="nav" aria-label="Primary">
@@ -90,15 +89,8 @@ function Header() {
           </nav>
 
           <div className="nav__actions">
-            {/* Ghost, not primary. The header is fixed, so an accent fill up
-                here would sit on screen alongside whichever accent fill the
-                page itself is showing — two signals in every viewport. The
-                header's one accent is the rule under the current nav link;
-                the page keeps the fill. The mobile menu is a different case:
-                it covers the page, so nothing competes and its call to
-                action stays primary. */}
             <button type="button" className="btn btn--ghost btn--sm" onClick={openContact}>
-              Start a project
+              Get in touch
             </button>
             <button
               type="button"
@@ -145,7 +137,7 @@ function Header() {
           style={{ '--menu-delay': `${60 + items.length * 45}ms` }}
         >
           <button type="button" className="btn btn--primary btn--lg" onClick={openContact}>
-            Start a project
+            Get in touch
           </button>
           <a className="btn btn--ghost btn--lg" href={`mailto:${SITE.email}`}>
             {SITE.email}

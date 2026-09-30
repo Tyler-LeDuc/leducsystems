@@ -22,70 +22,38 @@ const fs = require('fs');
 const path = require('path');
 
 const BUILD = path.join(__dirname, '..', 'build');
-const SITE_NAME = 'Le Duc Systems';
+const SITE_NAME = 'LeDuc Systems';
 const ORIGIN = 'https://leducsystems.com';
 
 /* path -> { title, description, canonical? }. Title is rendered as
-   "<title> — Le Duc Systems", matching what src/components/SEO.js does at
+   "<title> — LeDuc Systems", matching what src/components/SEO.js does at
    runtime. An optional `canonical` points the canonical link and og:url at a
    different path — used by routes that still exist and must still serve a
    200, but are no longer the canonical URL for their content. */
 const ROUTES = {
-  '/services': {
-    title: 'Services have moved to the home page',
+  '/games': {
+    title: 'Games',
     description:
-      'The services page is now part of the Le Duc Systems home page: what gets built, engagement models, pricing, process, and technology are all there.',
-    canonical: '/',
-  },
-  '/agencies': {
-    title: 'For agencies',
-    description:
-      'White-label development capacity for digital agencies. Java and Spring Boot, native iOS and Android, React, and legacy migrations — under your brand, on your process, at $95/hr. Based in Phoenix, Arizona.',
+      'Every game released on itch.io under the handle raxeris. Free to play, right in the browser.',
   },
   '/about': {
     title: 'About',
     description:
-      'Le Duc Systems builds custom web and mobile software. Founded 2026 by Tyler LeDuc in Phoenix, Arizona.',
+      'Tyler LeDuc makes small browser games under the handle raxeris on itch.io. Based in Phoenix, Arizona.',
   },
   '/contact': {
     title: 'Contact',
-    description:
-      'Start a project with Le Duc Systems in Phoenix, Arizona. Describe what you are building and get a reply within one business day from the person who would do the work.',
-  },
-  '/tools': {
-    title: 'Free tools',
-    description:
-      'Free tools that run entirely in your browser: what is inside one workbook, which file a whole folder depends on, what moving off Access would involve, and the database a spreadsheet should have been. Nothing is uploaded.',
-  },
-  '/tools/schema': {
-    title: 'Spreadsheet to database schema',
-    description:
-      'Paste a spreadsheet and get a Postgres schema plus the data problems that would break the import: mixed date formats, identifiers stored as numbers, columns that should be lookup tables. Runs entirely in your browser.',
-  },
-  '/tools/workbook': {
-    title: 'What is running inside your spreadsheet',
-    description:
-      "Drop an Excel workbook and see the software hiding in it: macro code and what it reaches, database connections, Power Query sources, links to other people's machines, and sheets that cannot be unhidden from the menu. Runs entirely in your browser — the file is never uploaded.",
-  },
-  '/tools/folder': {
-    title: 'Map the spreadsheets your team runs on',
-    description:
-      'Point this at a folder of Excel workbooks and see the dependency map nobody has drawn: which file a dozen reports read from, which links point at a machine that is not there, which workbook exists in eleven copies, and which one person has ever saved it. Reads four small parts per file, entirely in your browser.',
-  },
-  '/tools/access': {
-    title: 'What is actually in your Access database',
-    description:
-      'Drop an .mdb or .accdb and see what a migration off Access really involves: the tables and their Postgres schema, the forms, reports, macros and modules that do not convert at all, and the type mismatches that break an import. Runs entirely in your browser — the file is never uploaded.',
+    description: 'Say hi, report a bug, or leave feedback for LeDuc Systems. I reply within one business day.',
   },
   '/privacy': {
     title: 'Privacy Policy',
     description:
-      'What Le Duc Systems collects through this website: contact form submissions delivered by EmailJS and Google Analytics traffic data. Nothing else, and nothing sold.',
+      'What LeDuc Systems collects through this website: contact form submissions delivered by EmailJS and Google Analytics traffic data. Nothing else, and nothing sold.',
   },
   '/terms': {
     title: 'Terms of Service',
     description:
-      'The terms covering work by Le Duc Systems: written scope up front, work-for-hire deliverables you own on payment, no warranty of fitness, and a capped limitation of liability.',
+      'The terms covering this site: what the contact form collects, no warranty of fitness, and a capped limitation of liability.',
   },
 };
 

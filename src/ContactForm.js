@@ -13,24 +13,11 @@ const MAX_ATTACHMENT_BYTES = 5 * 1024 * 1024;
 const EMPTY_VALUES = {
   name: '',
   email: '',
-  company: '',
-  phone: '',
-  companySize: '',
-  projectType: '',
-  timeline: '',
+  game: '',
   details: '',
 };
 
-const FIELD_ORDER = ['name', 'email', 'company', 'phone', 'companySize', 'projectType', 'timeline', 'details'];
-
-const COMPANY_SIZES = ['Just me', '2-10', '11-50', '51-200', '200+'];
-const PROJECT_TYPES = [
-  'New product build',
-  'Add AI to an existing product',
-  'Internal tool or automation',
-  'Not sure yet',
-];
-const TIMELINES = ['ASAP', 'Next 1-3 months', 'This quarter', 'Exploring'];
+const FIELD_ORDER = ['name', 'email', 'game', 'details'];
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -45,15 +32,6 @@ const FOCUSABLE_SELECTOR = [
 
 /* ── Pure helpers ──────────────────────────────────────────────────────── */
 
-const digitsOnly = (value) => value.replace(/\D/g, '');
-
-const formatPhone = (value) => {
-  const digits = digitsOnly(value).slice(0, 10);
-  if (digits.length < 4) return digits;
-  if (digits.length < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
-  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
-};
-
 const validateField = (name, values) => {
   switch (name) {
     case 'name':
@@ -61,12 +39,9 @@ const validateField = (name, values) => {
     case 'email':
       if (!values.email.trim()) return 'Enter your email address.';
       return EMAIL_PATTERN.test(values.email.trim()) ? '' : 'Enter a valid email address.';
-    case 'phone':
-      if (!values.phone.trim()) return '';
-      return digitsOnly(values.phone).length < 10 ? 'Enter a 10-digit phone number, or leave this blank.' : '';
     case 'details':
       return values.details.trim().length < 10
-        ? 'A sentence or two about what you want built is enough to start.'
+        ? 'A sentence or two is enough to start.'
         : '';
     default:
       return '';
@@ -82,16 +57,13 @@ const validateAll = (values) => {
   return found;
 };
 
-const buildSubject = (values) => `New inquiry - ${values.company.trim() || values.name.trim()}`;
+const buildSubject = (values) =>
+  values.game.trim() ? `${values.game.trim()} — message from ${values.name.trim()}` : `Message from ${values.name.trim()}`;
 
 const buildMessage = (values) => {
   const lines = [`Name: ${values.name.trim()}`, `Email: ${values.email.trim()}`];
-  if (values.company.trim()) lines.push(`Company: ${values.company.trim()}`);
-  if (values.phone.trim()) lines.push(`Phone: ${values.phone.trim()}`);
-  if (values.companySize) lines.push(`Company size: ${values.companySize}`);
-  if (values.projectType) lines.push(`Project type: ${values.projectType}`);
-  if (values.timeline) lines.push(`Timeline: ${values.timeline}`);
-  lines.push('', 'What are you trying to build?', values.details.trim());
+  if (values.game.trim()) lines.push(`Game: ${values.game.trim()}`);
+  lines.push('', values.details.trim());
   return lines.join('\n');
 };
 
@@ -286,8 +258,7 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    const nextValue = name === 'phone' ? formatPhone(value) : value;
-    const next = { ...values, [name]: nextValue };
+    const next = { ...values, [name]: value };
     setValues(next);
 
     /* Once a field has been flagged, correct the error live rather than on the next blur. */
@@ -506,105 +477,29 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
           />
         </Field>
 
-        <Field id={`${uid}-company`} label="Company" error={errorFor('company')}>
-          <input
-            id={`${uid}-company`}
-            name="company"
-            type="text"
-            className="field__control"
-            autoComplete="organization"
-            value={values.company}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            ref={registerControl('company')}
-            aria-describedby={describedBy('company', false)}
-          />
-        </Field>
-
         <Field
-          id={`${uid}-phone`}
-          label="Phone"
-          hint="Optional."
-          error={errorFor('phone')}
+          id={`${uid}-game`}
+          label="Which game?"
+          hint="Optional — helps if this is a bug report."
+          error={errorFor('game')}
         >
           <input
-            id={`${uid}-phone`}
-            name="phone"
-            type="tel"
-            inputMode="tel"
+            id={`${uid}-game`}
+            name="game"
+            type="text"
             className="field__control"
-            autoComplete="tel"
-            placeholder="(555) 123-4567"
-            value={values.phone}
+            value={values.game}
             onChange={handleChange}
             onBlur={handleBlur}
-            ref={registerControl('phone')}
-            aria-invalid={errorFor('phone') ? 'true' : undefined}
-            aria-describedby={describedBy('phone', true)}
+            ref={registerControl('game')}
+            aria-describedby={describedBy('game', true)}
           />
-        </Field>
-
-        <Field id={`${uid}-companySize`} label="Company size" error={errorFor('companySize')}>
-          <select
-            id={`${uid}-companySize`}
-            name="companySize"
-            className="field__control"
-            value={values.companySize}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            ref={registerControl('companySize')}
-          >
-            <option value="">Select company size</option>
-            {COMPANY_SIZES.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </Field>
-
-        <Field id={`${uid}-projectType`} label="Project type" error={errorFor('projectType')}>
-          <select
-            id={`${uid}-projectType`}
-            name="projectType"
-            className="field__control"
-            value={values.projectType}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            ref={registerControl('projectType')}
-          >
-            <option value="">Select project type</option>
-            {PROJECT_TYPES.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </Field>
-
-        <Field id={`${uid}-timeline`} label="Timeline" error={errorFor('timeline')}>
-          <select
-            id={`${uid}-timeline`}
-            name="timeline"
-            className="field__control"
-            value={values.timeline}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            ref={registerControl('timeline')}
-          >
-            <option value="">Select timeline</option>
-            {TIMELINES.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
         </Field>
 
         <Field
           id={`${uid}-attachment`}
           label="Attachment"
-          hint="Optional. One file, up to 5 MB."
+          hint="Optional. One file, up to 5 MB — a screenshot works well for a bug."
           error={fileError}
         >
           <input
@@ -621,7 +516,7 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
 
         <Field
           id={`${uid}-details`}
-          label="What are you trying to build?"
+          label="What's on your mind?"
           required
           full
           error={errorFor('details')}
@@ -656,7 +551,7 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
 
       <div className="form-actions">
         <button type="submit" className="btn btn--primary btn--lg" disabled={submitting}>
-          {submitting ? 'Sending' : 'Send inquiry'}
+          {submitting ? 'Sending' : 'Send message'}
         </button>
         <a className="link-underline" href={`mailto:${CONTACT_EMAIL}`}>
           Or email {CONTACT_EMAIL} directly
@@ -675,7 +570,7 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
       <div className="modal" role="dialog" aria-modal="true" aria-labelledby={titleId} ref={modalRef} tabIndex={-1}>
         <div className="modal__head">
           <h2 className="modal__title" id={titleId}>
-            Start a project
+            Say hi
           </h2>
           <button type="button" className="modal__close" onClick={requestClose} aria-label="Close dialog">
             <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">

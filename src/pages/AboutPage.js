@@ -2,30 +2,22 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import Reveal from '../components/Reveal';
-import { SITE, APPROACH, RESPONSE_PROMISE, GAMES } from '../data/site';
+import { SITE, GAMES, RESPONSE_PROMISE } from '../data/site';
 import './AboutPage.css';
-
-const CLIENT_TERMS = [
-  'A first engagement small enough that walking away costs a week, not a quarter.',
-  'Direct access to the engineer writing the code, for the whole engagement.',
-  'Everything produced is yours from the first commit — repository, infrastructure, accounts.',
-  RESPONSE_PROMISE,
-];
 
 function AboutPage() {
   return (
     <>
       <SEO
         title="About"
-        description={`${SITE.name} builds custom web and mobile software. Founded ${SITE.founded} by ${SITE.founder} in ${SITE.city}, ${SITE.region}.`}
+        description={`${SITE.founder} makes small browser games under the handle ${SITE.itchioHandle} on itch.io. Based in ${SITE.city}, ${SITE.region}.`}
         path="/about"
       />
 
       {/* ── Front matter ───────────────────────────────────────────────────
           The arrival is the identity block itself: a drawing-sheet title
           block with the portrait in the left cell and the ruled facts, the
-          compressed title and the primary action in the right. No headline
-          screenful in front of it. */}
+          compressed title and the primary action in the right. */}
       <section className="section about-front">
         <div className="bg-grid" aria-hidden="true" />
 
@@ -42,7 +34,7 @@ function AboutPage() {
               />
               <figcaption className="about-block__id">
                 <span className="about-block__name">{SITE.founder}</span>
-                <span className="mono">Founder</span>
+                <span className="mono">{SITE.itchioHandle}</span>
               </figcaption>
             </figure>
 
@@ -51,18 +43,16 @@ function AboutPage() {
                 <span className="ordinal">00</span>
                 <span>About</span>
               </p>
-              <h1 className="about-block__h1">
-                Senior engineering, without the agency overhead.
-              </h1>
+              <h1 className="about-block__h1">One person, a lot of small games.</h1>
               <hr className="datum" />
 
               <dl className="about-block__facts">
                 <div className="about-block__fact">
-                  <dt>Company</dt>
+                  <dt>Ships as</dt>
                   <dd>{SITE.name}</dd>
                 </div>
                 <div className="about-block__fact">
-                  <dt>Founded</dt>
+                  <dt>Since</dt>
                   <dd>{SITE.founded}</dd>
                 </div>
                 <div className="about-block__fact">
@@ -76,6 +66,14 @@ function AboutPage() {
                 <div className="about-block__fact">
                   <dt>Elsewhere</dt>
                   <dd className="cluster">
+                    <a
+                      className="link-underline"
+                      href={SITE.itchio}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      itch.io
+                    </a>
                     <a
                       className="link-underline"
                       href={SITE.github}
@@ -95,9 +93,9 @@ function AboutPage() {
                   </dd>
                 </div>
                 <div className="about-block__fact about-block__fact--wide">
-                  <dt>Working</dt>
+                  <dt>Based in</dt>
                   <dd>
-                    {SITE.city}, {SITE.region} — remote-first, across US time zones
+                    {SITE.city}, {SITE.region}
                   </dd>
                 </div>
               </dl>
@@ -105,218 +103,94 @@ function AboutPage() {
 
             <div className="about-block__foot">
               <p className="about-block__lede">
-                {SITE.name} builds custom web and mobile software for companies that need it
-                shipped, not staffed.
+                I write software for a living, and {SITE.name} is what happens to it after hours:
+                small games, released under the handle {SITE.itchioHandle}.
               </p>
-              <Link className="btn btn--primary" to="/contact">
-                Start a project
+              <Link className="btn btn--primary" to="/games">
+                See the games
               </Link>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ── 01 · Who ─────────────────────────────────────────────────────── */}
-      <section className="section section--rule" aria-labelledby="about-who">
+      {/* ── 01 · Why ─────────────────────────────────────────────────────── */}
+      <section className="section section--rule" aria-labelledby="about-why">
         <div className="container stack stack--lg">
           <Reveal className="grid grid--split">
             <div className="section-head">
               <p className="eyebrow">
                 <span className="ordinal">01</span>
-                <span>Who you are hiring</span>
+                <span>Why</span>
               </p>
-              <h2 className="h2" id="about-who">
-                No handoff between the pitch and the build
+              <h2 className="h2" id="about-why">
+                Games are the part with no spec
               </h2>
               <hr className="datum" />
             </div>
 
             <p className="body">
-              At most firms, the person who understands your problem best is the person who
-              sold you the work, and that person writes none of the code. Everything they
-              learned has to survive a handoff. Most of it does not. Here, you explain the
-              problem once, to the engineer who builds it.
+              Most of what I build professionally is scoped by someone else before I ever touch
+              it. A game gets to start from a single idea — one button, one feeling, something
+              that happens in the first five seconds — and go from nothing to playable without a
+              client, a stakeholder, or a deadline that isn&rsquo;t mine.
             </p>
-          </Reveal>
-
-          <Reveal className="rows" delay={80}>
-            <div className="row">
-              <div className="row__label">
-                <span className="ordinal">A</span>
-                <h3 className="about-rowhead">What gets built</h3>
-              </div>
-              <div className="stack stack--sm">
-                <p className="row__body">
-                  Full-stack: the interface, the application behind it, the data model
-                  underneath, and the infrastructure it runs on. Java and Spring Boot, React
-                  and TypeScript, native iOS and Android, PostgreSQL, deployed on cloud
-                  accounts you own — with the monitoring and pipelines that keep it
-                  maintainable after handover.
-                </p>
-                <p className="row__body">
-                  AI is one line of work among several: assistants, retrieval over your own
-                  documents, extraction and classification, and the harder part behind them —
-                  evaluations, guardrails, fallbacks, and a human review path for the cases a
-                  model should not decide alone.
-                </p>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="row__label">
-                <span className="ordinal">B</span>
-                <h3 className="about-rowhead">How the work runs</h3>
-              </div>
-              <p className="row__body">
-                Scope goes in writing before anything starts, including what is explicitly
-                out. Work runs in short phases with something running on a real environment
-                at the end of each week. You have repository access the entire time, and
-                scope changes get re-quoted before the work happens.
-              </p>
-            </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ── 02 · Why this exists ───────────────────────────────────────── */}
-      <section className="section section--rule section--alt" aria-labelledby="about-why">
+      {/* ── 02 · How ─────────────────────────────────────────────────────── */}
+      <section className="section section--rule section--alt" aria-labelledby="about-how">
         <div className="container">
           <div className="grid grid--split">
             <Reveal className="section-head">
               <p className="eyebrow">
                 <span className="ordinal">02</span>
-                <span>Why this exists</span>
+                <span>How</span>
               </p>
-              <h2 className="h2" id="about-why">
-                The leverage is real. This passes it on.
+              <h2 className="h2" id="about-how">
+                Small on purpose.
               </h2>
               <hr className="datum" />
-              <p className="about-statement">
-                Software costs what it costs largely because of the organization delivering it.
-              </p>
             </Reveal>
 
             <Reveal className="stack" delay={120}>
               <p className="body">
-                Modern tooling has genuinely changed how much a focused engineering effort can
-                carry — not by writing software on its own, but by removing the parts of the job
-                that were never the hard part. The judgment, the architecture, and the decision
-                about what not to build are unchanged, and still where projects succeed or fail.
+                {GAMES.length} games and counting, most of them built to a single constraint:
+                small enough to finish before the idea gets boring. That keeps the failure rate
+                low and the release rate high — if something doesn&rsquo;t work, the next one
+                ships in days, not months.
               </p>
               <p className="body">
-                Most firms that adopted these tools kept the difference. {SITE.name} hands it to
-                you instead, as smaller engagements, shorter timelines, and a direct line to the
-                person doing the work.
+                Everything runs straight in the browser on itch.io. No installers, no account
+                walls, no download standing between the idea and someone actually playing it.
               </p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ── 03 · How the work runs ─────────────────────────────────────────
-          The approach set as three clauses across a lattice — read at a
-          glance, not down a column. */}
-      <section className="section section--rule" aria-labelledby="about-approach">
-        <div className="container stack stack--lg">
-          <Reveal className="section-head">
-            <p className="eyebrow">
-              <span className="ordinal">03</span>
-              <span>{APPROACH.eyebrow}</span>
-            </p>
-            <h2 className="h2" id="about-approach">
-              {APPROACH.title}
-            </h2>
-            <hr className="datum" />
-          </Reveal>
-
-          <Reveal className="about-clauses" delay={80}>
-            {APPROACH.body.map((paragraph) => (
-              <p className="about-clause" key={paragraph.slice(0, 32)}>
-                {paragraph}
-              </p>
-            ))}
-          </Reveal>
-
-          <Reveal className="about-terms" delay={120}>
-            <h3 className="about-terms__title">What every client gets</h3>
-            <ul className="list list--num about-terms__list">
-              {CLIENT_TERMS.map((term) => (
-                <li key={term}>{term}</li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── 04 · Side work ─────────────────────────────────────────────────
-          Shipped games, listed as a register of releases. The itch.io embeds
-          are the real store widgets — the entry beside each one carries only
-          facts (title, handle, link). No ratings or download counts: those
-          would be outcome metrics, which this site does not publish. */}
-      <section className="section section--rule section--alt" aria-labelledby="about-side">
-        <div className="container stack stack--lg">
-          <Reveal className="section-head">
-            <p className="eyebrow">
-              <span className="ordinal">04</span>
-              <span>Side work</span>
-            </p>
-            <h2 className="h2" id="about-side">
-              Games, shipped under another name
-            </h2>
-            <hr className="datum" />
-            <p className="lede">
-              Small games released on itch.io as <span className="code">raxeris</span>. Not
-              consultancy work, but the same habit: finish it and put it where people can
-              actually play it.
-            </p>
-          </Reveal>
-
-          <Reveal className="about-releases" delay={80}>
-            {GAMES.map((game, index) => (
-              <article className="about-release" key={game.slug}>
-                <div className="about-release__meta">
-                  <span className="ordinal">{String(index + 1).padStart(2, '0')}</span>
-                  <h3 className="about-release__title">
-                    <a className="link-underline" href={game.url}>
-                      {game.title}
-                    </a>
-                  </h3>
-                  <p className="about-release__handle">itch.io / raxeris</p>
-                </div>
-                <div className="about-release__embed">
-                  <iframe
-                    title={`${game.title} on itch.io`}
-                    src={`https://itch.io/embed/${game.embedId}`}
-                    height="167"
-                    loading="lazy"
-                  />
-                </div>
-              </article>
-            ))}
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── 05 · CTA ───────────────────────────────────────────────────── */}
+      {/* ── 03 · CTA ───────────────────────────────────────────────────── */}
       <section className="section section--rule" aria-labelledby="about-cta">
         <div className="container container--narrow">
           <Reveal className="cta-block">
             <p className="eyebrow">
-              <span className="ordinal">05</span>
+              <span className="ordinal">03</span>
               <span>Next step</span>
             </p>
             <h2 className="h2" id="about-cta">
-              Tell us what you are trying to build
+              Say hi, or tell me what broke.
             </h2>
-            <p className="lede">Thirty minutes, no charge, and a straight answer about fit.</p>
+            <p className="lede">Comments are the best part of this job. I read all of them.</p>
             <div className="cluster" role="group" aria-label="Contact options">
               <Link className="btn btn--primary btn--lg" to="/contact">
-                Start a project
+                Get in touch
               </Link>
               <a className="btn btn--ghost btn--lg" href={`mailto:${SITE.email}`}>
                 {SITE.email}
               </a>
             </div>
+            <p className="body--sm muted">{RESPONSE_PROMISE}</p>
           </Reveal>
         </div>
       </section>
