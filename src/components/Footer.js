@@ -46,6 +46,10 @@ function Footer() {
                 {item.label}
               </Link>
             ))}
+            {/* Static pages built in the leduc-tools repo, outside the router. */}
+            <a className="site-footer__link" href="/tools/">
+              Tools
+            </a>
           </div>
 
           <div className="site-footer__col">

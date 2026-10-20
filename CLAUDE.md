@@ -10,6 +10,13 @@ This file carries the content and business guardrails.
 
 ## Positioning
 
+**Tools (added October 2026):** `/tools/` holds small browser-based file tools, such as the Rhino
+.3dm converter. They're static pages built in `C:\Users\Tyler\apps\leduc-tools` and copied into
+`public/tools/` by that repo's `npm run export`. Don't edit `public/tools/` by hand. The tools
+are outside the React router, so link to them with plain `<a href>`, never `<Link>`. They have
+their own sitemap at `/tools/sitemap.xml`, listed in `robots.txt`. The rest of the section below
+covers the games side of the site.
+
 LeDuc Systems is the site for the games Tyler LeDuc releases on itch.io under the handle
 **raxeris**. It is a personal project, not a company with clients or a service line. There is no
 consulting business, no pricing, no engagement model, and no second audience (agencies, clients,
