@@ -31,7 +31,7 @@ function Footer() {
               <span className="brand__text">{SITE.name}</span>
             </Link>
             <p className="body body--sm muted">
-              Small, fast, slightly unhinged browser games, shipped on itch.io under the handle{' '}
+              Leduc Try-On for beauty brands, and small browser games under the handle{' '}
               {SITE.itchioHandle}. Based in {SITE.city}, {SITE.region}.
             </p>
             <a className="site-footer__link link-underline" href={`mailto:${SITE.email}`}>

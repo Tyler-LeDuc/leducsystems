@@ -1,6 +1,6 @@
-# LeDuc Systems — indie game site
+# LeDuc Systems — software studio site
 
-Public repo. Personal site for **LeDuc Systems**, Tyler LeDuc's indie game studio, live at
+Public repo. Personal site for **LeDuc Systems**, the name Tyler LeDuc ships software under, live at
 <https://leducsystems.com>. `README.md` carries the technical contract — stack, design system,
 routes, content model, contact form, build and deploy. Read it before writing code.
 
@@ -10,22 +10,21 @@ This file carries the content and business guardrails.
 
 ## Positioning
 
-LeDuc Systems is the site for the games Tyler LeDuc releases on itch.io under the handle
-**raxeris**. It is a personal project, not a company with clients or a service line. There is no
-consulting business, no pricing, no engagement model, and no second audience (agencies, clients,
-subcontractors) — that content was retired in September 2026 when the site pivoted from software
-consulting to indie game development. **Do not reintroduce it.**
+Repositioned October 2026. LeDuc Systems makes two things, in this order of emphasis:
 
-The games themselves are small, fast, one-button browser games — see the itch.io bio quoted in
-`PHILOSOPHY` in `src/data/site.js`. Everything runs free, in the browser, on itch.io. This site
-does not host or sell the games; it showcases and links to the real store pages.
+1. **Leduc Try-On** (`/tryon`) — the lead. Live AR makeup try-on engine Tyler licenses to beauty
+   brands for their product pages. The offer is a free pilot, then a yearly per-domain license
+   quoted by email. No published price list. Copy lives in `TRYON` in `src/data/site.js`.
+2. **Browser games** (`/games`) — small, fast, one-button games released free on itch.io under the
+   handle **raxeris**. This site showcases and links to the real store pages; it does not host or
+   sell them. See `PHILOSOPHY` and `GAMES`.
 
-**The one exception is `/tryon`** (added October 2026): Leduc Try-On, the AR makeup try-on engine
-Tyler licenses to beauty brands. It is a product page, not a return of the consulting business —
-no services menu, no agency audience, no published price list. The offer is a free pilot, then a
-yearly per-domain license quoted by email. Its copy lives in `TRYON` in `src/data/site.js`, and the
-honesty rules below apply to it in full: no customer logos, counts, testimonials or "trusted by"
-lines until they are real.
+The home page introduces both (`MAKES`) and closes on the Try-On pilot. It is still one person's
+work, not an agency: no services menu, no consulting engagements, no "work with our team". The old
+software-consulting content retired in September 2026 stays retired.
+
+Try-On demo images must never show REESOLVE material or photos of real people who have not agreed
+to it.
 
 Adding any route means updating **three** places or the build's drift test fails:
 `src/App.js`, `scripts/prerender.js` (`ROUTES`), and `public/sitemap.xml`.
@@ -51,7 +50,8 @@ a claim. Concretely, never add:
 
 - Fabricated review quotes, star ratings, or download/player counts
 - Named or implied press coverage, awards, or "featured on itch.io" claims that did not happen
-- A team, studio staff, or "we" language implying more than one person makes these games
+- A team, studio staff, or "we" language implying more than one person makes these things
+- Try-On customer logos, "trusted by" lines, testimonials or usage numbers that are not real
 - Manufactured scarcity or urgency ("limited time", "before it's gone")
 
 The only numbers permitted are facts that are checkable against the real itch.io store: the
@@ -70,7 +70,7 @@ the games list, FAQ answers, and the contact email there — not in page compone
 legal prose is the exception and lives in `PrivacyPolicyPage.js` / `TermsOfServicePage.js`.
 
 Exports: `SITE` · `NAV` · `LEGAL_NAV` · `PHILOSOPHY` · `GAMES` · `FEATURED_SLUGS` · `FAQ` ·
-`RESPONSE_PROMISE` · `TRYON`
+`RESPONSE_PROMISE` · `MAKES` · `TRYON`
 
 `GAMES` is the full catalogue released under the handle **raxeris**, in the order the live store
 page shows them (not a verified chronological order — itch.io's own grid ordering, not

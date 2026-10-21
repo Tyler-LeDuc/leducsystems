@@ -5,7 +5,7 @@ import Reveal from '../components/Reveal';
 import { SITE, RESPONSE_PROMISE } from '../data/site';
 import './LegalPage.css';
 
-const LAST_UPDATED = 'September 30, 2026';
+const LAST_UPDATED = 'October 21, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
 
@@ -16,8 +16,8 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          {SITE.name} is a personal site run by {SITE.founder} for the games released on itch.io
-          under the handle {SITE.itchioHandle}. This policy describes what happens to information
+          {SITE.name} is a personal site run by {SITE.founder} for Leduc Try-On and for the games
+          released on itch.io under the handle {SITE.itchioHandle}. This policy describes what happens to information
           collected through the website at <span className="hi">leducsystems.com</span>, including
           anything you send through the contact form on that site.
         </p>
@@ -35,7 +35,7 @@ const SECTIONS = [
         </p>
         <ul className="list">
           <li>Your name and email address</li>
-          <li>Which game you are writing about, if you fill that in — it is optional</li>
+          <li>What you are writing about, if you fill that in — it is optional</li>
           <li>The message itself</li>
           <li>Any file you choose to attach</li>
         </ul>
@@ -88,6 +88,25 @@ const SECTIONS = [
           tell one visit apart from another. You can block them with your browser&rsquo;s settings,
           with any content blocker, or with Google&rsquo;s official Analytics opt-out browser
           add-on, and the site will keep working normally.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'tryon-demo',
+    title: 'The Leduc Try-On demo',
+    content: (
+      <>
+        <p>
+          The try-on demo on the <span className="hi">/tryon</span> page uses your camera or a
+          photo you choose. Face tracking and the makeup rendering run entirely in your browser.
+          Camera frames and photos are never uploaded, stored, or seen by me or anyone else.
+        </p>
+        <p>
+          The demo reports anonymous usage events to the same Google Analytics property — for
+          example that the camera was started, a photo was loaded, or a look was picked — so I can
+          see which features get used. Those events never contain an image or anything derived
+          from your face.
         </p>
       </>
     ),

@@ -10,7 +10,7 @@ export default function ContactPage() {
     <>
       <SEO
         title="Contact"
-        description={`Say hi, report a bug, or leave feedback for ${SITE.name}. ${RESPONSE_PROMISE}`}
+        description={`Ask about Leduc Try-On, report a bug, or say hi. ${RESPONSE_PROMISE}`}
         path="/contact"
       />
 
@@ -26,7 +26,7 @@ export default function ContactPage() {
                   <span>Say hi</span>
                 </p>
                 <h1 className="hi contact-strip__title" id="contact-title">
-                  Tell me what broke, or what you liked
+                  Ask about Try-On, or just say hi
                 </h1>
               </div>
               <p className="contact-strip__promise">{RESPONSE_PROMISE}</p>
@@ -45,8 +45,8 @@ export default function ContactPage() {
 
             <Reveal className="contact-aside" delay={120}>
               <p className="body muted contact-aside__lede">
-                Bug reports, feedback, an idea for a game, or just a comment — it goes straight to
-                me. Comments are the best part of this job. I read all of them.
+                A Try-On pilot for your store, a bug in one of the games, or just a comment — it
+                goes straight to me, and I read all of them.
               </p>
 
               <div className="contact-note">

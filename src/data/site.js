@@ -3,9 +3,10 @@
    Single source of truth for the words on this site. Pages import from here
    instead of duplicating strings.
 
-   LeDuc Systems is Tyler LeDuc's indie game studio — the site for the games
-   released on itch.io under the handle "raxeris". Two rules govern this
-   file:
+   LeDuc Systems is the name Tyler LeDuc ships software under: Leduc
+   Try-On, an AR makeup try-on engine licensed to beauty brands, and the
+   small browser games released on itch.io under the handle "raxeris".
+   Two rules govern this file:
    1. Nothing here may claim a rating, review, download count, award, or
       press mention that is not real. The itch.io embeds and links already
       show the real numbers; this file does not restate them.
@@ -29,15 +30,15 @@ export const SITE = {
   region: 'Arizona',
   regionShort: 'AZ',
   founded: 2026,
-  tagline: 'Small, fast, slightly unhinged browser games.',
+  tagline: 'Software that runs right in the browser.',
   description:
-    'I make one-button games that run straight in the browser — no downloads, no tutorials, something happens in the first five seconds. Everything ships to itch.io under the handle raxeris.',
+    'I build Leduc Try-On, live AR makeup try-on for beauty brands, and small one-button games on itch.io. No installs, nothing to download.',
 };
 
 export const NAV = [
   { label: 'Home', path: '/' },
-  { label: 'Games', path: '/#games' },
   { label: 'Try-On', path: '/tryon' },
+  { label: 'Games', path: '/games' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
 ];
@@ -462,18 +463,50 @@ export const GAMES = [
    flagship without the numbers behind it. */
 export const FEATURED_SLUGS = ['dig-to-australia', '99'];
 
+/* What LeDuc Systems makes, as the home page's two headline cards. */
+export const MAKES = [
+  {
+    slug: 'tryon',
+    eyebrow: 'For beauty brands',
+    title: 'Leduc Try-On',
+    body: 'Live AR makeup try-on for product pages. Shoppers see your exact shades on their own face, on the camera or a selfie.',
+    path: '/tryon',
+    cta: 'See the live demo',
+  },
+  {
+    slug: 'games',
+    eyebrow: 'For everyone',
+    title: 'Browser games',
+    body: 'Small, fast, slightly unhinged one-button games, free on itch.io under the handle raxeris.',
+    path: '/games',
+    cta: 'Play the games',
+  },
+];
+
 export const FAQ = [
+  {
+    id: 'tryon-what',
+    question: 'What is Leduc Try-On?',
+    answer:
+      'An AR makeup engine that lets shoppers try lipstick, eyeshadow, blush and more on their own face, live in the browser. Brands drop it into a product page with one script tag.',
+  },
+  {
+    id: 'tryon-cost',
+    question: 'How much does Try-On cost?',
+    answer:
+      'It starts with a free pilot on your own product page. After that it is a yearly license for your domain — email me and I will quote it.',
+  },
+  {
+    id: 'tryon-privacy',
+    question: 'Do shopper photos get uploaded anywhere?',
+    answer:
+      'No. Face tracking and the makeup rendering run on the shopper’s device. Camera frames and selfies never leave the browser.',
+  },
   {
     id: 'free',
     question: 'Are the games free?',
     answer:
       'Yes. Everything is free to play, right in the browser, on itch.io. No downloads and no paywalls.',
-  },
-  {
-    id: 'often',
-    question: 'How often do new games come out?',
-    answer:
-      'Often. Most of these are small enough to finish in days, not months, so new ones show up on the itch.io page on a regular basis.',
   },
   {
     id: 'feedback',
@@ -482,15 +515,9 @@ export const FAQ = [
       "Please do. Leave a comment on the game's itch.io page or use the contact form here — I read everything.",
   },
   {
-    id: 'build',
-    question: 'What do you build these with?',
-    answer:
-      'Whatever gets a one-button idea into a browser fastest. The tools change from game to game; the constraint does not.',
-  },
-  {
     id: 'name',
     question: 'What is LeDuc Systems?',
-    answer: 'The name I ship things under. Right now that is these games.',
+    answer: 'The name I ship software under: Leduc Try-On and the games. It is one person — me.',
   },
 ];
 

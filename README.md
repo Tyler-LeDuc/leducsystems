@@ -1,8 +1,8 @@
 # LeDuc Systems
 
-Personal site for Tyler LeDuc's indie game studio. Live at <https://leducsystems.com>.
+Personal site for Tyler LeDuc's software studio: Leduc Try-On (AR makeup try-on for beauty brands) and his browser games. Live at <https://leducsystems.com>.
 
-The site is a small static React app: six routes, a shared design system, and one working
+The site is a small static React app: seven routes, a shared design system, and one working
 contact form. There is no CMS, no backend, and no database — content lives in a single
 JavaScript module and the form posts directly to EmailJS from the browser.
 
@@ -30,9 +30,9 @@ a concrete reason; the site is deliberately dependency-light.
 ## Routes
 
 ```
-/                 Home — the pitch, the philosophy, the two newest games, FAQ
-/games            Games — the full catalogue released under the handle raxeris
+/                 Home — what I make (Try-On and games), FAQ, pilot call to action
 /tryon            Leduc Try-On — the AR makeup engine, live demo and pilot offer
+/games            Games — featured embeds and the full catalogue released under the handle raxeris
 /about            About — who makes these and why
 /contact          Contact — the form, embedded
 /privacy          Privacy Policy

@@ -62,7 +62,7 @@ const buildSubject = (values) =>
 
 const buildMessage = (values) => {
   const lines = [`Name: ${values.name.trim()}`, `Email: ${values.email.trim()}`];
-  if (values.game.trim()) lines.push(`Game: ${values.game.trim()}`);
+  if (values.game.trim()) lines.push(`Topic: ${values.game.trim()}`);
   lines.push('', values.details.trim());
   return lines.join('\n');
 };
@@ -479,8 +479,8 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
 
         <Field
           id={`${uid}-game`}
-          label="Which game?"
-          hint="Optional — helps if this is a bug report."
+          label="What is it about?"
+          hint="Optional — Leduc Try-On, a game title, anything."
           error={errorFor('game')}
         >
           <input

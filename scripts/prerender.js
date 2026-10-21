@@ -36,14 +36,19 @@ const ROUTES = {
     description:
       'Live AR makeup try-on for beauty product pages. Runs in the browser on the camera or a selfie; nothing is uploaded.',
   },
+  '/games': {
+    title: 'Games',
+    description:
+      'Small, fast, one-button browser games by Tyler LeDuc, free on itch.io under the handle raxeris.',
+  },
   '/about': {
     title: 'About',
     description:
-      'Tyler LeDuc makes small browser games under the handle raxeris on itch.io. Based in Phoenix, Arizona.',
+      'Tyler LeDuc builds Leduc Try-On, AR makeup try-on for beauty brands, and small browser games. Based in Phoenix, Arizona.',
   },
   '/contact': {
     title: 'Contact',
-    description: 'Say hi, report a bug, or leave feedback for LeDuc Systems. I reply within one business day.',
+    description: 'Ask about Leduc Try-On, report a bug, or say hi. I reply within one business day.',
   },
   '/privacy': {
     title: 'Privacy Policy',

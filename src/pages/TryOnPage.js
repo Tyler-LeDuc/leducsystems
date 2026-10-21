@@ -2,6 +2,7 @@ import React from 'react';
 import SEO from '../components/SEO';
 import Reveal from '../components/Reveal';
 import { SITE, TRYON, RESPONSE_PROMISE } from '../data/site';
+import { track } from '../analytics';
 import './TryOnPage.css';
 
 const MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent(`${TRYON.name} pilot`)}`;
@@ -29,7 +30,11 @@ function TryOnPage() {
             </h1>
             <p className="lede">{TRYON.lede}</p>
             <div className="cluster" role="group" aria-label="Try-on actions">
-              <a className="btn btn--primary btn--lg" href={MAILTO}>
+              <a
+                className="btn btn--primary btn--lg"
+                href={MAILTO}
+                onClick={() => track('tryon_pilot_click', { location: 'tryon_top' })}
+              >
                 Ask about a pilot
               </a>
               <a
@@ -37,6 +42,7 @@ function TryOnPage() {
                 href={TRYON.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => track('tryon_demo_fullscreen')}
               >
                 Open the demo full screen
               </a>
@@ -125,10 +131,18 @@ function TryOnPage() {
               ))}
             </ol>
             <div className="cluster" role="group" aria-label="Contact options">
-              <a className="btn btn--primary btn--lg" href={MAILTO}>
+              <a
+                className="btn btn--primary btn--lg"
+                href={MAILTO}
+                onClick={() => track('tryon_pilot_click', { location: 'tryon_bottom' })}
+              >
                 Ask about a pilot
               </a>
-              <a className="btn btn--ghost btn--lg" href={`mailto:${SITE.email}`}>
+              <a
+                className="btn btn--ghost btn--lg"
+                href={`mailto:${SITE.email}`}
+                onClick={() => track('tryon_email_click')}
+              >
                 {SITE.email}
               </a>
             </div>

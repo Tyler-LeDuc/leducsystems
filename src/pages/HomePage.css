@@ -236,3 +236,20 @@
   padding-block: clamp(56px, 7vw, 96px) clamp(72px, 9vw, 120px);
   border-top: 1px solid var(--line);
 }
+
+/* ── What I make ─────────────────────────────────────────────────────────
+   The two headline cards: the link sits at the foot so both line up. */
+.home-make {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.home-make .link-arrow {
+  margin-top: auto;
+}
+
+/* ── Games page front matter (GamesPage.js shares this sheet) ─────────── */
+.section.games-front {
+  padding-top: var(--sp-7);
+}

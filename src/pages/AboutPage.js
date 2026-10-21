@@ -10,7 +10,7 @@ function AboutPage() {
     <>
       <SEO
         title="About"
-        description={`${SITE.founder} makes small browser games under the handle ${SITE.itchioHandle} on itch.io. Based in ${SITE.city}, ${SITE.region}.`}
+        description={`${SITE.founder} builds Leduc Try-On, AR makeup try-on for beauty brands, and small browser games. Based in ${SITE.city}, ${SITE.region}.`}
         path="/about"
       />
 
@@ -43,7 +43,7 @@ function AboutPage() {
                 <span className="ordinal">00</span>
                 <span>About</span>
               </p>
-              <h1 className="about-block__h1">One person, a lot of small games.</h1>
+              <h1 className="about-block__h1">One person, building for the browser.</h1>
               <hr className="datum" />
 
               <dl className="about-block__facts">
@@ -103,11 +103,11 @@ function AboutPage() {
 
             <div className="about-block__foot">
               <p className="about-block__lede">
-                I write software for a living, and {SITE.name} is what happens to it after hours:
-                small games, released under the handle {SITE.itchioHandle}.
+                I write software for a living, and {SITE.name} is what I ship on my own: Leduc
+                Try-On for beauty brands, and small games under the handle {SITE.itchioHandle}.
               </p>
-              <Link className="btn btn--primary" to="/#games">
-                See the games
+              <Link className="btn btn--primary" to="/tryon">
+                See Leduc Try-On
               </Link>
             </div>
           </Reveal>
@@ -124,16 +124,16 @@ function AboutPage() {
                 <span>Why</span>
               </p>
               <h2 className="h2" id="about-why">
-                Games are the part with no spec
+                Things I can finish myself
               </h2>
               <hr className="datum" />
             </div>
 
             <p className="body">
               Most of what I build professionally is scoped by someone else before I ever touch
-              it. A game gets to start from a single idea — one button, one feeling, something
-              that happens in the first five seconds — and go from nothing to playable without a
-              client, a stakeholder, or a deadline that isn&rsquo;t mine.
+              it. Here I get to own the whole thing: Leduc Try-On is my own AR makeup engine,
+              and the games start from a single idea — one button, one
+              feeling — and go from nothing to playable without a deadline that isn&rsquo;t mine.
             </p>
           </Reveal>
         </div>
@@ -156,14 +156,13 @@ function AboutPage() {
 
             <Reveal className="stack" delay={120}>
               <p className="body">
-                {GAMES.length} games and counting, most of them built to a single constraint:
-                small enough to finish before the idea gets boring. That keeps the failure rate
-                low and the release rate high — if something doesn&rsquo;t work, the next one
-                ships in days, not months.
+                Everything I make runs straight in the browser. No installers, no account walls,
+                no download standing between the idea and someone actually using it.
               </p>
               <p className="body">
-                Everything runs straight in the browser on itch.io. No installers, no account
-                walls, no download standing between the idea and someone actually playing it.
+                For Try-On that also means privacy: the face tracking runs on the shopper&rsquo;s
+                device, so nothing is uploaded. For the games it means {GAMES.length} of them,
+                each small enough to finish before the idea gets boring.
               </p>
             </Reveal>
           </div>
@@ -179,9 +178,9 @@ function AboutPage() {
               <span>Next step</span>
             </p>
             <h2 className="h2" id="about-cta">
-              Say hi, or tell me what broke.
+              Ask about Try-On, or just say hi.
             </h2>
-            <p className="lede">Comments are the best part of this job. I read all of them.</p>
+            <p className="lede">I read every message myself.</p>
             <div className="cluster" role="group" aria-label="Contact options">
               <Link className="btn btn--primary btn--lg" to="/contact">
                 Get in touch
