@@ -31,6 +31,11 @@ const ORIGIN = 'https://leducsystems.com';
    different path — used by routes that still exist and must still serve a
    200, but are no longer the canonical URL for their content. */
 const ROUTES = {
+  '/tryon': {
+    title: 'Leduc Try-On',
+    description:
+      'Live AR makeup try-on for beauty product pages. Runs in the browser on the camera or a selfie; nothing is uploaded.',
+  },
   '/about': {
     title: 'About',
     description:

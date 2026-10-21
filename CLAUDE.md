@@ -20,6 +20,13 @@ The games themselves are small, fast, one-button browser games — see the itch.
 `PHILOSOPHY` in `src/data/site.js`. Everything runs free, in the browser, on itch.io. This site
 does not host or sell the games; it showcases and links to the real store pages.
 
+**The one exception is `/tryon`** (added October 2026): Leduc Try-On, the AR makeup try-on engine
+Tyler licenses to beauty brands. It is a product page, not a return of the consulting business —
+no services menu, no agency audience, no published price list. The offer is a free pilot, then a
+yearly per-domain license quoted by email. Its copy lives in `TRYON` in `src/data/site.js`, and the
+honesty rules below apply to it in full: no customer logos, counts, testimonials or "trusted by"
+lines until they are real.
+
 Adding any route means updating **three** places or the build's drift test fails:
 `src/App.js`, `scripts/prerender.js` (`ROUTES`), and `public/sitemap.xml`.
 
@@ -63,7 +70,7 @@ the games list, FAQ answers, and the contact email there — not in page compone
 legal prose is the exception and lives in `PrivacyPolicyPage.js` / `TermsOfServicePage.js`.
 
 Exports: `SITE` · `NAV` · `LEGAL_NAV` · `PHILOSOPHY` · `GAMES` · `FEATURED_SLUGS` · `FAQ` ·
-`RESPONSE_PROMISE`
+`RESPONSE_PROMISE` · `TRYON`
 
 `GAMES` is the full catalogue released under the handle **raxeris**, in the order the live store
 page shows them (not a verified chronological order — itch.io's own grid ordering, not

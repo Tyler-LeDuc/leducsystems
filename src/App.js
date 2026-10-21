@@ -8,6 +8,7 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
+import TryOnPage from './pages/TryOnPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 const EMAILJS_PUBLIC_KEY = 'HIVHympEPP7sMQ_Pl';
@@ -48,6 +49,7 @@ export function AppShell() {
       <main id="main" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/tryon" element={<TryOnPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />

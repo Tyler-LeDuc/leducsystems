@@ -37,6 +37,7 @@ export const SITE = {
 export const NAV = [
   { label: 'Home', path: '/' },
   { label: 'Games', path: '/#games' },
+  { label: 'Try-On', path: '/tryon' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
 ];
@@ -494,3 +495,56 @@ export const FAQ = [
 ];
 
 export const RESPONSE_PROMISE = 'I reply to every message within one business day.';
+
+/* Leduc Try-On — the AR makeup engine I license to beauty brands. The one
+   part of this site that is a product for sale. Same honesty rules as
+   everything else: no customer logos, counts or quotes until they are real. */
+export const TRYON = {
+  name: 'Leduc Try-On',
+  demoUrl: 'https://tyler-leduc.github.io/leduc-tryon-demo/',
+  title: 'Let shoppers try your shades on their own face.',
+  lede:
+    'Live AR makeup try-on for your product pages, on the camera or a selfie, running entirely in the browser.',
+  features: [
+    {
+      title: 'Live or photo',
+      body: 'Real-time on the front camera, or on an uploaded selfie for shoppers who would rather not turn it on.',
+    },
+    {
+      title: 'The whole face',
+      body: 'Lips, liner, eyeshadow, lashes, brows, blush, bronzer, contour, highlight, foundation, concealer and hair color.',
+    },
+    {
+      title: 'Your exact shades',
+      body: 'Each product is a hex color plus a finish — matte, satin, gloss or shimmer — so the catalog maps straight across.',
+    },
+    {
+      title: 'Private by design',
+      body: 'Face tracking runs on the shopper’s device. No photos reach my servers or yours.',
+    },
+    {
+      title: 'One script tag',
+      body: 'Plain JavaScript, no framework. It drops into Shopify, WooCommerce or a custom storefront.',
+    },
+    {
+      title: 'Save and share',
+      body: 'Shoppers can compare before and after, and save the result as an image.',
+    },
+  ],
+  snippet: `<div id="tryon" style="height:520px"></div>
+<script src="leduc-tryon.iife.js"></script>
+<script>
+  LeducTryOn.create({
+    container: document.getElementById('tryon'),
+    licenseKey: 'YOUR-KEY',
+  }).then((tryon) => {
+    tryon.startCamera();
+    tryon.apply({ lips: { color: '#b0303f' } });
+  });
+</script>`,
+  steps: [
+    'Try the demo and send me a product page you want it on.',
+    'I set it up with your shades on a free pilot.',
+    'If it helps you sell, we agree a yearly license for your domain.',
+  ],
+};

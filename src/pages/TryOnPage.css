@@ -1,0 +1,45 @@
+/* =========================================================================
+   Try-On — page-specific styles only.
+
+   The live demo is the headline object: a framed iframe straight under the
+   pitch. Everything else — cards, rows, buttons, lists — is components.css.
+   ========================================================================= */
+
+.section.tryon-front {
+  padding-top: var(--sp-7);
+}
+
+/* The demo app lays itself out for a ~1280x860 viewport and collapses to a
+   stacked phone layout below 900px, so the frame is tall on narrow screens. */
+.tryon-demo {
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--paper-100);
+}
+
+.tryon-demo__frame {
+  display: block;
+  width: 100%;
+  height: min(860px, 80vh);
+  border: 0;
+}
+
+@media (max-width: 720px) {
+  .tryon-demo__frame {
+    height: 900px;
+  }
+}
+
+.tryon-code {
+  margin: 0;
+  padding: var(--sp-5);
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--paper-100);
+}
+
+.tryon-steps {
+  text-align: left;
+}

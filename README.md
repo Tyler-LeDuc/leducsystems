@@ -32,6 +32,7 @@ a concrete reason; the site is deliberately dependency-light.
 ```
 /                 Home — the pitch, the philosophy, the two newest games, FAQ
 /games            Games — the full catalogue released under the handle raxeris
+/tryon            Leduc Try-On — the AR makeup engine, live demo and pilot offer
 /about            About — who makes these and why
 /contact          Contact — the form, embedded
 /privacy          Privacy Policy
