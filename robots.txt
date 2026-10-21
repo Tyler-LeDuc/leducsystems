@@ -3,4 +3,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://leducsystems.com/sitemap.xml
-Sitemap: https://leducsystems.com/tools/sitemap.xml
