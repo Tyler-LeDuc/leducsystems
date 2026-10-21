@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import Reveal from '../components/Reveal';
-import { SITE, GAMES, FEATURED_SLUGS, PHILOSOPHY, FAQ } from '../data/site';
+import { SITE, GAMES, FEATURED_SLUGS, PHILOSOPHY, FAQ, TOOLS } from '../data/site';
 import './HomePage.css';
 
 const FEATURED = GAMES.filter((game) => FEATURED_SLUGS.includes(game.slug));
@@ -172,7 +172,37 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 04 · Questions ─────────────────────────────────────────────── */}
+      {/* ── 04 · Tools ─────────────────────────────────────────────────
+          Static pages under /tools/, so plain <a> links, not <Link>. */}
+      <section id="tools" className="section section--rule" aria-labelledby="tools-title">
+        <div className="container stack stack--lg">
+          <Reveal className="home-head">
+            <p className="eyebrow home-head__meta">
+              <span className="ordinal">04</span>
+              <span>Tools</span>
+            </p>
+            <h2 id="tools-title" className="h2 home-head__title">
+              Small tools for annoying file problems.
+            </h2>
+            <hr className="datum" />
+          </Reveal>
+
+          <Reveal as="ul" className="games-grid" delay={80}>
+            {TOOLS.map((tool) => (
+              <li className="card games-card" key={tool.slug}>
+                <span className="pill games-card__genre">{tool.tag}</span>
+                <h3 className="card__title games-card__title">{tool.title}</h3>
+                <p className="card__body games-card__blurb">{tool.blurb}</p>
+                <a className="link-arrow games-card__link" href={tool.url}>
+                  Open the tool
+                </a>
+              </li>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── 05 · Questions ─────────────────────────────────────────────── */}
       <section
         id="faq"
         className="section section--tight section--rule"
@@ -181,7 +211,7 @@ export default function HomePage() {
         <div className="container stack stack--lg">
           <Reveal className="home-head">
             <p className="eyebrow home-head__meta">
-              <span className="ordinal">04</span>
+              <span className="ordinal">05</span>
               <span>Questions</span>
             </p>
             <h2 id="faq-title" className="h2 home-head__title">
@@ -228,11 +258,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 05 · Closing call to action ────────────────────────────────── */}
+      {/* ── 06 · Closing call to action ────────────────────────────────── */}
       <section className="home-close" aria-labelledby="close-title">
         <div className="container">
           <Reveal className="cta-block">
-            <p className="ordinal">05</p>
+            <p className="ordinal">06</p>
             <h2 id="close-title" className="h2">
               Say hi, or tell me what broke.
             </h2>

@@ -37,8 +37,22 @@ export const SITE = {
 export const NAV = [
   { label: 'Home', path: '/' },
   { label: 'Games', path: '/#games' },
+  /* Static pages from the leduc-tools repo, outside the router: render as a
+     plain <a>, never <Link>, or the router serves its 404 page. */
+  { label: 'Tools', href: '/tools/', static: true },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
+];
+
+/* Browser tools served from public/tools/ (built in the leduc-tools repo). */
+export const TOOLS = [
+  {
+    slug: 'rhino-converter',
+    title: 'Rhino file converter',
+    tag: 'Rhino / .3dm',
+    blurb: 'Opens newer Rhino files in older versions of Rhino. Runs in your browser, so nothing is uploaded.',
+    url: '/tools/rhino-converter/',
+  },
 ];
 
 export const LEGAL_NAV = [

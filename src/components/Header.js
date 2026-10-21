@@ -19,6 +19,7 @@ function Header() {
   const items = NAV.map((item) => ({
     to: item.to || item.path || item.href,
     label: item.label || item.name,
+    static: item.static,
   }));
 
   useEffect(() => {
@@ -75,13 +76,19 @@ function Header() {
                 const active = isActivePath(pathname, item.to);
                 return (
                   <li key={item.to}>
-                    <Link
-                      to={item.to}
-                      className={`nav__link${active ? ' nav__link--active' : ''}`}
-                      aria-current={active ? 'page' : undefined}
-                    >
-                      {item.label}
-                    </Link>
+                    {item.static ? (
+                      <a href={item.to} className="nav__link">
+                        {item.label}
+                      </a>
+                    ) : (
+                      <Link
+                        to={item.to}
+                        className={`nav__link${active ? ' nav__link--active' : ''}`}
+                        aria-current={active ? 'page' : undefined}
+                      >
+                        {item.label}
+                      </Link>
+                    )}
                   </li>
                 );
               })}
@@ -118,15 +125,25 @@ function Header() {
             const active = isActivePath(pathname, item.to);
             return (
               <li key={item.to}>
-                <Link
-                  to={item.to}
-                  className="mobile-menu__link"
-                  aria-current={active ? 'page' : undefined}
-                  style={{ '--menu-delay': `${60 + index * 45}ms` }}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
+                {item.static ? (
+                  <a
+                    href={item.to}
+                    className="mobile-menu__link"
+                    style={{ '--menu-delay': `${60 + index * 45}ms` }}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    to={item.to}
+                    className="mobile-menu__link"
+                    aria-current={active ? 'page' : undefined}
+                    style={{ '--menu-delay': `${60 + index * 45}ms` }}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </li>
             );
           })}

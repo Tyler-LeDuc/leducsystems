@@ -13,6 +13,7 @@ function Footer() {
   const items = NAV.map((item) => ({
     to: item.to || item.path || item.href,
     label: item.label || item.name,
+    static: item.static,
   }));
 
   return (
@@ -41,15 +42,17 @@ function Footer() {
 
           <div className="site-footer__col">
             <h2 className="site-footer__title">Navigate</h2>
-            {items.map((item) => (
-              <Link key={item.to} className="site-footer__link" to={item.to}>
-                {item.label}
-              </Link>
-            ))}
-            {/* Static pages built in the leduc-tools repo, outside the router. */}
-            <a className="site-footer__link" href="/tools/">
-              Tools
-            </a>
+            {items.map((item) =>
+              item.static ? (
+                <a key={item.to} className="site-footer__link" href={item.to}>
+                  {item.label}
+                </a>
+              ) : (
+                <Link key={item.to} className="site-footer__link" to={item.to}>
+                  {item.label}
+                </Link>
+              )
+            )}
           </div>
 
           <div className="site-footer__col">
