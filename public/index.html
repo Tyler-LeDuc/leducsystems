@@ -119,6 +119,15 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <!-- Plain links in the HTML so crawlers find the pages without running JavaScript.
+         React replaces this on load (createRoot), and the same links are in the site nav. -->
+    <div id="root"><nav aria-label="Site">
+      <a href="/">LeDuc Systems</a> ·
+      <a href="/tools/">Tools</a> ·
+      <a href="/tools/publisher-converter/">Publisher converter</a> ·
+      <a href="/tools/rhino-converter/">Rhino converter</a> ·
+      <a href="/about">About</a> ·
+      <a href="/contact">Contact</a>
+    </nav></div>
   </body>
 </html>
