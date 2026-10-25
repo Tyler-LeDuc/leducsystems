@@ -5,7 +5,7 @@ import Reveal from '../components/Reveal';
 import { SITE, RESPONSE_PROMISE } from '../data/site';
 import './LegalPage.css';
 
-const LAST_UPDATED = 'September 30, 2026';
+const LAST_UPDATED = 'October 25, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
 
@@ -107,6 +107,29 @@ const SECTIONS = [
     ),
   },
   {
+    id: 'file-tools',
+    title: 'Files you convert with the tools',
+    content: (
+      <>
+        <p>
+          The Rhino converter runs entirely in your browser. Your file never leaves your computer.
+        </p>
+        <p>
+          The Publisher converter needs software that can&rsquo;t run in a browser, so the file you
+          drop is uploaded to my conversion server, hosted by Hetzner. It is used only to make your
+          preview and download, nobody looks at it, and it and the converted files are deleted
+          automatically within 24 hours. The server logs the time, your IP address and the page
+          count of each conversion, to prevent abuse and fix problems.
+        </p>
+        <p>
+          Payments for the Publisher converter are handled by Stripe on its own checkout page. I
+          never see or store your card details; Stripe tells me only whether a payment went
+          through, and keeps the receipt details it needs under its own privacy policy.
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'not-collected',
     title: 'What this site does not do',
     content: (
@@ -114,7 +137,7 @@ const SECTIONS = [
         <p>Stated plainly, so there is no ambiguity about it:</p>
         <ul className="list">
           <li>There are no user accounts, logins, or passwords</li>
-          <li>No payments are taken through this site, so no payment details are collected</li>
+          <li>Card details are entered only on Stripe&rsquo;s checkout page and never reach me</li>
           <li>There are no advertising pixels, retargeting tags, or ad networks</li>
           <li>There is no session recording, heatmapping, or screen capture</li>
           <li>Your information is never sold, rented, or traded</li>

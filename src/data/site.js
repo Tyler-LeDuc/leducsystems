@@ -47,6 +47,13 @@ export const NAV = [
 /* Browser tools served from public/tools/ (built in the leduc-tools repo). */
 export const TOOLS = [
   {
+    slug: 'publisher-converter',
+    title: 'Publisher file converter',
+    tag: 'Publisher / .pub',
+    blurb: 'Turns Microsoft Publisher files into editable files for PowerPoint, Canva, Affinity and InDesign. Free preview.',
+    url: '/tools/publisher-converter/',
+  },
+  {
     slug: 'rhino-converter',
     title: 'Rhino file converter',
     tag: 'Rhino / .3dm',
