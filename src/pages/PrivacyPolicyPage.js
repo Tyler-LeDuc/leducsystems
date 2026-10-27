@@ -118,7 +118,8 @@ const SECTIONS = [
           The Publisher converter needs software that can&rsquo;t run in a browser, so the file you
           drop is uploaded to my conversion server, hosted by Hetzner. It is used only to make your
           preview and download, nobody looks at it, and it and the converted files are deleted
-          automatically within 24 hours. The server logs the time, your IP address and the page
+          automatically within 24 hours, or within 7 days if you paid for the conversion, so you
+          can download it again. The server logs the time, your IP address and the page
           count of each conversion, to prevent abuse and fix problems.
         </p>
         <p>
