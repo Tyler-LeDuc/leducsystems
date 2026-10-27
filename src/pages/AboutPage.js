@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import Reveal from '../components/Reveal';
-import { SITE, GAMES, RESPONSE_PROMISE } from '../data/site';
+import { SITE, RESPONSE_PROMISE } from '../data/site';
 import './AboutPage.css';
 
 function AboutPage() {
@@ -10,7 +10,7 @@ function AboutPage() {
     <>
       <SEO
         title="About"
-        description={`${SITE.founder} makes small browser games under the handle ${SITE.itchioHandle} on itch.io. Based in ${SITE.city}, ${SITE.region}.`}
+        description={`${SITE.founder} is the developer behind ${SITE.name}: software tools that open and convert files other software won't. Based in ${SITE.city}, ${SITE.region}.`}
         path="/about"
       />
 
@@ -34,7 +34,7 @@ function AboutPage() {
               />
               <figcaption className="about-block__id">
                 <span className="about-block__name">{SITE.founder}</span>
-                <span className="mono">{SITE.itchioHandle}</span>
+                <span className="mono">Developer</span>
               </figcaption>
             </figure>
 
@@ -43,13 +43,13 @@ function AboutPage() {
                 <span className="ordinal">00</span>
                 <span>About</span>
               </p>
-              <h1 className="about-block__h1">One person, a lot of small games.</h1>
+              <h1 className="about-block__h1">One developer, a few sharp tools.</h1>
               <hr className="datum" />
 
               <dl className="about-block__facts">
                 <div className="about-block__fact">
-                  <dt>Ships as</dt>
-                  <dd>{SITE.name}</dd>
+                  <dt>Company</dt>
+                  <dd>{SITE.name} LLC</dd>
                 </div>
                 <div className="about-block__fact">
                   <dt>Since</dt>
@@ -66,14 +66,6 @@ function AboutPage() {
                 <div className="about-block__fact">
                   <dt>Elsewhere</dt>
                   <dd className="cluster">
-                    <a
-                      className="link-underline"
-                      href={SITE.itchio}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      itch.io
-                    </a>
                     <a
                       className="link-underline"
                       href={SITE.github}
@@ -103,12 +95,12 @@ function AboutPage() {
 
             <div className="about-block__foot">
               <p className="about-block__lede">
-                I write software for a living, and {SITE.name} is what happens to it after hours:
-                small games, released under the handle {SITE.itchioHandle}.
+                I&rsquo;m {SITE.founder}, a software developer. {SITE.name} is my company: I
+                build and sell tools that rescue files other software can&rsquo;t open.
               </p>
-              <Link className="btn btn--primary" to="/#games">
-                See the games
-              </Link>
+              <a className="btn btn--primary" href="/tools/">
+                See the tools
+              </a>
             </div>
           </Reveal>
         </div>
@@ -124,16 +116,16 @@ function AboutPage() {
                 <span>Why</span>
               </p>
               <h2 className="h2" id="about-why">
-                Games are the part with no spec
+                Files outlive the software that made them
               </h2>
               <hr className="datum" />
             </div>
 
             <p className="body">
-              Most of what I build professionally is scoped by someone else before I ever touch
-              it. A game gets to start from a single idea — one button, one feeling, something
-              that happens in the first five seconds — and go from nothing to playable without a
-              client, a stakeholder, or a deadline that isn&rsquo;t mine.
+              Microsoft retired Publisher. PageMaker has been gone for years. Rhino moves its file
+              format forward with every release. Each time, people are left holding files they
+              made and can no longer open. I find those dead ends and build the tool that gets
+              them out.
             </p>
           </Reveal>
         </div>
@@ -156,14 +148,17 @@ function AboutPage() {
 
             <Reveal className="stack" delay={120}>
               <p className="body">
-                {GAMES.length} games and counting, most of them built to a single constraint:
-                small enough to finish before the idea gets boring. That keeps the failure rate
-                low and the release rate high — if something doesn&rsquo;t work, the next one
-                ships in days, not months.
+                Each tool does one job and runs in the browser: no installer, no account, no
+                subscription. You see a free preview of your own file before you pay, and if a
+                paid result doesn&rsquo;t work for you, I refund it.
               </p>
               <p className="body">
-                Everything runs straight in the browser on itch.io. No installers, no account
-                walls, no download standing between the idea and someone actually playing it.
+                When someone sends me a file a tool got wrong, I fix the tool for the next person.
+                On the side I also make{' '}
+                <Link className="link-underline" to="/games">
+                  small browser games
+                </Link>
+                .
               </p>
             </Reveal>
           </div>
@@ -179,9 +174,9 @@ function AboutPage() {
               <span>Next step</span>
             </p>
             <h2 className="h2" id="about-cta">
-              Say hi, or tell me what broke.
+              Got a file nothing will open?
             </h2>
-            <p className="lede">Comments are the best part of this job. I read all of them.</p>
+            <p className="lede">Tell me about it. Every message comes straight to me.</p>
             <div className="cluster" role="group" aria-label="Contact options">
               <Link className="btn btn--primary btn--lg" to="/contact">
                 Get in touch

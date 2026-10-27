@@ -1,8 +1,9 @@
 # LeDuc Systems
 
-Personal site for Tyler LeDuc's indie game studio. Live at <https://leducsystems.com>.
+Site for LeDuc Systems, Tyler LeDuc's software company: browser-based tools that fix file
+problems, served from `/tools/`. Live at <https://leducsystems.com>.
 
-The site is a small static React app: six routes, a shared design system, and one working
+The site is a small static React app: seven routes, a shared design system, and one working
 contact form. There is no CMS, no backend, and no database — content lives in a single
 JavaScript module and the form posts directly to EmailJS from the browser.
 
@@ -30,9 +31,9 @@ a concrete reason; the site is deliberately dependency-light.
 ## Routes
 
 ```
-/                 Home — the pitch, the philosophy, the two newest games, FAQ
-/games            Games — the full catalogue released under the handle raxeris
-/about            About — who makes these and why
+/                 Home — the pitch, the tools, how they work, FAQ
+/games            Games — the side-project catalogue released under the handle raxeris
+/about            About — who builds the tools and why
 /contact          Contact — the form, embedded
 /privacy          Privacy Policy
 /terms            Terms of Service
@@ -94,12 +95,18 @@ Rules that keep this from rotting:
 import from it rather than duplicating strings. It exports:
 
 `SITE` (name, founder, email, url, founded, tagline, description, itch.io/github/linkedin) ·
-`NAV` · `LEGAL_NAV` · `PHILOSOPHY` · `GAMES` · `FEATURED_SLUGS` · `FAQ` · `RESPONSE_PROMISE`
+`NAV` · `TOOLS` · `LEGAL_NAV` · `PRINCIPLES` · `GAMES` · `FEATURED_SLUGS` · `FAQ` ·
+`RESPONSE_PROMISE`
+
+`TOOLS` lists the live tools under `/tools/` (static pages built in
+`C:\Users\Tyler\apps\leduc-tools`, outside the React router, so link with `<a href>`). Those
+pages carry a static copy of this site's header and footer, kept in that repo's
+`src/chrome.js`; when `NAV` or the footer changes here, change it there too.
 
 `GAMES` is the full catalogue released on itch.io under the handle raxeris, in the order the
 live store page shows them, with title, slug, url, genre, a one-line blurb, and a real
 `embedId` per game (pulled from itch.io, never fabricated). Only the games in
-`FEATURED_SLUGS` get the live itch.io embed widget on the Home and Games pages — picked by
+`FEATURED_SLUGS` get the live itch.io embed widget on the Games page — picked by
 real itch.io creator-dashboard analytics (views/downloads/ratings/collections), not by feel;
 every other game links straight to its own store page instead.
 
@@ -116,7 +123,7 @@ server and no secret — the EmailJS public key is publishable by design.
 
 - Public key `HIVHympEPP7sMQ_Pl`, initialised once in `src/App.js`
 - Service `service_zeogjbm`, template `template_mfizbds`
-- Fields: name, email, an optional "which game?" field, an optional file attachment, and a
+- Fields: name, email, an optional "which tool?" field (still named `game` internally), an optional file attachment, and a
   free-text message
 - `templateParams`: `from_name`, `from_email`, `subject`, `message`, `to_email`,
   `reply_to`, plus optional `attachment` (data URL) and `attachment_name`
@@ -162,7 +169,7 @@ exists, and the site is usable at 360px, 768px, 1280px, and 1920px.
 
 The honesty rules are defined in `CLAUDE.md` and that file is authoritative. In short:
 nothing on this site may claim a rating, review, download count, award, or press mention
-that is not real — the itch.io embeds and links already show the real numbers. Voice is
+that is not real, and no invented customers or metrics. Voice is
 first person ("I"), not company "we".
 
 Contact address everywhere is **tyler@leducsystems.com**.

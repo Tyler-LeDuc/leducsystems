@@ -34,11 +34,16 @@ const ROUTES = {
   '/about': {
     title: 'About',
     description:
-      'Tyler LeDuc makes small browser games under the handle raxeris on itch.io. Based in Phoenix, Arizona.',
+      "Tyler LeDuc is the developer behind LeDuc Systems: software tools that open and convert files other software won't. Based in Phoenix, Arizona.",
   },
   '/contact': {
     title: 'Contact',
-    description: 'Say hi, report a bug, or leave feedback for LeDuc Systems. I reply within one business day.',
+    description:
+      "Questions about a tool, a file that didn't convert, or a tool request for LeDuc Systems. I reply to every message within one business day.",
+  },
+  '/games': {
+    title: 'Games',
+    description: 'Small browser games I make on the side, released on itch.io under the handle raxeris.',
   },
   '/privacy': {
     title: 'Privacy Policy',

@@ -1,13 +1,11 @@
 /* =========================================================================
    LeDuc Systems — Home page
 
-   The masthead states the pitch (from the itch.io bio), a numbered
-   philosophy clause explains the constraint every game shares, the two
-   best-performing releases (by real itch.io analytics) get a real embed,
-   the rest of the catalogue follows as a card grid, and a short FAQ
-   answers what's worth asking before About/Contact take over the rest.
-   This page used to be split across Home and a separate /games route —
-   now it is one scrolling page.
+   The masthead states the pitch, the tools follow as a card grid (each
+   card: the problem, then what the tool does), numbered clauses explain
+   how every tool works, and a short FAQ answers what's worth asking before
+   About/Contact take over the rest. The games catalogue lives on /games
+   (GamesPage.js), which reuses the release and grid styles below.
 
    Page layout only. Type, buttons, rows, lists, the disclosure and the datum
    come from the shared cascade; nothing here restates them.
@@ -87,13 +85,12 @@
 }
 
 
-/* ── 01 · Philosophy clauses ─────────────────────────────────────────────
-   Three lines from the itch.io bio, set as a numbered lattice rather than
-   a paragraph — the same device the old pillars section used. */
+/* ── How they work — numbered clauses ─────────────────────────────────────
+   Set as a numbered lattice rather than a paragraph. */
 .home-clauses {
   counter-reset: clause;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   border-top: 1px solid var(--line-strong);
   border-bottom: 1px solid var(--line);
 }
@@ -123,6 +120,12 @@
   color: var(--text-xlo);
 }
 
+@media (max-width: 960px) and (min-width: 721px) {
+  .home-clauses { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-clauses > .home-clause:nth-child(3) { padding-left: 0; border-left: 0; }
+  .home-clauses > .home-clause:nth-child(n + 3) { border-top: 1px solid var(--line); }
+}
+
 @media (max-width: 720px) {
   .home-clauses { grid-template-columns: minmax(0, 1fr); }
   .home-clause {
@@ -134,9 +137,8 @@
 }
 
 
-/* ── 02 · Latest releases ─────────────────────────────────────────────────
-   Same register/embed pattern as the Games page, kept local here because
-   only two games ever appear on the home page. */
+/* ── Games page: featured releases ────────────────────────────────────────
+   Used by GamesPage.js for the two embedded games. */
 .home-releases {
   display: flex;
   flex-direction: column;
@@ -197,8 +199,8 @@
 }
 
 
-/* ── 03 · Everything else — the rest of the catalogue ─────────────────────
-   Moved here from the old standalone /games page, now one scrolling page. */
+/* ── Card grid ─────────────────────────────────────────────────────────────
+   The tools on the home page and the catalogue on /games. */
 .games-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -219,6 +221,18 @@
 
 .games-card__link {
   align-self: flex-start;
+}
+
+.tools-card__problem {
+  font-weight: 500;
+  color: var(--text-hi);
+}
+
+.home-more {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-3) var(--sp-5);
 }
 
 @media (max-width: 960px) {

@@ -8,7 +8,7 @@ export default function NotFoundPage() {
     <>
       <SEO
         title="Page not found"
-        description="That page does not exist. Head back to the home page, or see all the games."
+        description="That page does not exist. Head back to the home page, or browse the tools."
         path="/404"
       />
 
@@ -36,9 +36,9 @@ export default function NotFoundPage() {
                 {/* Accent first, ghost second — the order every cluster on the
                     site uses. */}
                 <div className="cluster">
-                  <Link className="btn btn--primary" to="/contact">
-                    Get in touch
-                  </Link>
+                  <a className="btn btn--primary" href="/tools/">
+                    Browse the tools
+                  </a>
                   <Link className="btn btn--ghost" to="/">
                     Back to home
                   </Link>

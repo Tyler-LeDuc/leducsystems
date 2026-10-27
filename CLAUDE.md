@@ -1,7 +1,7 @@
-# LeDuc Systems — indie game site
+# LeDuc Systems — software tools site
 
-Public repo. Personal site for **LeDuc Systems**, Tyler LeDuc's indie game studio, live at
-<https://leducsystems.com>. `README.md` carries the technical contract — stack, design system,
+Public repo. Site for **LeDuc Systems** (LeDuc Systems LLC), Tyler LeDuc's software company, live
+at <https://leducsystems.com>. `README.md` carries the technical contract — stack, design system,
 routes, content model, contact form, build and deploy. Read it before writing code.
 
 This file carries the content and business guardrails.
@@ -10,22 +10,25 @@ This file carries the content and business guardrails.
 
 ## Positioning
 
-**Tools (added October 2026):** `/tools/` holds small browser-based file tools, such as the Rhino
-.3dm converter. They're static pages built in `C:\Users\Tyler\apps\leduc-tools` and copied into
-`public/tools/` by that repo's `npm run export`. Don't edit `public/tools/` by hand. The tools
-are outside the React router, so link to them with plain `<a href>`, never `<Link>`. They have
-their own sitemap at `/tools/sitemap.xml`, listed in `robots.txt`. The rest of the section below
-covers the games side of the site.
+**Repositioned October 27, 2026 (Tyler's call):** LeDuc Systems is a software company that builds
+and sells software tools — one developer, Tyler LeDuc. The live products are the file tools under
+`/tools/`: the Publisher .pub converter (to PowerPoint/IDML), the bulk Publisher converter, the
+PageMaker converter, the PowerPoint text-wrap tool and the Rhino .3dm version converter. The home
+page, About, FAQ and meta all lead with the tools and link to `/tools/`.
 
-LeDuc Systems is the site for the games Tyler LeDuc releases on itch.io under the handle
-**raxeris**. It is a personal project, not a company with clients or a service line. There is no
-consulting business, no pricing, no engagement model, and no second audience (agencies, clients,
-subcontractors) — that content was retired in September 2026 when the site pivoted from software
-consulting to indie game development. **Do not reintroduce it.**
+The tools are static pages built in `C:\Users\Tyler\apps\leduc-tools` and copied into
+`public/tools/` by that repo's `npm run export`. Don't edit `public/tools/` by hand. They're
+outside the React router, so link to them with plain `<a href>`, never `<Link>`. They have their
+own sitemap at `/tools/sitemap.xml`, listed in `robots.txt`. They share this site's header and
+footer through a static copy in that repo's `src/chrome.js` + `src/chrome.css`; keep the two in
+step when the nav or footer changes.
 
-The games themselves are small, fast, one-button browser games — see the itch.io bio quoted in
-`PHILOSOPHY` in `src/data/site.js`. Everything runs free, in the browser, on itch.io. This site
-does not host or sell the games; it showcases and links to the real store pages.
+This is a product company, not a consultancy: no client services, engagement models or "hire
+me" pitches (the old consulting content was retired in September 2026 — don't bring it back).
+Prices live on the tool pages only; this site's copy doesn't restate them.
+
+The games are now a side project: the catalogue lives on `/games` (not in the main nav), plus
+one FAQ line and a footer link. Don't put games back into the home page's focus.
 
 Adding any route means updating **three** places or the build's drift test fails:
 `src/App.js`, `scripts/prerender.js` (`ROUTES`), and `public/sitemap.xml`.
@@ -44,20 +47,18 @@ Adding any route means updating **three** places or the build's drift test fails
 
 ## Honesty rules — non-negotiable
 
-**Nothing on this site may claim a rating, review quote, download count, award, or press mention
-that is not real.** The itch.io embeds and store links already show the real numbers for each
-game (ratings, downloads, comments) — this site's own copy never restates or paraphrases them as
-a claim. Concretely, never add:
+**Nothing on this site may claim a customer, testimonial, rating, review quote, user or download
+count, award, or press mention that is not real.** Claims about the tools must match what the tool
+pages themselves say (free preview, 30-day refund, how files are handled). Concretely, never add:
 
 - Fabricated review quotes, star ratings, or download/player counts
 - Named or implied press coverage, awards, or "featured on itch.io" claims that did not happen
-- A team, studio staff, or "we" language implying more than one person makes these games
+- Invented customers, logos, case studies, or usage numbers for the tools
+- A team, studio staff, or "we" language implying more than one person does this work
 - Manufactured scarcity or urgency ("limited time", "before it's gone")
 
-The only numbers permitted are facts that are checkable against the real itch.io store: the
-count of games, genres, and the founding year. If a section needs to feel more substantial, add
-another real game to `GAMES` in `src/data/site.js`, or link to the itch.io profile directly —
-never invent a metric.
+The only numbers permitted are checkable facts: the founding year, the number of tools, what a
+tool page itself states, and (on `/games`) the count of games. Never invent a metric.
 
 Contact address everywhere is **tyler@leducsystems.com**.
 
@@ -66,11 +67,11 @@ Contact address everywhere is **tyler@leducsystems.com**.
 ## Where content lives
 
 `src/data/site.js` is the single source of truth for the words on this site. Change headlines,
-the games list, FAQ answers, and the contact email there — not in page components. Long-form
+the tools list, the games list, FAQ answers, and the contact email there — not in page components. Long-form
 legal prose is the exception and lives in `PrivacyPolicyPage.js` / `TermsOfServicePage.js`.
 
-Exports: `SITE` · `NAV` · `LEGAL_NAV` · `PHILOSOPHY` · `GAMES` · `FEATURED_SLUGS` · `FAQ` ·
-`RESPONSE_PROMISE`
+Exports: `SITE` · `NAV` · `TOOLS` · `LEGAL_NAV` · `PRINCIPLES` · `GAMES` · `FEATURED_SLUGS` ·
+`FAQ` · `RESPONSE_PROMISE`
 
 `GAMES` is the full catalogue released under the handle **raxeris**, in the order the live store
 page shows them (not a verified chronological order — itch.io's own grid ordering, not

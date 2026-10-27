@@ -10,7 +10,7 @@ export default function ContactPage() {
     <>
       <SEO
         title="Contact"
-        description={`Say hi, report a bug, or leave feedback for ${SITE.name}. ${RESPONSE_PROMISE}`}
+        description={`Questions about a tool, a file that didn't convert, or a tool request for ${SITE.name}. ${RESPONSE_PROMISE}`}
         path="/contact"
       />
 
@@ -23,10 +23,10 @@ export default function ContactPage() {
               <div className="contact-strip__head">
                 <p className="eyebrow">
                   <span className="ordinal">00</span>
-                  <span>Say hi</span>
+                  <span>Contact</span>
                 </p>
                 <h1 className="hi contact-strip__title" id="contact-title">
-                  Tell me what broke, or what you liked
+                  Questions, problem files, tool ideas
                 </h1>
               </div>
               <p className="contact-strip__promise">{RESPONSE_PROMISE}</p>
@@ -45,8 +45,8 @@ export default function ContactPage() {
 
             <Reveal className="contact-aside" delay={120}>
               <p className="body muted contact-aside__lede">
-                Bug reports, feedback, an idea for a game, or just a comment — it goes straight to
-                me. Comments are the best part of this job. I read all of them.
+                A question about a tool, a file that didn&rsquo;t come out right, a refund, or a file
+                nothing will open: it goes straight to me.
               </p>
 
               <div className="contact-note">
@@ -58,8 +58,8 @@ export default function ContactPage() {
                   and it reaches exactly the same place.
                 </p>
                 <p className="body muted">
-                  Playing a specific game and found a bug? A comment on that game&rsquo;s itch.io
-                  page works just as well and helps other players too.
+                  Writing about a conversion? Attach the file if you can, so I can see exactly what
+                  went wrong and fix it.
                 </p>
               </div>
             </Reveal>

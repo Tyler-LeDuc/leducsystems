@@ -3,14 +3,13 @@
    Single source of truth for the words on this site. Pages import from here
    instead of duplicating strings.
 
-   LeDuc Systems is Tyler LeDuc's indie game studio — the site for the games
-   released on itch.io under the handle "raxeris". Two rules govern this
-   file:
-   1. Nothing here may claim a rating, review, download count, award, or
-      press mention that is not real. The itch.io embeds and links already
-      show the real numbers; this file does not restate them.
-   2. Voice is first person ("I"), not company "we" — this is one person's
-      work, not a studio with a team.
+   LeDuc Systems is Tyler LeDuc's software company: I build and sell small
+   software tools that fix specific file problems, served from /tools/.
+   Two rules govern this file:
+   1. Nothing here may claim a customer, testimonial, user count, rating,
+      award, or press mention that is not real. No invented metrics.
+   2. Voice is first person ("I"), not company "we" — this is one
+      developer's work, not a team.
 
    Copy is deliberately tight. If a sentence can be cut without losing the
    point, cut it.
@@ -29,14 +28,13 @@ export const SITE = {
   region: 'Arizona',
   regionShort: 'AZ',
   founded: 2026,
-  tagline: 'Small, fast, slightly unhinged browser games.',
+  tagline: 'Software tools for files your software won’t open.',
   description:
-    'I make one-button games that run straight in the browser — no downloads, no tutorials, something happens in the first five seconds. Everything ships to itch.io under the handle raxeris.',
+    'I build software tools that fix stubborn file problems: Microsoft Publisher and PageMaker files into editable PowerPoint and InDesign files, text wrap for PowerPoint, and new Rhino files for older Rhino. They run in your browser, with a free preview first.',
 };
 
 export const NAV = [
   { label: 'Home', path: '/' },
-  { label: 'Games', path: '/#games' },
   /* Static pages from the leduc-tools repo, outside the router: render as a
      plain <a>, never <Link>, or the router serves its 404 page. */
   { label: 'Tools', href: '/tools/', static: true },
@@ -44,20 +42,47 @@ export const NAV = [
   { label: 'Contact', path: '/contact' },
 ];
 
-/* Browser tools served from public/tools/ (built in the leduc-tools repo). */
+/* The live tools, served from public/tools/ (built in the leduc-tools repo).
+   `problem` is the situation someone is in; `blurb` is what the tool does. */
 export const TOOLS = [
   {
     slug: 'publisher-converter',
     title: 'Publisher file converter',
     tag: 'Publisher / .pub',
-    blurb: 'Turns Microsoft Publisher files into editable files for PowerPoint, Canva, Affinity and InDesign. Free preview.',
+    problem: 'Microsoft retired Publisher, and Word and PowerPoint can’t open .pub files.',
+    blurb: 'Turns .pub files into editable files for PowerPoint, Canva, Affinity and InDesign. Free preview and PDF.',
     url: '/tools/publisher-converter/',
+  },
+  {
+    slug: 'bulk-publisher-converter',
+    title: 'Bulk Publisher converter',
+    tag: 'Folders / .zip',
+    problem: 'A whole archive of old Publisher and PageMaker files to rescue.',
+    blurb: 'Upload one zip and get every file back as PDF, PowerPoint and IDML.',
+    url: '/tools/bulk-publisher-converter/',
+  },
+  {
+    slug: 'pagemaker-converter',
+    title: 'PageMaker file converter',
+    tag: 'PageMaker / .pmd',
+    problem: 'Adobe PageMaker files that nothing current will open.',
+    blurb: 'Turns .pmd and .p65 files into editable files for InDesign, Affinity, PowerPoint and Canva. Free preview.',
+    url: '/tools/pagemaker-converter/',
+  },
+  {
+    slug: 'powerpoint-text-wrap',
+    title: 'PowerPoint text wrap',
+    tag: 'PowerPoint / .pptx',
+    problem: 'PowerPoint can’t wrap text around a picture.',
+    blurb: 'Flows your text around the pictures in a .pptx, as real editable text. Free before-and-after preview.',
+    url: '/tools/powerpoint-text-wrap/',
   },
   {
     slug: 'rhino-converter',
     title: 'Rhino file converter',
     tag: 'Rhino / .3dm',
-    blurb: 'Opens newer Rhino files in older versions of Rhino. Runs in your browser, so nothing is uploaded.',
+    problem: 'A Rhino 8 or 7 file that your older Rhino won’t open.',
+    blurb: 'Saves a copy for Rhino 7, 6, 5 or 4. Free, and it runs in your browser, so nothing is uploaded.',
     url: '/tools/rhino-converter/',
   },
 ];
@@ -67,16 +92,16 @@ export const LEGAL_NAV = [
   { label: 'Terms of Service', path: '/terms' },
 ];
 
-/* The itch.io bio, essentially verbatim — it already says the thing better
-   than a rewrite would. Reused on the home page and the about page so the
-   pitch is not written twice in two different voices. */
-export const PHILOSOPHY = {
-  eyebrow: 'What these are',
-  title: 'Small, fast, and a little unhinged.',
+/* How the tools are built and sold. Every line here is checkable on the
+   tool pages themselves; do not add claims they do not back up. */
+export const PRINCIPLES = {
+  eyebrow: 'How they work',
+  title: 'One problem per tool, solved properly.',
   body: [
-    'One button. No tutorials. Something happens in the first five seconds.',
-    'Everything runs right in the browser — click and play, no downloads.',
-    'Comments are the best part of this job. I read all of them.',
+    'Each tool does one job: take a file you can’t use and hand back one you can.',
+    'You see the result before you pay. Every paid tool shows a free preview first.',
+    'Nothing to install. Everything runs in the browser, on Windows, Mac or a Chromebook.',
+    'If a paid result doesn’t work for you, email me within 30 days for a full refund.',
   ],
 };
 
@@ -484,33 +509,40 @@ export const FEATURED_SLUGS = ['dig-to-australia', '99'];
 
 export const FAQ = [
   {
-    id: 'free',
-    question: 'Are the games free?',
-    answer:
-      'Yes. Everything is free to play, right in the browser, on itch.io. No downloads and no paywalls.',
-  },
-  {
-    id: 'often',
-    question: 'How often do new games come out?',
-    answer:
-      'Often. Most of these are small enough to finish in days, not months, so new ones show up on the itch.io page on a regular basis.',
-  },
-  {
-    id: 'feedback',
-    question: 'Can I give feedback or report a bug?',
-    answer:
-      "Please do. Leave a comment on the game's itch.io page or use the contact form here — I read everything.",
-  },
-  {
-    id: 'build',
-    question: 'What do you build these with?',
-    answer:
-      'Whatever gets a one-button idea into a browser fastest. The tools change from game to game; the constraint does not.',
-  },
-  {
     id: 'name',
     question: 'What is LeDuc Systems?',
-    answer: 'The name I ship things under. Right now that is these games.',
+    answer:
+      'My software company. I’m Tyler LeDuc, a developer in Phoenix, and I build and sell small tools that fix specific file problems, like opening Microsoft Publisher files now that Publisher is gone.',
+  },
+  {
+    id: 'cost',
+    question: 'What do the tools cost?',
+    answer:
+      'Each tool page shows its price before you start. The Rhino converter is free, and the paid tools show a free preview of your file before you pay.',
+  },
+  {
+    id: 'files',
+    question: 'What happens to my files?',
+    answer:
+      'The Rhino converter runs entirely in your browser, so your file never leaves your computer. The other tools convert on my server, use the file only to make your download, and delete it automatically. I never look at or share them.',
+  },
+  {
+    id: 'refund',
+    question: 'What if a conversion doesn’t come out right?',
+    answer:
+      'Email me within 30 days and I’ll refund you in full. If you can, attach the file, so I can fix the tool for the next person.',
+  },
+  {
+    id: 'request',
+    question: 'Can I suggest a tool?',
+    answer:
+      'Yes. If you have a file that nothing will open, tell me what it is. It might be the next tool.',
+  },
+  {
+    id: 'games',
+    question: 'Didn’t this site used to be about games?',
+    answer:
+      'It was. I still make small browser games on the side; they live on itch.io and on the games page here.',
   },
 ];
 

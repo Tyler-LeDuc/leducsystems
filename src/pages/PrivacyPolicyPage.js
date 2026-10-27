@@ -5,7 +5,7 @@ import Reveal from '../components/Reveal';
 import { SITE, RESPONSE_PROMISE } from '../data/site';
 import './LegalPage.css';
 
-const LAST_UPDATED = 'October 25, 2026';
+const LAST_UPDATED = 'October 27, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
 
@@ -16,8 +16,8 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          {SITE.name} is a personal site run by {SITE.founder} for the games released on itch.io
-          under the handle {SITE.itchioHandle}. This policy describes what happens to information
+          {SITE.name} is {SITE.founder}&rsquo;s software company. It sells the file tools at{' '}
+          <span className="hi">leducsystems.com/tools/</span>. This policy describes what happens to information
           collected through the website at <span className="hi">leducsystems.com</span>, including
           anything you send through the contact form on that site.
         </p>
@@ -35,7 +35,7 @@ const SECTIONS = [
         </p>
         <ul className="list">
           <li>Your name and email address</li>
-          <li>Which game you are writing about, if you fill that in — it is optional</li>
+          <li>Which tool you are writing about, if you fill that in — it is optional</li>
           <li>The message itself</li>
           <li>Any file you choose to attach</li>
         </ul>

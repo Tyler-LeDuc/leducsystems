@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { LEGAL_NAV, NAV, SITE } from '../data/site';
 
 const ELSEWHERE = [
-  { href: SITE.itchio, label: 'itch.io' },
   { href: SITE.github, label: 'GitHub' },
   { href: SITE.linkedin, label: 'LinkedIn' },
 ];
@@ -32,8 +31,8 @@ function Footer() {
               <span className="brand__text">{SITE.name}</span>
             </Link>
             <p className="body body--sm muted">
-              Small, fast, slightly unhinged browser games, shipped on itch.io under the handle{' '}
-              {SITE.itchioHandle}. Based in {SITE.city}, {SITE.region}.
+              Software tools for files your software won&rsquo;t open, built by {SITE.founder} in{' '}
+              {SITE.city}, {SITE.region}.
             </p>
             <a className="site-footer__link link-underline" href={`mailto:${SITE.email}`}>
               {SITE.email}
@@ -57,6 +56,9 @@ function Footer() {
 
           <div className="site-footer__col">
             <h2 className="site-footer__title">Elsewhere</h2>
+            <Link className="site-footer__link" to="/games">
+              Games
+            </Link>
             {ELSEWHERE.map((item) => (
               <a
                 key={item.href}
@@ -81,7 +83,7 @@ function Footer() {
         </div>
 
         <div className="site-footer__bottom">
-          <p>&copy; {year} {SITE.name}</p>
+          <p>&copy; {year} {SITE.name} LLC</p>
           <p className="site-footer__legal">Made by {SITE.founder}.</p>
         </div>
       </div>

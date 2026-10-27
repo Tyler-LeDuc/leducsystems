@@ -62,7 +62,7 @@ const buildSubject = (values) =>
 
 const buildMessage = (values) => {
   const lines = [`Name: ${values.name.trim()}`, `Email: ${values.email.trim()}`];
-  if (values.game.trim()) lines.push(`Game: ${values.game.trim()}`);
+  if (values.game.trim()) lines.push(`Tool: ${values.game.trim()}`);
   lines.push('', values.details.trim());
   return lines.join('\n');
 };
@@ -479,8 +479,8 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
 
         <Field
           id={`${uid}-game`}
-          label="Which game?"
-          hint="Optional — helps if this is a bug report."
+          label="Which tool?"
+          hint="Optional, for example the Publisher converter."
           error={errorFor('game')}
         >
           <input
@@ -499,7 +499,7 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
         <Field
           id={`${uid}-attachment`}
           label="Attachment"
-          hint="Optional. One file, up to 5 MB — a screenshot works well for a bug."
+          hint="Optional. One file, up to 5 MB: the file that didn't convert, or a screenshot."
           error={fileError}
         >
           <input

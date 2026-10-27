@@ -5,7 +5,7 @@ import Reveal from '../components/Reveal';
 import { SITE, RESPONSE_PROMISE } from '../data/site';
 import './LegalPage.css';
 
-const LAST_UPDATED = 'September 30, 2026';
+const LAST_UPDATED = 'October 27, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
 
@@ -25,8 +25,33 @@ const SECTIONS = [
     ),
   },
   {
+    id: 'tools',
+    title: 'The tools',
+    content: (
+      <>
+        <p>
+          The file tools under <span className="hi">leducsystems.com/tools/</span> are sold by{' '}
+          {SITE.name}. Each paid tool shows its price, and a free preview of your own file, before
+          you pay. Payments are taken by Stripe on its own checkout page.
+        </p>
+        <p>
+          If a paid result doesn&rsquo;t work for you, email{' '}
+          <a className="link-underline" href={MAILTO}>
+            {SITE.email}
+          </a>{' '}
+          within 30 days and I will refund you in full. What happens to the files you upload is
+          described in the{' '}
+          <Link className="link-underline" to="/privacy">
+            Privacy Policy
+          </Link>
+          .
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'games',
-    title: 'The games',
+    title: 'Games on itch.io',
     content: (
       <>
         <p>
@@ -53,8 +78,8 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          The content on this site is general information about {SITE.name} and the games
-          released under it. It is not professional advice of any kind, and reading it does not
+          The content on this site is general information about {SITE.name}, its tools, and the
+          games released under it. It is not professional advice of any kind, and reading it does not
           create any relationship beyond that of a visitor. I make no promise that the site will
           always be available or free of errors.
         </p>
@@ -71,13 +96,14 @@ const SECTIONS = [
     content: (
       <>
         <p className="legal-fineprint">
-          To the maximum extent permitted by law, this website and the games it links to are
+          To the maximum extent permitted by law, this website, the tools, and the games it links
+          to are
           provided without warranties of any kind, whether express or implied, including any
           implied warranty of merchantability, fitness for a particular purpose, or
           non-infringement.
         </p>
         <p>
-          I do not warrant that the site or the games will be uninterrupted, bug-free, or
+          I do not warrant that the site, the tools, or the games will be uninterrupted, bug-free, or
           available on any particular device or browser.
         </p>
       </>
@@ -91,13 +117,12 @@ const SECTIONS = [
         <p className="legal-fineprint">
           To the maximum extent permitted by law, {SITE.name} is not liable for indirect,
           incidental, special, consequential, or punitive damages arising from your use of this
-          site or the games it links to, however caused and regardless of the theory of
+          site, the tools, or the games it links to, however caused and regardless of the theory of
           liability.
         </p>
         <p>
-          This site does not sell anything and takes no payment from visitors, so there is
-          nothing to refund and nothing paid to recover. Nothing here limits liability that
-          cannot be limited by law.
+          For a paid tool, your remedy is the refund described under The tools. Nothing here
+          limits liability that cannot be limited by law.
         </p>
       </>
     ),
@@ -109,7 +134,8 @@ const SECTIONS = [
       <>
         <p>
           The contact form is delivered by EmailJS, site traffic is measured with Google
-          Analytics, and the games themselves are hosted on itch.io. Those services are operated
+          Analytics, payments for the tools are taken by Stripe, and the games are hosted on
+          itch.io. Those services are operated
           by their own companies under their own terms, and I am not responsible for how they
           run. What EmailJS and Google Analytics receive and why is described in the{' '}
           <Link className="link-underline" to="/privacy">
@@ -229,9 +255,10 @@ export default function TermsOfServicePage() {
         <div className="container">
           <Reveal className="note legal-summary legal-body">
             <p>
-              <strong>The short version:</strong> this is a personal site for games released on
-              itch.io. There&rsquo;s nothing to buy here, nothing sold, and the games themselves
-              run under itch.io&rsquo;s own terms. Use the site normally and it works out fine.
+              <strong>The short version:</strong> {SITE.name} sells small software tools for
+              files. Every paid tool shows its price and a free preview before you pay, and comes
+              with a 30-day refund. The games I make on the side run on itch.io under its own
+              terms.
             </p>
           </Reveal>
 
