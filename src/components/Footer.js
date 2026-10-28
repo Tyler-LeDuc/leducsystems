@@ -21,14 +21,7 @@ function Footer() {
         <div className="site-footer__top">
           <div className="site-footer__brand">
             <Link to="/" className="brand" aria-label={`${SITE.name}, home`}>
-              <img
-                className="brand__mark"
-                src="/leduc-mark.svg"
-                alt=""
-                width="30"
-                height="30"
-              />
-              <span className="brand__text">{SITE.name}</span>
+              <img className="brand__logo" src="/leduc-logo.svg" alt={SITE.name} width="172" height="30" />
             </Link>
             <p className="body body--sm muted">
               Software tools for files your software won&rsquo;t open, built by {SITE.founder} in{' '}

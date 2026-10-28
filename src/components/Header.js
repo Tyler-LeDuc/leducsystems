@@ -60,14 +60,7 @@ function Header() {
       <header className={`site-header${scrolled ? ' site-header--scrolled' : ''}`}>
         <div className="site-header__inner">
           <Link to="/" className="brand" aria-label={`${SITE.name}, home`}>
-            <img
-              className="brand__mark"
-              src="/leduc-mark.svg"
-              alt=""
-              width="30"
-              height="30"
-            />
-            <span className="brand__text">{SITE.name}</span>
+            <img className="brand__logo" src="/leduc-logo.svg" alt={SITE.name} width="172" height="30" />
           </Link>
 
           <nav className="nav" aria-label="Primary">
