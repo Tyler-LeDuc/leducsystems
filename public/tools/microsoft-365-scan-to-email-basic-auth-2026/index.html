@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VPCZV3J5CQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VPCZV3J5CQ');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Microsoft 365 Scan to Email After December 2026: What Breaks and Your Options</title>
+<meta name="description" content="Microsoft turns off SMTP basic authentication for Exchange Online at the end of December 2026. How to tell if your copier's scan to email is affected, and every way to keep it working.">
+<link rel="canonical" href="https://leducsystems.com/tools/microsoft-365-scan-to-email-basic-auth-2026/">
+<meta property="og:title" content="Microsoft 365 Scan to Email After December 2026: What Breaks and Your Options">
+<meta property="og:description" content="Microsoft turns off SMTP basic authentication for Exchange Online at the end of December 2026. How to tell if your copier's scan to email is affected, and every way to keep it working.">
+<meta property="og:url" content="https://leducsystems.com/tools/microsoft-365-scan-to-email-basic-auth-2026/">
+<meta property="og:type" content="website">
+<link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Microsoft 365 Scan to Email After December 2026: What Breaks and Your Options","description":"Microsoft turns off SMTP basic authentication for Exchange Online at the end of December 2026. How to tell if your copier's scan to email is affected, and every way to keep it working.","url":"https://leducsystems.com/tools/microsoft-365-scan-to-email-basic-auth-2026/","author":{"@type":"Person","name":"Tyler LeDuc"},"publisher":{"@type":"Organization","name":"LeDuc Systems"}}</script>
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-B065xgQH.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__mark" src="/leduc-mark.svg" alt="" width="30" height="30"><span class="brand__text">LeDuc Systems</span></a>
+    <nav class="nav" aria-label="Primary">
+      <ul><li><a class="nav__link" href="/">Home</a></li><li><a class="nav__link nav__link--active" href="/tools/">Tools</a></li><li><a class="nav__link" href="/about">About</a></li><li><a class="nav__link" href="/contact">Contact</a></li></ul>
+    </nav>
+    <div class="nav__actions">
+      <a class="site-header__cta" href="/contact">Get in touch</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
+  <ul><li><a class="mobile-menu__link" href="/" style="--menu-delay:60ms">Home</a></li><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:105ms">Tools</a></li><li><a class="mobile-menu__link" href="/about" style="--menu-delay:150ms">About</a></li><li><a class="mobile-menu__link" href="/contact" style="--menu-delay:195ms">Contact</a></li></ul>
+  <div class="mobile-menu__actions" style="--menu-delay:240ms">
+    <a class="site-btn site-btn--primary" href="/contact">Get in touch</a>
+    <a class="site-btn site-btn--ghost" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+  </div>
+</nav>
+<script>
+(() => {
+  const b = document.querySelector('.menu-toggle'), m = document.getElementById('site-mobile-menu');
+  const set = (open) => {
+    b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    m.classList.toggle('mobile-menu--open', open); document.body.style.overflow = open ? 'hidden' : '';
+  };
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  matchMedia('(min-width: 861px)').addEventListener('change', (e) => { if (e.matches) set(false); });
+})();
+</script>
+<main id="main" tabindex="-1">
+  <section class="hero">
+    <h1>Scan to email and Microsoft 365 after December 2026</h1>
+    <p class="lede">At the end of December 2026 Microsoft turns off basic authentication for sending email (SMTP AUTH) in Exchange Online. Plenty of office copiers and scanners still send that way. Here's how to tell if yours does, and the ways to keep scan to email working.</p>
+  </section>
+  <p class="cta"><a class="btn" href="/tools/scan-to-email-microsoft-365/">Pre-order a simple fix</a> <span>Not available yet: ships by December 15, 2026.</span></p>
+  <article class="guide">
+<h2>What's changing</h2>
+<p>For existing Microsoft 365 organizations, Microsoft is disabling SMTP AUTH with basic authentication (a username and password) by default at the end of December 2026. An admin can turn it back on for a while, and Microsoft says it will announce the date it goes away for good in the second half of 2027. Organizations created after December 2026 won't have it at all.</p>
+
+<h2>Are you affected?</h2>
+<p>Look at your copier's or scanner's email settings (or ask your copier dealer). You're affected if it sends through <b>smtp.office365.com</b>, usually on port 587, with a Microsoft 365 email address and password. The same goes for older line-of-business apps that email invoices, reports or alerts that way. When it stops working, the error usually says basic authentication is disabled (for example 5.7.139).</p>
+
+<h2>Your options</h2>
+<ol>
+  <li><b>Update the copier.</b> Many newer copiers support Microsoft 365's modern sign-in (OAuth) after a firmware update. Ask your dealer first: if yours does, this is the cleanest fix.</li>
+  <li><b>Scan to a folder or to OneDrive instead</b> of email, if your copier supports it and your staff don't mind the change.</li>
+  <li><b>A Microsoft 365 connector.</b> If your office has a static public IP address, an admin can set up a connector so the copier sends through your domain's mail server without a password. It's free, but it needs some IT know-how and a static IP.</li>
+  <li><b>Turn basic authentication back on for now.</b> An admin can re-enable it after the change. That buys time, but only until Microsoft removes it for good.</li>
+  <li><b>A local relay.</b> A small program on an always-on office PC accepts the copier's email the old way and passes it on to Microsoft 365 with modern sign-in. IT people can set up a free open-source relay. <a href="../scan-to-email-microsoft-365/">I'm building a simple Windows one</a> for offices that just want scan to email to keep working; it's a pre-order for now, shipping by December 15, 2026.</li>
+</ol>
+
+<h2>Do it before January</h2>
+<p>Whatever you choose, test it before the end of December, while the old way still works as a fallback. The first sign of trouble is usually a scan that never arrives, with no error on the copier's screen.</p>
+  </article>
+  <p class="cta"><a class="btn" href="/tools/scan-to-email-microsoft-365/">Pre-order a simple fix</a> <span>Not available yet: ships by December 15, 2026.</span></p>
+  <nav class="more" aria-label="More guides">
+    <h2>More guides</h2>
+    <ul class="guides"><li><a href="/tools/publisher-files-after-retirement/">Publisher is gone. What do you do with your .pub files?</a></li><li><a href="/tools/publisher-to-word/">Converting a Publisher file to Word</a></li><li><a href="/tools/make-a-newsletter-in-word-like-publisher/">Making a newsletter in Word when you used to use Publisher</a></li><li><a href="/tools/move-church-bulletin-from-publisher-to-canva/">Moving a bulletin or newsletter from Publisher to Canva</a></li><li><a href="/tools/publisher-to-google-docs/">Getting a Publisher file into Google Docs</a></li><li><a href="/tools/publisher-alternatives/">What to use now that Publisher is gone</a></li><li><a href="/tools/convert-publisher-files-in-bulk/">Converting a whole folder of Publisher files</a></li><li><a href="/tools/open-old-pagemaker-files/">Opening old PageMaker files today</a></li><li><a href="/tools/wrap-text-around-picture-in-powerpoint/">Wrapping text around a picture in PowerPoint</a></li><li><a href="/tools/irs-fire-system-retirement-iris/">The IRS FIRE system is retiring: filing 1099s through IRIS</a></li></ul>
+  </nav>
+<p class="fine">Microsoft Publisher, Word and PowerPoint are trademarks of Microsoft; PageMaker and InDesign of Adobe; Canva and Affinity of Canva. I'm not affiliated with any of them.</p>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__mark" src="/leduc-mark.svg" alt="" width="30" height="30"><span class="brand__text">LeDuc Systems</span></a>
+        <p class="site-footer__blurb">Software tools for files your software won&rsquo;t open, built by Tyler LeDuc in Phoenix, Arizona.</p>
+        <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+      </div>
+      <div class="site-footer__col">
+        <h2 class="site-footer__title">Navigate</h2>
+        <a class="site-footer__link" href="/">Home</a>
+        <a class="site-footer__link" href="/tools/">Tools</a>
+        <a class="site-footer__link" href="/about">About</a>
+        <a class="site-footer__link" href="/contact">Contact</a>
+      </div>
+      <div class="site-footer__col">
+        <h2 class="site-footer__title">Elsewhere</h2>
+        <a class="site-footer__link" href="/games">Games</a>
+        <a class="site-footer__link" href="https://github.com/tyler-leduc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://www.linkedin.com/in/tyler-l-60a9451a3/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+      <div class="site-footer__col">
+        <h2 class="site-footer__title">Legal</h2>
+        <a class="site-footer__link" href="/privacy">Privacy Policy</a>
+        <a class="site-footer__link" href="/terms">Terms of Service</a>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <p>&copy; 2026 LeDuc Systems LLC</p>
+      <p>Made by Tyler LeDuc.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
