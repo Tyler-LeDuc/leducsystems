@@ -30,8 +30,9 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          The contact form is the only place on this site where you are asked to type anything.
-          When you submit it, the following is sent to me:
+          Apart from the &ldquo;email me when it&rsquo;s ready&rdquo; box on some tool pages
+          (see below), the contact form is the only place on this site where you are asked to type
+          anything. When you submit it, the following is sent to me:
         </p>
         <ul className="list">
           <li>Your name and email address</li>
@@ -126,6 +127,11 @@ const SECTIONS = [
           Payments for the Publisher converter are handled by Stripe on its own checkout page. I
           never see or store your card details; Stripe tells me only whether a payment went
           through, and keeps the receipt details it needs under its own privacy policy.
+        </p>
+        <p>
+          If you ask on a tool page to be emailed when a tool is ready, your email address is stored
+          on my conversion server only to send you that email, and you can ask me to remove it at
+          any time.
         </p>
       </>
     ),
