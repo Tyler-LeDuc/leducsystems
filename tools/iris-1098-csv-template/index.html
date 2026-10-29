@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VPCZV3J5CQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VPCZV3J5CQ');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IRIS 1098 CSV Template: All 54 Columns, and How to Fill It From a FIRE File</title>
+<meta name="description" content="Every column in the IRIS Taxpayer Portal 1098 CSV upload template, in order, plus which Publication 1220 (FIRE) amount code goes in each box and the formatting mistakes that get a file rejected.">
+<link rel="canonical" href="https://leducsystems.com/tools/iris-1098-csv-template/">
+<meta property="og:title" content="IRIS 1098 CSV Template: All 54 Columns, and How to Fill It From a FIRE File">
+<meta property="og:description" content="Every column in the IRIS Taxpayer Portal 1098 CSV upload template, in order, plus which Publication 1220 (FIRE) amount code goes in each box and the formatting mistakes that get a file rejected.">
+<meta property="og:url" content="https://leducsystems.com/tools/iris-1098-csv-template/">
+<meta property="og:type" content="website">
+<link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"IRIS 1098 CSV Template: All 54 Columns, and How to Fill It From a FIRE File","description":"Every column in the IRIS Taxpayer Portal 1098 CSV upload template, in order, plus which Publication 1220 (FIRE) amount code goes in each box and the formatting mistakes that get a file rejected.","url":"https://leducsystems.com/tools/iris-1098-csv-template/","author":{"@type":"Person","name":"Tyler LeDuc"},"publisher":{"@type":"Organization","name":"LeDuc Systems"}}</script>
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-B3hchEMC.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+    <nav class="nav" aria-label="Primary">
+      <ul><li><a class="nav__link" href="/">Home</a></li><li><a class="nav__link nav__link--active" href="/tools/">Tools</a></li><li><a class="nav__link" href="/about">About</a></li><li><a class="nav__link" href="/contact">Contact</a></li></ul>
+    </nav>
+    <div class="nav__actions">
+      <a class="site-header__cta" href="/contact">Get in touch</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
+  <ul><li><a class="mobile-menu__link" href="/" style="--menu-delay:60ms">Home</a></li><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:105ms">Tools</a></li><li><a class="mobile-menu__link" href="/about" style="--menu-delay:150ms">About</a></li><li><a class="mobile-menu__link" href="/contact" style="--menu-delay:195ms">Contact</a></li></ul>
+  <div class="mobile-menu__actions" style="--menu-delay:240ms">
+    <a class="site-btn site-btn--primary" href="/contact">Get in touch</a>
+    <a class="site-btn site-btn--ghost" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+  </div>
+</nav>
+<script>
+(() => {
+  const b = document.querySelector('.menu-toggle'), m = document.getElementById('site-mobile-menu');
+  const set = (open) => {
+    b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    m.classList.toggle('mobile-menu--open', open); document.body.style.overflow = open ? 'hidden' : '';
+  };
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  matchMedia('(min-width: 861px)').addEventListener('change', (e) => { if (e.matches) set(false); });
+})();
+</script>
+<main id="main" tabindex="-1">
+  <section class="hero">
+    <h1>The IRIS 1098 CSV template, column by column</h1>
+    <p class="lede">The IRIS Taxpayer Portal lets you upload 1098 forms (mortgage interest received from borrowers) as a CSV file instead of typing them in one by one. Here are all 54 columns of the template in order, and how the amounts in a FIRE (Publication 1220) file map onto them.</p>
+  </section>
+  <p class="cta"><a class="btn" href="/tools/fire-to-iris-1099-converter/">Convert a FIRE file to the 1098 template</a> <span>Free check and preview in your browser. Nothing is uploaded.</span></p>
+  <article class="guide">
+<h2>Where the template comes from</h2>
+<p>Sign in to the IRIS Taxpayer Portal, choose to upload a CSV with form data, and download the blank 1098 template. IRIS checks the header row of your upload against that template, so keep the header exactly as it is: same columns, same order, same wording. The column names below are the ones in the IRS's published formatting guidelines for IRIS CSV files.</p>
+<p>Use one file per form type and per payer, and keep each file to 100 forms or fewer.</p>
+
+<h2>Publication 1220 amount codes to 1098 boxes</h2>
+<p>In a FIRE file, each payee (B) record holds up to 18 payment amounts, numbered 1–9 and A–J. Which box each one belongs to depends on the form, and the codes don't always line up with box numbers.</p>
+<table>
+  <thead><tr><th>Pub 1220 amount code</th><th>IRIS 1098 column</th></tr></thead>
+  <tbody><tr><td>1</td><td>Box 1 - Mortgage interest received from payer(s)/borrower(s)</td></tr><tr><td>6</td><td>Box 2 - Outstanding Mortgage Principal</td></tr><tr><td>3</td><td>Box 4 - Refund of Overpaid Interest</td></tr><tr><td>4</td><td>Box 5 - Mortgage Insurance Premiums</td></tr><tr><td>2</td><td>Box 6 - Points Paid on Purchase of Principal Residence</td></tr></tbody>
+</table>
+
+<h2>Formatting that trips people up</h2>
+<ul>
+  <li><b>Amounts are dollars, not cents.</b> A FIRE file stores $1,500.00 as <code>000000150000</code>. In the CSV it's <code>1500</code> or <code>1500.00</code>.</li>
+  <li><b>Leave unused amounts blank.</b> An empty cell, not a zero.</li>
+  <li><b>Names are split.</b> FIRE has one name line; IRIS wants first, middle, last and suffix for people, or a business name line for companies. The FIRE name control (the first four letters of the last name) tells you where the surname starts.</li>
+  <li><b>Address lines are 35 characters at most.</b> Longer FIRE address lines have to be split between Address Line 1 and Line 2.</li>
+  <li><b>TIN type has to be stated.</b> SSN, ITIN, ATIN or EIN, which FIRE only partly records.</li>
+  <li><b>Corrections don't go in this template.</b> Corrected (G or C) records are made in the IRIS portal itself.</li>
+</ul>
+
+<h2>All 54 columns, in order</h2>
+<table>
+  <thead><tr><th>#</th><th>Column</th><th>From a FIRE file</th></tr></thead>
+  <tbody><tr><td>1</td><td>Form Type</td><td></td></tr><tr><td>2</td><td>Tax Year</td><td></td></tr><tr><td>3</td><td>Lender TIN Type</td><td></td></tr><tr><td>4</td><td>Lender Taxpayer ID Number</td><td></td></tr><tr><td>5</td><td>Lender Name Type</td><td></td></tr><tr><td>6</td><td>Lender Business or Entity Name Line 1</td><td></td></tr><tr><td>7</td><td>Lender Business or Entity Name Line 2</td><td></td></tr><tr><td>8</td><td>Lender First Name</td><td></td></tr><tr><td>9</td><td>Lender Middle Name</td><td></td></tr><tr><td>10</td><td>Lender Last Name (Surname)</td><td></td></tr><tr><td>11</td><td>Lender Suffix</td><td></td></tr><tr><td>12</td><td>Lender Country</td><td></td></tr><tr><td>13</td><td>Lender Address Line 1</td><td></td></tr><tr><td>14</td><td>Lender Address Line 2</td><td></td></tr><tr><td>15</td><td>Lender City/Town</td><td></td></tr><tr><td>16</td><td>Lender State/Province/Territory</td><td></td></tr><tr><td>17</td><td>Lender ZIP/Postal Code</td><td></td></tr><tr><td>18</td><td>Lender Phone Type</td><td></td></tr><tr><td>19</td><td>Lender Phone</td><td></td></tr><tr><td>20</td><td>Borrower TIN Type</td><td></td></tr><tr><td>21</td><td>Borrower Taxpayer ID Number</td><td></td></tr><tr><td>22</td><td>Borrower Name Type</td><td></td></tr><tr><td>23</td><td>Borrower Business or Entity Name Line 1</td><td></td></tr><tr><td>24</td><td>Borrower Business or Entity Name Line 2</td><td></td></tr><tr><td>25</td><td>Borrower First Name</td><td></td></tr><tr><td>26</td><td>Borrower Middle Name</td><td></td></tr><tr><td>27</td><td>Borrower Last Name (Surname)</td><td></td></tr><tr><td>28</td><td>Borrower Suffix</td><td></td></tr><tr><td>29</td><td>Borrower Country</td><td></td></tr><tr><td>30</td><td>Borrower Address Line 1</td><td></td></tr><tr><td>31</td><td>Borrower Address Line 2</td><td></td></tr><tr><td>32</td><td>Borrower City/Town</td><td></td></tr><tr><td>33</td><td>Borrower State/Province/Territory</td><td></td></tr><tr><td>34</td><td>Borrower ZIP/Postal Code</td><td></td></tr><tr><td>35</td><td>Office Code</td><td></td></tr><tr><td>36</td><td>Form Account Number</td><td></td></tr><tr><td>37</td><td>Box 1 - Mortgage interest received from payer(s)/borrower(s)</td><td>Amount code 1</td></tr><tr><td>38</td><td>Box 2 - Outstanding Mortgage Principal</td><td>Amount code 6</td></tr><tr><td>39</td><td>Box 3 - Mortgage Origination Date</td><td></td></tr><tr><td>40</td><td>Box 4 - Refund of Overpaid Interest</td><td>Amount code 3</td></tr><tr><td>41</td><td>Box 5 - Mortgage Insurance Premiums</td><td>Amount code 4</td></tr><tr><td>42</td><td>Box 6 - Points Paid on Purchase of Principal Residence</td><td>Amount code 2</td></tr><tr><td>43</td><td>Box 7 - Same Payer Address</td><td></td></tr><tr><td>44</td><td>Box 8 - Address or Description of Property Securing Mortgage</td><td></td></tr><tr><td>45</td><td>Country</td><td></td></tr><tr><td>46</td><td>Address Line 1</td><td></td></tr><tr><td>47</td><td>Address Line 2</td><td></td></tr><tr><td>48</td><td>City/Town</td><td></td></tr><tr><td>49</td><td>State/Province/Territory</td><td></td></tr><tr><td>50</td><td>ZIP/Postal Code</td><td></td></tr><tr><td>51</td><td>Provide a Legal Description</td><td></td></tr><tr><td>52</td><td>Box 9 - Number of Properties Securing the Mortgage</td><td></td></tr><tr><td>53</td><td>Box 10 - Other</td><td></td></tr><tr><td>54</td><td>Box 11 - Mortgage Acquisition Date</td><td></td></tr></tbody>
+</table>
+
+<h2>Doing it by hand, or not</h2>
+<p>For a handful of forms, typing them straight into the IRIS portal is quickest. For more, you can fill this template in a spreadsheet using the tables above. If your accounting software only exports a Publication 1220 file, <a href="../fire-to-iris-1099-converter/">my FIRE to IRIS converter</a> does the mapping, name splitting and file splitting for you, in your browser, so the SSNs in the file are never uploaded.</p>
+<p>This page describes file formats, not tax rules. Check what belongs on each form with the IRS instructions or your tax professional.</p>
+
+  </article>
+  <p class="cta"><a class="btn" href="/tools/fire-to-iris-1099-converter/">Convert a FIRE file to the 1098 template</a> <span>Free check and preview in your browser. Nothing is uploaded.</span></p>
+  <nav class="more" aria-label="More guides">
+    <h2>More guides</h2>
+    <ul class="guides"><li><a href="/tools/publisher-files-after-retirement/">Publisher is gone. What do you do with your .pub files?</a></li><li><a href="/tools/publisher-to-word/">Converting a Publisher file to Word</a></li><li><a href="/tools/make-a-newsletter-in-word-like-publisher/">Making a newsletter in Word when you used to use Publisher</a></li><li><a href="/tools/move-church-bulletin-from-publisher-to-canva/">Moving a bulletin or newsletter from Publisher to Canva</a></li><li><a href="/tools/publisher-to-google-docs/">Getting a Publisher file into Google Docs</a></li><li><a href="/tools/publisher-alternatives/">What to use now that Publisher is gone</a></li><li><a href="/tools/convert-publisher-files-in-bulk/">Converting a whole folder of Publisher files</a></li><li><a href="/tools/open-old-pagemaker-files/">Opening old PageMaker files today</a></li><li><a href="/tools/wrap-text-around-picture-in-powerpoint/">Wrapping text around a picture in PowerPoint</a></li><li><a href="/tools/microsoft-365-scan-to-email-basic-auth-2026/">Scan to email and Microsoft 365 after December 2026</a></li><li><a href="/tools/irs-fire-system-retirement-iris/">The IRS FIRE system is retiring: filing 1099s through IRIS</a></li><li><a href="/tools/iris-1099-nec-csv-template/">The IRIS 1099-NEC CSV template, column by column</a></li><li><a href="/tools/iris-1099-misc-csv-template/">The IRIS 1099-MISC CSV template, column by column</a></li><li><a href="/tools/iris-1099-int-csv-template/">The IRIS 1099-INT CSV template, column by column</a></li><li><a href="/tools/iris-1099-div-csv-template/">The IRIS 1099-DIV CSV template, column by column</a></li><li><a href="/tools/iris-1099-r-csv-template/">The IRIS 1099-R CSV template, column by column</a></li><li><a href="/tools/iris-1098-t-csv-template/">The IRIS 1098-T CSV template, column by column</a></li><li><a href="/tools/will-scan-to-email-break-microsoft-365/">Will your copier's scan to email break?</a></li></ul>
+  </nav>
+<p class="fine">Microsoft Publisher, Word and PowerPoint are trademarks of Microsoft; PageMaker and InDesign of Adobe; Canva and Affinity of Canva. I'm not affiliated with any of them.</p>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+        <p class="site-footer__blurb">Software tools for files your software won&rsquo;t open, built by Tyler LeDuc in Phoenix, Arizona.</p>
+        <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+      </div>
+      <div class="site-footer__col">
+        <h2 class="site-footer__title">Navigate</h2>
+        <a class="site-footer__link" href="/">Home</a>
+        <a class="site-footer__link" href="/tools/">Tools</a>
+        <a class="site-footer__link" href="/about">About</a>
+        <a class="site-footer__link" href="/contact">Contact</a>
+      </div>
+      <div class="site-footer__col">
+        <h2 class="site-footer__title">Elsewhere</h2>
+        <a class="site-footer__link" href="/games">Games</a>
+        <a class="site-footer__link" href="https://github.com/tyler-leduc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://www.linkedin.com/in/tyler-l-60a9451a3/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+      <div class="site-footer__col">
+        <h2 class="site-footer__title">Legal</h2>
+        <a class="site-footer__link" href="/privacy">Privacy Policy</a>
+        <a class="site-footer__link" href="/terms">Terms of Service</a>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <p>&copy; 2026 LeDuc Systems LLC</p>
+      <p>Made by Tyler LeDuc.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
