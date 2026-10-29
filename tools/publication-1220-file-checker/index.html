@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VPCZV3J5CQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VPCZV3J5CQ');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Publication 1220 File Checker: Validate a FIRE 1099 File in Your Browser</title>
+<meta name="description" content="Check a Publication 1220 (FIRE) 1099 file for errors before you file: record counts, payee totals against the C record, amount codes, TINs and names. Free, and the file never leaves your computer.">
+<link rel="canonical" href="https://leducsystems.com/tools/publication-1220-file-checker/">
+<meta property="og:title" content="Free Publication 1220 File Checker: Validate a FIRE 1099 File in Your Browser">
+<meta property="og:description" content="Check a Publication 1220 (FIRE) 1099 file for errors before you file: record counts, payee totals against the C record, amount codes, TINs and names. Free, and the file never leaves your computer.">
+<meta property="og:url" content="https://leducsystems.com/tools/publication-1220-file-checker/">
+<meta property="og:type" content="website">
+<link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the check really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Checking and previewing any number of files is free, with no sign-up. Only downloading the IRIS CSV files costs money: $49 for one payer for the 2027 filing season."}},{"@type":"Question","name":"Is this the IRS?","acceptedAnswer":{"@type":"Answer","text":"No. It's a tool I make. The IRS no longer checks Publication 1220 files once FIRE closes, and IRIS takes a different format."}},{"@type":"Question","name":"What happens to my file?","acceptedAnswer":{"@type":"Answer","text":"Nothing leaves your computer. The checks run in your browser, so the SSNs and TINs in your file are never uploaded."}},{"@type":"Question","name":"Is this tax advice?","acceptedAnswer":{"@type":"Answer","text":"No. It checks the file's format and arithmetic; it doesn't decide what you should report. Ask your tax professional about what belongs on each form."}}]}</script>
+  <script type="module" crossorigin src="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js"></script>
+  <script type="module" crossorigin src="/tools/assets/fire-iris-sIjxW-l-.js"></script>
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-ocO26P7O.css">
+</head>
+<body data-api="https://convert.leducsystems.com" data-product="fire-iris" data-ships="December 10, 2026" data-price="$49">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+    <nav class="nav" aria-label="Primary">
+      <ul><li><a class="nav__link" href="/">Home</a></li><li><a class="nav__link nav__link--active" href="/tools/">Tools</a></li><li><a class="nav__link" href="/about">About</a></li><li><a class="nav__link" href="/contact">Contact</a></li></ul>
+    </nav>
+    <div class="nav__actions">
+      <a class="site-header__cta" href="/contact">Get in touch</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
+  <ul><li><a class="mobile-menu__link" href="/" style="--menu-delay:60ms">Home</a></li><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:105ms">Tools</a></li><li><a class="mobile-menu__link" href="/about" style="--menu-delay:150ms">About</a></li><li><a class="mobile-menu__link" href="/contact" style="--menu-delay:195ms">Contact</a></li></ul>
+  <div class="mobile-menu__actions" style="--menu-delay:240ms">
+    <a class="site-btn site-btn--primary" href="/contact">Get in touch</a>
+    <a class="site-btn site-btn--ghost" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+  </div>
+</nav>
+<script>
+(() => {
+  const b = document.querySelector('.menu-toggle'), m = document.getElementById('site-mobile-menu');
+  const set = (open) => {
+    b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    m.classList.toggle('mobile-menu--open', open); document.body.style.overflow = open ? 'hidden' : '';
+  };
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  matchMedia('(min-width: 861px)').addEventListener('change', (e) => { if (e.matches) set(false); });
+})();
+</script>
+<main id="main" tabindex="-1">
+  <section class="hero">
+    <h1>Check a Publication 1220 (FIRE) 1099 file</h1>
+    <p class="lede">Drop in the fixed-width 1099 file your accounting or payroll software exports in the Publication 1220 format. It's read in your browser and checked record by record: counts, totals, amount codes, TINs and names. Free, and nothing is uploaded.</p>
+  </section>
+
+  <section class="tool" aria-label="Converter">
+    <label class="drop" id="drop">
+      <input type="file" id="file" accept=".txt,.dat,.asc,.ascii,.irs,.fire,text/plain" hidden>
+      <span class="drop-title">Drop your Publication 1220 (FIRE) file here</span>
+      <span class="drop-sub">or click to choose · free preview · nothing is uploaded: it stays on this computer</span>
+    </label>
+    <p class="status" id="status" role="status"></p>
+    <div class="result" id="result" hidden></div>
+  </section>
+
+  <article class="guide">
+<h2>What it checks</h2>
+<ul>
+  <li><b>Structure.</b> Every record is a known Publication 1220 type, payee (B) records sit under a payer (A) record, and each payer has its end-of-payer (C) record.</li>
+  <li><b>Totals.</b> The number of payees and each amount total in the C record against the B records actually in the file, the mismatch FIRE used to reject files for.</li>
+  <li><b>Amounts.</b> Every payment amount is read with its sign, including the old overpunch format for negatives, and shown against the box it belongs in.</li>
+  <li><b>Payees.</b> Which TINs are SSNs, ITINs, ATINs or EINs, whether a person's name splits cleanly using the name control, and addresses too long for one line.</li>
+  <li><b>Corrections.</b> Corrected (G or C) records are counted and listed separately.</li>
+</ul>
+<p>It reads 1099-NEC, 1099-MISC, 1099-INT, 1099-DIV and 1099-R files for tax years 2022 and later, and previews every form.</p>
+
+<h2>Why check it now</h2>
+<p>The IRS retires FIRE on November 19, 2026, so you can no longer upload this file there to find out what's wrong with it. From the 2027 filing season, 1099s go through IRIS. If your file checks out, the same page turns it into the IRIS Taxpayer Portal CSV files for $49 per payer. Checking stays free.</p>
+<p>It runs entirely in your browser. Your file, with its SSNs and TINs, is never uploaded to me or anyone else.</p>
+  </article>
+
+  <p class="cta"><a class="btn" href="#main">Convert your file</a> <span>Free preview. $49 to download the IRIS files for one payer.</span></p>
+
+  <section class="faq">
+    <h2>Questions</h2>
+    <details><summary>Is the check really free?</summary><p>Yes. Checking and previewing any number of files is free, with no sign-up. Only downloading the IRIS CSV files costs money: $49 for one payer for the 2027 filing season.</p></details>
+    <details><summary>Is this the IRS?</summary><p>No. It's a tool I make. The IRS no longer checks Publication 1220 files once FIRE closes, and IRIS takes a different format.</p></details>
+    <details><summary>What happens to my file?</summary><p>Nothing leaves your computer. The checks run in your browser, so the SSNs and TINs in your file are never uploaded.</p></details>
+    <details><summary>Is this tax advice?</summary><p>No. It checks the file's format and arithmetic; it doesn't decide what you should report. Ask your tax professional about what belongs on each form.</p></details>
+  </section>
+
+  <nav class="more" aria-label="Related">
+    <h2>More from LeDuc Systems</h2>
+    <ul><li><a href="/tools/">All tools</a></li></ul>
+  </nav>
+<p class="fine">Not affiliated with the IRS or any tax software company. Questions: <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+        <p class="site-footer__blurb">Software tools for files your software won&rsquo;t open, built by Tyler LeDuc in Phoenix, Arizona.</p>
+        <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+      </div>
+      <div class="site-footer__col">
+        <h2 class="site-footer__title">Navigate</h2>
+        <a class="site-footer__link" href="/">Home</a>
+        <a class="site-footer__link" href="/tools/">Tools</a>
+        <a class="site-footer__link" href="/about">About</a>
+        <a class="site-footer__link" href="/contact">Contact</a>
+      </div>
+      <div class="site-footer__col">
+        <h2 class="site-footer__title">Elsewhere</h2>
+        <a class="site-footer__link" href="/games">Games</a>
+        <a class="site-footer__link" href="https://github.com/tyler-leduc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://www.linkedin.com/in/tyler-l-60a9451a3/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+      <div class="site-footer__col">
+        <h2 class="site-footer__title">Legal</h2>
+        <a class="site-footer__link" href="/privacy">Privacy Policy</a>
+        <a class="site-footer__link" href="/terms">Terms of Service</a>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <p>&copy; 2026 LeDuc Systems LLC</p>
+      <p>Made by Tyler LeDuc.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
