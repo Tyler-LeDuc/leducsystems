@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Try-on demo — LeDuc Systems</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="A brand's shades, live on your own face, in the browser. Nothing is uploaded.">
+<link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
+<style>
+  :root { --bg: #faf7f5; --panel: #fff; --ink: #1d1a19; --muted: #6f6866; --line: #e8e1dd; --accent: #FF3D70; --stage: #161312; color-scheme: light; }
+  * { box-sizing: border-box; } [hidden] { display: none !important; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; max-width: 1100px; margin: 0 auto; }
+  header b { font-size: 18px; } header b span { color: var(--accent); }
+  header .status { font-size: 13px; color: var(--muted); text-align: right; }
+  main { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; padding: 0 16px 24px; max-width: 1100px; margin: 0 auto; }
+  @media (max-width: 820px) { main { grid-template-columns: 1fr; padding: 0 0 16px; } }
+  .stage-wrap { position: relative; }
+  #stage { width: 100%; aspect-ratio: 3 / 4; max-height: calc(100dvh - 110px); border-radius: 16px; background: var(--stage); overflow: hidden; }
+  @media (min-width: 821px) { #stage { aspect-ratio: 4 / 3; } }
+  @media (max-width: 820px) { #stage { border-radius: 0; max-height: 64dvh; } }
+  .empty { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #eee; text-align: center; padding: 24px; }
+  .empty p { margin: 0; max-width: 320px; color: #bbb; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  button, .btn { font: inherit; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 999px; padding: 9px 16px; cursor: pointer; min-height: 40px; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+  button.primary, .btn.primary { background: var(--accent); color: #fff; border-color: transparent; font-weight: 600; }
+  button:disabled { opacity: .5; cursor: default; }
+  input[type=file] { display: none; }
+  .toolbar { position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; gap: 8px; justify-content: space-between; }
+  .toolbar button { background: rgba(20,16,15,.62); color: #fff; border-color: rgba(255,255,255,.18); backdrop-filter: blur(8px); }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 14px; align-self: start; }
+  @media (max-width: 820px) { .panel { border-radius: 0; border-left: 0; border-right: 0; } }
+  .panel h2 { margin: 0; font-size: 16px; } .panel h2 small { display: block; color: var(--muted); font-weight: normal; font-size: 13px; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 10px; }
+  .sw { display: flex; flex-direction: column; align-items: center; gap: 6px; background: none; border: 0; padding: 0; min-height: 0; border-radius: 12px; font-size: 12px; text-align: center; color: var(--ink); }
+  .sw i { width: 52px; height: 52px; border-radius: 50%; display: block; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+  .sw[aria-pressed=true] i { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .sw small { color: var(--muted); }
+  .slider { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; font-size: 13px; color: var(--muted); }
+  .fine { font-size: 12px; color: var(--muted); margin: 0; }
+  .cta { border-top: 1px solid var(--line); padding-top: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <b>LeDuc<span>.</span> Try-On <span id="brand"></span></b>
+  <div class="status" id="status">Your shades, live on your own face. Nothing is uploaded.</div>
+</header>
+<main>
+  <div class="stage-wrap">
+    <div id="stage"></div>
+    <div class="empty" id="empty">
+      <p>See every shade on your own face, live. The camera stays on your device: no photo is uploaded.</p>
+      <div class="row"><button class="primary" id="cam">Start camera</button><label class="btn" for="file">Use a photo</label><input type="file" id="file" accept="image/*"></div>
+    </div>
+    <div class="toolbar" id="toolbar" hidden>
+      <div class="row"><button id="cmp" aria-pressed="false">Compare</button><button id="snap">Save photo</button></div>
+      <div class="row"><label class="btn" for="file" style="background:rgba(20,16,15,.62);color:#fff;border-color:rgba(255,255,255,.18)">Photo</label></div>
+    </div>
+  </div>
+  <aside class="panel">
+    <h2>Shades <small id="sub">Tap a shade to try it</small></h2>
+    <div class="swatches" id="swatches"></div>
+    <label class="slider">Intensity <input type="range" id="op" min="40" max="150" value="100"><span id="opv">100%</span></label>
+    <p class="fine">Works in Safari and Chrome on phones and desktops. Good light helps, like it does for a mirror.</p>
+    <div class="cta"><a class="btn primary" href="/tools/tryon/">Get this on your store</a> <p class="fine" style="margin-top:8px">From $49 a month. One line of code on a product page.</p></div>
+  </aside>
+</main>
+<script type="module">
+import { LeducTryOn } from '../leduc-tryon.min.js';
+// Signed for leducsystems.com; localhost needs no key.
+const LICENSE_KEY = 'eyJ2IjoxLCJpZCI6IkxFRFVDU1lTVEVNUy1kZW1vMiIsImN1c3RvbWVyIjoiTGVkdWMgU3lzdGVtcyBkZW1vIiwidGllciI6ImRlbW8iLCJkb21haW5zIjpbInR5bGVyLWxlZHVjLmdpdGh1Yi5pbyIsImxlZHVjc3lzdGVtcy5jb20iLCJ3d3cubGVkdWNzeXN0ZW1zLmNvbSJdLCJleHAiOiIyMDI4LTEwLTIwIiwiaWF0IjoiMjAyNi0xMC0zMCJ9.ktDpaEpSCw9G_6D8k6mykEDapSGfhhT4keDHDMX695A6OkZ0qzhWY3Xx-_KTYe84WEDt_ImO26RsqOb1_8Garg';
+const $ = (id) => document.getElementById(id);
+const q = new URLSearchParams(location.search);
+const FINISHES = ['matte', 'satin', 'gloss', 'sheershine'];
+// ?brand=Name&shades=hex:finish:name,hex:finish:name  (finish optional; name optional; "#" optional)
+const parse = (s) => (s || '').split(',').map((t) => t.trim()).filter(Boolean).map((t) => { const [hex, finish, ...name] = t.split(':'); const h = '#' + hex.replace(/^#/, '').toLowerCase(); return /^#[0-9a-f]{6}$/.test(h) ? { hex: h, finish: FINISHES.includes(finish) ? finish : 'satin', name: name.join(':') || hex } : null; }).filter(Boolean);
+const DEFAULT = [{ hex: '#b0303f', finish: 'satin', name: 'Classic red' }, { hex: '#c76a6a', finish: 'sheershine', name: 'Rose tint' }, { hex: '#8e4b42', finish: 'matte', name: 'Brick' }, { hex: '#d58c80', finish: 'gloss', name: 'Nude gloss' }, { hex: '#7a2e4d', finish: 'satin', name: 'Berry' }];
+const shades = parse(q.get('shades')); const SHADES = shades.length ? shades : DEFAULT;
+const brand = (q.get('brand') || '').slice(0, 40); if (brand) { $('brand').textContent = '× ' + brand; document.title = brand + ' try-on — LeDuc Systems'; }
+const state = { shade: SHADES[0], opacity: 1, compare: false };
+let tryon = null; const setStatus = (t) => { $('status').textContent = t; };
+const onStatus = (s) => { if (s && (s.contextLost || s.glError || s.error)) setStatus('Graphics problem: reload the page'); };
+async function ensure() { if (!tryon) tryon = await LeducTryOn.create({ container: $('stage'), onStatus, licenseKey: LICENSE_KEY }); return tryon; }
+const ready = () => { $('empty').hidden = true; $('toolbar').hidden = false; };
+async function push() { if (!tryon || tryon.mode === 'idle') return; await tryon.apply(state.shade ? { lips: { color: state.shade.hex, finish: state.shade.finish, opacity: state.opacity } } : {}); }
+function renderSwatches() {
+  $('swatches').innerHTML = SHADES.map((s, i) => `<button class="sw" data-i="${i}" aria-pressed="${state.shade === s}" title="${s.name}"><i style="background:${s.hex}"></i>${s.name.slice(0, 18)}<small>${s.finish === 'sheershine' ? 'sheer' : s.finish}</small></button>`).join('')
+    + `<button class="sw" data-i="-1" aria-pressed="${!state.shade}"><i style="background:repeating-linear-gradient(45deg,#e8e1dd 0 4px,transparent 4px 8px)"></i>Bare</button>`;
+}
+$('swatches').addEventListener('click', (e) => { const b = e.target.closest('[data-i]'); if (!b) return; const i = Number(b.dataset.i); state.shade = i < 0 ? null : SHADES[i]; renderSwatches(); push(); });
+let tmr = 0; $('op').addEventListener('input', (e) => { state.opacity = e.target.value / 100; $('opv').textContent = e.target.value + '%'; clearTimeout(tmr); tmr = setTimeout(push, 120); });
+$('cam').onclick = async () => { try { setStatus('Starting camera…'); const t = await ensure(); await t.startCamera(); ready(); setStatus('Live'); push(); } catch (e) { setStatus(/denied|NotAllowed/i.test(String(e && (e.name || e.message))) ? 'Allow camera access to try shades live, or use a photo' : 'Camera failed: try a photo'); } };
+$('file').onchange = async (e) => { const f = e.target.files[0]; e.target.value = ''; if (!f) return; try { setStatus('Finding your face…'); const t = await ensure(); const r = await t.usePhoto(f); ready(); await push(); setStatus(r && r.face === false ? 'No face found in this photo' : 'Photo'); } catch (err) { setStatus('Could not open that photo'); } };
+$('cmp').onclick = async () => { state.compare = !state.compare; $('cmp').setAttribute('aria-pressed', state.compare); $('cmp').textContent = state.compare ? 'Hide compare' : 'Compare'; if (tryon) await tryon.compare(state.compare ? 0.5 : null); };
+$('stage').addEventListener('pointermove', (e) => { if (!state.compare || !tryon || !(e.buttons || e.pointerType === 'touch')) return; const r = $('stage').getBoundingClientRect(); tryon.compare((e.clientX - r.left) / r.width); });
+$('snap').onclick = async () => { if (!tryon) return; const blob = await tryon.snapshot(); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = (brand || 'try-on') + '.jpg'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); };
+renderSwatches();
+</script>
+</body>
+</html>
