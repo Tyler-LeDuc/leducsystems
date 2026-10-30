@@ -97,6 +97,9 @@ $('cmp').onclick = async () => { state.compare = !state.compare; $('cmp').setAtt
 $('stage').addEventListener('pointermove', (e) => { if (!state.compare || !tryon || !(e.buttons || e.pointerType === 'touch')) return; const r = $('stage').getBoundingClientRect(); tryon.compare((e.clientX - r.left) / r.width); });
 $('snap').onclick = async () => { if (!tryon) return; const blob = await tryon.snapshot(); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = (brand || 'try-on') + '.jpg'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); };
 renderSwatches();
+// Start the engine (and the face model download) on page load, so the tap only has to open the camera.
+setStatus('Loading the face model (a few seconds the first time)…');
+ensure().then(() => setStatus('Ready. Nothing leaves your device.')).catch(() => setStatus('Your shades, live on your own face. Nothing is uploaded.'));
 </script>
 </body>
 </html>
