@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VPCZV3J5CQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VPCZV3J5CQ');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ricoh Scan to Email Stopped Working With Microsoft 365? How to Fix It</title>
+<meta name="description" content="Microsoft 365 turns off SMTP basic authentication at the end of December 2026. Where your Ricoh copier keeps its scan-to-email settings, whether yours is affected, and how to keep it working.">
+<link rel="canonical" href="https://leducsystems.com/tools/ricoh-scan-to-email-microsoft-365/">
+<meta property="og:title" content="Ricoh Scan to Email Stopped Working With Microsoft 365? How to Fix It">
+<meta property="og:description" content="Microsoft 365 turns off SMTP basic authentication at the end of December 2026. Where your Ricoh copier keeps its scan-to-email settings, whether yours is affected, and how to keep it working.">
+<meta property="og:url" content="https://leducsystems.com/tools/ricoh-scan-to-email-microsoft-365/">
+<meta property="og:type" content="website">
+<link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Ricoh Scan to Email Stopped Working With Microsoft 365? How to Fix It","description":"Microsoft 365 turns off SMTP basic authentication at the end of December 2026. Where your Ricoh copier keeps its scan-to-email settings, whether yours is affected, and how to keep it working.","url":"https://leducsystems.com/tools/ricoh-scan-to-email-microsoft-365/","author":{"@type":"Person","name":"Tyler LeDuc"},"publisher":{"@type":"Organization","name":"LeDuc Systems"}}</script>
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-BtOZvzEo.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+    <nav class="nav" aria-label="Primary">
+      <ul><li><a class="nav__link" href="/">Home</a></li><li><a class="nav__link nav__link--active" href="/tools/">Tools</a></li><li><a class="nav__link" href="/about">About</a></li><li><a class="nav__link" href="/contact">Contact</a></li></ul>
+    </nav>
+    <div class="nav__actions">
+      <a class="site-header__cta" href="/contact">Get in touch</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
+  <ul><li><a class="mobile-menu__link" href="/" style="--menu-delay:60ms">Home</a></li><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:105ms">Tools</a></li><li><a class="mobile-menu__link" href="/about" style="--menu-delay:150ms">About</a></li><li><a class="mobile-menu__link" href="/contact" style="--menu-delay:195ms">Contact</a></li></ul>
+  <div class="mobile-menu__actions" style="--menu-delay:240ms">
+    <a class="site-btn site-btn--primary" href="/contact">Get in touch</a>
+    <a class="site-btn site-btn--ghost" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+  </div>
+</nav>
+<script>
+(() => {
+  const b = document.querySelector('.menu-toggle'), m = document.getElementById('site-mobile-menu');
+  const set = (open) => {
+    b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    m.classList.toggle('mobile-menu--open', open); document.body.style.overflow = open ? 'hidden' : '';
+  };
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  matchMedia('(min-width: 861px)').addEventListener('change', (e) => { if (e.matches) set(false); });
+})();
+</script>
+<main id="main" tabindex="-1">
+  <section class="hero">
+    <h1>Ricoh scan to email and Microsoft 365</h1>
+    <p class="lede">At the end of December 2026 Microsoft 365 stops accepting username-and-password email from copiers (SMTP AUTH with basic authentication). If your Ricoh sends scans through smtp.office365.com with a password, it will stop. Here's how to check, and how to fix it.</p>
+  </section>
+  <p class="cta"><a class="btn" href="/tools/scan-to-email-microsoft-365/">Get Scan Relay, free 14-day trial</a> <span>Keeps your Ricoh scanning to email without changing its firmware.</span></p>
+  <article class="guide">
+<h2>Is your Ricoh affected?</h2>
+<p>In Web Image Monitor (the copier's IP address in a browser), sign in as administrator and open Device Management, then Configuration, then Email under Device Settings. On the copier itself it's usually under User Tools, System Settings, File Transfer.</p>
+<p>If the SMTP server is <b>smtp.office365.com</b> (usually port 587) and the copier signs in with a Microsoft 365 email address and password, it's affected. Menu names vary by model; your dealer can also check over the phone. Or <a href="../will-scan-to-email-break-microsoft-365/">answer three quick questions</a> and see.</p>
+
+<h2>What Ricoh offers</h2>
+<p>Many recent Ricoh IM models can sign in to Microsoft 365 with OAuth after a firmware update. Older MP series machines generally can't. Ask your dealer whether your exact model and firmware can do it: if it can, that's the cleanest fix.</p>
+
+<h2>If your Ricoh can't use OAuth</h2>
+<ul>
+  <li><b>Scan to a folder or OneDrive</b> instead of email, if your staff don't mind the change.</li>
+  <li><b>A Microsoft 365 connector</b>, if your office has a static public IP address and someone to set it up.</li>
+  <li><b>A local relay.</b> <a href="../scan-to-email-microsoft-365/">Scan Relay</a>, which I make, runs on any always-on office PC. You point the Ricoh at that PC instead of smtp.office365.com, and it passes each scan on to Microsoft 365 with modern sign-in. No firmware update, static IP or DNS changes. Free for 14 days, then $79 once per office.</li>
+</ul>
+
+<h2>Setting up the Ricoh for Scan Relay</h2>
+<ol>
+  <li>Install Scan Relay on a PC that stays on and sign in with the Microsoft 365 mailbox scans should come from.</li>
+  <li>In the Ricoh's email settings, set the SMTP server to that PC's address (Scan Relay shows it), port 25, no SSL/TLS. Leave any username and password; Scan Relay ignores them.</li>
+  <li>Send a test scan.</li>
+</ol>
+<p>Test before the end of December, while the old way still works as a fallback. More detail is in <a href="../microsoft-365-scan-to-email-basic-auth-2026/">the full guide</a>. Copier dealers and IT providers can buy <a href="../scan-relay-resellers/">wholesale licenses</a>.</p>
+  </article>
+  <p class="cta"><a class="btn" href="/tools/scan-to-email-microsoft-365/">Get Scan Relay, free 14-day trial</a> <span>Keeps your Ricoh scanning to email without changing its firmware.</span></p>
+  <nav class="more" aria-label="More guides">
+    <h2>More guides</h2>
+    <ul class="guides"><li><a href="/tools/publisher-files-after-retirement/">Publisher is gone. What do you do with your .pub files?</a></li><li><a href="/tools/publisher-to-word/">Converting a Publisher file to Word</a></li><li><a href="/tools/make-a-newsletter-in-word-like-publisher/">Making a newsletter in Word when you used to use Publisher</a></li><li><a href="/tools/move-church-bulletin-from-publisher-to-canva/">Moving a bulletin or newsletter from Publisher to Canva</a></li><li><a href="/tools/publisher-to-google-docs/">Getting a Publisher file into Google Docs</a></li><li><a href="/tools/publisher-alternatives/">What to use now that Publisher is gone</a></li><li><a href="/tools/convert-publisher-files-in-bulk/">Converting a whole folder of Publisher files</a></li><li><a href="/tools/open-old-pagemaker-files/">Opening old PageMaker files today</a></li><li><a href="/tools/wrap-text-around-picture-in-powerpoint/">Wrapping text around a picture in PowerPoint</a></li><li><a href="/tools/microsoft-365-scan-to-email-basic-auth-2026/">Scan to email and Microsoft 365 after December 2026</a></li><li><a href="/tools/irs-fire-system-retirement-iris/">The IRS FIRE system is retiring: filing 1099s through IRIS</a></li><li><a href="/tools/iris-1098-csv-template/">The IRIS 1098 CSV template, column by column</a></li><li><a href="/tools/iris-1099-nec-csv-template/">The IRIS 1099-NEC CSV template, column by column</a></li><li><a href="/tools/iris-1099-misc-csv-template/">The IRIS 1099-MISC CSV template, column by column</a></li><li><a href="/tools/iris-1099-int-csv-template/">The IRIS 1099-INT CSV template, column by column</a></li><li><a href="/tools/iris-1099-div-csv-template/">The IRIS 1099-DIV CSV template, column by column</a></li><li><a href="/tools/iris-1099-r-csv-template/">The IRIS 1099-R CSV template, column by column</a></li><li><a href="/tools/iris-1098-t-csv-template/">The IRIS 1098-T CSV template, column by column</a></li><li><a href="/tools/iris-1099-s-csv-template/">The IRIS 1099-S CSV template, column by column</a></li><li><a href="/tools/iris-1099-g-csv-template/">The IRIS 1099-G CSV template, column by column</a></li><li><a href="/tools/iris-1099-k-csv-template/">The IRIS 1099-K CSV template, column by column</a></li><li><a href="/tools/iris-w-2g-csv-template/">The IRIS W-2G CSV template, column by column</a></li><li><a href="/tools/will-scan-to-email-break-microsoft-365/">Will your copier's scan to email break?</a></li><li><a href="/tools/scan-relay-resellers/">Scan Relay for copier dealers and IT providers</a></li><li><a href="/tools/canon-scan-to-email-microsoft-365/">Canon scan to email and Microsoft 365</a></li><li><a href="/tools/sharp-scan-to-email-microsoft-365/">Sharp scan to email and Microsoft 365</a></li><li><a href="/tools/konica-minolta-scan-to-email-microsoft-365/">Konica Minolta scan to email and Microsoft 365</a></li><li><a href="/tools/kyocera-scan-to-email-microsoft-365/">Kyocera scan to email and Microsoft 365</a></li><li><a href="/tools/hp-scan-to-email-microsoft-365/">HP scan to email and Microsoft 365</a></li><li><a href="/tools/xerox-scan-to-email-microsoft-365/">Xerox scan to email and Microsoft 365</a></li><li><a href="/tools/brother-scan-to-email-microsoft-365/">Brother scan to email and Microsoft 365</a></li></ul>
+  </nav>
+<p class="fine">Microsoft Publisher, Word and PowerPoint are trademarks of Microsoft; PageMaker and InDesign of Adobe; Canva and Affinity of Canva. I'm not affiliated with any of them.</p>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+        <p class="site-footer__blurb">Software tools for files your software won&rsquo;t open, built by Tyler LeDuc in Phoenix, Arizona.</p>
+        <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+      </div>
+      <div class="site-footer__col">
+        <h2 class="site-footer__title">Navigate</h2>
+        <a class="site-footer__link" href="/">Home</a>
+        <a class="site-footer__link" href="/tools/">Tools</a>
+        <a class="site-footer__link" href="/about">About</a>
+        <a class="site-footer__link" href="/contact">Contact</a>
+      </div>
+      <div class="site-footer__col">
+        <h2 class="site-footer__title">Elsewhere</h2>
+        <a class="site-footer__link" href="/games">Games</a>
+        <a class="site-footer__link" href="https://github.com/tyler-leduc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://www.linkedin.com/in/tyler-l-60a9451a3/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+      <div class="site-footer__col">
+        <h2 class="site-footer__title">Legal</h2>
+        <a class="site-footer__link" href="/privacy">Privacy Policy</a>
+        <a class="site-footer__link" href="/terms">Terms of Service</a>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <p>&copy; 2026 LeDuc Systems LLC</p>
+      <p>Made by Tyler LeDuc.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
