@@ -50,7 +50,7 @@ export const TOOLS = [
     title: 'Publisher file converter',
     tag: 'Publisher / .pub',
     problem: 'Microsoft retired Publisher, and Word and PowerPoint can’t open .pub files.',
-    blurb: 'Turns .pub files into editable files for PowerPoint, Canva, Affinity and InDesign. Free preview and PDF.',
+    blurb: 'Turns .pub files into editable files for PowerPoint, Canva, Affinity and InDesign. Free preview of every page.',
     url: '/tools/publisher-converter/',
   },
   {
