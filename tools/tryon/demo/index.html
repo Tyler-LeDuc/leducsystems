@@ -74,8 +74,9 @@ const LICENSE_KEY = 'eyJ2IjoxLCJpZCI6IkxFRFVDU1lTVEVNUy1kZW1vMiIsImN1c3RvbWVyIjo
 const $ = (id) => document.getElementById(id);
 const q = new URLSearchParams(location.search);
 const FINISHES = ['matte', 'satin', 'gloss', 'sheershine'];
+const FINISH_ALIAS = { sheer: 'sheershine', shine: 'sheershine', glossy: 'gloss', cream: 'satin', creme: 'satin', velvet: 'matte', '': 'satin' }; // accepted in links: matte | satin | gloss | sheershine (sheer, shine, glossy, cream, velvet map onto those)
 // ?brand=Name&shades=hex:finish:name,hex:finish:name  (finish optional; name optional; "#" optional)
-const parse = (s) => (s || '').split(',').map((t) => t.trim()).filter(Boolean).map((t) => { const [hex, finish, ...name] = t.split(':'); const h = '#' + hex.replace(/^#/, '').toLowerCase(); return /^#[0-9a-f]{6}$/.test(h) ? { hex: h, finish: FINISHES.includes(finish) ? finish : 'satin', name: name.join(':') || hex } : null; }).filter(Boolean);
+const parse = (s) => (s || '').split(',').map((t) => t.trim()).filter(Boolean).map((t) => { const [hex, finish, ...name] = t.split(':'); const h = '#' + hex.replace(/^#/, '').toLowerCase(); const f = (finish || '').trim().toLowerCase(); return /^#[0-9a-f]{6}$/.test(h) ? { hex: h, finish: FINISHES.includes(f) ? f : (FINISH_ALIAS[f] || 'satin'), name: name.join(':') || hex } : null; }).filter(Boolean);
 const DEFAULT = [{ hex: '#b0303f', finish: 'satin', name: 'Classic red' }, { hex: '#c76a6a', finish: 'sheershine', name: 'Rose tint' }, { hex: '#8e4b42', finish: 'matte', name: 'Brick' }, { hex: '#d58c80', finish: 'gloss', name: 'Nude gloss' }, { hex: '#7a2e4d', finish: 'satin', name: 'Berry' }];
 const shades = parse(q.get('shades')); const SHADES = shades.length ? shades : DEFAULT;
 const brand = (q.get('brand') || '').slice(0, 40); if (brand) { $('brand').textContent = '× ' + brand; document.title = brand + ' try-on — LeDuc Systems'; }

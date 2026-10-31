@@ -15,24 +15,25 @@
 <link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"Leduc Try-On for beauty stores","url":"https://leducsystems.com/tools/tryon/","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","offers":[{"@type":"Offer","name":"Starter","price":"49","priceCurrency":"USD","description":"per month"},{"@type":"Offer","name":"Growth","price":"149","priceCurrency":"USD","description":"per month"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How realistic is it?","acceptedAnswer":{"@type":"Answer","text":"The lipstick keeps her own lip texture, highlights and shading and takes the room's light, so a red reads as a red lipstick on her, not a sticker. Blush is a diffused flush, not a patch. Try the demo above with your own shades and judge it on your face."}},{"@type":"Question","name":"Does it work on phones?","acceptedAnswer":{"@type":"Answer","text":"Yes. Safari on iPhone and Chrome on Android, live camera or a photo. The engine renders at the camera's own resolution at 30 to 60 frames a second on recent phones."}},{"@type":"Question","name":"Is anything uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. The camera frames stay on the shopper's device; the makeup is drawn in her browser. No camera frames or photos ever leave her device, and there is no account for the shopper to create."}},{"@type":"Question","name":"How do I add it to my store?","acceptedAnswer":{"@type":"Answer","text":"Paste one script tag into your product page template and map each shade to its colour and finish (matte, satin, gloss or sheer). Shopify and WooCommerce themes both take it; I'll do the first one with you on a call if you like."}},{"@type":"Question","name":"What makeup does it do?","acceptedAnswer":{"@type":"Answer","text":"Lipstick and lip liner in four finishes, blush, bronzer, contour, highlighter, eyeshadow, eyeliner, mascara, brows, foundation and hair colour, as single products or as full looks."}},{"@type":"Question","name":"Can I try it before paying?","acceptedAnswer":{"@type":"Answer","text":"Every plan starts with a 14-day free trial, and the demo above is free. Send me your shade list and I'll make you a demo link with your products loaded."}},{"@type":"Question","name":"What does it cost?","acceptedAnswer":{"@type":"Answer","text":"Starter is $49 a month for up to 25 shades on one store; Growth is $149 a month for unlimited shades. Cancel any time: email tyler@leducsystems.com and I'll cancel it the same day, with no charge if you're still in the trial."}}]}]}</script>
 <style>
   .tryon { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; margin: 8px 0 24px; }
   @media (max-width: 820px) { .tryon { grid-template-columns: 1fr; } }
   .tryon .stage-wrap { position: relative; }
-  .tryon #stage { position: relative; z-index: 0; width: 100%; aspect-ratio: 4 / 3; border-radius: 16px; background: #161312; overflow: hidden; }
+  .tryon #stage { position: relative; z-index: 0; width: 100%; aspect-ratio: 4 / 3; border-radius: 8px; background: #161312; overflow: hidden; }
   @media (max-width: 820px) { .tryon #stage { aspect-ratio: 3 / 4; max-height: 64dvh; } }
   .tryon [hidden] { display: none !important; }
   .tryon #empty { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #eee; text-align: center; padding: 24px; }
   .tryon #empty p { margin: 0; max-width: 320px; color: #bbb; }
   .tryon .row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
-  .tryon button, .tryon .btn { font: inherit; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 999px; padding: 9px 16px; cursor: pointer; min-height: 40px; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
-  .tryon button.primary, .tryon .btn.primary { background: var(--accent-fill); color: #fff; border-color: transparent; font-weight: 600; }
+  .tryon button, .tryon .btn { font: inherit; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 4px; padding: 9px 16px; cursor: pointer; min-height: 40px; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+  .tryon button.primary, .tryon .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 500; }
+  .tryon button.primary:hover, .tryon .btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
   .tryon input[type=file] { display: none; }
   .tryon #toolbar { position: absolute; z-index: 2; left: 12px; right: 12px; bottom: 12px; display: flex; gap: 8px; justify-content: space-between; }
   .tryon #toolbar button, .tryon #toolbar .btn { background: rgba(20,16,15,.62); color: #fff; border-color: rgba(255,255,255,.18); backdrop-filter: blur(8px); }
-  .tryon .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 12px; align-self: start; }
+  .tryon .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 12px; align-self: start; }
   .tryon .panel h2 { margin: 0; font-size: 16px; }
   .tryon .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); gap: 10px; }
   .tryon .sw { display: flex; flex-direction: column; align-items: center; gap: 6px; background: none; border: 0; padding: 0; min-height: 0; border-radius: 12px; font-size: 12px; text-align: center; color: var(--ink); }
@@ -41,27 +42,27 @@
   .tryon .sw[aria-pressed=true] i { outline: 2px solid var(--ink); outline-offset: 3px; }
   .tryon .sw small { color: var(--muted); }
   .tryon .own { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
-  .tryon .own input, .tryon .own select { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--ink); min-width: 0; }
+  .tryon .own input, .tryon .own select { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); color: var(--ink); min-width: 0; }
   .tryon .slider { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; font-size: 13px; color: var(--muted); }
   .tryon .tstatus { font-size: 13px; color: var(--muted); margin: 0; min-height: 1.4em; }
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 8px 0 24px; }
-  @media (max-width: 720px) { .steps { grid-template-columns: 1fr; } }
-  .steps div { padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
-  .steps b { display: block; margin-bottom: 4px; }
-  .buy { margin: 8px 0 24px; padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+  main .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 8px 0 24px; }
+  @media (max-width: 720px) { main .steps { grid-template-columns: 1fr; } }
+  main .steps div { display: block; color: var(--muted); font-size: 15px; padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+  main .steps b { display: block; margin-bottom: 4px; color: var(--ink); font-family: inherit; font-size: inherit; font-weight: 600; }
+  .buy { margin: 8px 0 24px; padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
   .buy .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
   @media (max-width: 720px) { .buy .fields { grid-template-columns: 1fr; } }
-  .buy input { font: inherit; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg, #fff); color: var(--ink); width: 100%; }
+  .buy input { font: inherit; padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg, #fff); color: var(--ink); width: 100%; }
   .buy .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   @media (max-width: 720px) { .buy .plans { grid-template-columns: 1fr; } }
-  .buy .plans button { font: inherit; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--ink); cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 2px; }
-  .buy .plans button b { font-size: 22px; } .buy .plans button span { color: var(--muted); font-size: 13px; }
+  .buy .plans button { font: inherit; padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--ink); cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 2px; }
+  .buy .plans button b { font-size: 22px; letter-spacing: -0.02em; } .buy .plans button span { color: var(--muted); font-size: 13px; }
   .buy .plans button:hover { border-color: var(--ink); }
-  #buymsg { margin: 10px 0 0; font-size: 14px; } #buymsg code { display: block; margin-top: 6px; padding: 10px; background: #f3efed; border-radius: 8px; word-break: break-all; font-size: 13px; }
+  #buymsg { margin: 10px 0 0; font-size: 14px; } #buymsg code { display: block; margin-top: 6px; padding: 10px; background: var(--ls-paper-050); border-radius: 4px; word-break: break-all; font-size: 13px; }
 </style>
-  <script type="module" crossorigin src="/tools/assets/tryon-CHiU0xLB.js"></script>
+  <script type="module" crossorigin src="/tools/assets/tryon-B4YHoOr7.js"></script>
   <link rel="modulepreload" crossorigin href="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js">
-  <link rel="stylesheet" crossorigin href="/tools/assets/style-B5eAQULN.css">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-oImeWcko.css">
 </head>
 <body data-api="https://convert.leducsystems.com">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -69,10 +70,10 @@
   <div class="site-header__inner">
     <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
     <nav class="nav" aria-label="Primary">
-      <ul><li><a class="nav__link" href="/">Home</a></li><li><a class="nav__link nav__link--active" href="/tools/">Tools</a></li><li><a class="nav__link" href="/about">About</a></li><li><a class="nav__link" href="/contact">Contact</a></li></ul>
+      <ul><li><a class="nav__link nav__link--active" href="/tools/">Products</a></li><li><a class="nav__link" href="/games">Games</a></li><li><a class="nav__link" href="/about">About</a></li><li><a class="nav__link" href="/contact">Contact</a></li></ul>
     </nav>
     <div class="nav__actions">
-      <a class="site-header__cta" href="/contact">Get in touch</a>
+      <a class="site-btn site-btn--primary site-btn--sm site-header__cta" href="/contact">Get in touch</a>
       <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
         <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
       </button>
@@ -80,10 +81,10 @@
   </div>
 </header>
 <nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
-  <ul><li><a class="mobile-menu__link" href="/" style="--menu-delay:60ms">Home</a></li><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:105ms">Tools</a></li><li><a class="mobile-menu__link" href="/about" style="--menu-delay:150ms">About</a></li><li><a class="mobile-menu__link" href="/contact" style="--menu-delay:195ms">Contact</a></li></ul>
+  <ul><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:60ms">Products</a></li><li><a class="mobile-menu__link" href="/games" style="--menu-delay:105ms">Games</a></li><li><a class="mobile-menu__link" href="/about" style="--menu-delay:150ms">About</a></li><li><a class="mobile-menu__link" href="/contact" style="--menu-delay:195ms">Contact</a></li></ul>
   <div class="mobile-menu__actions" style="--menu-delay:240ms">
-    <a class="site-btn site-btn--primary" href="/contact">Get in touch</a>
-    <a class="site-btn site-btn--ghost" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+    <a class="site-btn site-btn--primary site-btn--lg" href="/contact">Get in touch</a>
+    <a class="site-btn site-btn--ghost site-btn--lg" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
   </div>
 </nav>
 <script>
@@ -160,31 +161,36 @@
     <div class="site-footer__top">
       <div class="site-footer__brand">
         <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
-        <p class="site-footer__blurb">Software tools for files your software won&rsquo;t open, built by Tyler LeDuc in Phoenix, Arizona.</p>
+        <p class="site-footer__blurb">Focused software built and sold by Tyler LeDuc in Phoenix, Arizona.</p>
         <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
       </div>
-      <div class="site-footer__col">
-        <h2 class="site-footer__title">Navigate</h2>
-        <a class="site-footer__link" href="/">Home</a>
-        <a class="site-footer__link" href="/tools/">Tools</a>
+      <nav class="site-footer__col" aria-labelledby="footer-products">
+        <h2 class="site-footer__title" id="footer-products">Products</h2>
+        <a class="site-footer__link" href="/tools/scan-to-email-microsoft-365/">Scan Relay</a>
+        <a class="site-footer__link" href="/tools/tryon/demo/">Virtual try-on</a>
+        <a class="site-footer__link" href="/tools/publisher-converter/">Publisher converter</a>
+        <a class="site-footer__link" href="/tools/">All products</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-company">
+        <h2 class="site-footer__title" id="footer-company">Company</h2>
         <a class="site-footer__link" href="/about">About</a>
-        <a class="site-footer__link" href="/contact">Contact</a>
-      </div>
-      <div class="site-footer__col">
-        <h2 class="site-footer__title">Elsewhere</h2>
         <a class="site-footer__link" href="/games">Games</a>
-        <a class="site-footer__link" href="https://github.com/tyler-leduc" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a class="site-footer__link" href="https://www.linkedin.com/in/tyler-l-60a9451a3/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      </div>
-      <div class="site-footer__col">
-        <h2 class="site-footer__title">Legal</h2>
+        <a class="site-footer__link" href="/contact">Contact</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-elsewhere">
+        <h2 class="site-footer__title" id="footer-elsewhere">Elsewhere</h2>
+        <a class="site-footer__link" href="https://github.com/Tyler-LeDuc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://raxeris.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-legal">
+        <h2 class="site-footer__title" id="footer-legal">Legal</h2>
         <a class="site-footer__link" href="/privacy">Privacy Policy</a>
         <a class="site-footer__link" href="/terms">Terms of Service</a>
-      </div>
+      </nav>
     </div>
     <div class="site-footer__bottom">
       <p>&copy; 2026 LeDuc Systems LLC</p>
-      <p>Made by Tyler LeDuc.</p>
+      <p>Phoenix, AZ</p>
     </div>
   </div>
 </footer>
