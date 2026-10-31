@@ -89,7 +89,7 @@ function Header() {
           </nav>
 
           <div className="nav__actions">
-            <button type="button" className="btn btn--ghost btn--sm" onClick={openContact}>
+            <button type="button" className="btn btn--primary btn--sm" onClick={openContact}>
               Get in touch
             </button>
             <button

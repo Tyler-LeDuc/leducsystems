@@ -479,8 +479,8 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
 
         <Field
           id={`${uid}-game`}
-          label="Which tool?"
-          hint="Optional, for example the Publisher converter."
+          label="Which product?"
+          hint="Optional, for example Scan Relay or the Publisher converter."
           error={errorFor('game')}
         >
           <input

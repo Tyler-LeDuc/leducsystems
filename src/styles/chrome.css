@@ -2,10 +2,9 @@
    LeDuc Systems — Chrome
    Header, navigation, mobile menu, footer, modal, and form shell.
 
-   DIRECTION: playful and colorful, same as the rest of the site now. The
-   header is a solid paper bar; the footer is a set of columns with mono
-   headings and a colourful counter. Rounded shapes and soft shadow are
-   welcome here too — the modal in particular should feel lifted, not flat.
+   DIRECTION: quiet chrome. A solid paper header with a hairline, sans nav
+   links with an ink underline for the current page, and a ruled footer of
+   plain link columns. The modal is the one surface allowed a shadow.
 
    Tokens only — no colors outside the token set.
    ========================================================================= */
@@ -62,11 +61,12 @@
   height: 30px;
 }
 
-/* The header brand sits in its own titleblock cell, ruled off from the nav. */
+/* The header brand: same height as the bar, nothing ruled around it. */
 .site-header .brand {
   align-self: stretch;
-  padding-right: var(--sp-5);
-  border-right: 1px solid var(--line);
+}
+@media (max-width: 400px) {
+  .brand__logo { height: 26px; }
 }
 
 /* ── Desktop navigation ───────────────────────────────────────────────── */
@@ -74,24 +74,23 @@
 .nav {
   display: flex;
   align-items: center;
-  margin-left: var(--sp-6);
+  margin-left: var(--sp-8);
   margin-right: auto;
 }
 .nav ul {
   display: flex;
   align-items: center;
-  gap: var(--sp-6);
+  gap: var(--sp-5);
+  height: 100%;
 }
+.nav li { display: flex; height: 100%; align-items: stretch; }
 
 .nav__link {
   position: relative;
-  display: inline-block;
-  padding-block: 8px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--fs-sm);
   font-weight: 500;
-  letter-spacing: var(--ls-caps);
-  text-transform: uppercase;
   color: var(--text-lo);
   transition: color var(--dur) var(--ease);
 }
@@ -100,9 +99,9 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
-  height: 1px;
-  background: var(--accent-500);
+  bottom: -1px;
+  height: 2px;
+  background: var(--ink-900);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform var(--dur) var(--ease);
@@ -132,7 +131,8 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
   background: transparent;
   color: var(--text-hi);
   transition: background-color var(--dur) var(--ease),
@@ -217,10 +217,10 @@
   gap: var(--sp-4);
   padding: var(--sp-5) var(--gutter);
   min-height: 64px;
-  font-size: var(--fs-h3);
-  font-weight: 600;
+  font-size: var(--fs-xl);
+  font-weight: 500;
   line-height: var(--lh-snug);
-  letter-spacing: var(--ls-tight);
+  letter-spacing: var(--ls-snug);
   color: var(--text-lo);
   border-bottom: 1px solid var(--line);
   opacity: 0;
@@ -238,7 +238,7 @@
   font-weight: 400;
   letter-spacing: var(--ls-mono);
   line-height: inherit;
-  color: var(--accent-600);
+  color: var(--text-xlo);
   transition: color var(--dur) var(--ease);
 }
 .mobile-menu__link:hover { color: var(--text-hi); }
@@ -283,19 +283,18 @@
 }
 
 /* ── Footer ───────────────────────────────────────────────────────────── */
-/* The colophon. Ruled columns, mono headings numbered like clauses, every
-   line ranged left off its own rule. */
+/* A ruled colophon: the company line on the left, plain link columns on
+   the right, and a bottom strip with the legal name. */
 .site-footer {
   background: var(--paper-050);
-  border-top: 1px solid var(--line-strong);
+  border-top: 1px solid var(--line);
 }
 
 .site-footer__top {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
-  gap: 0;
+  grid-template-columns: minmax(0, 1.5fr) repeat(4, minmax(0, 1fr));
+  gap: var(--sp-6);
   padding-block: var(--sp-9) var(--sp-8);
-  counter-reset: colophon;
 }
 
 .site-footer__brand {
@@ -303,8 +302,8 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--sp-4);
-  max-width: 40ch;
-  padding-right: var(--sp-8);
+  max-width: 36ch;
+  padding-right: var(--sp-5);
 }
 
 .site-footer__col {
@@ -312,43 +311,26 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--sp-2);
-  counter-increment: colophon;
-  padding-inline: var(--sp-5) var(--sp-4);
-  border-left: 1px solid var(--line);
-}
-/* Clause number above the ruled heading. Plain zero-padded decimals, the
-   same ordinal form every page spine and every CSS counter on the site
-   uses — the colophon is not a different numbering system. */
-.site-footer__col::before {
-  content: counter(colophon, decimal-leading-zero);
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: var(--ls-mono);
-  color: var(--accent-600);
-  margin-bottom: var(--sp-2);
 }
 
 .site-footer__title {
-  align-self: stretch;
-  padding-bottom: var(--sp-2);
   margin-bottom: var(--sp-2);
-  border-bottom: 1px solid var(--line);
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
   font-weight: 500;
-  letter-spacing: var(--ls-mono);
+  letter-spacing: var(--ls-caps);
   text-transform: uppercase;
-  color: var(--text-hi);
+  color: var(--text-xlo);
 }
 
 .site-footer__link {
   font-size: var(--fs-sm);
-  color: var(--text-lo);
+  color: var(--text);
   overflow-wrap: anywhere;
   max-width: 100%;
   transition: color var(--dur) var(--ease);
 }
-.site-footer__link:hover { color: var(--text-hi); }
+.site-footer__link:hover { color: var(--accent-600); }
 
 .site-footer__bottom {
   display: flex;
@@ -407,26 +389,15 @@
   }
 }
 
-/* Below the widest breakpoint the vertical rules stop paying their way —
-   the columns stack, so the hairlines lie down with them. */
 @media (max-width: 960px) {
   .site-footer__top {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--sp-7) var(--sp-6);
   }
-  .site-footer__brand { padding-right: 0; }
-  .site-footer__col {
-    padding-inline: 0;
-    padding-top: var(--sp-5);
-    border-left: 0;
-    border-top: 1px solid var(--line);
-  }
+  .site-footer__brand { grid-column: 1 / -1; padding-right: 0; }
 }
-@media (max-width: 720px) {
-  .site-footer__top {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--sp-6);
-  }
+@media (max-width: 420px) {
+  .site-footer__top { gap: var(--sp-6) var(--sp-5); }
   .site-footer__bottom { justify-content: flex-start; }
 }
 
@@ -473,8 +444,8 @@
   gap: var(--sp-5);
   flex: none;
   padding: var(--sp-5) var(--sp-6);
-  background: var(--paper-050);
-  border-bottom: 1px solid var(--line-heavy);
+  background: var(--paper-000);
+  border-bottom: 1px solid var(--line);
 }
 
 .modal__title {
@@ -493,6 +464,7 @@
   flex: none;
   margin: -10px -14px -10px 0;
   border: 1px solid transparent;
+  border-radius: var(--r-sm);
   color: var(--text-lo);
   transition: color var(--dur) var(--ease),
               background-color var(--dur) var(--ease),

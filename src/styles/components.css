@@ -1,10 +1,9 @@
 /* =========================================================================
    LeDuc Systems — Component & utility vocabulary
 
-   The shared language of a playful, colorful indie-game site: rounded
-   shapes, soft tactile shadows, and a small deliberate set of accent
-   colours (pink-red primary, violet secondary, amber for sparing highlights)
-   used with intent rather than one signal colour or rainbow chaos.
+   The shared language of a small, serious product studio: hairline rules,
+   small radii, ink buttons, mono labels, and one accent (the logo's red
+   stop) used as a marker rather than a fill.
 
    Habits this file keeps:
      1. Mono still carries genre tags, small labels and identifiers — a
@@ -13,9 +12,8 @@
         is --accent-500. The 500 is drawn to be seen as an area — as type on
         paper it lands a shade under the contrast floor, and the 600 clears
         it comfortably. Never set --accent-500 as a text colour.
-     3. Depth now comes from colour, roundness and soft shadow, not just
-        hairline rules — but rules and ruled rows are still a fine layout
-        device where a set of statements is genuinely a sequence.
+     3. Depth comes from rules and spacing. No gradients, no glass, and
+        shadows only where something genuinely floats (the modal).
 
    Every page is built from these classes. Do not write inline style objects.
    ========================================================================= */
@@ -78,20 +76,18 @@
   margin: 0;
 }
 
-/* The datum. A short, rounded, colourful accent bar that sits directly
-   under a section heading — a signature mark rather than a full-width
-   technical rule. Exactly one per major section. */
+/* The datum. A short red tick under a heading — the logo's stop, drawn as
+   a rule. At most one per section. */
 .datum {
   display: block;
-  width: 56px;
-  height: 5px;
+  width: 24px;
+  height: 2px;
   margin: 0;
   padding: 0;
   border: 0;
-  border-radius: var(--r-full);
   background: var(--accent-500);
 }
-.datum--soft { background: var(--accent2-500); }
+.datum--soft { background: var(--line-heavy); }
 
 /* Closing call to action. Every page ends with one of these: a left-ranged
    band opened by its own datum, never a centred column of buttons. */
@@ -209,8 +205,7 @@
 .section-head > .datum { margin-block: var(--sp-1); }
 
 /* ── Buttons ──────────────────────────────────────────────────────────── */
-/* Pill-shaped, sentence case, with a soft shadow that lifts on hover — a
-   tactile, game-UI feel rather than a flat rectangle. */
+/* Small-radius rectangles, sentence case. Primary is ink, not accent. */
 .btn {
   --btn-bg: transparent;
   --btn-fg: var(--text-hi);
@@ -219,7 +214,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--sp-2);
-  padding: 13px 24px;
+  padding: 12px 20px;
   font-size: var(--fs-sm);
   font-weight: 500;
   letter-spacing: var(--ls-wide);
@@ -230,7 +225,7 @@
   color: var(--btn-fg);
   background: var(--btn-bg);
   border: 1px solid var(--btn-bd);
-  border-radius: var(--r-full);
+  border-radius: var(--r-sm);
   cursor: pointer;
   transition: background-color var(--dur) var(--ease),
               border-color var(--dur) var(--ease),
@@ -244,35 +239,34 @@
   cursor: not-allowed;
 }
 
-/* Filled with --accent-600, not --accent-500: the label is 15px, so it needs
-   4.5:1, and --text-on-accent sits at 4.3:1 on 500 against 5.9:1 on 600. */
+/* Ink fill, paper label: 17:1. */
 .btn--primary {
-  --btn-bg: var(--accent-600);
-  --btn-fg: var(--text-on-accent);
-  --btn-bd: var(--accent-600);
-  box-shadow: var(--shadow-sm);
+  --btn-bg: var(--ink-900);
+  --btn-fg: var(--paper-000);
+  --btn-bd: var(--ink-900);
 }
 .btn--primary:hover:not(:disabled):not([aria-disabled="true"]) {
-  --btn-bg: var(--accent-700);
-  --btn-bd: var(--accent-700);
-  box-shadow: var(--shadow-accent);
-  transform: translateY(-2px);
+  --btn-bg: var(--ink-700);
+  --btn-bd: var(--ink-700);
 }
-.btn--primary:active:not(:disabled):not([aria-disabled="true"]) { --btn-bg: var(--accent-700); --btn-bd: var(--accent-700); filter: brightness(0.9); }
-/* An accent fill needs its ring drawn inside, in the text colour. */
+.btn--primary:active:not(:disabled):not([aria-disabled="true"]) { --btn-bg: var(--ink-800); --btn-bd: var(--ink-800); }
 .btn--primary:focus-visible {
-  outline: 2px solid var(--text-on-accent);
-  outline-offset: -5px;
+  outline: 2px solid var(--accent-500);
+  outline-offset: 2px;
 }
 
 .btn--ghost { --btn-bg: transparent; --btn-fg: var(--text-hi); --btn-bd: var(--line-strong); }
-.btn--ghost:hover:not(:disabled):not([aria-disabled="true"])   { --btn-bg: var(--paper-200); --btn-bd: var(--line-heavy); box-shadow: var(--shadow-sm); }
+.btn--ghost:hover:not(:disabled):not([aria-disabled="true"])   { --btn-bg: var(--paper-100); --btn-bd: var(--line-heavy); }
 .btn--ghost:active:not(:disabled):not([aria-disabled="true"])  { --btn-bg: var(--paper-300); }
 
-.btn--quiet { --btn-bd: transparent; --btn-fg: var(--text-lo); padding-inline: 12px; }
+/* Paper fill, for use on an ink band. */
+.btn--light { --btn-bg: var(--paper-000); --btn-fg: var(--ink-900); --btn-bd: var(--paper-000); }
+.btn--light:hover:not(:disabled):not([aria-disabled="true"]) { --btn-bg: var(--paper-200); --btn-bd: var(--paper-200); }
+
+.btn--quiet {--btn-bd: transparent; --btn-fg: var(--text-lo); padding-inline: 12px; }
 .btn--quiet:hover:not(:disabled):not([aria-disabled="true"])   { --btn-fg: var(--text-hi); --btn-bg: var(--surface-wash); }
 
-.btn--lg { padding: 16px 32px; font-size: var(--fs-base); }
+.btn--lg { padding: 14px 24px; font-size: var(--fs-base); }
 .btn--sm { padding: 9px 16px; font-size: var(--fs-xs); }
 .btn--block { width: 100%; }
 
@@ -289,14 +283,14 @@
   font-size: var(--fs-sm);
   font-weight: 500;
   letter-spacing: var(--ls-wide);
-  color: var(--accent-600);
+  color: var(--text-hi);
   transition: color var(--dur) var(--ease);
 }
 .link-arrow::after {
   content: "\2192";
   transition: transform var(--dur-fast) var(--ease);
 }
-.link-arrow:hover { color: var(--accent-700); }
+.link-arrow:hover { color: var(--accent-600); }
 .link-arrow:hover::after { transform: translateX(3px); }
 
 .link-underline {
@@ -318,7 +312,6 @@
   background: var(--paper-100);
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
-  box-shadow: var(--shadow-sm);
   transition: border-color var(--dur) var(--ease),
               background-color var(--dur) var(--ease),
               box-shadow var(--dur) var(--ease);
@@ -329,13 +322,11 @@
 .card--feature {
   background: var(--paper-100);
   border-color: var(--line-strong);
-  border-top: 4px solid var(--accent-500);
-  padding-top: calc(var(--sp-6) - 3px);
+  border-top: 2px solid var(--ink-900);
+  padding-top: calc(var(--sp-6) - 1px);
 }
 .card--interactive:hover {
-  background: var(--paper-200);
-  border-color: var(--line-strong);
-  box-shadow: var(--shadow-md);
+  border-color: var(--line-heavy);
 }
 
 /* A filled numbered chip that names the object it sits on. */
@@ -367,7 +358,6 @@
   background: var(--paper-100);
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
-  box-shadow: var(--shadow-sm);
 }
 /* 40px of gutter inside a 320px viewport leaves a 240px content column —
    narrower than a .card in the same slot. */
@@ -383,7 +373,7 @@
   background: var(--accent-wash);
   border: 1px solid var(--line-accent);
   border-left: 2px solid var(--accent-500);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   font-size: var(--fs-sm);
   line-height: var(--lh-base);
   color: var(--text);
@@ -401,8 +391,8 @@
   text-transform: uppercase;
   color: var(--text-lo);
   background: transparent;
-  border: 1px solid var(--line);
-  border-radius: var(--r-full);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
   white-space: nowrap;
 }
 .pill--accent {
@@ -609,7 +599,7 @@
   color: var(--text-hi);
   background: var(--paper-100);
   border: 1px solid var(--line-strong);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   transition: border-color var(--dur) var(--ease),
               box-shadow var(--dur) var(--ease);
 }
@@ -652,7 +642,7 @@ input[type="file"].field__control::file-selector-button {
   color: var(--text-hi);
   background: var(--paper-200);
   border: 1px solid var(--line-strong);
-  border-radius: var(--r-full);
+  border-radius: var(--r-sm);
   cursor: pointer;
   transition: background-color var(--dur) var(--ease),
               border-color var(--dur) var(--ease);
@@ -705,7 +695,7 @@ input[type="file"].field__control:hover::file-selector-button {
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px),
     linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: 96px 96px, 96px 96px, 16px 16px, 16px 16px;
+  background-size: 80px 80px, 80px 80px, 0 0, 0 0;
   background-position: 0 0;
   /* The #000 stops below are mask alpha stencils, not design colours. */
   mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 92%);
@@ -761,3 +751,21 @@ input[type="file"].field__control:hover::file-selector-button {
   .hide-mobile { display: none; }
   .only-mobile { display: initial; }
 }
+
+/* ── Interior page head ───────────────────────────────────────────────── */
+/* Opening block for interior pages (Games, Contact, legal): eyebrow, h1,
+   lede, actions, ranged left, closed by a hairline. */
+.page-head {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(48px, 6vw, 88px) clamp(36px, 4.5vw, 64px);
+  border-bottom: 1px solid var(--line);
+}
+.page-head__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-5);
+}
+.page-head__title { max-width: 20ch; }
+.page-head__lede { max-width: 60ch; color: var(--text); }

@@ -34,12 +34,12 @@ const ROUTES = {
   '/about': {
     title: 'About',
     description:
-      "Tyler LeDuc is the developer behind LeDuc Systems: software tools that open and convert files other software won't. Based in Phoenix, Arizona.",
+      'Tyler LeDuc is the developer behind LeDuc Systems, a one-person software company in Phoenix, Arizona: Scan Relay, a virtual makeup try-on, file converters and browser games.',
   },
   '/contact': {
     title: 'Contact',
     description:
-      "Questions about a tool, a file that didn't convert, or a tool request for LeDuc Systems. I reply to every message within one business day.",
+      "Questions about a product, a license, or a file that didn't convert, for LeDuc Systems. I reply to every message within one business day.",
   },
   '/games': {
     title: 'Games',

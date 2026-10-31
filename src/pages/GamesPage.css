@@ -1,0 +1,86 @@
+/* =========================================================================
+   Games — page-specific styles only.
+   Two featured releases with live itch.io embeds, then the catalogue as a
+   ruled three-column register rather than a wall of cards.
+   ========================================================================= */
+
+.games-head { margin-bottom: var(--sp-7); }
+
+/* ── Featured releases ─────────────────────────────────────────────────── */
+.releases { border-top: 1px solid var(--line-heavy); }
+
+.release {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: var(--sp-6);
+  align-items: start;
+  padding-block: var(--sp-6);
+  border-bottom: 1px solid var(--line);
+}
+
+.release__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-2);
+}
+.release__title { font-size: var(--fs-h3); }
+.release__title a { transition: color var(--dur) var(--ease); }
+.release__title a:hover { color: var(--accent-600); }
+.release__blurb { font-size: var(--fs-sm); color: var(--text-lo); max-width: 44ch; }
+
+.release__embed {
+  min-width: 0;
+  background: var(--paper-100);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  max-width: 554px;
+}
+.release__embed iframe {
+  display: block;
+  width: 100%;
+  height: 167px;
+  border: 0;
+}
+
+@media (max-width: 720px) {
+  .release { grid-template-columns: minmax(0, 1fr); gap: var(--sp-4); }
+}
+
+/* ── Catalogue ─────────────────────────────────────────────────────────── */
+.catalogue {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--sp-6);
+  border-top: 1px solid var(--line-heavy);
+}
+.catalogue__item { border-bottom: 1px solid var(--line); }
+.catalogue__link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  height: 100%;
+  padding-block: var(--sp-4);
+}
+.catalogue__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--sp-3);
+}
+.catalogue__title {
+  font-weight: 600;
+  color: var(--text-hi);
+  transition: color var(--dur) var(--ease);
+}
+.catalogue__top .mono { flex: none; }
+.catalogue__blurb { font-size: var(--fs-xs); line-height: 1.5; color: var(--text-lo); }
+.catalogue__link:hover .catalogue__title { color: var(--accent-600); }
+
+@media (max-width: 960px) {
+  .catalogue { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .catalogue { grid-template-columns: minmax(0, 1fr); }
+}

@@ -2,127 +2,126 @@
    LeDuc Systems — Design Tokens
    Single source of truth for color, type, space, motion.
 
-   DIRECTION: playful, colorful indie-game site. Warm, bright neutrals as
-   the base; rounded shapes and soft tactile shadows instead of hairline
-   rules and flat paper; a small deliberate set of vivid accent colours
-   (pink-red, violet, amber) used with intent — not one signal colour, and
-   not rainbow chaos either. Structure still comes from rhythm and space,
-   but depth and delight now come from colour, roundness and motion too.
+   DIRECTION (redesign, October 2026): a small, serious product studio.
+   Warm off-white paper, near-black ink, hairline rules and a single accent
+   taken from the logo's red stop, used sparingly — a marker, a focus ring,
+   a link hover — never as a page-wide wash. Buttons are ink, not accent.
+   Depth comes from rules and spacing, not shadows. Radii are small.
+
+   Token NAMES are kept from the previous system so every page keeps
+   composing from the same vocabulary; only the values changed.
    ========================================================================= */
 
 :root {
   /* ---- Paper ------------------------------------------------------------
-     A warm, bright stock with a peach tint rather than gray-beige.
-     --paper-000 is the page; --paper-100 is the raised surface; --paper-050
-     bands a section off; --paper-200/300 are hover/pressed states. */
-  --paper-000: #FFFBF3;   /* page */
-  --paper-050: #FFF1E6;   /* banded/alt section — peach tint */
-  --paper-100: #FFFFFF;   /* raised surface */
-  --paper-200: #FFE4D1;   /* hover / inset */
-  --paper-300: #FFD3B8;   /* pressed, table stripe */
+     --paper-000 is the page; --paper-100 is a raised surface (white);
+     --paper-050 bands a section off; --paper-200/300 are hover/pressed. */
+  --paper-000: #F7F6F2;
+  --paper-050: #EFEDE7;
+  --paper-100: #FFFFFF;
+  --paper-200: #E9E6DE;
+  --paper-300: #DCD8CD;
 
-  --surface-wash: rgba(255, 61, 112, 0.045);  /* quiet hover fill */
-  --scrim:        rgba(30, 16, 20, 0.5);      /* modal backdrop */
+  /* Ink surface, for the one dark band per page (footer, product strip). */
+  --ink-900: #15130F;
+  --ink-800: #211E19;
+  --ink-700: #2E2A24;
+  --ink-line: rgba(247, 246, 242, 0.14);
+  --ink-text: #EDEAE3;
+  --ink-text-lo: #ADA79C;
+
+  --surface-wash: rgba(21, 19, 15, 0.04);
+  --scrim:        rgba(21, 19, 15, 0.55);
 
   /* ---- Rules ------------------------------------------------------------ */
-  --line:        rgba(40, 24, 20, 0.12);
-  --line-strong: rgba(40, 24, 20, 0.22);
-  --line-heavy:  rgba(40, 24, 20, 0.55);  /* decorative weight only — most headings use the colourful .datum bar instead */
-  --line-accent: rgba(255, 61, 112, 0.35);
-  --grid-line:   rgba(40, 24, 20, 0.05);  /* decorative lattice only */
+  --line:        rgba(21, 19, 15, 0.12);
+  --line-strong: rgba(21, 19, 15, 0.22);
+  --line-heavy:  rgba(21, 19, 15, 0.85);
+  --line-accent: rgba(214, 41, 87, 0.35);
+  --grid-line:   rgba(21, 19, 15, 0.045);
 
-  /* ---- Ink ---------------------------------------------------------------- */
-  --text-hi:  #1F1710;
-  --text:     #362A22;
-  --text-lo:  #6B5A4E;
-  --text-xlo: #7C6A5C;
+  /* ---- Ink (text) ------------------------------------------------------- */
+  --text-hi:  #15130F;   /* 17.4:1 on paper */
+  --text:     #2E2A24;   /* 13.3:1 */
+  --text-lo:  #57514A;   /*  7.5:1 */
+  --text-xlo: #6B655C;   /*  5.4:1 — still AA for body sizes */
   --text-on-accent: #FFFFFF;
 
-  /* ---- Accent — primary: vivid pink-red ---------------------------------
-     THE SPLIT THAT MATTERS: --accent-500 is only ever a FILL, a rule, or a
-     focus ring. Accent as INK (text on paper) is always --accent-600, which
-     reads clearly darker/more saturated so contrast holds. */
-  --accent-300: #FFAFC4;
-  --accent-400: #FF6F94;
-  --accent-500: #FF3D70;   /* primary fill */
-  --accent-600: #C81E52;   /* primary as text/ink */
-  --accent-700: #9E1740;
+  /* ---- Accent: the logo's red stop --------------------------------------
+     --accent-500 is a FILL / rule / focus ring. As text, use --accent-600. */
+  --accent-300: #F4A3B8;
+  --accent-400: #EC5F84;
+  --accent-500: #E8365F;
+  --accent-600: #B81F49;   /* 6.0:1 on paper */
+  --accent-700: #8F1738;
 
-  --accent-wash:  rgba(255, 61, 112, 0.08);
-  --accent-wash2: rgba(255, 61, 112, 0.16);
+  --accent-wash:  rgba(232, 54, 95, 0.07);
+  --accent-wash2: rgba(232, 54, 95, 0.16);
 
-  /* ---- Accent 2 — secondary: violet --------------------------------------
-     Used for variety: secondary badges, alternating step-numbers, one of
-     the genre-pill colours, hover states that need to read as "different
-     from primary" rather than "the CTA". */
-  --accent2-300: #C9BBFF;
-  --accent2-400: #9B82FF;
-  --accent2-500: #7C5CFF;
-  --accent2-600: #5A3FD6;
-  --accent2-700: #452FA8;
-  --accent2-wash:  rgba(124, 92, 255, 0.10);
-  --accent2-wash2: rgba(124, 92, 255, 0.18);
+  /* ---- Secondary: slate blue, for diagrams and quiet badges ------------- */
+  --accent2-300: #B9C3D3;
+  --accent2-400: #8494AE;
+  --accent2-500: #4F6283;
+  --accent2-600: #3B4B67;
+  --accent2-700: #2B3850;
+  --accent2-wash:  rgba(79, 98, 131, 0.08);
+  --accent2-wash2: rgba(79, 98, 131, 0.16);
 
-  /* ---- Accent 3 — warm amber ---------------------------------------------
-     Used sparingly: a highlight chip, a "NEW" marker, one alternating
-     genre-pill colour. Not a button fill — fails contrast for white text. */
-  --accent3-400: #FFC93C;
-  --accent3-500: #FFB800;
-  --accent3-600: #B37D00;   /* ink-safe on paper */
-  --accent3-wash: rgba(255, 184, 0, 0.12);
+  /* ---- Tertiary: ochre, used only for "status" markers ------------------ */
+  --accent3-400: #D9A441;
+  --accent3-500: #C28A1E;
+  --accent3-600: #8A6012;
+  --accent3-wash: rgba(194, 138, 30, 0.12);
 
-  /* ---- Support --------------------------------------------------------
-     Kept desaturated so none of them competes with the accents for signal. */
-  --positive:      #12B76A;
-  --positive-100:  #0B7A46;
-  --positive-wash: rgba(18, 183, 106, 0.10);
-  --positive-line: rgba(18, 183, 106, 0.32);
-  --warn:          #B37D00;
-  --warn-100:      #7A5500;
-  --warn-line:     rgba(179, 125, 0, 0.32);
-  --danger:        #E5484D;
-  --danger-100:    #A31A1F;
-  --danger-wash:   rgba(229, 72, 77, 0.08);
-  --danger-line:   rgba(229, 72, 77, 0.32);
+  /* ---- Support ---------------------------------------------------------- */
+  --positive:      #2F8A57;
+  --positive-100:  #1F6440;
+  --positive-wash: rgba(47, 138, 87, 0.09);
+  --positive-line: rgba(47, 138, 87, 0.32);
+  --warn:          #8A6012;
+  --warn-100:      #6A4A0E;
+  --warn-line:     rgba(138, 96, 18, 0.32);
+  --danger:        #C93A3F;
+  --danger-100:    #9A1F24;
+  --danger-wash:   rgba(201, 58, 63, 0.07);
+  --danger-line:   rgba(201, 58, 63, 0.32);
 
-  /* ---- Type -----------------------------------------------------------
-     IBM Plex Sans carries body copy, IBM Plex Mono still carries genre
-     tags and small identifiers — the nerdy-mono touch stays as a deliberate
-     contrast against the new playful display face, Fredoka, which now
-     carries every heading. */
+  /* ---- Type -------------------------------------------------------------
+     IBM Plex Sans for everything people read, IBM Plex Mono for labels,
+     identifiers and figures. One superfamily, no novelty display face. */
   --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
                Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, 'SF Mono',
                Menlo, Consolas, monospace;
-  --font-display: 'Fredoka', var(--font-sans);
+  --font-display: var(--font-sans);
 
   --fs-mono:    0.75rem;
   --fs-xs:      0.8125rem;
   --fs-code:    0.875rem;
   --fs-sm:      0.9375rem;
   --fs-base:    1.0625rem;
-  --fs-lg:      1.25rem;
-  --fs-xl:      1.5rem;
-  --fs-h4:      clamp(1.25rem, 1.6vw, 1.4375rem);
-  --fs-h3:      clamp(1.5rem, 2.2vw, 1.875rem);
-  --fs-h2:      clamp(2rem, 4vw, 3rem);
-  --fs-h1:      clamp(2.5rem, 6vw, 4.25rem);
-  --fs-display: clamp(3rem, 8.5vw, 6.5rem);
+  --fs-lg:      1.1875rem;
+  --fs-xl:      1.375rem;
+  --fs-h4:      clamp(1.125rem, 1.4vw, 1.25rem);
+  --fs-h3:      clamp(1.375rem, 2vw, 1.625rem);
+  --fs-h2:      clamp(1.75rem, 3.2vw, 2.5rem);
+  --fs-h1:      clamp(2.25rem, 5vw, 3.5rem);
+  --fs-display: clamp(2.5rem, 6.2vw, 4.5rem);
 
-  --lh-tight: 0.96;   /* display only — set solid, like a masthead */
-  --lh-snug:  1.14;
+  --lh-tight: 1.02;
+  --lh-snug:  1.16;
   --lh-base:  1.6;
   --lh-code:  1.7;
-  --lh-loose: 1.72;
+  --lh-loose: 1.65;
 
-  --ls-tight:  -0.028em;
-  --ls-snug:   -0.014em;
+  --ls-tight:  -0.032em;
+  --ls-snug:   -0.016em;
   --ls-normal: 0;
-  --ls-wide:   0.02em;
-  --ls-caps:   0.06em;
-  --ls-mono:   0.14em;
+  --ls-wide:   0.01em;
+  --ls-caps:   0.08em;
+  --ls-mono:   0.12em;
 
-  /* ---- Space ----------------------------------------------------------- */
+  /* ---- Space ------------------------------------------------------------ */
   --sp-1:  4px;
   --sp-2:  8px;
   --sp-3:  12px;
@@ -135,39 +134,37 @@
   --sp-10: 96px;
   --sp-11: 128px;
 
-  --section-y:       clamp(72px, 9vw, 136px);
-  --section-y-tight: clamp(48px, 6vw, 84px);
+  --section-y:       clamp(64px, 8vw, 120px);
+  --section-y-tight: clamp(44px, 5.5vw, 76px);
 
-  /* ---- Shape ----------------------------------------------------------
-     Real radii now — rounded shapes read as friendly and tactile. */
-  --r-xs:   6px;
-  --r-sm:   10px;
-  --r-md:   16px;
-  --r-lg:   22px;
-  --r-xl:   28px;
+  /* ---- Shape ------------------------------------------------------------ */
+  --r-xs:   2px;
+  --r-sm:   4px;
+  --r-md:   6px;
+  --r-lg:   8px;
+  --r-xl:   12px;
   --r-full: 999px;
 
-  /* ---- Elevation ------------------------------------------------------
-     Soft, warm-tinted shadows for tactile depth — never pure black. */
-  --shadow-sm: 0 2px 8px rgba(40, 24, 20, 0.08);
-  --shadow-md: 0 8px 20px rgba(40, 24, 20, 0.10);
-  --shadow-lg: 0 16px 40px rgba(40, 24, 20, 0.14);
-  --shadow-accent: 0 6px 18px rgba(255, 61, 112, 0.28);
+  /* ---- Elevation: almost none ------------------------------------------- */
+  --shadow-sm: 0 1px 2px rgba(21, 19, 15, 0.06);
+  --shadow-md: 0 4px 14px rgba(21, 19, 15, 0.08);
+  --shadow-lg: 0 18px 48px rgba(21, 19, 15, 0.18);
+  --shadow-accent: none;
 
-  /* ---- Motion ---------------------------------------------------------- */
+  /* ---- Motion ----------------------------------------------------------- */
   --ease:       cubic-bezier(0.22, 1, 0.36, 1);
   --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
   --dur-fast: 120ms;
-  --dur:      200ms;
-  --dur-slow: 420ms;
-  --dur-reveal: 620ms;
+  --dur:      180ms;
+  --dur-slow: 360ms;
+  --dur-reveal: 520ms;
   --dur-loop:   1.15s;
 
-  /* ---- Layout ---------------------------------------------------------- */
-  --container:        1240px;
+  /* ---- Layout ----------------------------------------------------------- */
+  --container:        1200px;
   --container-narrow: 720px;
-  --container-wide:   1440px;
-  --gutter: clamp(20px, 4vw, 48px);
+  --container-wide:   1360px;
+  --gutter: clamp(16px, 4vw, 40px);
   --header-h: 64px;
 
   --z-header: 100;

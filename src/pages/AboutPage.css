@@ -1,207 +1,169 @@
 /* =========================================================================
    About — page-specific styles only.
 
-   The page arrives on its identity block. Not a headline followed by a
-   scroll: a drawing-sheet title block, opened by a heavy ink rule, with the
-   portrait in the left cell and the compressed title, the ruled facts and
-   the primary action in the right. Everything below it — rows, the datum,
-   buttons, lists — comes from components.css.
+   Intro (statement + portrait), a ruled strip of company facts, what I've
+   built as a register, how I work, and profile links. Type, buttons,
+   rules and the closing .cta-block come from components.css.
    ========================================================================= */
 
-/* The front matter opens tight so the whole block clears the fold. The
-   section's own class is doubled up to outrank .section's padding. */
-.section.about-front {
-  padding-top: var(--sp-7);
-  padding-bottom: var(--section-y-tight);
-}
-
-/* ── Title block ──────────────────────────────────────────────────────────
-   Two cells and a full-width foot, ruled off from each other. The colourful
-   top stripe is what marks it as the page's headline object. */
-.about-block {
-  display: grid;
-  grid-template-columns: minmax(0, 216px) minmax(0, 1fr);
-  background: var(--paper-100);
-  border: 1px solid var(--line);
-  border-top: 4px solid var(--accent-500);
-  border-radius: var(--r-lg);
+/* ── Intro ─────────────────────────────────────────────────────────────── */
+.about-intro {
+  position: relative;
   overflow: hidden;
+  padding-block: clamp(48px, 7vw, 104px) clamp(40px, 5vw, 72px);
 }
 
-/* ── Portrait cell ──────────────────────────────────────────────────────── */
-.about-block__portrait {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-4);
-  margin: 0;
-  padding: var(--sp-5);
-  border-right: 1px solid var(--line);
+.about-intro__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: var(--sp-9);
+  align-items: end;
 }
 
-/* Square source, framed square. The aspect-ratio plus the width/height
-   attributes reserve layout space so the block does not shift on load. */
-.about-block__photo {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1;
-  object-fit: cover;
-  border: 1px solid var(--line-strong);
-  border-radius: 0;
-}
-
-.about-block__id {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-  min-width: 0;
-}
-
-.about-block__name {
-  font-size: var(--fs-lg);
-  font-weight: 600;
-  line-height: var(--lh-snug);
-  letter-spacing: var(--ls-snug);
-  color: var(--text-hi);
-}
-
-/* ── Title cell ───────────────────────────────────────────────────────────
-   The h1 is compressed on purpose: on this page the payload is the block,
-   not the headline, so the title sits at heading-3 scale and hands the
-   screenful to the facts underneath it. */
-.about-block__title {
+.about-intro__copy {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--sp-4);
-  min-width: 0;
-  padding: var(--sp-5) var(--sp-6);
+  gap: var(--sp-5);
 }
+.about-intro__title { max-width: 18ch; }
+.about-intro__lede { color: var(--text); max-width: 58ch; }
 
-.about-block__h1 {
-  font-size: var(--fs-h3);
-  font-weight: 600;
-  line-height: var(--lh-snug);
-  letter-spacing: var(--ls-tight);
-  color: var(--text-hi);
-  max-width: 30ch;
+.about-portrait {
+  margin: 0;
+  justify-self: end;
+  width: min(100%, 340px);
+  background: var(--paper-100);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-lg);
+  overflow: hidden;
 }
-
-.about-block__title > .datum { margin-block: var(--sp-1); }
-
-/* ── Ruled facts ──────────────────────────────────────────────────────────
-   Two fields to a line, each a hairline-separated cell, mono label against
-   its entry the way a title block sets a field against its value. */
-.about-block__facts {
+.about-portrait__img {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
-
-.about-block__fact {
-  display: grid;
-  grid-template-columns: 9ch minmax(0, 1fr);
-  gap: var(--sp-3);
+.about-portrait__caption {
+  display: flex;
+  justify-content: space-between;
   align-items: baseline;
-  padding-block: var(--sp-3);
-  padding-right: var(--sp-5);
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
   border-top: 1px solid var(--line);
 }
-/* The vertical rule of the lattice. Fields are ordered so that every cell
-   landing in the second column is an even child. */
-.about-block__fact:nth-child(2n) {
-  padding-left: var(--sp-5);
-  padding-right: 0;
-  border-left: 1px solid var(--line);
-}
-.about-block__fact--wide {
-  grid-column: 1 / -1;
-  padding-right: 0;
+.about-portrait__name { font-weight: 600; color: var(--text-hi); }
+
+@media (max-width: 860px) {
+  .about-intro__grid { grid-template-columns: minmax(0, 1fr); gap: var(--sp-7); }
+  .about-portrait { justify-self: start; width: min(100%, 300px); }
 }
 
-.about-block__fact dt {
+/* ── Facts strip ───────────────────────────────────────────────────────── */
+.about-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+}
+.about-facts__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  padding-inline: var(--sp-5);
+  border-left: 1px solid var(--line);
+}
+.about-facts__item:first-child { padding-left: 0; border-left: 0; }
+.about-facts dt {
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
-  font-weight: 500;
   letter-spacing: var(--ls-caps);
   text-transform: uppercase;
   color: var(--text-xlo);
 }
-
-.about-block__fact dd {
-  font-size: var(--fs-sm);
-  color: var(--text);
+.about-facts dd {
+  margin: 0;
+  font-size: var(--fs-base);
+  font-weight: 500;
+  color: var(--text-hi);
   overflow-wrap: anywhere;
 }
 
-/* ── Foot: the lede and the primary action ────────────────────────────────
-   The one action a visitor should be able to take without scrolling, on the
-   same ruled row as the sentence that explains the offer. */
-.about-block__foot {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--sp-5);
-  padding: var(--sp-5) var(--sp-6);
-  border-top: 1px solid var(--line-strong);
+@media (max-width: 860px) {
+  .about-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-5) 0; }
+  .about-facts__item:nth-child(3) { padding-left: 0; border-left: 0; }
+}
+@media (max-width: 420px) {
+  .about-facts { grid-template-columns: minmax(0, 1fr); }
+  .about-facts__item { padding-left: 0; border-left: 0; }
 }
 
-.about-block__lede {
-  font-size: var(--fs-base);
-  line-height: var(--lh-base);
-  color: var(--text-lo);
-  max-width: 60ch;
+/* ── Split layout ──────────────────────────────────────────────────────── */
+.about-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: var(--sp-9);
+  align-items: start;
 }
-
-/* ── Responsive ───────────────────────────────────────────────────────────
-   Breakpoints match the shared cascade. */
 @media (max-width: 960px) {
-  .about-block { grid-template-columns: minmax(0, 176px) minmax(0, 1fr); }
-  .about-block__title { padding: var(--sp-5); }
-  .about-block__foot { padding: var(--sp-5); }
+  .about-split { grid-template-columns: minmax(0, 1fr); gap: var(--sp-6); }
 }
+
+/* ── Built register ────────────────────────────────────────────────────── */
+.built { border-top: 1px solid var(--line-heavy); }
+.built__item {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+  gap: var(--sp-2) var(--sp-6);
+  padding-block: var(--sp-5);
+  border-bottom: 1px solid var(--line);
+}
+.built__name { font-size: var(--fs-h4); }
+.built__name a {
+  border-bottom: 1px solid transparent;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.built__name a:hover { color: var(--accent-600); border-color: var(--accent-500); }
+.built__what { font-size: var(--fs-sm); color: var(--text-lo); max-width: 60ch; }
 
 @media (max-width: 620px) {
-  /* The title block collapses to one column: the portrait becomes a header
-     strip with the name beside it, then the title, facts and action. */
-  .about-block { grid-template-columns: minmax(0, 1fr); }
-  .about-block__portrait {
-    flex-direction: row;
-    align-items: center;
-    gap: var(--sp-4);
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .about-block__photo { width: 92px; flex: none; }
-
-  .about-block__fact,
-  .about-block__fact:nth-child(2n) {
-    grid-column: 1 / -1;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--sp-1);
-    padding-inline: 0;
-    border-left: 0;
-  }
-
-  .about-block__foot .btn { width: 100%; }
+  .built__item { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* The standalone links in the facts lattice are controls, not prose.
-   Scoped deliberately so .link-underline inside <p> elsewhere is untouched. */
-@media (pointer: coarse) {
-  /* Grown with a pseudo-element, not a 44px flex box: .link-underline draws
-     its rule as a border-bottom, and a taller box would strand that rule
-     below the text and drop the link off the fact row's shared baseline. */
-  .about-block__fact .link-underline { position: relative; }
-  .about-block__fact .link-underline::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    height: 44px;
-    transform: translateY(-50%);
-  }
+.about-prose .body { max-width: 62ch; }
+
+/* ── Profiles ──────────────────────────────────────────────────────────── */
+.about-elsewhere__head { margin-bottom: var(--sp-7); }
+
+.profiles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-4);
+}
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  height: 100%;
+  padding: var(--sp-5);
+  background: var(--paper-100);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-lg);
+  transition: border-color var(--dur) var(--ease);
+}
+.profile:hover { border-color: var(--line-heavy); }
+.profile__handle {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-hi);
+  overflow-wrap: anywhere;
+}
+.profile__handle::after { content: " \2192"; font-weight: 400; color: var(--text-xlo); }
+.profile[target="_blank"] .profile__handle::after { content: " \2197"; }
+.profile:hover .profile__handle { color: var(--accent-600); }
+.profile__note { font-size: var(--fs-sm); color: var(--text-lo); }
+
+@media (max-width: 960px) {
+  .profiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .profiles { grid-template-columns: minmax(0, 1fr); }
 }

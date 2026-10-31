@@ -17,7 +17,7 @@
   overflow: hidden;
   /* The masthead is a strip, not a hero: the section's full top measure
      would push the first field below the fold on a 800px-tall viewport. */
-  padding-top: var(--sp-7);
+  padding-top: clamp(40px, 5vw, 72px);
 }
 
 /* ── Title strip ──────────────────────────────────────────────────────── */
@@ -42,7 +42,7 @@
 }
 
 .contact-strip__title {
-  font-size: var(--fs-h3);
+  font-size: var(--fs-h2);
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: var(--ls-tight);
@@ -81,12 +81,12 @@
   flex-direction: column;
   gap: var(--sp-5);
   align-self: start;
-  border-top: 4px solid var(--accent-500);
+  border-top: 2px solid var(--ink-900);
   border-radius: var(--r-lg);
 }
 /* Doubled specificity so the top rule cannot be re-padded by .panel,
    whichever order the two sheets land in. */
-.panel.contact-form { padding-top: calc(var(--sp-6) - 3px); }
+.panel.contact-form { padding-top: calc(var(--sp-6) - 1px); }
 
 /* A single mono line. Anything taller here is measured in lost fields. */
 .contact-form__head {
@@ -104,8 +104,6 @@
   letter-spacing: var(--ls-caps);
   text-transform: uppercase;
   color: var(--text-hi);
-  padding-left: var(--sp-3);
-  border-left: 1px solid var(--line);
 }
 
 /* ── Margin column ────────────────────────────────────────────────────── */
@@ -166,5 +164,5 @@
 @media (max-width: 620px) {
   .contact-sheet { padding-top: var(--sp-6); }
   .contact-strip__title { font-size: var(--fs-xl); }
-  .panel.contact-form { padding-top: calc(var(--sp-5) - 3px); }
+  .panel.contact-form { padding-top: calc(var(--sp-5) - 1px); }
 }

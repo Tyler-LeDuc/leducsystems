@@ -3,87 +3,149 @@
    Single source of truth for the words on this site. Pages import from here
    instead of duplicating strings.
 
-   LeDuc Systems is Tyler LeDuc's software company: I build and sell small
-   software tools that fix specific file problems, served from /tools/.
+   LeDuc Systems is Tyler LeDuc's software company: one developer building
+   and selling focused software (office tools, retail apps, file converters)
+   plus browser games on the side. The products live under /tools/.
    Two rules govern this file:
    1. Nothing here may claim a customer, testimonial, user count, rating,
       award, or press mention that is not real. No invented metrics.
    2. Voice is first person ("I"), not company "we" — this is one
       developer's work, not a team.
 
-   Copy is deliberately tight. If a sentence can be cut without losing the
-   point, cut it.
+   Prices below are copied from the product pages under /tools/. If a price
+   changes there, change it here too.
    ========================================================================= */
 
 export const SITE = {
   name: 'LeDuc Systems',
+  legalName: 'LeDuc Systems LLC',
   founder: 'Tyler LeDuc',
   email: 'tyler@leducsystems.com',
   url: 'https://leducsystems.com',
-  github: 'https://github.com/tyler-leduc',
-  linkedin: 'https://www.linkedin.com/in/tyler-l-60a9451a3/',
+  github: 'https://github.com/Tyler-LeDuc',
+  githubHandle: 'Tyler-LeDuc',
   itchio: 'https://raxeris.itch.io',
   itchioHandle: 'raxeris',
   city: 'Phoenix',
   region: 'Arizona',
   regionShort: 'AZ',
   founded: 2026,
-  tagline: 'Software tools for files your software won’t open.',
+  tagline: 'Focused software, built and sold by one developer.',
   description:
-    'I build software tools that fix stubborn file problems: Microsoft Publisher and PageMaker files into editable PowerPoint and InDesign files, text wrap for PowerPoint, and new Rhino files for older Rhino. They run in your browser, with a free preview first.',
+    'LeDuc Systems is Tyler LeDuc’s software company. I build and sell focused software: Scan Relay keeps office copiers scanning to email on Microsoft 365, a virtual makeup try-on for beauty stores, converters for retired file formats, and browser games.',
 };
 
 export const NAV = [
-  { label: 'Home', path: '/' },
   /* Static pages from the leduc-tools repo, outside the router: render as a
      plain <a>, never <Link>, or the router serves its 404 page. */
-  { label: 'Tools', href: '/tools/', static: true },
+  { label: 'Products', href: '/tools/', static: true },
+  { label: 'Games', path: '/games' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
 ];
 
-/* The live tools, served from public/tools/ (built in the leduc-tools repo).
-   `problem` is the situation someone is in; `blurb` is what the tool does. */
-export const TOOLS = [
+/* The home page's opening statement. */
+export const HOME = {
+  eyebrow: 'LeDuc Systems LLC · Phoenix, Arizona',
+  title: 'Small software that does one job properly.',
+  lede:
+    'I build and sell focused software for problems with a deadline or a cost attached: copiers that stop scanning when Microsoft 365 drops basic auth, beauty stores whose shoppers can’t try a shade online, files stranded when Publisher was retired. I also make browser games.',
+};
+
+/* The three products I'm actively selling, shown large on the home page.
+   `facts` are short label/value pairs, each one stated on the product page. */
+export const FEATURED_PRODUCTS = [
+  {
+    slug: 'scan-relay',
+    visual: 'relay',
+    name: 'Scan Relay',
+    category: 'Office IT · Windows service',
+    line: 'Keeps office copiers scanning to email after Microsoft 365 turns off SMTP basic authentication.',
+    body: [
+      'At the end of December 2026 Microsoft disables basic authentication for SMTP in Exchange Online, and older copiers that send through smtp.office365.com with a password stop sending. Scan Relay is a small Windows service on an office PC: the copier keeps sending plain SMTP to it, and it passes each scan on to Microsoft 365 with OAuth through Microsoft Graph.',
+      'No firmware update, no static IP, no connector. Mail goes straight from the office to Microsoft 365, never through my servers.',
+    ],
+    facts: [
+      ['Price', '$99 per office, one-time'],
+      ['Dealers', 'Wholesale packs of 10, 25 and 100 offices'],
+      ['Trial', '14 days free, no card'],
+      ['Runs on', 'Any Windows PC in the office that stays on'],
+    ],
+    primary: { label: 'See Scan Relay', href: '/tools/scan-to-email-microsoft-365/' },
+    secondary: { label: 'Pricing for copier dealers', href: '/tools/scan-relay-resellers/' },
+  },
+  {
+    slug: 'tryon',
+    visual: 'tryon',
+    name: 'Virtual try-on',
+    category: 'Retail · In-browser AR',
+    line: 'Lets beauty-store shoppers see your exact shade on their own face, live, on the product page.',
+    body: [
+      'One script tag on a Shopify or WooCommerce product page. The shopper taps “Try it on”, the camera opens, and your lipstick, blush or shadow shade sits on her own face in her own light.',
+      'It runs on my own WebGL engine, entirely in the shopper’s browser. Nothing is uploaded.',
+    ],
+    facts: [
+      ['Starter', '$49 a month, up to 25 shades'],
+      ['Growth', '$149 a month, unlimited shades'],
+      ['Works with', 'Shopify and WooCommerce'],
+      ['Privacy', 'The camera image never leaves the device'],
+    ],
+    primary: { label: 'Try the live demo', href: '/tools/tryon/demo/' },
+    secondary: { label: 'Try-on for stores', href: '/tools/tryon/' },
+  },
   {
     slug: 'publisher-converter',
-    title: 'Publisher file converter',
-    tag: 'Publisher / .pub',
-    problem: 'Microsoft retired Publisher, and Word and PowerPoint can’t open .pub files.',
-    blurb: 'Turns .pub files into editable files for PowerPoint, Canva, Affinity and InDesign. Free preview of every page.',
-    url: '/tools/publisher-converter/',
+    visual: 'convert',
+    name: 'Publisher converter',
+    category: 'Documents · Browser',
+    line: 'Turns Microsoft Publisher .pub files into editable PowerPoint, Word and InDesign files.',
+    body: [
+      'Microsoft retired Publisher, and nothing else opens a .pub file. Upload one and you see a free preview of every page; pay and you get the same document as PowerPoint, Word and InDesign (IDML) files, with text, pictures and layout still editable.',
+      'Files are used only to make your download and are deleted automatically.',
+    ],
+    facts: [
+      ['Price', '$12 per file, or $29 for 30 days of files'],
+      ['Preview', 'Free, every page, before you pay'],
+      ['Refund', '30 days, if a result doesn’t work for you'],
+    ],
+    primary: { label: 'Convert a .pub file', href: '/tools/publisher-converter/' },
+    secondary: { label: 'Bulk converter', href: '/tools/bulk-publisher-converter/' },
+  },
+];
+
+/* Everything else that is live, shown as a ruled register. */
+export const MORE_PRODUCTS = [
+  {
+    slug: 'fire-to-iris',
+    name: 'FIRE to IRIS 1099 converter',
+    category: 'Tax filing',
+    line: 'Turns a Publication 1220 (FIRE) 1099 file into IRIS Taxpayer Portal CSV files, now that the IRS is retiring FIRE.',
+    price: '$49 per payer, free preview',
+    href: '/tools/fire-to-iris-1099-converter/',
   },
   {
-    slug: 'bulk-publisher-converter',
-    title: 'Bulk Publisher converter',
-    tag: 'Folders / .zip',
-    problem: 'A whole archive of old Publisher and PageMaker files to rescue.',
-    blurb: 'Upload one zip and get every file back as PDF, PowerPoint and IDML.',
-    url: '/tools/bulk-publisher-converter/',
+    slug: 'excel-to-iris',
+    name: 'Excel to IRIS 1099-NEC CSV',
+    category: 'Tax filing',
+    line: 'Builds the IRIS 1099-NEC or 1099-MISC upload file from a spreadsheet or QuickBooks export, checking tax IDs and amounts.',
+    price: 'Free for up to 5 forms',
+    href: '/tools/excel-to-iris-1099-nec-csv/',
   },
   {
-    slug: 'pagemaker-converter',
-    title: 'PageMaker file converter',
-    tag: 'PageMaker / .pmd',
-    problem: 'Adobe PageMaker files that nothing current will open.',
-    blurb: 'Turns .pmd and .p65 files into editable files for InDesign, Affinity, PowerPoint and Canva. Free preview.',
-    url: '/tools/pagemaker-converter/',
+    slug: 'infopath-to-excel',
+    name: 'InfoPath to Excel',
+    category: 'SharePoint',
+    line: 'Turns a library of filled-in InfoPath forms into one spreadsheet: a row per form, a column per field.',
+    price: 'Free for up to 25 forms, then $49 once',
+    href: '/tools/infopath-to-excel/',
   },
   {
-    slug: 'powerpoint-text-wrap',
-    title: 'PowerPoint text wrap',
-    tag: 'PowerPoint / .pptx',
-    problem: 'PowerPoint can’t wrap text around a picture.',
-    blurb: 'Flows your text around the pictures in a .pptx, as real editable text. Free before-and-after preview.',
-    url: '/tools/powerpoint-text-wrap/',
-  },
-  {
-    slug: 'rhino-converter',
-    title: 'Rhino file converter',
-    tag: 'Rhino / .3dm',
-    problem: 'A Rhino 8 or 7 file that your older Rhino won’t open.',
-    blurb: 'Saves a copy for Rhino 7, 6, 5 or 4. Free, and it runs in your browser, so nothing is uploaded.',
-    url: '/tools/rhino-converter/',
+    slug: 'file-tools',
+    name: 'PageMaker, Rhino and PowerPoint tools',
+    category: 'File converters',
+    line: 'Smaller tools for old PageMaker files, newer Rhino files in older Rhino, and text wrap in PowerPoint.',
+    price: 'See each tool',
+    href: '/tools/',
   },
 ];
 
@@ -92,16 +154,28 @@ export const LEGAL_NAV = [
   { label: 'Terms of Service', path: '/terms' },
 ];
 
-/* How the tools are built and sold. Every line here is checkable on the
-   tool pages themselves; do not add claims they do not back up. */
+/* How I build and sell. Every line is checkable on the product pages; do
+   not add claims they do not back up. */
 export const PRINCIPLES = {
-  eyebrow: 'How they work',
-  title: 'One problem per tool, solved properly.',
-  body: [
-    'Each tool does one job: take a file you can’t use and hand back one you can.',
-    'You see the result before you pay. Every paid tool shows a free preview first.',
-    'Nothing to install. Everything runs in the browser, on Windows, Mac or a Chromebook.',
-    'If a paid result doesn’t work for you, email me within 30 days for a full refund.',
+  eyebrow: 'How I sell software',
+  title: 'You can check every product before you pay for it.',
+  items: [
+    {
+      title: 'Try it first',
+      body: 'Scan Relay has a 14-day trial, the try-on has a live demo, and the converters show a free preview of your own file.',
+    },
+    {
+      title: 'Your data stays yours',
+      body: 'The try-on and the 1099 tools run in your browser. Scan Relay sends from your network straight to Microsoft 365. Uploaded files are deleted after conversion.',
+    },
+    {
+      title: 'Refunds without a fight',
+      body: 'If Scan Relay or a conversion doesn’t work for you, email me within 30 days for a full refund.',
+    },
+    {
+      title: 'You talk to the developer',
+      body: 'Support email comes to me, the person who wrote the code. I reply within one business day.',
+    },
   ],
 };
 
@@ -512,37 +586,31 @@ export const FAQ = [
     id: 'name',
     question: 'What is LeDuc Systems?',
     answer:
-      'My software company. I’m Tyler LeDuc, a developer in Phoenix, and I build and sell small tools that fix specific file problems, like opening Microsoft Publisher files now that Publisher is gone.',
+      'My software company, LeDuc Systems LLC. I’m Tyler LeDuc, a developer in Phoenix, and I build and sell focused software: Scan Relay, a virtual makeup try-on, file converters and 1099 tools, plus browser games.',
+  },
+  {
+    id: 'who',
+    question: 'Is it really one person?',
+    answer:
+      'Yes. I write the code, run the servers and answer the email. That is why each product does one job: I would rather ship one thing that works than five that half work.',
   },
   {
     id: 'cost',
-    question: 'What do the tools cost?',
+    question: 'How do I pay, and what if it doesn’t work?',
     answer:
-      'Each tool page shows its price before you start. The Rhino converter is free, and the paid tools show a free preview of your file before you pay.',
+      'Each product page shows its price before you start, and you can try every product before paying. Scan Relay and the converters have a 30-day refund if they don’t work for you.',
   },
   {
     id: 'files',
-    question: 'What happens to my files?',
+    question: 'What happens to my files and data?',
     answer:
-      'The Rhino converter runs entirely in your browser, so your file never leaves your computer. The other tools convert on my server, use the file only to make your download, and delete it automatically. I never look at or share them.',
-  },
-  {
-    id: 'refund',
-    question: 'What if a conversion doesn’t come out right?',
-    answer:
-      'Email me within 30 days and I’ll refund you in full. If you can, attach the file, so I can fix the tool for the next person.',
-  },
-  {
-    id: 'request',
-    question: 'Can I suggest a tool?',
-    answer:
-      'Yes. If you have a file that nothing will open, tell me what it is. It might be the next tool.',
+      'The try-on, the Rhino converter and the 1099 tools run in your browser, so nothing leaves your device. Scan Relay sends straight from your office to Microsoft 365. The Publisher and PageMaker converters use your file only to make the download, then delete it.',
   },
   {
     id: 'games',
-    question: 'Didn’t this site used to be about games?',
+    question: 'Why are there games on a software company’s site?',
     answer:
-      'It was. I still make small browser games on the side; they live on itch.io and on the games page here.',
+      'I make small browser games on the side. They’re free on itch.io, and they’re where I try out ideas quickly.',
   },
 ];
 

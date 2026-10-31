@@ -10,7 +10,7 @@ export default function ContactPage() {
     <>
       <SEO
         title="Contact"
-        description={`Questions about a tool, a file that didn't convert, or a tool request for ${SITE.name}. ${RESPONSE_PROMISE}`}
+        description={`Questions about a product, a license, or a file that didn't convert, for ${SITE.name}. ${RESPONSE_PROMISE}`}
         path="/contact"
       />
 
@@ -21,12 +21,9 @@ export default function ContactPage() {
           <Reveal className="contact-strip" delay={0}>
             <div className="contact-strip__line">
               <div className="contact-strip__head">
-                <p className="eyebrow">
-                  <span className="ordinal">00</span>
-                  <span>Contact</span>
-                </p>
+                <p className="eyebrow">Contact</p>
                 <h1 className="hi contact-strip__title" id="contact-title">
-                  Questions, problem files, tool ideas
+                  Ask about a product, a license or a file
                 </h1>
               </div>
               <p className="contact-strip__promise">{RESPONSE_PROMISE}</p>
@@ -37,7 +34,6 @@ export default function ContactPage() {
           <div className="contact-body">
             <Reveal className="panel contact-form" delay={60}>
               <div className="contact-form__head">
-                <p className="ordinal">01</p>
                 <h2 className="contact-form__label">Message</h2>
               </div>
               <ContactForm embedded />
@@ -45,8 +41,8 @@ export default function ContactPage() {
 
             <Reveal className="contact-aside" delay={120}>
               <p className="body muted contact-aside__lede">
-                A question about a tool, a file that didn&rsquo;t come out right, a refund, or a file
-                nothing will open: it goes straight to me.
+                A question before you buy, a license for a dealer, a file that didn&rsquo;t come out
+                right, or a refund: it all comes straight to me, the person who wrote the software.
               </p>
 
               <div className="contact-note">

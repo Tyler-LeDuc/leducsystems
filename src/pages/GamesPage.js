@@ -2,11 +2,11 @@ import React from 'react';
 import SEO from '../components/SEO';
 import Reveal from '../components/Reveal';
 import { SITE, GAMES, FEATURED_SLUGS } from '../data/site';
-import './HomePage.css';
+import './GamesPage.css';
 
-/* The games are a side project now; the site is about the tools. This page
-   keeps the catalogue reachable without it competing with them on the home
-   page. It reuses the home page's head, release and grid styles. */
+/* The games are a side project next to the products. The two in
+   FEATURED_SLUGS get a live itch.io embed; the rest link to their store
+   pages, so the page doesn't stack dozens of iframes. */
 const FEATURED = GAMES.filter((game) => FEATURED_SLUGS.includes(game.slug));
 const REST = GAMES.filter((game) => !FEATURED_SLUGS.includes(game.slug));
 
@@ -19,69 +19,54 @@ export default function GamesPage() {
         path="/games"
       />
 
-      <section className="home-hero" aria-labelledby="games-title">
+      <section className="page-head" aria-labelledby="games-title">
         <div className="bg-grid" aria-hidden="true" />
         <div className="container layer">
-          <Reveal className="home-hero__head">
-            <p className="eyebrow">
-              <span className="ordinal">00</span>
-              <span>On the side</span>
-            </p>
-            <h1 id="games-title" className="h1 home-hero__title">
+          <Reveal className="page-head__inner">
+            <p className="eyebrow">Games · On the side</p>
+            <h1 id="games-title" className="h1 page-head__title">
               Small browser games.
             </h1>
-            <hr className="datum" />
-            <div className="home-hero__brief">
-              <p className="lede home-hero__lede">
-                Besides the tools, I make small games that run in the browser. They&rsquo;re free on
-                itch.io under the handle {SITE.itchioHandle}.
-              </p>
-              <div className="cluster home-hero__actions">
-                <a
-                  className="btn btn--ghost btn--lg"
-                  href={SITE.itchio}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {SITE.itchioHandle} on itch.io
-                </a>
-              </div>
+            <p className="lede page-head__lede">
+              Next to the products, I make small games that run in the browser. All{' '}
+              {GAMES.length} are free on itch.io under the name {SITE.itchioHandle}.
+            </p>
+            <div className="cluster">
+              <a
+                className="btn btn--primary"
+                href={SITE.itchio}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {SITE.itchioHandle} on itch.io
+              </a>
             </div>
           </Reveal>
         </div>
       </section>
 
-      <section className="section section--rule section--alt" aria-labelledby="featured-title">
-        <div className="container stack stack--lg">
-          <Reveal className="home-head">
-            <p className="eyebrow home-head__meta">
-              <span className="ordinal">01</span>
-              <span>Featured</span>
-            </p>
-            <h2 id="featured-title" className="h2 home-head__title">
+      <section className="section" aria-labelledby="featured-title">
+        <div className="container">
+          <Reveal className="section-head games-head">
+            <p className="eyebrow">Featured</p>
+            <h2 id="featured-title" className="h2">
               Play these two right here.
             </h2>
-            <hr className="datum" />
           </Reveal>
 
-          <Reveal className="home-releases" delay={80}>
-            {FEATURED.map((game, index) => (
-              <article className="home-release" key={game.slug}>
-                <div className="home-release__meta">
-                  <span className="ordinal">{String(index + 1).padStart(2, '0')}</span>
-                  <h3 className="home-release__title">
-                    <a
-                      className="link-underline"
-                      href={game.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+          <Reveal className="releases" delay={80}>
+            {FEATURED.map((game) => (
+              <article className="release" key={game.slug}>
+                <div className="release__meta">
+                  <span className="mono">{game.genre}</span>
+                  <h3 className="release__title">
+                    <a href={game.url} target="_blank" rel="noopener noreferrer">
                       {game.title}
                     </a>
                   </h3>
-                  <p className="home-release__genre">{game.genre}</p>
+                  <p className="release__blurb">{game.blurb}</p>
                 </div>
-                <div className="home-release__embed">
+                <div className="release__embed">
                   <iframe
                     title={`${game.title} on itch.io`}
                     src={`https://itch.io/embed/${game.embedId}`}
@@ -95,32 +80,29 @@ export default function GamesPage() {
         </div>
       </section>
 
-      <section className="section section--rule" aria-labelledby="games-all">
-        <div className="container stack stack--lg">
-          <Reveal className="home-head">
-            <p className="eyebrow home-head__meta">
-              <span className="ordinal">02</span>
-              <span>Everything else</span>
-            </p>
-            <h2 id="games-all" className="h2 home-head__title">
-              The rest of the catalogue.
+      <section className="section section--alt section--rule" aria-labelledby="games-all">
+        <div className="container">
+          <Reveal className="section-head games-head">
+            <p className="eyebrow">Catalogue</p>
+            <h2 id="games-all" className="h2">
+              Everything else.
             </h2>
-            <hr className="datum" />
           </Reveal>
 
-          <Reveal as="ul" className="games-grid" delay={80}>
+          <Reveal as="ul" className="catalogue" delay={80}>
             {REST.map((game) => (
-              <li className="card games-card" key={game.slug}>
-                <span className="pill games-card__genre">{game.genre}</span>
-                <h3 className="card__title games-card__title">{game.title}</h3>
-                <p className="card__body games-card__blurb">{game.blurb}</p>
+              <li className="catalogue__item" key={game.slug}>
                 <a
-                  className="link-arrow games-card__link"
+                  className="catalogue__link"
                   href={game.url}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Play on itch.io
+                  <span className="catalogue__top">
+                    <span className="catalogue__title">{game.title}</span>
+                    <span className="mono">{game.genre}</span>
+                  </span>
+                  <span className="catalogue__blurb">{game.blurb}</span>
                 </a>
               </li>
             ))}
