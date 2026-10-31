@@ -15,12 +15,12 @@
 <link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the check really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Checking and previewing any number of files is free, with no sign-up. Only downloading the IRIS CSV files costs money: $49 for one payer for the 2027 filing season."}},{"@type":"Question","name":"Is this the IRS?","acceptedAnswer":{"@type":"Answer","text":"No. It's a tool I make. The IRS no longer checks Publication 1220 files once FIRE closes, and IRIS takes a different format."}},{"@type":"Question","name":"What happens to my file?","acceptedAnswer":{"@type":"Answer","text":"Nothing leaves your computer. The checks run in your browser, so the SSNs and TINs in your file are never uploaded."}},{"@type":"Question","name":"Is this tax advice?","acceptedAnswer":{"@type":"Answer","text":"No. It checks the file's format and arithmetic; it doesn't decide what you should report. Ask your tax professional about what belongs on each form."}}]}</script>
   <script type="module" crossorigin src="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js"></script>
   <script type="module" crossorigin src="/tools/assets/zip-CPDB7S3Y.js"></script>
   <script type="module" crossorigin src="/tools/assets/fire-iris-Doir3jRC.js"></script>
-  <link rel="stylesheet" crossorigin href="/tools/assets/style-B5eAQULN.css">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-oImeWcko.css">
 </head>
 <body data-api="https://convert.leducsystems.com" data-product="fire-iris" data-ships="December 10, 2026" data-price="$49">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -28,10 +28,10 @@
   <div class="site-header__inner">
     <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
     <nav class="nav" aria-label="Primary">
-      <ul><li><a class="nav__link" href="/">Home</a></li><li><a class="nav__link nav__link--active" href="/tools/">Tools</a></li><li><a class="nav__link" href="/about">About</a></li><li><a class="nav__link" href="/contact">Contact</a></li></ul>
+      <ul><li><a class="nav__link nav__link--active" href="/tools/">Products</a></li><li><a class="nav__link" href="/games">Games</a></li><li><a class="nav__link" href="/about">About</a></li><li><a class="nav__link" href="/contact">Contact</a></li></ul>
     </nav>
     <div class="nav__actions">
-      <a class="site-header__cta" href="/contact">Get in touch</a>
+      <a class="site-btn site-btn--primary site-btn--sm site-header__cta" href="/contact">Get in touch</a>
       <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
         <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
       </button>
@@ -39,10 +39,10 @@
   </div>
 </header>
 <nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
-  <ul><li><a class="mobile-menu__link" href="/" style="--menu-delay:60ms">Home</a></li><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:105ms">Tools</a></li><li><a class="mobile-menu__link" href="/about" style="--menu-delay:150ms">About</a></li><li><a class="mobile-menu__link" href="/contact" style="--menu-delay:195ms">Contact</a></li></ul>
+  <ul><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:60ms">Products</a></li><li><a class="mobile-menu__link" href="/games" style="--menu-delay:105ms">Games</a></li><li><a class="mobile-menu__link" href="/about" style="--menu-delay:150ms">About</a></li><li><a class="mobile-menu__link" href="/contact" style="--menu-delay:195ms">Contact</a></li></ul>
   <div class="mobile-menu__actions" style="--menu-delay:240ms">
-    <a class="site-btn site-btn--primary" href="/contact">Get in touch</a>
-    <a class="site-btn site-btn--ghost" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+    <a class="site-btn site-btn--primary site-btn--lg" href="/contact">Get in touch</a>
+    <a class="site-btn site-btn--ghost site-btn--lg" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
   </div>
 </nav>
 <script>
@@ -110,31 +110,36 @@
     <div class="site-footer__top">
       <div class="site-footer__brand">
         <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
-        <p class="site-footer__blurb">Software tools for files your software won&rsquo;t open, built by Tyler LeDuc in Phoenix, Arizona.</p>
+        <p class="site-footer__blurb">Focused software built and sold by Tyler LeDuc in Phoenix, Arizona.</p>
         <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
       </div>
-      <div class="site-footer__col">
-        <h2 class="site-footer__title">Navigate</h2>
-        <a class="site-footer__link" href="/">Home</a>
-        <a class="site-footer__link" href="/tools/">Tools</a>
+      <nav class="site-footer__col" aria-labelledby="footer-products">
+        <h2 class="site-footer__title" id="footer-products">Products</h2>
+        <a class="site-footer__link" href="/tools/scan-to-email-microsoft-365/">Scan Relay</a>
+        <a class="site-footer__link" href="/tools/tryon/demo/">Virtual try-on</a>
+        <a class="site-footer__link" href="/tools/publisher-converter/">Publisher converter</a>
+        <a class="site-footer__link" href="/tools/">All products</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-company">
+        <h2 class="site-footer__title" id="footer-company">Company</h2>
         <a class="site-footer__link" href="/about">About</a>
-        <a class="site-footer__link" href="/contact">Contact</a>
-      </div>
-      <div class="site-footer__col">
-        <h2 class="site-footer__title">Elsewhere</h2>
         <a class="site-footer__link" href="/games">Games</a>
-        <a class="site-footer__link" href="https://github.com/tyler-leduc" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a class="site-footer__link" href="https://www.linkedin.com/in/tyler-l-60a9451a3/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      </div>
-      <div class="site-footer__col">
-        <h2 class="site-footer__title">Legal</h2>
+        <a class="site-footer__link" href="/contact">Contact</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-elsewhere">
+        <h2 class="site-footer__title" id="footer-elsewhere">Elsewhere</h2>
+        <a class="site-footer__link" href="https://github.com/Tyler-LeDuc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://raxeris.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-legal">
+        <h2 class="site-footer__title" id="footer-legal">Legal</h2>
         <a class="site-footer__link" href="/privacy">Privacy Policy</a>
         <a class="site-footer__link" href="/terms">Terms of Service</a>
-      </div>
+      </nav>
     </div>
     <div class="site-footer__bottom">
       <p>&copy; 2026 LeDuc Systems LLC</p>
-      <p>Made by Tyler LeDuc.</p>
+      <p>Phoenix, AZ</p>
     </div>
   </div>
 </footer>

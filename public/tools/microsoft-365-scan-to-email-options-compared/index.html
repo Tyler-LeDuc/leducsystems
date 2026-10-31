@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VPCZV3J5CQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VPCZV3J5CQ');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Microsoft 365 Scan to Email Options Compared: OAuth, Connector, Direct Send, HVE or a Relay</title>
+<meta name="description" content="Every way to keep a copier scanning to email after Microsoft 365 turns off SMTP basic authentication, side by side: OAuth firmware, an SMTP relay connector, Direct Send, High Volume Email and a local relay. Pros, cons and who each suits.">
+<link rel="canonical" href="https://leducsystems.com/tools/microsoft-365-scan-to-email-options-compared/">
+<meta property="og:title" content="Microsoft 365 Scan to Email Options Compared: OAuth, Connector, Direct Send, HVE or a Relay">
+<meta property="og:description" content="Every way to keep a copier scanning to email after Microsoft 365 turns off SMTP basic authentication, side by side: OAuth firmware, an SMTP relay connector, Direct Send, High Volume Email and a local relay. Pros, cons and who each suits.">
+<meta property="og:url" content="https://leducsystems.com/tools/microsoft-365-scan-to-email-options-compared/">
+<meta property="og:type" content="website">
+<link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Microsoft 365 Scan to Email Options Compared: OAuth, Connector, Direct Send, HVE or a Relay","description":"Every way to keep a copier scanning to email after Microsoft 365 turns off SMTP basic authentication, side by side: OAuth firmware, an SMTP relay connector, Direct Send, High Volume Email and a local relay. Pros, cons and who each suits.","url":"https://leducsystems.com/tools/microsoft-365-scan-to-email-options-compared/","author":{"@type":"Person","name":"Tyler LeDuc"},"publisher":{"@type":"Organization","name":"LeDuc Systems"}}</script>
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-oImeWcko.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+    <nav class="nav" aria-label="Primary">
+      <ul><li><a class="nav__link nav__link--active" href="/tools/">Products</a></li><li><a class="nav__link" href="/games">Games</a></li><li><a class="nav__link" href="/about">About</a></li><li><a class="nav__link" href="/contact">Contact</a></li></ul>
+    </nav>
+    <div class="nav__actions">
+      <a class="site-btn site-btn--primary site-btn--sm site-header__cta" href="/contact">Get in touch</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
+  <ul><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:60ms">Products</a></li><li><a class="mobile-menu__link" href="/games" style="--menu-delay:105ms">Games</a></li><li><a class="mobile-menu__link" href="/about" style="--menu-delay:150ms">About</a></li><li><a class="mobile-menu__link" href="/contact" style="--menu-delay:195ms">Contact</a></li></ul>
+  <div class="mobile-menu__actions" style="--menu-delay:240ms">
+    <a class="site-btn site-btn--primary site-btn--lg" href="/contact">Get in touch</a>
+    <a class="site-btn site-btn--ghost site-btn--lg" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+  </div>
+</nav>
+<script>
+(() => {
+  const b = document.querySelector('.menu-toggle'), m = document.getElementById('site-mobile-menu');
+  const set = (open) => {
+    b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    m.classList.toggle('mobile-menu--open', open); document.body.style.overflow = open ? 'hidden' : '';
+  };
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  matchMedia('(min-width: 861px)').addEventListener('change', (e) => { if (e.matches) set(false); });
+})();
+</script>
+<main id="main" tabindex="-1">
+  <section class="hero">
+    <h1>Microsoft 365 scan to email: the options compared</h1>
+    <p class="lede">When Microsoft 365 stops accepting a copier's username and password, there are five or so ways to keep scan to email going. I make one of them, so take that into account, but here's an honest side-by-side.</p>
+  </section>
+  <p class="cta"><a class="btn" href="/tools/scan-to-email-microsoft-365/">Get Scan Relay, free 14-day trial</a> <span>Keeps any copier scanning to email through Microsoft 365, no firmware update.</span></p>
+  <article class="guide">
+<h2>1. OAuth on the copier</h2>
+<p>Newer copiers can sign in to Microsoft 365 with OAuth (modern authentication) after a firmware update, usually after an admin approves the copier maker's app in your tenant.</p>
+<ul>
+  <li><b>Good:</b> no extra hardware or software, and it's what Microsoft wants. If your copier supports it, start here.</li>
+  <li><b>Catches:</b> many older models never get it. Some need a dealer visit for the firmware. Sign-in tokens can expire, and the copier may need signing in again now and then.</li>
+</ul>
+
+<h2>2. An SMTP relay connector</h2>
+<p>An admin creates an inbound connector in Exchange Online that trusts mail coming from your office's public IP address (or a certificate). The copier sends to your domain's MX endpoint (something like yourdomain-com.mail.protection.outlook.com) on port 25 with no password.</p>
+<ul>
+  <li><b>Good:</b> free, and it can send to outside addresses as well as your own.</li>
+  <li><b>Catches:</b> needs a static public IP, which many small offices don't have. Your internet provider must not block outgoing port 25. You need to add that IP to your SPF record, and someone has to set it up and keep it right when the IP changes.</li>
+</ul>
+
+<h2>3. Direct Send</h2>
+<p>The copier sends straight to the same MX endpoint on port 25 with no sign-in and no connector.</p>
+<ul>
+  <li><b>Good:</b> free, and nothing to install.</li>
+  <li><b>Catches:</b> it only delivers to mailboxes in your own organization, so no scanning to a customer or your accountant. Outgoing port 25 must be open. Without SPF set up it can land in junk. And because it's been abused for spoofing, Microsoft added a setting that lets admins reject Direct Send entirely; if your organization turns that on, it stops.</li>
+</ul>
+
+<h2>4. High Volume Email (HVE)</h2>
+<p>Microsoft's High Volume Email service for Exchange Online is meant for apps and devices sending large amounts of mail to people inside your organization.</p>
+<ul>
+  <li><b>Good:</b> made by Microsoft for this kind of sender.</li>
+  <li><b>Catches:</b> internal recipients only, it has its own limits and setup, and it's been changing (it was in preview for a long time). Microsoft has published separate timelines for how long HVE itself accepts basic authentication, so check its current documentation before you rely on it for a copier with no OAuth.</li>
+</ul>
+
+<h2>5. Turn basic authentication back on</h2>
+<p>Microsoft has said admins can re-enable SMTP AUTH after the December 2026 change, for a while. <a href="../re-enable-smtp-auth-microsoft-365/">How, and the downsides</a>.</p>
+<ul>
+  <li><b>Good:</b> quick, and nothing changes on the copier.</li>
+  <li><b>Catches:</b> temporary: Microsoft says it will announce a final removal date in the second half of 2027. It also leaves a password-only sign-in open on that mailbox.</li>
+</ul>
+
+<h2>6. A local relay</h2>
+<p>A small program on an always-on office PC takes the copier's email on the local network the old way and sends it on to Microsoft 365 with OAuth. Free open-source relays exist if you have IT help to set one up. <a href="../scan-to-email-microsoft-365/">Scan Relay</a> is mine: a Windows service that sends through Microsoft Graph.</p>
+<ul>
+  <li><b>Good:</b> works with any copier that can scan to email, old or new. No static IP, no connector, no DNS changes, and it can send to outside addresses. The copier never holds a Microsoft password.</li>
+  <li><b>Catches:</b> you need a Windows PC that stays on, and scans only flow while it's running. Scan Relay costs $99 once per office after a 14-day free trial.</li>
+</ul>
+
+<h2>So which one?</h2>
+<p>If the copier supports OAuth, use it. If you have a static IP and IT help, a connector is free. If every scan goes to your own staff, Direct Send may do. For older copiers on a normal office connection, a local relay is usually the least work. Not sure where your copier stands? <a href="../will-scan-to-email-break-microsoft-365/">answer three quick questions</a>.</p>
+  </article>
+  <p class="cta"><a class="btn" href="/tools/scan-to-email-microsoft-365/">Get Scan Relay, free 14-day trial</a> <span>Keeps any copier scanning to email through Microsoft 365, no firmware update.</span></p>
+  <nav class="more" aria-label="More guides">
+    <h2>More guides</h2>
+    <ul class="guides"><li><a href="/tools/publisher-files-after-retirement/">Publisher is gone. What do you do with your .pub files?</a></li><li><a href="/tools/publisher-to-word/">Converting a Publisher file to Word</a></li><li><a href="/tools/make-a-newsletter-in-word-like-publisher/">Making a newsletter in Word when you used to use Publisher</a></li><li><a href="/tools/move-church-bulletin-from-publisher-to-canva/">Moving a bulletin or newsletter from Publisher to Canva</a></li><li><a href="/tools/publisher-to-google-docs/">Getting a Publisher file into Google Docs</a></li><li><a href="/tools/publisher-alternatives/">What to use now that Publisher is gone</a></li><li><a href="/tools/convert-publisher-files-in-bulk/">Converting a whole folder of Publisher files</a></li><li><a href="/tools/open-old-pagemaker-files/">Opening old PageMaker files today</a></li><li><a href="/tools/wrap-text-around-picture-in-powerpoint/">Wrapping text around a picture in PowerPoint</a></li><li><a href="/tools/microsoft-365-scan-to-email-basic-auth-2026/">Scan to email and Microsoft 365 after December 2026</a></li><li><a href="/tools/irs-fire-system-retirement-iris/">The IRS FIRE system is retiring: filing 1099s through IRIS</a></li><li><a href="/tools/iris-1098-csv-template/">The IRIS 1098 CSV template, column by column</a></li><li><a href="/tools/iris-1099-nec-csv-template/">The IRIS 1099-NEC CSV template, column by column</a></li><li><a href="/tools/iris-1099-misc-csv-template/">The IRIS 1099-MISC CSV template, column by column</a></li><li><a href="/tools/iris-1099-int-csv-template/">The IRIS 1099-INT CSV template, column by column</a></li><li><a href="/tools/iris-1099-div-csv-template/">The IRIS 1099-DIV CSV template, column by column</a></li><li><a href="/tools/iris-1099-r-csv-template/">The IRIS 1099-R CSV template, column by column</a></li><li><a href="/tools/iris-1098-t-csv-template/">The IRIS 1098-T CSV template, column by column</a></li><li><a href="/tools/iris-1099-s-csv-template/">The IRIS 1099-S CSV template, column by column</a></li><li><a href="/tools/iris-1099-g-csv-template/">The IRIS 1099-G CSV template, column by column</a></li><li><a href="/tools/iris-1099-k-csv-template/">The IRIS 1099-K CSV template, column by column</a></li><li><a href="/tools/iris-w-2g-csv-template/">The IRIS W-2G CSV template, column by column</a></li><li><a href="/tools/will-scan-to-email-break-microsoft-365/">Will your copier's scan to email break?</a></li><li><a href="/tools/scan-relay-resellers/">Scan Relay for copier dealers and IT providers</a></li><li><a href="/tools/ricoh-scan-to-email-microsoft-365/">Ricoh scan to email and Microsoft 365</a></li><li><a href="/tools/canon-scan-to-email-microsoft-365/">Canon scan to email and Microsoft 365</a></li><li><a href="/tools/sharp-scan-to-email-microsoft-365/">Sharp scan to email and Microsoft 365</a></li><li><a href="/tools/konica-minolta-scan-to-email-microsoft-365/">Konica Minolta scan to email and Microsoft 365</a></li><li><a href="/tools/kyocera-scan-to-email-microsoft-365/">Kyocera scan to email and Microsoft 365</a></li><li><a href="/tools/hp-scan-to-email-microsoft-365/">HP scan to email and Microsoft 365</a></li><li><a href="/tools/xerox-scan-to-email-microsoft-365/">Xerox scan to email and Microsoft 365</a></li><li><a href="/tools/brother-scan-to-email-microsoft-365/">Brother scan to email and Microsoft 365</a></li><li><a href="/tools/smtp-5-7-139-basic-authentication-disabled/">5.7.139: basic authentication is disabled</a></li><li><a href="/tools/scan-to-email-smtp-office365-authentication/">Copier scan to email through smtp.office365.com</a></li><li><a href="/tools/re-enable-smtp-auth-microsoft-365/">Turning SMTP AUTH back on for a copier</a></li><li><a href="/tools/microsoft-365-app-password-scan-to-email/">App passwords on copiers and Microsoft 365</a></li><li><a href="/tools/msp-scan-to-email-microsoft-365-rollout/">Scan to email across many client offices</a></li><li><a href="/tools/excel-to-iris-1099-nec-csv/">Spreadsheet to IRIS 1099-NEC CSV</a></li><li><a href="/tools/rent-1099-misc-iris-csv/">Rent 1099-MISC from a spreadsheet, for IRIS</a></li><li><a href="/tools/quickbooks-online-1099-nec-to-iris-csv/">QuickBooks Online to IRIS 1099-NEC CSV</a></li><li><a href="/tools/quickbooks-desktop-1099-nec-to-iris-csv/">QuickBooks Desktop to IRIS 1099-NEC CSV</a></li><li><a href="/tools/xero-1099-nec-to-iris-csv/">Xero to IRIS 1099-NEC CSV</a></li><li><a href="/tools/wave-1099-nec-to-iris-csv/">Wave to IRIS 1099-NEC CSV</a></li><li><a href="/tools/freshbooks-1099-nec-to-iris-csv/">FreshBooks to IRIS 1099-NEC CSV</a></li><li><a href="/tools/google-sheets-1099-nec-to-iris-csv/">Google Sheets to IRIS 1099-NEC CSV</a></li><li><a href="/tools/infopath-to-excel/">InfoPath forms to Excel</a></li><li><a href="/tools/export-infopath-forms-from-sharepoint/">Export InfoPath form data from SharePoint</a></li></ul>
+  </nav>
+<p class="fine">Microsoft Publisher, Word and PowerPoint are trademarks of Microsoft; PageMaker and InDesign of Adobe; Canva and Affinity of Canva. I'm not affiliated with any of them.</p>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+        <p class="site-footer__blurb">Focused software built and sold by Tyler LeDuc in Phoenix, Arizona.</p>
+        <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+      </div>
+      <nav class="site-footer__col" aria-labelledby="footer-products">
+        <h2 class="site-footer__title" id="footer-products">Products</h2>
+        <a class="site-footer__link" href="/tools/scan-to-email-microsoft-365/">Scan Relay</a>
+        <a class="site-footer__link" href="/tools/tryon/demo/">Virtual try-on</a>
+        <a class="site-footer__link" href="/tools/publisher-converter/">Publisher converter</a>
+        <a class="site-footer__link" href="/tools/">All products</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-company">
+        <h2 class="site-footer__title" id="footer-company">Company</h2>
+        <a class="site-footer__link" href="/about">About</a>
+        <a class="site-footer__link" href="/games">Games</a>
+        <a class="site-footer__link" href="/contact">Contact</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-elsewhere">
+        <h2 class="site-footer__title" id="footer-elsewhere">Elsewhere</h2>
+        <a class="site-footer__link" href="https://github.com/Tyler-LeDuc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://raxeris.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-legal">
+        <h2 class="site-footer__title" id="footer-legal">Legal</h2>
+        <a class="site-footer__link" href="/privacy">Privacy Policy</a>
+        <a class="site-footer__link" href="/terms">Terms of Service</a>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p>&copy; 2026 LeDuc Systems LLC</p>
+      <p>Phoenix, AZ</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
