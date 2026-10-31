@@ -10,11 +10,13 @@ This file carries the content and business guardrails.
 
 ## Positioning
 
-**Repositioned October 27, 2026 (Tyler's call):** LeDuc Systems is a software company that builds
-and sells software tools — one developer, Tyler LeDuc. The live products are the file tools under
-`/tools/`: the Publisher .pub converter (to PowerPoint/IDML), the bulk Publisher converter, the
-PageMaker converter, the PowerPoint text-wrap tool and the Rhino .3dm version converter. The home
-page, About, FAQ and meta all lead with the tools and link to `/tools/`.
+**Redesigned October 30, 2026 (Tyler's call, supersedes the Oct 27 tools-first positioning):**
+LeDuc Systems is a small software company (one developer, Tyler LeDuc) that builds and sells its own
+products: tools, apps and games. The home page presents the company and its portfolio. Scan Relay,
+the virtual try-on and the Publisher converter are featured, then the smaller tools (1099/IRIS,
+InfoPath, PageMaker, Rhino, text wrap), then games. The look is a restrained product studio: warm
+off-white, near-black, IBM Plex Sans/Mono, the logo's red dot as the only accent; no gradients, glass
+or template-style cards. Don't revert to the old tools-only home page or the pink rounded style.
 
 The tools are static pages built in `C:\Users\Tyler\apps\leduc-tools` and copied into
 `public/tools/` by that repo's `npm run export`. Don't edit `public/tools/` by hand. They're
@@ -25,10 +27,11 @@ step when the nav or footer changes.
 
 This is a product company, not a consultancy: no client services, engagement models or "hire
 me" pitches (the old consulting content was retired in September 2026 — don't bring it back).
-Prices live on the tool pages only; this site's copy doesn't restate them.
+The home page shows each featured product's price (hardcoded in `src/data/site.js`). When a price
+changes on a tool page or the server, change it there too.
 
-The games are now a side project: the catalogue lives on `/games` (not in the main nav), plus
-one FAQ line and a footer link. Don't put games back into the home page's focus.
+Games are in the main nav and get one band on the home page; the full catalogue lives on `/games`.
+The About page links to GitHub (Tyler-LeDuc) and itch.io (raxeris); no LinkedIn.
 
 Adding any route means updating **three** places or the build's drift test fails:
 `src/App.js`, `scripts/prerender.js` (`ROUTES`), and `public/sitemap.xml`.
