@@ -146,7 +146,7 @@
 </ul>
 
 <h2>Microsoft 365 permissions</h2>
-<p>Scan Relay signs in to a single work or school mailbox with Microsoft's device code sign-in. The setup page shows a code. You type it on Microsoft's own sign-in page, with MFA if your organization uses it, so Scan Relay never sees the password. It only accepts work or school accounts, not personal Microsoft accounts.</p>
+<p>Scan Relay signs in to a single work or school mailbox through Microsoft's own sign-in page. Click <b>Sign in with Microsoft</b> on the setup page, sign in in the browser on that PC, with MFA if your organization uses it, and Microsoft hands Scan Relay a token, so it never sees the password. This standard browser sign-in (authorization code with PKCE) works with Microsoft's security defaults, which block the older "enter a code" device sign-in. It only accepts work or school accounts, not personal Microsoft accounts.</p>
 <p>It asks for these delegated permissions and no others:</p>
 <table>
   <tr><th>Permission</th><th>What Scan Relay uses it for</th></tr>
@@ -159,7 +159,7 @@
 <p><b>Scan size:</b> with these permissions, Scan Relay sends scans up to about 3 MB per email. Set the copier's maximum email size (often called "split email by size" or a data size limit) to 3 MB, so bigger jobs arrive as several emails; if a scan still lands in the failed folder with a size message, try 2 MB, because some copiers count the file before it is encoded. Larger single emails need an option that isn't released yet, so don't plan on them.</p>
 
 <h2>Why an admin has to approve it once</h2>
-<p>Scan Relay's publisher (LeDuc Systems) isn't verified with Microsoft yet. In most organizations Microsoft won't let ordinary users approve an app from an unverified publisher, so the first sign-in shows "Need admin approval". A Microsoft 365 admin signs in once with the same code and ticks <b>Consent on behalf of your organization</b>. After that, any mailbox in the organization can be used. The consent screen lists the three permissions above.</p>
+<p>Scan Relay's publisher (LeDuc Systems) isn't verified with Microsoft yet. In most organizations Microsoft won't let ordinary users approve an app from an unverified publisher, so the first sign-in shows "Need admin approval". A Microsoft 365 admin signs in once with the same button and ticks <b>Consent on behalf of your organization</b>. After that, any mailbox in the organization can be used. The consent screen lists the three permissions above.</p>
 
 <h2>Where your scans go</h2>
 <ol>
@@ -201,10 +201,11 @@
 <p>That's all it changes: no browser extensions, no scheduled tasks, no other startup entries.</p>
 
 <h3>The setup page</h3>
-<p>The setup page is at <code>http://localhost:2526</code>. It listens on 127.0.0.1 only, so it can't be reached from other computers, and the firewall rule doesn't include its port. It also has these guards:</p>
+<p>The setup page is at <code>http://localhost:2526</code>. It listens on the PC's own loopback address only (127.0.0.1 and ::1), so it can't be reached from other computers, and the firewall rule doesn't include its port. It also has these guards:</p>
 <ul>
   <li>It refuses any request whose Host isn't <code>localhost:2526</code> or <code>127.0.0.1:2526</code>, which stops DNS rebinding attacks from websites.</li>
   <li>Anything that changes a setting (sign in, sign out, port, license, test message) must be a POST with a custom <code>X-Scan-Relay</code> header. Another website can't send that without a CORS preflight, and Scan Relay never answers one.</li>
+  <li>The one exception is Microsoft's redirect back after sign-in (<code>/auth/callback</code>), which has to be a plain link. It only works with the single-use code Scan Relay created for that sign-in, which expires after 10 minutes.</li>
   <li>The page sends a Content-Security-Policy that stops other sites from framing it.</li>
 </ul>
 <p>It has no password of its own. Anyone signed in to that PC can open it, which is another reason to limit who can sign in to the PC.</p>
