@@ -2,8 +2,82 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VPCZV3J5CQ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VPCZV3J5CQ');</script>
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Virtual Try-On for Beauty Stores — Your Shades, Live on the Shopper's Face</title>
 <meta name="description" content="Add live makeup try-on to your Shopify or WooCommerce product pages: your exact lipstick, blush and shadow shades on the shopper's own face, in the browser, nothing uploaded. From $49 a month.">
@@ -16,9 +90,7 @@
 <meta property="og:image" content="https://leducsystems.com/images/og-card.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/fonts/plex.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"Leduc Try-On for beauty stores","url":"https://leducsystems.com/tools/tryon/","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","offers":[{"@type":"Offer","name":"Starter","price":"49","priceCurrency":"USD","description":"per month"},{"@type":"Offer","name":"Growth","price":"149","priceCurrency":"USD","description":"per month"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How realistic is it?","acceptedAnswer":{"@type":"Answer","text":"The lipstick keeps her own lip texture, highlights and shading and takes the room's light, so a red reads as a red lipstick on her, not a sticker. Blush is a diffused flush, not a patch. Try the demo above with your own shades and judge it on your face."}},{"@type":"Question","name":"Does it work on phones?","acceptedAnswer":{"@type":"Answer","text":"Yes. Safari on iPhone and Chrome on Android, live camera or a photo, rendered at the camera's own resolution. On a 2025 desktop it runs at about 60 frames a second; recent phones run it smoothly, older ones drop the resolution rather than the frame rate."}},{"@type":"Question","name":"Is anything uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. The camera frames stay on the shopper's device; the face is tracked and the makeup is drawn in her browser, and the tracker's model files are served from this site, not a third-party CDN. No camera frame, photo or face measurement ever leaves her device, nothing is stored, and there is no account for the shopper to create."}},{"@type":"Question","name":"How do I add it to my store?","acceptedAnswer":{"@type":"Answer","text":"Paste one script tag into your product page template and map each shade to its colour and finish (matte, satin, gloss or sheer). Any store page that can carry a script tag works, including Shopify and WooCommerce themes; I'll do the first one with you on a call."}},{"@type":"Question","name":"What makeup does it do?","acceptedAnswer":{"@type":"Answer","text":"Lipstick and lip liner in four finishes, blush, bronzer, contour, highlighter, eyeshadow, eyeliner, mascara, brows, foundation and hair colour, as single products or as full looks."}},{"@type":"Question","name":"Can I try it before paying?","acceptedAnswer":{"@type":"Answer","text":"Every plan starts with a 14-day free trial, and the demo above is free. Send me your shade list and I'll make you a demo link with your products loaded."}},{"@type":"Question","name":"What does it cost?","acceptedAnswer":{"@type":"Answer","text":"Starter is $49 a month for up to 25 shades on one store; Growth is $149 a month for unlimited shades. Cancel any time: email tyler@leducsystems.com and I'll cancel it the same day, with no charge if you're still in the trial."}}]}]}</script>
 <style>
   .tryon { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; margin: 8px 0 24px; }
@@ -33,7 +105,8 @@
   .tryon button, .tryon .btn { font: inherit; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 4px; padding: 9px 16px; cursor: pointer; min-height: 40px; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
   .tryon button.primary, .tryon .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 500; }
   .tryon button.primary:hover, .tryon .btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
-  .tryon input[type=file] { display: none; }
+  .tryon input[type=file] { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; padding: 0; }
+  .tryon input[type=file]:focus-visible + label.btn { outline: 2px solid var(--accent-fill); outline-offset: 2px; }
   .tryon #toolbar { position: absolute; z-index: 2; left: 12px; right: 12px; bottom: 12px; display: flex; gap: 8px; justify-content: space-between; }
   .tryon #toolbar button, .tryon #toolbar .btn { background: rgba(20,16,15,.62); color: #fff; border-color: rgba(255,255,255,.18); backdrop-filter: blur(8px); }
   .tryon .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 12px; align-self: start; }
@@ -63,9 +136,9 @@
   .buy .plans button:hover { border-color: var(--ink); }
   #buymsg { margin: 10px 0 0; font-size: 14px; } #buymsg code { display: block; margin-top: 6px; padding: 10px; background: var(--ls-paper-050); border-radius: 4px; word-break: break-all; font-size: 13px; }
 </style>
-  <script type="module" crossorigin src="/tools/assets/tryon-bHWeIFLx.js"></script>
+  <script type="module" crossorigin src="/tools/assets/tryon-oboq4-2c.js"></script>
   <link rel="modulepreload" crossorigin href="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js">
-  <link rel="stylesheet" crossorigin href="/tools/assets/style-BcpZICfL.css">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-Byj51VTQ.css">
 </head>
 <body data-api="https://convert.leducsystems.com">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -113,7 +186,7 @@
       <div id="stage"></div>
       <div class="empty" id="empty">
         <p>Try it on your own face now. The camera stays on your device: nothing is uploaded.</p>
-        <div class="row"><button class="primary" id="cam" type="button">Start camera</button><label class="btn" for="file">Use a photo</label><input type="file" id="file" accept="image/*"></div>
+        <div class="row"><button class="primary" id="cam" type="button">Start camera</button><input type="file" id="file" accept="image/*"><label class="btn" for="file">Use a photo</label></div>
       </div>
       <div class="toolbar" id="toolbar" hidden>
         <div class="row"><button id="cmp" type="button" aria-pressed="false">Compare</button></div>
@@ -146,6 +219,7 @@
       <button type="button" data-plan="growth"><b>$149<small> / month</small></b><span>Growth · Unlimited shades · one store</span></button>
     </div>
     <p id="buymsg"></p>
+    <p class="fine">Plans renew every month until you cancel. Stripe takes your card at sign-up and the first charge comes after the 14-day trial; cancel during the trial and you pay nothing. To cancel, email <a href="mailto:tyler@leducsystems.com?subject=Cancel%20my%20try-on%20plan">tyler@leducsystems.com</a> from the address on the plan: I cancel it the same day and nothing more is charged. Your store domain and email are used only to run the plan and send receipts. <a href="/terms#subscriptions">Terms</a> · <a href="/refunds">Refund Policy</a> · <a href="/privacy#tryon">Privacy</a></p>
     <p class="fine">Prefer to talk first? Email <a href="mailto:tyler@leducsystems.com?subject=Try-on%20for%20my%20store">tyler@leducsystems.com</a> with your shade list and I'll send you a demo link with your products loaded.</p>
   </section>
 
@@ -191,11 +265,13 @@
         <h2 class="site-footer__title" id="footer-legal">Legal</h2>
         <a class="site-footer__link" href="/privacy">Privacy Policy</a>
         <a class="site-footer__link" href="/terms">Terms of Service</a>
+        <a class="site-footer__link" href="/refunds">Refund Policy</a>
+        <button type="button" class="site-footer__link site-footer__button" data-cookie-settings>Cookie settings</button>
       </nav>
     </div>
     <div class="site-footer__bottom">
       <p>&copy; 2026 LeDuc Systems LLC</p>
-      <p>Phoenix, AZ</p>
+      <p>Phoenix, Arizona</p>
     </div>
   </div>
 </footer>

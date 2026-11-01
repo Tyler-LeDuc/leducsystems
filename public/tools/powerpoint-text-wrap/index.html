@@ -2,8 +2,82 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VPCZV3J5CQ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VPCZV3J5CQ');</script>
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wrap Text Around a Picture in PowerPoint — Online Tool</title>
 <meta name="description" content="PowerPoint can't wrap text around pictures. Upload a .pptx and get it back with the text laid out around them, still editable. Free before-and-after preview.">
@@ -16,13 +90,11 @@
 <meta property="og:image" content="https://leducsystems.com/images/og-card.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/fonts/plex.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"PowerPoint Text Wrap","url":"https://leducsystems.com/tools/powerpoint-text-wrap/","applicationCategory":"DesignApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"9","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How does it work?","acceptedAnswer":{"@type":"Answer","text":"PowerPoint can't wrap, but it can show several text boxes. For each text box with a picture over its words, the tool measures your text with the real fonts and splits it into boxes above, beside and below the picture, the way Publisher would flow it. The text stays real text with its own font, size, colour and bullets."}},{"@type":"Question","name":"What do I see before paying?","acceptedAnswer":{"@type":"Answer","text":"A before-and-after picture of every slide it changed (up to 12), so you can check the result. Files where no picture covers any text are not charged: the tool tells you there is nothing to fix."}},{"@type":"Question","name":"What if I edit the text later?","acceptedAnswer":{"@type":"Answer","text":"PowerPoint doesn't reflow text between boxes, so after a big edit the lines won't meet up any more. Upload the file again (or fix small edits by hand). The original layout is easy to undo: the pictures are untouched and the text is all there."}},{"@type":"Question","name":"What does it leave alone?","acceptedAnswer":{"@type":"Answer","text":"Text a picture doesn't cover, text with animations, text set in the middle or at the bottom of its box, rotated text, and any box where the wrapped text would have to shrink below 70% of its size or run into other text. Those stay exactly as they were."}},{"@type":"Question","name":"Will it look the same on my computer?","acceptedAnswer":{"@type":"Answer","text":"The text is measured with standard fonts that match Calibri, Cambria, Arial, Times New Roman and Georgia exactly. With other fonts, line breaks can come out slightly different, so check the result and nudge a box if a line spills."}},{"@type":"Question","name":"Does it work with Google Slides, Keynote or Canva?","acceptedAnswer":{"@type":"Answer","text":"Upload a .pptx: PowerPoint saves one, and Google Slides, Keynote and Canva can all download one. The result opens in all of them, since it is just text boxes and pictures."}},{"@type":"Question","name":"What happens to my file?","acceptedAnswer":{"@type":"Answer","text":"It is processed on my server only to make your download, and deleted automatically (after a day, or 7 days once paid). I never look at it or share it."}},{"@type":"Question","name":"What if it doesn't work for my file?","acceptedAnswer":{"@type":"Answer","text":"Email tyler@leducsystems.com within 30 days and I'll refund you."}}]}]}</script>
-  <script type="module" crossorigin src="/tools/assets/powerpoint-text-wrap-hhS1boZ0.js"></script>
+  <script type="module" crossorigin src="/tools/assets/powerpoint-text-wrap-URIKOhyH.js"></script>
   <link rel="modulepreload" crossorigin href="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js">
-  <link rel="stylesheet" crossorigin href="/tools/assets/style-BcpZICfL.css">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-Byj51VTQ.css">
 </head>
 <body data-api="https://convert.leducsystems.com" data-price="$9">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -67,7 +139,7 @@
 
   <section class="tool" aria-label="PowerPoint text wrap">
     <label class="drop" id="drop">
-      <input type="file" id="file" accept=".pptx,.ppt" hidden>
+      <input type="file" id="file" accept=".pptx,.ppt" class="sr-only">
       <span class="drop-title">Drop a .pptx file here</span>
       <span class="drop-sub">or click to choose · free before-and-after preview · $9 to download</span>
     </label>
@@ -126,11 +198,13 @@
         <h2 class="site-footer__title" id="footer-legal">Legal</h2>
         <a class="site-footer__link" href="/privacy">Privacy Policy</a>
         <a class="site-footer__link" href="/terms">Terms of Service</a>
+        <a class="site-footer__link" href="/refunds">Refund Policy</a>
+        <button type="button" class="site-footer__link site-footer__button" data-cookie-settings>Cookie settings</button>
       </nav>
     </div>
     <div class="site-footer__bottom">
       <p>&copy; 2026 LeDuc Systems LLC</p>
-      <p>Phoenix, AZ</p>
+      <p>Phoenix, Arizona</p>
     </div>
   </div>
 </footer>
