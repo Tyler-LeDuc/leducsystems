@@ -2,24 +2,99 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VPCZV3J5CQ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VPCZV3J5CQ');</script>
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scan to Email Stopped Working With Microsoft 365? Fix It in 5 Minutes</title>
-<meta name="description" content="Microsoft is turning off basic authentication for SMTP in Exchange Online at the end of December 2026, and older copiers that scan to email will stop sending. Scan Relay keeps them working. Free 14-day trial.">
+<title>Fix Copier Scan to Email for Microsoft 365 in 5 Minutes</title>
+<meta name="description" content="Microsoft 365 ends basic SMTP authentication in December 2026 and older copiers stop scanning to email. Scan Relay keeps them working. Free 14-day trial, $99 per office.">
 <link rel="canonical" href="https://leducsystems.com/tools/scan-to-email-microsoft-365/">
-<meta property="og:title" content="Scan to Email Stopped Working With Microsoft 365? Fix It in 5 Minutes">
-<meta property="og:description" content="Microsoft is turning off basic authentication for SMTP in Exchange Online at the end of December 2026, and older copiers that scan to email will stop sending. Scan Relay keeps them working. Free 14-day trial.">
+<meta property="og:title" content="Fix Copier Scan to Email for Microsoft 365 in 5 Minutes">
+<meta property="og:description" content="Microsoft 365 ends basic SMTP authentication in December 2026 and older copiers stop scanning to email. Scan Relay keeps them working. Free 14-day trial, $99 per office.">
 <meta property="og:url" content="https://leducsystems.com/tools/scan-to-email-microsoft-365/">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:image" content="https://leducsystems.com/images/og-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How does the trial work?","acceptedAnswer":{"@type":"Answer","text":"Download it and use everything free for 14 days, no card needed. After that, scans pause until you enter a license key. Buying a license shows the key straight away; paste it into the setup page at http://localhost:2526."}},{"@type":"Question","name":"What does a license cover?","acceptedAnswer":{"@type":"Answer","text":"One PC in one office, with as many copiers and scanners as you like pointed at it. It is a one-time payment with free updates."}},{"@type":"Question","name":"What if I want my money back?","acceptedAnswer":{"@type":"Answer","text":"Email tyler@leducsystems.com within 30 days for a full refund if it doesn't work with your copier."}},{"@type":"Question","name":"What do I set on the copier?","acceptedAnswer":{"@type":"Answer","text":"The setup page shows it: the PC's address as the SMTP server, port 25, no SSL/TLS and no authentication. If the copier insists on a username and password, any will do, because only devices on your own network can send to it."}},{"@type":"Question","name":"What if the internet drops?","acceptedAnswer":{"@type":"Answer","text":"Every scan is saved on the PC before the copier is told it was sent, then sent on as soon as Microsoft 365 is reachable. Nothing is lost."}},{"@type":"Question","name":"Who isn't it for?","acceptedAnswer":{"@type":"Answer","text":"Offices with IT help that can set up a connector with a static IP, which is free. Copiers that already support Microsoft 365's modern sign-in. Offices with nothing that sends through smtp.office365.com with a password. And offices without a Windows PC that stays on, since the relay runs on one."}},{"@type":"Question","name":"Do you see my email or scans?","acceptedAnswer":{"@type":"Answer","text":"No. The relay runs on your PC and sends straight to your Microsoft 365. Your scans and email never pass through my servers. Payment is handled by Stripe, which gives me your name and email so I can send it to you. I never see your card."}},{"@type":"Question","name":"Microsoft says it needs admin approval. What do I do?","acceptedAnswer":{"@type":"Answer","text":"Microsoft asks a Microsoft 365 admin to approve apps from new publishers like me. Have your admin (in a small office, usually the owner or whoever set up Microsoft 365) sign in once and tick Consent on behalf of your organization. After that, anyone can sign Scan Relay in with the mailbox scans should come from. Scan Relay only asks to send mail and read the signed-in account's name."}},{"@type":"Question","name":"Windows says the app is unrecognised. Is it safe?","acceptedAnswer":{"@type":"Answer","text":"Scan Relay is new, so Windows SmartScreen may warn you the first time. Click More info, then Run anyway. It is made by LeDuc Systems LLC, and you can email me with any question before you run it."}}]}</script>
-  <script type="module" crossorigin src="/tools/assets/scan-to-email-microsoft-365-qEiJYbq2.js"></script>
+<link rel="stylesheet" href="/fonts/plex.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How does the trial work?","acceptedAnswer":{"@type":"Answer","text":"Download it and use everything free for 14 days, no card needed. After that, scans pause until you enter a license key. Buying a license shows the key straight away; paste it into the setup page at http://localhost:2526."}},{"@type":"Question","name":"What does a license cover?","acceptedAnswer":{"@type":"Answer","text":"One PC in one office, with as many copiers and scanners as you like pointed at it. It is a one-time payment with free updates."}},{"@type":"Question","name":"What if I want my money back?","acceptedAnswer":{"@type":"Answer","text":"Email tyler@leducsystems.com within 30 days for a full refund if it doesn't work with your copier."}},{"@type":"Question","name":"What do I set on the copier?","acceptedAnswer":{"@type":"Answer","text":"The setup page shows it: the PC's address as the SMTP server, port 25, no SSL/TLS and no authentication. If the copier insists on a username and password, any will do, because only devices on your own network can send to it."}},{"@type":"Question","name":"What if the internet drops?","acceptedAnswer":{"@type":"Answer","text":"Every scan is saved on the PC before the copier is told it was sent, then sent on as soon as Microsoft 365 is reachable. Nothing is lost."}},{"@type":"Question","name":"Who isn't it for?","acceptedAnswer":{"@type":"Answer","text":"Offices with IT help that can set up a connector with a static IP, which is free. Copiers that already support Microsoft 365's modern sign-in. Offices with nothing that sends through smtp.office365.com with a password. And offices without a Windows PC that stays on, since the relay runs on one."}},{"@type":"Question","name":"Do you see my email or scans?","acceptedAnswer":{"@type":"Answer","text":"No. The relay runs on your PC and sends straight to your Microsoft 365. Your scans and email never pass through my servers. Payment is handled by Stripe, which gives me your name and email for the receipt; your license key appears on this page the moment you pay. I never see your card."}},{"@type":"Question","name":"Microsoft says it needs admin approval. What do I do?","acceptedAnswer":{"@type":"Answer","text":"Microsoft asks a Microsoft 365 admin to approve apps from new publishers like me. Have your admin (in a small office, usually the owner or whoever set up Microsoft 365) sign in once and tick Consent on behalf of your organization. After that, anyone can sign Scan Relay in with the mailbox scans should come from. Scan Relay only asks to send mail and read the signed-in account's name."}},{"@type":"Question","name":"Windows says the app is unrecognised. Is it safe?","acceptedAnswer":{"@type":"Answer","text":"Scan Relay is new, so Windows SmartScreen may warn you the first time. Click More info, then Run anyway. It is made by LeDuc Systems LLC, and you can email me with any question before you run it."}}]}</script>
+  <script type="module" crossorigin src="/tools/assets/scan-to-email-microsoft-365-DdanU16q.js"></script>
   <link rel="modulepreload" crossorigin href="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js">
-  <link rel="stylesheet" crossorigin href="/tools/assets/style-oImeWcko.css">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-Byj51VTQ.css">
 </head>
 <body data-api="https://convert.leducsystems.com" data-product="scan-relay" data-ships="December 15, 2026" data-price="$99">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -63,11 +138,12 @@
   </section>
 
   <section class="tool preorder" id="preorder" aria-label="Download">
-    <p class="tag">Windows · free 14 days trial</p>
+    <p class="tag">Windows · free trial for 14 days</p>
     <h2>LeDuc Scan Relay</h2>
     <p><a class="btn" href="https://convert.leducsystems.com/api/dl/scan-relay" download data-download>Download free trial</a></p>
     <p class="promise">Everything works for 14 days, no card needed. Then a license is <b>$99</b> one-time, per office (one PC), with free updates and a 30-day refund if it doesn't work with your copier.</p>
     <p><button class="btn ghost" type="button" data-buy>Buy a license for $99</button></p>
+    <p class="note">Two things to expect: Windows SmartScreen may warn the first time because the app is new (choose More info, then Run anyway), and a Microsoft 365 admin approves the sign-in once. Both are explained in the questions below.</p>
     <p class="status" role="status" data-status></p>
   </section>
 
@@ -107,14 +183,14 @@
     <details><summary>What do I set on the copier?</summary><p>The setup page shows it: the PC's address as the SMTP server, port 25, no SSL/TLS and no authentication. If the copier insists on a username and password, any will do, because only devices on your own network can send to it.</p></details>
     <details><summary>What if the internet drops?</summary><p>Every scan is saved on the PC before the copier is told it was sent, then sent on as soon as Microsoft 365 is reachable. Nothing is lost.</p></details>
     <details><summary>Who isn't it for?</summary><p>Offices with IT help that can set up a connector with a static IP, which is free. Copiers that already support Microsoft 365's modern sign-in. Offices with nothing that sends through smtp.office365.com with a password. And offices without a Windows PC that stays on, since the relay runs on one.</p></details>
-    <details><summary>Do you see my email or scans?</summary><p>No. The relay runs on your PC and sends straight to your Microsoft 365. Your scans and email never pass through my servers. Payment is handled by Stripe, which gives me your name and email so I can send it to you. I never see your card.</p></details>
+    <details><summary>Do you see my email or scans?</summary><p>No. The relay runs on your PC and sends straight to your Microsoft 365. Your scans and email never pass through my servers. Payment is handled by Stripe, which gives me your name and email for the receipt; your license key appears on this page the moment you pay. I never see your card.</p></details>
     <details><summary>Microsoft says it needs admin approval. What do I do?</summary><p>Microsoft asks a Microsoft 365 admin to approve apps from new publishers like me. Have your admin (in a small office, usually the owner or whoever set up Microsoft 365) sign in once and tick Consent on behalf of your organization. After that, anyone can sign Scan Relay in with the mailbox scans should come from. Scan Relay only asks to send mail and read the signed-in account's name.</p></details>
     <details><summary>Windows says the app is unrecognised. Is it safe?</summary><p>Scan Relay is new, so Windows SmartScreen may warn you the first time. Click More info, then Run anyway. It is made by LeDuc Systems LLC, and you can email me with any question before you run it.</p></details>
   </section>
 
   <nav class="more" aria-label="Related">
     <h2>More from LeDuc Systems</h2>
-    <ul><li><a href="/tools/">All tools</a></li></ul>
+    <ul><li><a href="/tools/will-scan-to-email-break-microsoft-365/">Will your copier's scan to email break? Free check</a></li><li><a href="/tools/microsoft-365-scan-to-email-basic-auth-2026/">Scan to email and Microsoft 365 after December 2026</a></li><li><a href="/tools/scan-relay-resellers/">Scan Relay for copier dealers and IT providers</a></li><li><a href="/tools/">All tools</a></li></ul>
   </nav>
 <p class="fine">Not affiliated with Microsoft. Microsoft 365 and Exchange Online are trademarks of Microsoft. Questions: <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
 </main>
@@ -148,11 +224,13 @@
         <h2 class="site-footer__title" id="footer-legal">Legal</h2>
         <a class="site-footer__link" href="/privacy">Privacy Policy</a>
         <a class="site-footer__link" href="/terms">Terms of Service</a>
+        <a class="site-footer__link" href="/refunds">Refund Policy</a>
+        <button type="button" class="site-footer__link site-footer__button" data-cookie-settings>Cookie settings</button>
       </nav>
     </div>
     <div class="site-footer__bottom">
       <p>&copy; 2026 LeDuc Systems LLC</p>
-      <p>Phoenix, AZ</p>
+      <p>Phoenix, Arizona</p>
     </div>
   </div>
 </footer>

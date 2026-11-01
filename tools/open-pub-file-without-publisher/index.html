@@ -2,8 +2,82 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VPCZV3J5CQ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VPCZV3J5CQ');</script>
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>How to Open a .pub File Without Microsoft Publisher</title>
 <meta name="description" content="Publisher is gone from Microsoft 365. Here's how to open and keep editing a .pub file without it: preview it free, then download an editable version.">
@@ -12,14 +86,15 @@
 <meta property="og:description" content="Publisher is gone from Microsoft 365. Here's how to open and keep editing a .pub file without it: preview it free, then download an editable version.">
 <meta property="og:url" content="https://leducsystems.com/tools/open-pub-file-without-publisher/">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:image" content="https://leducsystems.com/images/og-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Publisher File Converter","url":"https://leducsystems.com/tools/open-pub-file-without-publisher/","applicationCategory":"DesignApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"12","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why did my .pub files stop opening?","acceptedAnswer":{"@type":"Answer","text":"Microsoft retired Publisher. It was removed from Microsoft 365 in October 2026 and support for the standalone versions ended the same month. Word and PowerPoint can't open .pub files, so without Publisher they no longer open at all."}},{"@type":"Question","name":"Is the PDF free?","acceptedAnswer":{"@type":"Answer","text":"The preview of every page is free, no account needed. The clean PDF, with the page pictures, is $4.99 per file, and it's included free with the editable versions ($12) or the $29 pass."}},{"@type":"Question","name":"What do I get if I pay?","acceptedAnswer":{"@type":"Answer","text":"Three editable files for $12: a PowerPoint file (.pptx) for PowerPoint, Canva, Google Slides or Keynote, an IDML file for Affinity or Adobe InDesign, and a Word file (.docx). Every page, text box, picture, shape, line and table comes across as an object you can edit. You see a preview of every page before you pay."}},{"@type":"Question","name":"I have a lot of files. Is there a better deal?","acceptedAnswer":{"@type":"Answer","text":"Yes. The 30-day pass is $29 and covers every file you convert in those 30 days, every file type each. It pays for itself at three files. After you pay you get a pass link; open it on any computer to use the pass there."}},{"@type":"Question","name":"What if it doesn't come out right?","acceptedAnswer":{"@type":"Answer","text":"Email tyler@leducsystems.com within 30 days and I'll refund you in full, no questions asked. If you can, attach the .pub file so I can fix the converter for the next person."}},{"@type":"Question","name":"Which should I use?","acceptedAnswer":{"@type":"Answer","text":"If you have Microsoft 365, PowerPoint is the easiest: it's already installed and works well for flyers, newsletters, cards and brochures. Canva is good if you'd rather work in your browser. Affinity (free from Canva) and InDesign are full layout programs and keep articles linked from column to column."}},{"@type":"Question","name":"How do I open it in Canva?","acceptedAnswer":{"@type":"Answer","text":"In Canva, choose Upload and pick the .pptx file. Canva imports it as an editable design."}},{"@type":"Question","name":"How do I open it in Affinity or InDesign?","acceptedAnswer":{"@type":"Answer","text":"Choose File > Open and pick the .idml file. It opens as a normal document you can edit and save."}},{"@type":"Question","name":"What about fonts?","acceptedAnswer":{"@type":"Answer","text":"Your text keeps the fonts it used in Publisher. If the computer you open it on doesn't have one of them, the app will substitute another, and text can reflow slightly."}},{"@type":"Question","name":"Which Publisher versions work?","acceptedAnswer":{"@type":"Answer","text":"Publisher 98 through Publisher 365. Files from Publisher 95 and earlier, and password-protected files, aren't supported."}},{"@type":"Question","name":"What happens to my file?","acceptedAnswer":{"@type":"Answer","text":"Your file is converted on my server, used only to make your download, and deleted automatically within 24 hours. I never look at it or share it."}},{"@type":"Question","name":"Is this made by Microsoft, Adobe or Canva?","acceptedAnswer":{"@type":"Answer","text":"No. I'm an independent developer. Microsoft Publisher and PowerPoint are trademarks of Microsoft, InDesign of Adobe, and Canva and Affinity of Canva."}}]}]}</script>
+<link rel="stylesheet" href="/fonts/plex.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Publisher File Converter","url":"https://leducsystems.com/tools/open-pub-file-without-publisher/","applicationCategory":"DesignApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"12","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why did my .pub files stop opening?","acceptedAnswer":{"@type":"Answer","text":"Microsoft retired Publisher. It was removed from Microsoft 365 in October 2026 and support for the standalone versions ended the same month. Word and PowerPoint can't open .pub files, so without Publisher they no longer open at all."}},{"@type":"Question","name":"Is the PDF free?","acceptedAnswer":{"@type":"Answer","text":"The preview of every page is free, no account needed. The clean PDF, with the page pictures, is $4.99 per file, and it's included free with the editable versions ($12) or the $29 pass."}},{"@type":"Question","name":"What do I get if I pay?","acceptedAnswer":{"@type":"Answer","text":"Three editable files for $12: a PowerPoint file (.pptx) for PowerPoint, Canva, Google Slides or Keynote, an IDML file for Affinity or Adobe InDesign, and a Word file (.docx). Every page, text box, picture, shape, line and table comes across as an object you can edit. You see a preview of every page before you pay."}},{"@type":"Question","name":"I have a lot of files. Is there a better deal?","acceptedAnswer":{"@type":"Answer","text":"Yes. The 30-day pass is $29 and covers every file you convert in those 30 days, every file type each. It pays for itself at three files. After you pay you get a pass link; open it on any computer to use the pass there."}},{"@type":"Question","name":"What if it doesn't come out right?","acceptedAnswer":{"@type":"Answer","text":"Email tyler@leducsystems.com within 30 days and I'll refund you in full, no questions asked. If you can, attach the .pub file so I can fix the converter for the next person."}},{"@type":"Question","name":"Which should I use?","acceptedAnswer":{"@type":"Answer","text":"If you have Microsoft 365, PowerPoint is the easiest: it's already installed and works well for flyers, newsletters, cards and brochures. Canva is good if you'd rather work in your browser. Affinity (free from Canva) and InDesign are full layout programs and keep articles linked from column to column."}},{"@type":"Question","name":"How do I open it in Canva?","acceptedAnswer":{"@type":"Answer","text":"In Canva, choose Upload and pick the .pptx file. Canva imports it as an editable design."}},{"@type":"Question","name":"How do I open it in Affinity or InDesign?","acceptedAnswer":{"@type":"Answer","text":"Choose File > Open and pick the .idml file. It opens as a normal document you can edit and save."}},{"@type":"Question","name":"What about fonts?","acceptedAnswer":{"@type":"Answer","text":"Your text keeps the fonts it used in Publisher. If the computer you open it on doesn't have one of them, the app will substitute another, and text can reflow slightly."}},{"@type":"Question","name":"Which Publisher versions work?","acceptedAnswer":{"@type":"Answer","text":"Publisher 98 through Publisher 365. Files from Publisher 95 and earlier, and password-protected files, aren't supported."}},{"@type":"Question","name":"What happens to my file?","acceptedAnswer":{"@type":"Answer","text":"Your file is converted on my server, used only to make your download, and deleted automatically within 24 hours, or within 7 days once paid, so you can download it again. I never look at it or share it."}},{"@type":"Question","name":"Is this made by Microsoft, Adobe or Canva?","acceptedAnswer":{"@type":"Answer","text":"No. I'm an independent developer. Microsoft Publisher and PowerPoint are trademarks of Microsoft, InDesign of Adobe, and Canva and Affinity of Canva."}}]}]}</script>
   <script type="module" crossorigin src="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js"></script>
-  <script type="module" crossorigin src="/tools/assets/publisher-CoueyqRX.js"></script>
-  <link rel="stylesheet" crossorigin href="/tools/assets/style-oImeWcko.css">
+  <script type="module" crossorigin src="/tools/assets/publisher-CPKkm7_-.js"></script>
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-Byj51VTQ.css">
 </head>
 <body data-api="https://convert.leducsystems.com" data-price="$12" data-pass-price="$29" data-accept=".pub" data-app="Publisher" data-image="jpg">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -64,13 +139,14 @@
 
   <section class="tool" aria-label="Converter">
     <label class="drop" id="drop">
-      <input type="file" id="file" accept=".pub" hidden>
+      <input type="file" id="file" accept=".pub" class="sr-only">
       <span class="drop-title">Drop a .pub file here</span>
-      <span class="drop-sub">or click to choose · free preview of every page · $12 for editable Word, PowerPoint and InDesign files · full refund if it doesn't work</span>
+      <span class="drop-sub">or click to choose · free preview of every page · $12 for editable Word, PowerPoint and InDesign files · full refund within 30 days, no questions asked</span>
     </label>
     <p class="status" id="status" role="status"></p>
     <div class="result" id="result" hidden></div>
     <p class="pass" id="pass" hidden>Lots of files? <button class="link" id="buy-pass" type="button">Get a 30-day pass for $29</button> and convert as many as you like.</p>
+    <p class="fine">Payments go to LeDuc Systems LLC in Phoenix, Arizona, through Stripe. Questions before you pay: <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
   </section>
 
   <section class="steps">
@@ -91,7 +167,7 @@
     <details><summary>How do I open it in Affinity or InDesign?</summary><p>Choose File > Open and pick the .idml file. It opens as a normal document you can edit and save.</p></details>
     <details><summary>What about fonts?</summary><p>Your text keeps the fonts it used in Publisher. If the computer you open it on doesn't have one of them, the app will substitute another, and text can reflow slightly.</p></details>
     <details><summary>Which Publisher versions work?</summary><p>Publisher 98 through Publisher 365. Files from Publisher 95 and earlier, and password-protected files, aren't supported.</p></details>
-    <details><summary>What happens to my file?</summary><p>Your file is converted on my server, used only to make your download, and deleted automatically within 24 hours. I never look at it or share it.</p></details>
+    <details><summary>What happens to my file?</summary><p>Your file is converted on my server, used only to make your download, and deleted automatically within 24 hours, or within 7 days once paid, so you can download it again. I never look at it or share it.</p></details>
     <details><summary>Is this made by Microsoft, Adobe or Canva?</summary><p>No. I'm an independent developer. Microsoft Publisher and PowerPoint are trademarks of Microsoft, InDesign of Adobe, and Canva and Affinity of Canva.</p></details>
   </section>
 
@@ -133,11 +209,13 @@
         <h2 class="site-footer__title" id="footer-legal">Legal</h2>
         <a class="site-footer__link" href="/privacy">Privacy Policy</a>
         <a class="site-footer__link" href="/terms">Terms of Service</a>
+        <a class="site-footer__link" href="/refunds">Refund Policy</a>
+        <button type="button" class="site-footer__link site-footer__button" data-cookie-settings>Cookie settings</button>
       </nav>
     </div>
     <div class="site-footer__bottom">
       <p>&copy; 2026 LeDuc Systems LLC</p>
-      <p>Phoenix, AZ</p>
+      <p>Phoenix, Arizona</p>
     </div>
   </div>
 </footer>
