@@ -110,7 +110,9 @@ function AboutPage() {
           <Reveal as="dl" className="about-facts">
             <div className="about-facts__item">
               <dt>Company</dt>
-              <dd>{SITE.legalName}</dd>
+              <dd>
+                {SITE.legalName}, {SITE.legalForm}
+              </dd>
             </div>
             <div className="about-facts__item">
               <dt>Founded</dt>
@@ -127,6 +129,14 @@ function AboutPage() {
               <dd>
                 <a className="link-underline" href={`mailto:${SITE.email}`}>
                   {SITE.email}
+                </a>
+              </dd>
+            </div>
+            <div className="about-facts__item">
+              <dt>Phone</dt>
+              <dd>
+                <a className="link-underline" href={SITE.phoneHref}>
+                  {SITE.phone}
                 </a>
               </dd>
             </div>

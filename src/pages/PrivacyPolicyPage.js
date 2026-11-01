@@ -140,7 +140,12 @@ const SECTIONS = [
           <strong>Scan Relay</strong> runs on your own Windows PC. Your scans go from the copier to
           that PC and then straight to Microsoft 365; they never pass through my servers. The
           Microsoft sign-in it uses is stored on that PC. The only thing Scan Relay sends me is
-          your license key, to check that it is valid.
+          your license key, to check that it is valid. The details, checked against its source
+          code, are in{' '}
+          <a className="link-underline" href="/tools/scan-relay-security/">
+            How Scan Relay handles your mail
+          </a>
+          .
         </p>
       </>
     ),
@@ -369,7 +374,11 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          {SITE.legalName}, {SITE.city}, {SITE.region}, United States. Email{' '}
+          {SITE.legalName}, {SITE.legalForm}, {SITE.city}, {SITE.region}, United States. Phone{' '}
+          <a className="link-underline" href={SITE.phoneHref}>
+            {SITE.phone}
+          </a>
+          . Email{' '}
           <a className="link-underline" href={MAILTO}>
             {SITE.email}
           </a>{' '}

@@ -53,9 +53,33 @@ export default function ContactPage() {
                   </a>{' '}
                   and it reaches exactly the same place.
                 </p>
+                <p className="body">
+                  Or call{' '}
+                  <a className="link-underline" href={SITE.phoneHref}>
+                    {SITE.phone}
+                  </a>
+                  .
+                </p>
                 <p className="body muted">
                   Writing about a conversion? Attach the file if you can, so I can see exactly what
                   went wrong and fix it.
+                </p>
+              </div>
+
+              <div className="contact-note">
+                <h2 className="contact-form__label">Company</h2>
+                <p className="body">
+                  {SITE.legalName}, {SITE.legalForm}
+                  <br />
+                  {SITE.city}, {SITE.region}
+                  <br />
+                  <a className="link-underline" href={SITE.phoneHref}>
+                    {SITE.phone}
+                  </a>
+                  <br />
+                  <a className="link-underline" href={`mailto:${SITE.email}`}>
+                    {SITE.email}
+                  </a>
                 </p>
               </div>
             </Reveal>

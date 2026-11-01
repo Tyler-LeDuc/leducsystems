@@ -19,6 +19,10 @@
 export const SITE = {
   name: 'LeDuc Systems',
   legalName: 'LeDuc Systems LLC',
+  legalForm: 'an Arizona limited liability company',
+  /* City level only: never publish a street address on this site. */
+  phone: '(623) 320-5633',
+  phoneHref: 'tel:+16233205633',
   founder: 'Tyler LeDuc',
   email: 'tyler@leducsystems.com',
   url: 'https://leducsystems.com',
@@ -39,7 +43,7 @@ export const NAV = [
   /* Static pages from the leduc-tools repo, outside the router: render as a
      plain <a>, never <Link>, or the router serves its 404 page. */
   { label: 'Products', href: '/tools/', static: true },
-  { label: 'Games', path: '/games' },
+  /* Games is linked from the footer (Company column), not the top nav. */
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
 ];

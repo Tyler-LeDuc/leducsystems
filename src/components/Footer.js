@@ -32,6 +32,9 @@ function Footer() {
             <a className="site-footer__link link-underline" href={`mailto:${SITE.email}`}>
               {SITE.email}
             </a>
+            <a className="site-footer__link link-underline" href={SITE.phoneHref}>
+              {SITE.phone}
+            </a>
           </div>
 
           <nav className="site-footer__col" aria-labelledby="footer-products">
@@ -95,7 +98,7 @@ function Footer() {
 
         <div className="site-footer__bottom">
           <p>
-            &copy; {year} {SITE.legalName}
+            &copy; {year} {SITE.legalName}, {SITE.legalForm}
           </p>
           <p className="site-footer__legal">
             {SITE.city}, {SITE.region}
