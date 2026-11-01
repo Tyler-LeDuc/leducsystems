@@ -144,7 +144,7 @@
   <li>Works with any copier or scanner that can scan to email over SMTP.</li>
   <li>Signs in once with the mailbox scans should come from; the copier never holds a Microsoft password again.</li>
   <li>Queues scans on disk if the internet drops, and sends them when it's back.</li>
-  <li>Large scans go through Microsoft's upload sessions instead of being rejected for size.</li>
+  <li>Sends scans up to about 3 MB per email, the most Microsoft accepts with the Mail.Send permission. Set each copier's maximum email size, or "split email by size", to 3 MB (2 MB if a scan still fails) so long jobs arrive as several emails. Larger single emails need an option that isn't released yet.</li>
   <li>Accepts mail only from the office's local network.</li>
 </ul>
 
@@ -163,7 +163,7 @@
 <ol>
   <li>On an office PC that stays on, download and run Scan Relay. It installs itself as a Windows service and opens its setup page.</li>
   <li>Sign in with the Microsoft 365 mailbox scans should come from. The first time at each company, a Microsoft 365 admin approves it once ("Consent on behalf of your organization").</li>
-  <li>On the copier, set the SMTP server to that PC's address (shown on the setup page), port 25, any username and password, no SSL.</li>
+  <li>On the copier, set the SMTP server to that PC's address (shown on the setup page), port 25, any username and password, no SSL. Set its maximum email size, or "split email by size", to 3 MB.</li>
   <li>Send a test scan, then enter one of your license keys on the setup page.</li>
 </ol>
 
