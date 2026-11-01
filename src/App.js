@@ -9,6 +9,7 @@ import GamesPage from './pages/GamesPage';
 import ContactPage from './pages/ContactPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
+import RefundPolicyPage from './pages/RefundPolicyPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 const EMAILJS_PUBLIC_KEY = 'HIVHympEPP7sMQ_Pl';
@@ -54,6 +55,7 @@ export function AppShell() {
           <Route path="/games" element={<GamesPage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/terms" element={<TermsOfServicePage />} />
+          <Route path="/refunds" element={<RefundPolicyPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

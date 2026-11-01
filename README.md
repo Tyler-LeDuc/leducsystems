@@ -3,7 +3,7 @@
 Site for LeDuc Systems, Tyler LeDuc's software company: browser-based tools that fix file
 problems, served from `/tools/`. Live at <https://leducsystems.com>.
 
-The site is a small static React app: seven routes, a shared design system, and one working
+The site is a small static React app: eight routes, a shared design system, and one working
 contact form. There is no CMS, no backend, and no database — content lives in a single
 JavaScript module and the form posts directly to EmailJS from the browser.
 
@@ -37,6 +37,7 @@ a concrete reason; the site is deliberately dependency-light.
 /contact          Contact — the form, embedded
 /privacy          Privacy Policy
 /terms            Terms of Service
+/refunds          Refund Policy
 *                 404
 ```
 
@@ -112,7 +113,17 @@ every other game links straight to its own store page instead.
 
 To change a headline, the games list, a FAQ answer, or the contact email, edit `site.js` —
 not the page components. Long-form legal prose is the exception and lives in
-`PrivacyPolicyPage.js` / `TermsOfServicePage.js`.
+`PrivacyPolicyPage.js` / `TermsOfServicePage.js` / `RefundPolicyPage.js`, all rendered by
+`src/components/LegalDocument.js`. Those pages describe what the code and the conversion server
+actually do (retention, processors, what is stored); when that changes, change them.
+
+### Cookie consent and fonts
+
+Google Analytics loads only after the visitor clicks Accept on the cookie banner (Consent Mode
+default denied). The banner script is inline in `public/index.html` and must stay identical to
+`src/consent.js` in the leduc-tools repo; both store the choice under `ldsConsent`. Any element
+with `data-cookie-settings` (the footer's "Cookie settings") reopens it. IBM Plex is self-hosted
+in `public/fonts/` (SIL OFL, `OFL.txt`); the tools pages load the same `/fonts/plex.css`.
 
 ---
 

@@ -1,63 +1,209 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SEO from '../components/SEO';
-import Reveal from '../components/Reveal';
-import { SITE, RESPONSE_PROMISE } from '../data/site';
-import './LegalPage.css';
+import LegalDocument from '../components/LegalDocument';
+import { SITE } from '../data/site';
 
-const LAST_UPDATED = 'October 27, 2026';
+const LAST_UPDATED = 'October 31, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
+const CANCEL_MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent('Cancel my try-on plan')}`;
 
+/* Product terms here must match the product pages under /tools/ (prices,
+   trial, refund windows) and the conversion server's Stripe descriptions. */
 const SECTIONS = [
   {
     id: 'acceptance',
-    title: 'Acceptance of these terms',
+    title: 'Who these terms are with',
     content: (
       <>
         <p>
-          These terms apply to your use of the website at{' '}
-          <span className="hi">leducsystems.com</span>, run by {SITE.founder} under the name{' '}
-          {SITE.name}. By using the site, you agree to what is written here. If you do not, do
-          not use the site.
+          These terms are an agreement between you and {SITE.legalName}, an Arizona limited
+          liability company run by {SITE.founder} (&ldquo;I&rdquo;, &ldquo;me&rdquo;). They cover
+          this website, the tools under <span className="hi">leducsystems.com/tools/</span>, Scan
+          Relay, the virtual try-on, and anything you buy from me. By using the site or buying a
+          product, you agree to them. If you don&rsquo;t agree, don&rsquo;t use them.
+        </p>
+        <p>
+          My products are for businesses and adults. You must be at least 18 (or the age of majority
+          where you live) to buy, and if you buy for a company, you confirm you may bind it to these
+          terms.
         </p>
       </>
     ),
   },
   {
-    id: 'tools',
-    title: 'The tools',
+    id: 'buying',
+    title: 'Prices and payment',
     content: (
       <>
         <p>
-          The file tools under <span className="hi">leducsystems.com/tools/</span> are sold by{' '}
-          {SITE.name}. Each paid tool shows its price, and a free preview of your own file, before
-          you pay. Payments are taken by Stripe on its own checkout page.
+          Every product page shows its price, in US dollars, before you pay, and the Stripe checkout
+          page shows the total before you confirm. There are no hidden fees. Payments are taken by
+          Stripe on its own checkout page; I never see your card number. Most tools let you try
+          your own file or a free trial first, so you can check a product works before paying.
         </p>
+      </>
+    ),
+  },
+  {
+    id: 'licenses',
+    title: 'What each purchase gives you',
+    content: (
+      <>
+        <ul className="list">
+          <li>
+            <strong>Publisher, PageMaker and PowerPoint converters:</strong> the converted files for
+            the file you paid for, or, with a 30-day pass, unlimited conversions for 30 days. You
+            can use the converted files however you like.
+          </li>
+          <li>
+            <strong>Scan Relay:</strong> a lifetime license for one office (one PC), with free
+            updates. Dealer packs give you that number of single-office licenses to install at your
+            clients&rsquo; offices.
+          </li>
+          <li>
+            <strong>FIRE to IRIS and spreadsheet to IRIS:</strong> a license for one payer (one
+            business) for the 2027 filing season.
+          </li>
+          <li>
+            <strong>InfoPath to Excel:</strong> a one-time license for as many forms as you need.
+          </li>
+        </ul>
         <p>
-          If a paid result doesn&rsquo;t work for you, email{' '}
-          <a className="link-underline" href={MAILTO}>
-            {SITE.email}
-          </a>{' '}
-          within 30 days and I will refund you in full. What happens to the files you upload is
-          described in the{' '}
+          A license key is for you (or, for dealer packs, your clients) and the use it was sold for.
+          Don&rsquo;t publish, share or resell keys, and don&rsquo;t try to get around license
+          checks, payment, or the limits on free use. The software itself stays mine; you get the
+          right to use it, not ownership of it.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'subscriptions',
+    title: 'Try-on subscriptions',
+    content: (
+      <>
+        <ul className="list">
+          <li>
+            Plans are billed monthly in advance by Stripe: Starter is $49 a month, Growth $149 a
+            month, as shown on the try-on page.
+          </li>
+          <li>
+            Every plan starts with a 14-day free trial. Stripe takes your card when you sign up and
+            makes the first charge when the trial ends, unless you have cancelled.
+          </li>
+          <li>
+            The plan renews every month until you cancel. To cancel, email{' '}
+            <a className="link-underline" href={CANCEL_MAILTO}>
+              {SITE.email}
+            </a>{' '}
+            from the address on the plan. I cancel it the same business day and confirm by email.
+            Cancel during the trial and you are not charged at all.
+          </li>
+          <li>
+            Cancelling stops all future charges. I don&rsquo;t refund part of a month already paid,
+            except as the{' '}
+            <Link className="link-underline" to="/refunds">
+              Refund Policy
+            </Link>{' '}
+            says.
+          </li>
+          <li>
+            If I change a plan&rsquo;s price, I will email you at least 30 days before the new price
+            applies to you, so you can cancel first.
+          </li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    id: 'tryon-license',
+    title: 'Using the try-on on your store',
+    content: (
+      <>
+        <ul className="list">
+          <li>
+            Each plan covers one store: the domain you signed up with and its subdomains. Using it on
+            another domain needs its own plan.
+          </li>
+          <li>
+            The try-on engine, the embed script and the keys it issues remain mine. You may embed it
+            on your store while your plan is active; it stops working when the plan ends.
+          </li>
+          <li>
+            Use it only to let shoppers preview products on your store. Don&rsquo;t copy, modify or
+            reverse-engineer the engine, remove its license checks, or use it to capture, store or
+            analyse shoppers&rsquo; faces.
+          </li>
+          <li>
+            You are responsible for your store, for the notices and terms you give your shoppers, and
+            for complying with the laws that apply to your store.
+          </li>
+          <li>The try-on is for business use by store owners, not for personal use.</li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    id: 'your-files',
+    title: 'Your files and information',
+    content: (
+      <>
+        <p>
+          Files you convert stay yours. You let me process them only to make your preview and
+          download; how long they are kept is in the{' '}
           <Link className="link-underline" to="/privacy">
             Privacy Policy
           </Link>
-          .
+          . Only upload files you have the right to use. You are responsible for checking a
+          converted file before you rely on it, and for keeping your own copy of the original.
+        </p>
+        <p>
+          The 1099 tools format data for the IRS IRIS system; they are not tax advice, and you are
+          responsible for the accuracy of what you file. I am not affiliated with the IRS, Microsoft,
+          Adobe, McNeel or any other company whose file formats my tools work with.
         </p>
       </>
     ),
   },
   {
-    id: 'games',
-    title: 'Games on itch.io',
+    id: 'acceptable-use',
+    title: 'Acceptable use',
     content: (
       <>
         <p>
-          This site links to games released on itch.io under the handle{' '}
-          <span className="hi">{SITE.itchioHandle}</span>. The games themselves are hosted and
-          served by itch.io and covered by{' '}
+          Don&rsquo;t use the site or the tools to break the law, to upload malware or material you
+          have no right to share, to overload or attack the servers, or to get around rate limits or
+          payment. I may block access, or cancel a license or plan, that is used this way.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'refunds',
+    title: 'Refunds',
+    content: (
+      <>
+        <p>
+          Each product&rsquo;s refund promise is set out in the{' '}
+          <Link className="link-underline" to="/refunds">
+            Refund Policy
+          </Link>
+          . In short: Publisher and PageMaker conversions and passes are refunded in full within 30
+          days, no questions asked; other paid tools and licenses are refunded in full within 30
+          days if they don&rsquo;t work for you.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'third-parties',
+    title: 'Other companies’ services',
+    content: (
+      <>
+        <p>
+          Payments are handled by Stripe, contact-form messages by EmailJS, and the games I link to
+          are hosted on itch.io under{' '}
           <a
             className="link-underline"
             href="https://itch.io/docs/legal/terms"
@@ -66,26 +212,25 @@ const SECTIONS = [
           >
             itch.io&rsquo;s own terms
           </a>
-          , not this page. This site is not itch.io and is not responsible for itch.io&rsquo;s
-          platform, payments, or account systems.
+          . Scan Relay works with your Microsoft 365 account under Microsoft&rsquo;s terms. I&rsquo;m
+          not responsible for how those services run.
         </p>
       </>
     ),
   },
   {
     id: 'website',
-    title: 'Use of this website',
+    title: 'This website',
     content: (
       <>
         <p>
-          The content on this site is general information about {SITE.name}, its tools, and the
-          games released under it. It is not professional advice of any kind, and reading it does not
-          create any relationship beyond that of a visitor. I make no promise that the site will
-          always be available or free of errors.
+          The text, design and logo on this site belong to {SITE.legalName}. Quoting or linking to it
+          is welcome; copying it wholesale or presenting it as yours is not. Content on the site is
+          general information, not professional advice.
         </p>
         <p>
-          The text, design, and marks on this site belong to {SITE.name}. Do not copy the site
-          wholesale or present it as your own. Quoting or linking to it is welcome.
+          If anything on the site is hard to use with a keyboard, screen reader or other assistive
+          technology, email me and I will fix it or help you another way.
         </p>
       </>
     ),
@@ -96,15 +241,12 @@ const SECTIONS = [
     content: (
       <>
         <p className="legal-fineprint">
-          To the maximum extent permitted by law, this website, the tools, and the games it links
-          to are
-          provided without warranties of any kind, whether express or implied, including any
-          implied warranty of merchantability, fitness for a particular purpose, or
-          non-infringement.
-        </p>
-        <p>
-          I do not warrant that the site, the tools, or the games will be uninterrupted, bug-free, or
-          available on any particular device or browser.
+          Apart from the refund promises in the Refund Policy, and to the fullest extent permitted by
+          law, the website, the tools, Scan Relay and the try-on are provided &ldquo;as is&rdquo; and
+          &ldquo;as available&rdquo;, without warranties of any kind, express or implied, including
+          warranties of merchantability, fitness for a particular purpose, title and
+          non-infringement. I don&rsquo;t warrant that they will be uninterrupted, error-free, or work
+          with every file, copier, browser or device.
         </p>
       </>
     ),
@@ -115,33 +257,29 @@ const SECTIONS = [
     content: (
       <>
         <p className="legal-fineprint">
-          To the maximum extent permitted by law, {SITE.name} is not liable for indirect,
-          incidental, special, consequential, or punitive damages arising from your use of this
-          site, the tools, or the games it links to, however caused and regardless of the theory of
-          liability.
+          To the maximum extent permitted by law, {SITE.legalName} is not liable for lost profits,
+          lost data, costs of substitute products, or any indirect, incidental, special,
+          consequential or punitive damages arising from these terms or your use of (or inability to
+          use) the site or products. My total liability for any claim is limited to the greater of
+          $50 and the amount you paid me for the product concerned in the 12 months before the claim.
         </p>
         <p>
-          For a paid tool, your remedy is the refund described under The tools. Nothing here
-          limits liability that cannot be limited by law.
+          Nothing in these terms limits liability that the law does not allow to be limited, or takes
+          away rights you have as a consumer under the law where you live.
         </p>
       </>
     ),
   },
   {
-    id: 'third-parties',
-    title: 'Third-party services on this site',
+    id: 'indemnity',
+    title: 'Claims caused by your use',
     content: (
       <>
         <p>
-          The contact form is delivered by EmailJS, site traffic is measured with Google
-          Analytics, payments for the tools are taken by Stripe, and the games are hosted on
-          itch.io. Those services are operated
-          by their own companies under their own terms, and I am not responsible for how they
-          run. What EmailJS and Google Analytics receive and why is described in the{' '}
-          <Link className="link-underline" to="/privacy">
-            Privacy Policy
-          </Link>
-          .
+          If someone makes a claim against me because you used a product in breach of these terms or
+          the law (for example, by converting files you had no right to use, or by running the
+          try-on on your store without the notices your shoppers need), you agree to cover my
+          reasonable costs of dealing with it.
         </p>
       </>
     ),
@@ -152,20 +290,26 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          These terms are governed by the laws of the United States and of the state in which{' '}
-          {SITE.name} is established, without regard to conflict-of-law rules.
+          These terms are governed by the laws of the State of Arizona and of the United States,
+          without regard to conflict-of-law rules. Any dispute will be heard in the state or federal
+          courts in Maricopa County, Arizona, except that either of us may bring a claim in small
+          claims court where it qualifies. Before going to court, please email me: most problems
+          are fixed faster that way.
         </p>
       </>
     ),
   },
   {
-    id: 'modifications',
-    title: 'Changes to these terms',
+    id: 'changes',
+    title: 'Changes and general terms',
     content: (
       <>
         <p>
-          These terms may be updated, and the date at the top changes when they are. There is no
-          archive of previous versions; the page you are reading is the current one.
+          I may update these terms; the date at the top changes when I do, and the version in force
+          when you bought something governs that purchase. If any part of these terms can&rsquo;t be
+          enforced, the rest still applies. Not enforcing a term is not a waiver of it. These terms,
+          the Privacy Policy and the Refund Policy are the whole agreement between us about the site
+          and products. Notices between us can be given by email.
         </p>
       </>
     ),
@@ -176,142 +320,34 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          Questions about these terms go directly to me at{' '}
+          {SITE.legalName}, {SITE.city}, {SITE.region}, United States. Email{' '}
           <a className="link-underline" href={MAILTO}>
             {SITE.email}
           </a>
-          . {RESPONSE_PROMISE}
+          .
         </p>
       </>
     ),
   },
 ];
 
-const num = (index) => String(index + 1).padStart(2, '0');
-
 export default function TermsOfServicePage() {
   return (
-    <>
-      <SEO
-        title="Terms of Service"
-        description="The terms covering this site: what the contact form collects, no warranty of fitness, and a capped limitation of liability."
-        path="/terms"
-      />
-
-      <section className="section legal-front">
-        <div className="container">
-          <Reveal className="legal-front__head">
-            <p className="legal-mark">
-              <span className="mono">Appendix</span>
-              <span className="legal-mark__glyph">B</span>
-            </p>
-            <div className="legal-front__title">
-              <h1 className="h2">Terms of Service</h1>
-              <dl className="legal-front__fields">
-                <div>
-                  <dt className="mono">Issued by</dt>
-                  <dd>{SITE.name}</dd>
-                </div>
-                <div>
-                  <dt className="mono">Last updated</dt>
-                  <dd>{LAST_UPDATED}</dd>
-                </div>
-              </dl>
-            </div>
-            <div className="legal-front__act">
-              <Link className="btn btn--primary" to="/contact">
-                Get in touch
-              </Link>
-              <a className="link-arrow" href={MAILTO}>
-                Email {SITE.email}
-              </a>
-            </div>
-          </Reveal>
-
-          <hr className="datum legal-front__datum" />
-
-          <Reveal
-            as="nav"
-            className="legal-index"
-            delay={60}
-            aria-label="Sections of these terms"
-          >
-            <p className="mono legal-index__label">Contents</p>
-            <ul className="legal-index__list">
-              {SECTIONS.map((section, i) => (
-                <li className="legal-index__item" key={section.id}>
-                  <a className="legal-index__link" href={`#${section.id}`}>
-                    <span className="legal-index__num">{num(i)}</span>
-                    <span>{section.title}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section section--rule section--tight">
-        <div className="container">
-          <Reveal className="note legal-summary legal-body">
-            <p>
-              <strong>The short version:</strong> {SITE.name} sells small software tools for
-              files. Every paid tool shows its price and a free preview before you pay, and comes
-              with a 30-day refund. The games I make on the side run on itch.io under its own
-              terms.
-            </p>
-          </Reveal>
-
-          <Reveal as="article" className="legal-doc legal-body" delay={60}>
-            {SECTIONS.map((section, i) => (
-              <section
-                key={section.id}
-                id={section.id}
-                className="legal-clause"
-                aria-labelledby={`${section.id}-title`}
-              >
-                <span className="legal-clause__num" aria-hidden="true">
-                  {num(i)}
-                </span>
-                <h2 className="h3 legal-clause__title" id={`${section.id}-title`}>
-                  {section.title}
-                </h2>
-                <div className="legal-clause__body">{section.content}</div>
-              </section>
-            ))}
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section section--tight">
-        <div className="container">
-          <Reveal className="cta-block legal-body">
-            <p className="eyebrow">
-              <span className="ordinal">{num(SECTIONS.length)}</span>
-              <span>Next</span>
-            </p>
-            <h2 className="h2">Have a question about these terms?</h2>
-            <p className="lede">
-              Ask directly rather than guessing at what a policy page means. {RESPONSE_PROMISE}
-            </p>
-            <div className="cluster">
-              <Link className="btn btn--primary btn--lg" to="/contact">
-                Get in touch
-              </Link>
-              <a className="link-arrow" href={MAILTO}>
-                Email {SITE.email}
-              </a>
-            </div>
-            <p className="body--sm muted">
-              See also the{' '}
-              <Link className="link-underline" to="/privacy">
-                Privacy Policy
-              </Link>
-              .
-            </p>
-          </Reveal>
-        </div>
-      </section>
-    </>
+    <LegalDocument
+      mark="B"
+      title="Terms of Service"
+      path="/terms"
+      description="The terms for LeDuc Systems' website and products: prices and payment, licenses, try-on subscriptions, acceptable use, warranty, liability and Arizona law."
+      lastUpdated={LAST_UPDATED}
+      summary={
+        <>
+          {SITE.legalName} sells software to businesses and adults. Prices are shown before you pay,
+          most products can be tried first, paid tools and licenses come with a 30-day refund, and try-on plans
+          renew monthly until you cancel by email. Arizona law applies.
+        </>
+      }
+      sections={SECTIONS}
+      credit
+    />
   );
 }

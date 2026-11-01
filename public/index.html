@@ -1,20 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VPCZV3J5CQ"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-VPCZV3J5CQ');
-    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#F7F6F2" />
     <meta name="color-scheme" content="light" />
     <meta name="robots" content="index, follow" />
+    <!-- Cookie consent + Google Analytics. GA loads only after the visitor clicks Accept
+         (Consent Mode default denied). Keep identical to src/consent.js in the leduc-tools repo. -->
+    <script>
+    (function () {
+      var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+      gtag('js', new Date());
+      function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+      function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+      function clearGa() {
+        document.cookie.split(';').forEach(function (c) {
+          var n = c.split('=')[0].trim();
+          if (n.indexOf('_ga') === 0) {
+            ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+              document.cookie = n + '=; Max-Age=0; path=/' + d;
+            });
+          }
+        });
+      }
+      function apply(v) {
+        if (v === 'granted') {
+          gtag('consent', 'update', { analytics_storage: 'granted' });
+          if (!configured) {
+            configured = true;
+            gtag('config', GA);
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+            document.head.appendChild(s);
+          }
+        } else {
+          gtag('consent', 'update', { analytics_storage: 'denied' });
+          clearGa();
+        }
+      }
+      function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+      function choose(v) { write(v); apply(v); close(); }
+      function open(focus) {
+        if (!bar) {
+          if (!document.getElementById('lds-consent-style')) {
+            var st = document.createElement('style');
+            st.id = 'lds-consent-style';
+            st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+              + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+              + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+              + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+              + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+            document.head.appendChild(st);
+          }
+          bar = document.createElement('section');
+          bar.className = 'lds-consent';
+          bar.setAttribute('aria-label', 'Cookie choice');
+          bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+            + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+          bar.addEventListener('click', function (e) {
+            var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+            if (b) choose(b.getAttribute('data-v'));
+          });
+          bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+          document.body.appendChild(bar);
+        }
+        if (focus) bar.querySelector('button').focus();
+      }
+      document.addEventListener('click', function (e) {
+        var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+        if (t) { e.preventDefault(); open(true); }
+      });
+      var saved = read();
+      if (saved === 'granted') apply(saved);
+      else if (saved !== 'denied') {
+        if (document.body) open(false);
+        else document.addEventListener('DOMContentLoaded', function () { open(false); });
+      }
+    })();
+    </script>
 
     <title>LeDuc Systems &mdash; Focused software, built and sold by one developer</title>
     <meta
@@ -31,13 +100,9 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-    <!-- Typography (required by src/styles/tokens.css) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Typography (required by src/styles/tokens.css): IBM Plex, self-hosted in public/fonts/
+         (SIL OFL 1.1), so no visitor request goes to Google Fonts. -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/fonts/plex.css" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />

@@ -48,12 +48,17 @@ const ROUTES = {
   '/privacy': {
     title: 'Privacy Policy',
     description:
-      'What LeDuc Systems collects through this website: contact form submissions delivered by EmailJS and Google Analytics traffic data. Nothing else, and nothing sold.',
+      'What LeDuc Systems collects, why, how long it keeps it, who processes it (Stripe, Hetzner, Google, EmailJS), and how to get your data deleted.',
   },
   '/terms': {
     title: 'Terms of Service',
     description:
-      'The terms covering this site: what the contact form collects, no warranty of fitness, and a capped limitation of liability.',
+      "The terms for LeDuc Systems' website and products: prices and payment, licenses, try-on subscriptions, acceptable use, warranty, liability and Arizona law.",
+  },
+  '/refunds': {
+    title: 'Refund Policy',
+    description:
+      'LeDuc Systems refunds: 30 days on the converters, Scan Relay, the 1099 tools and InfoPath to Excel; try-on plans cancel by email with no charge in the trial.',
   },
 };
 

@@ -331,6 +331,16 @@
   transition: color var(--dur) var(--ease);
 }
 .site-footer__link:hover { color: var(--accent-600); }
+/* "Cookie settings": a button that reads as a footer link. */
+.site-footer__button {
+  font-family: inherit;
+  line-height: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
 
 .site-footer__bottom {
   display: flex;
