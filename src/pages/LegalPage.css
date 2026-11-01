@@ -269,3 +269,14 @@
   .legal-clause__title { grid-row: 2; }
   .legal-clause__body { grid-row: 3; margin-top: var(--sp-3); }
 }
+
+/* "Cookie settings" inside the prose: a button that reads as an inline link. */
+.legal-inline-button {
+  font: inherit;
+  color: var(--text-hi);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  padding: 0;
+  cursor: pointer;
+}

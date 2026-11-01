@@ -85,6 +85,11 @@ function Footer() {
                 {item.label}
               </Link>
             ))}
+            {/* Reopens the cookie banner; the inline consent script in
+                public/index.html listens for clicks on [data-cookie-settings]. */}
+            <button type="button" className="site-footer__link site-footer__button" data-cookie-settings>
+              Cookie settings
+            </button>
           </nav>
         </div>
 
@@ -93,7 +98,7 @@ function Footer() {
             &copy; {year} {SITE.legalName}
           </p>
           <p className="site-footer__legal">
-            {SITE.city}, {SITE.regionShort}
+            {SITE.city}, {SITE.region}
           </p>
         </div>
       </div>

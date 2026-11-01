@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import { SITE } from './data/site';
 
@@ -543,7 +544,7 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
           <a className="link-underline" href={`mailto:${CONTACT_EMAIL}`}>
             {CONTACT_EMAIL}
           </a>{' '}
-          directly and it will reach us either way.
+          directly and it will reach me either way.
         </p>
       ) : null}
 
@@ -557,6 +558,13 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
           Or email {CONTACT_EMAIL} directly
         </a>
       </div>
+      <p className="field__hint">
+        I use what you send only to reply to you. It is delivered by EmailJS to my inbox; see the{' '}
+        <Link className="link-underline" to="/privacy#contact-form">
+          Privacy Policy
+        </Link>
+        .
+      </p>
     </form>
   );
 

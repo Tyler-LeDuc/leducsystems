@@ -100,8 +100,8 @@ export const FEATURED_PRODUCTS = [
     category: 'Documents · Browser',
     line: 'Turns Microsoft Publisher .pub files into editable PowerPoint, Word and InDesign files.',
     body: [
-      'Microsoft retired Publisher, and nothing else opens a .pub file. Upload one and you see a free preview of every page; pay and you get the same document as PowerPoint, Word and InDesign (IDML) files, with text, pictures and layout still editable.',
-      'Files are used only to make your download and are deleted automatically.',
+      'Microsoft retired Publisher, and most other software can’t open a .pub file. Upload one and you see a free preview of every page; pay and you get the same document as PowerPoint, Word and InDesign (IDML) files, with text, pictures and layout still editable.',
+      'Files are used only to make your download and are deleted automatically, within 24 hours (7 days if you paid).',
     ],
     facts: [
       ['Price', '$12 per file, or $29 for 30 days of files'],
@@ -152,6 +152,7 @@ export const MORE_PRODUCTS = [
 export const LEGAL_NAV = [
   { label: 'Privacy Policy', path: '/privacy' },
   { label: 'Terms of Service', path: '/terms' },
+  { label: 'Refund Policy', path: '/refunds' },
 ];
 
 /* How I build and sell. Every line is checkable on the product pages; do
@@ -166,7 +167,7 @@ export const PRINCIPLES = {
     },
     {
       title: 'Your data stays yours',
-      body: 'The try-on and the 1099 tools run in your browser. Scan Relay sends from your network straight to Microsoft 365. Uploaded files are deleted after conversion.',
+      body: 'The try-on and the 1099 tools run in your browser. Scan Relay sends from your network straight to Microsoft 365. Uploaded files are deleted automatically within a day, or a week if you paid.',
     },
     {
       title: 'Refunds without a fight',
@@ -604,7 +605,7 @@ export const FAQ = [
     id: 'files',
     question: 'What happens to my files and data?',
     answer:
-      'The try-on, the Rhino converter and the 1099 tools run in your browser, so nothing leaves your device. Scan Relay sends straight from your office to Microsoft 365. The Publisher and PageMaker converters use your file only to make the download, then delete it.',
+      'The try-on, the Rhino converter and the 1099 tools run in your browser, so nothing leaves your device. Scan Relay sends straight from your office to Microsoft 365. The Publisher and PageMaker converters use your file only to make the download and delete it automatically within 24 hours (7 days if you paid).',
   },
   {
     id: 'games',

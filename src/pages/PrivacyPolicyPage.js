@@ -1,199 +1,326 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SEO from '../components/SEO';
-import Reveal from '../components/Reveal';
-import { SITE, RESPONSE_PROMISE } from '../data/site';
-import './LegalPage.css';
+import LegalDocument from '../components/LegalDocument';
+import { SITE } from '../data/site';
 
-const LAST_UPDATED = 'October 27, 2026';
+const LAST_UPDATED = 'October 31, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
+const DELETE_MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent('Privacy request')}`;
 
+/* Every statement below describes what the code actually does. Sources:
+   the contact form (src/ContactForm.js), the consent script (public/index.html
+   and leduc-tools src/consent.js), and the conversion server
+   (apps/pub-converter/pub2idml/server.py: KEEP_HOURS=24, paid files kept 7x,
+   DATA/notify.jsonl, DATA/licenses, DATA/passes, DATA/tryon, request log lines
+   with the client IP). If any of those change, change this page. */
 const SECTIONS = [
   {
     id: 'scope',
-    title: 'Who this policy covers',
+    title: 'Who I am and what this covers',
     content: (
       <>
         <p>
-          {SITE.name} is {SITE.founder}&rsquo;s software company. It sells the file tools at{' '}
-          <span className="hi">leducsystems.com/tools/</span>. This policy describes what happens to information
-          collected through the website at <span className="hi">leducsystems.com</span>, including
-          anything you send through the contact form on that site.
+          {SITE.legalName} is a one-person software company in {SITE.city}, {SITE.region}, run
+          by {SITE.founder}. In this policy, &ldquo;I&rdquo; and &ldquo;me&rdquo; mean {SITE.legalName}.
+          I am the controller of the personal information described here.
+        </p>
+        <p>
+          This policy covers the website at <span className="hi">leducsystems.com</span>, the tools
+          under <span className="hi">leducsystems.com/tools/</span>, the conversion and licensing
+          server at <span className="hi">convert.leducsystems.com</span>, Scan Relay, the virtual
+          try-on, and email you exchange with me. It does not cover the games on itch.io, which
+          itch.io runs under its own policy.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'summary-table',
+    title: 'What I collect, why, and for how long',
+    content: (
+      <>
+        <ul className="list">
+          <li>
+            <strong>Contact form and email.</strong> Your name, email address, message, the
+            product you name and any file you attach. Used to reply to you. Kept in my mailbox for
+            as long as the conversation and normal business records need it, or until you ask me
+            to delete it.
+          </li>
+          <li>
+            <strong>Files you upload to a converter</strong> (Publisher, PageMaker, bulk converter,
+            PowerPoint text wrap). Used only to make your preview and download. Deleted
+            automatically within 24 hours, or within 7 days if you paid so you can download again.
+          </li>
+          <li>
+            <strong>Server request logs.</strong> Time, your IP address, the address requested and
+            short event notes (for example, a conversion&rsquo;s page count and duration, or the
+            first characters of a license key that failed a check). Used to prevent abuse, limit
+            how many conversions one address can run per hour, and fix problems. The logs are
+            rotated by the server&rsquo;s operating system when they reach its size limit.
+          </li>
+          <li>
+            <strong>Purchases.</strong> Stripe collects your card details, email address, name and
+            billing country on its own checkout page. I receive your email, name, what you bought
+            and whether the payment went through. I never see your full card number.
+          </li>
+          <li>
+            <strong>License keys</strong> (Scan Relay, FIRE to IRIS and spreadsheet to IRIS,
+            InfoPath to Excel) and <strong>30-day passes</strong>. The key, the product, the
+            purchase time, the Stripe checkout ID and your email, kept on my server for as long as
+            the key or pass can be used, so I can confirm it is valid and help you if you lose it.
+          </li>
+          <li>
+            <strong>Try-on subscriptions.</strong> Your store&rsquo;s domain, plan, email, the name
+            on the checkout, your Stripe customer and subscription IDs, and the subscription&rsquo;s
+            status. Kept while the subscription runs and afterwards for my business records.
+          </li>
+          <li>
+            <strong>&ldquo;Email me when it&rsquo;s ready&rdquo;.</strong> Your email, the product
+            and the time. Used to send that one message. Ask me and I remove it.
+          </li>
+          <li>
+            <strong>Analytics, only if you accept cookies.</strong> Pages viewed, referring site,
+            approximate location from your IP address, device and browser type, and tool events
+            such as &ldquo;file converted&rdquo; (never the file or its contents). See{' '}
+            <a className="link-underline" href="#cookies">
+              Cookies
+            </a>
+            .
+          </li>
+        </ul>
+        <p>
+          I don&rsquo;t ask for more than a product needs. There are no user accounts or passwords,
+          and I don&rsquo;t buy data about you from anyone.
         </p>
       </>
     ),
   },
   {
     id: 'contact-form',
-    title: 'What the contact form collects',
+    title: 'The contact form',
     content: (
       <>
         <p>
-          Apart from the &ldquo;email me when it&rsquo;s ready&rdquo; box on some tool pages
-          (see below), the contact form is the only place on this site where you are asked to type
-          anything. When you submit it, the following is sent to me:
+          The form on the contact page is delivered by EmailJS, a form-delivery service, to my
+          mailbox at <span className="hi">{SITE.email}</span>, which is hosted by Google Workspace.
+          While you type, a draft is saved in your own browser (local storage, key{' '}
+          <span className="hi">ldsContactDraft</span>) so a refresh doesn&rsquo;t lose it. The
+          draft never leaves your device and is cleared when the message is sent.
+        </p>
+        <p>
+          What you send is used only to reply to you. It is not added to a mailing list and not
+          used for advertising.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'tools',
+    title: 'The tools and where your files go',
+    content: (
+      <>
+        <p>
+          <strong>Tools that run in your browser and upload nothing:</strong> the Rhino converter,
+          FIRE to IRIS, spreadsheet to IRIS, InfoPath to Excel and the try-on demo. Your file stays
+          on your computer. When you buy a license for one of them, the page asks my server whether
+          the key is valid, and saves the key in your browser&rsquo;s local storage so you
+          don&rsquo;t have to paste it again.
+        </p>
+        <p>
+          <strong>Tools that upload your file:</strong> the Publisher and PageMaker converters, the
+          bulk converter and PowerPoint text wrap need software that can&rsquo;t run in a browser,
+          so your file is sent over HTTPS to <span className="hi">convert.leducsystems.com</span>,
+          a server I rent from Hetzner Online in Germany. The file and its converted versions are
+          used only to make your preview and download, and are deleted automatically within 24
+          hours, or within 7 days if you paid. I don&rsquo;t open your files. If you send me a file
+          by email because a conversion went wrong, I use it only to fix that problem.
+        </p>
+        <p>
+          <strong>Scan Relay</strong> runs on your own Windows PC. Your scans go from the copier to
+          that PC and then straight to Microsoft 365; they never pass through my servers. The
+          Microsoft sign-in it uses is stored on that PC. The only thing Scan Relay sends me is
+          your license key, to check that it is valid.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'tryon',
+    title: 'The virtual try-on',
+    content: (
+      <>
+        <p>
+          The try-on runs entirely in the shopper&rsquo;s browser. Face tracking and drawing the
+          makeup happen on the device; no camera frames, photos or face measurements are sent to
+          me or stored anywhere. On the leducsystems.com try-on pages, the face-tracking model
+          files are served from this site.
+        </p>
+        <p>
+          When a store adds the try-on to its own website, the store decides how it is used there
+          and is responsible for the notices it gives its shoppers. The embed script loads from my
+          server, which checks that the store&rsquo;s plan is active; like any web request, that
+          request includes the shopper&rsquo;s IP address and the store&rsquo;s domain, which appear
+          in the server request log described above.
+        </p>
+        <p>
+          When a store signs up, I keep the details listed under{' '}
+          <a className="link-underline" href="#summary-table">
+            What I collect
+          </a>{' '}
+          (domain, plan, email, Stripe customer and subscription IDs) on my server to run the plan.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'cookies',
+    title: 'Cookies and similar storage',
+    content: (
+      <>
+        <p>
+          The site uses Google Analytics (measurement ID <span className="hi">G-VPCZV3J5CQ</span>)
+          to count visits, and only if you click Accept on the cookie banner. Until then, and if you
+          click Decline, the Google Analytics script is not loaded at all. When it is loaded it sets
+          these cookies:
         </p>
         <ul className="list">
-          <li>Your name and email address</li>
-          <li>Which tool you are writing about, if you fill that in — it is optional</li>
-          <li>The message itself</li>
-          <li>Any file you choose to attach</li>
-        </ul>
-        <p>
-          That message is delivered to <span className="hi">{SITE.email}</span> through EmailJS, a
-          third-party form-delivery service. EmailJS processes the submission in order to send the
-          email and is the only service that handles the contents of your message besides my email
-          provider.
-        </p>
-        <p>
-          Everything you send is used for one purpose: to reply to you and to have the
-          conversation you started. It is not added to a mailing list, not used for advertising,
-          and not passed to anyone else.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'local-drafts',
-    title: 'Drafts saved in your own browser',
-    content: (
-      <>
-        <p>
-          While you are filling in the contact form, what you have typed so far is saved in your
-          browser&rsquo;s local storage so that a refresh or a closed tab does not lose it. That
-          draft stays on your device. It is not transmitted anywhere, and it is cleared once the
-          form is submitted. Clearing your browser&rsquo;s site data removes it immediately.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'analytics',
-    title: 'Analytics',
-    content: (
-      <>
-        <p>
-          This site uses Google Analytics (measurement ID{' '}
-          <span className="hi">G-VPCZV3J5CQ</span>, loaded via Google&rsquo;s gtag.js script) to
-          understand which pages people read and how they arrived. What that records is standard
-          web analytics data: pages viewed, referring site, approximate location derived from your
-          IP address, and general device and browser information.
-        </p>
-        <p>
-          I look at this in aggregate. It is not used to build a profile of you, and it is not
-          connected to anything you submit through the contact form.
-        </p>
-        <p>
-          This site sets no cookies of its own. Google Analytics sets its own cookies in order to
-          tell one visit apart from another. You can block them with your browser&rsquo;s settings,
-          with any content blocker, or with Google&rsquo;s official Analytics opt-out browser
-          add-on, and the site will keep working normally.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'hosting',
-    title: 'Hosting',
-    content: (
-      <>
-        <p>
-          The site is a static site served by GitHub Pages. Like any web host, GitHub receives the
-          ordinary request information required to deliver a page to you, including your IP address
-          and browser user agent. I do not have access to those server logs, and I do not maintain
-          logs of my own.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'file-tools',
-    title: 'Files you convert with the tools',
-    content: (
-      <>
-        <p>
-          The Rhino converter runs entirely in your browser. Your file never leaves your computer.
-        </p>
-        <p>
-          The Publisher converter needs software that can&rsquo;t run in a browser, so the file you
-          drop is uploaded to my conversion server, hosted by Hetzner. It is used only to make your
-          preview and download, nobody looks at it, and it and the converted files are deleted
-          automatically within 24 hours, or within 7 days if you paid for the conversion, so you
-          can download it again. The server logs the time, your IP address and the page
-          count of each conversion, to prevent abuse and fix problems.
-        </p>
-        <p>
-          Payments for the Publisher converter are handled by Stripe on its own checkout page. I
-          never see or store your card details; Stripe tells me only whether a payment went
-          through, and keeps the receipt details it needs under its own privacy policy.
-        </p>
-        <p>
-          If you ask on a tool page to be emailed when a tool is ready, your email address is stored
-          on my conversion server only to send you that email, and you can ask me to remove it at
-          any time.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'not-collected',
-    title: 'What this site does not do',
-    content: (
-      <>
-        <p>Stated plainly, so there is no ambiguity about it:</p>
-        <ul className="list">
-          <li>There are no user accounts, logins, or passwords</li>
-          <li>Card details are entered only on Stripe&rsquo;s checkout page and never reach me</li>
-          <li>There are no advertising pixels, retargeting tags, or ad networks</li>
-          <li>There is no session recording, heatmapping, or screen capture</li>
-          <li>Your information is never sold, rented, or traded</li>
           <li>
-            Nothing is shared with anyone beyond the services named in this policy, except where I
-            am legally required to disclose it
+            <span className="hi">_ga</span> and <span className="hi">_ga_&lt;ID&gt;</span>: set by
+            Google to tell one visitor&rsquo;s visits apart. They last up to two years unless you
+            delete them. Advertising features are switched off: ad storage and ad personalisation
+            are always denied.
           </li>
         </ul>
-      </>
-    ),
-  },
-  {
-    id: 'retention',
-    title: 'How long information is kept',
-    content: (
-      <>
-        <p>
-          Messages you send stay in my email account for as long as they are useful to the
-          conversation and to normal business records. If you ask me to delete a message and
-          anything attached to it, I will, and I will confirm when it is done.
-        </p>
-        <p>
-          Analytics data is held by Google under the retention setting configured in that product
-          and is deleted by Google on that schedule. I hold no separate copy of it.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'your-choices',
-    title: 'Your choices',
-    content: (
-      <>
-        <p>You can, at any time and without explaining why:</p>
+        <p>Things saved in your browser that are not used for tracking:</p>
         <ul className="list">
-          <li>Ask for a copy of everything you have sent me</li>
-          <li>Ask me to correct something</li>
-          <li>Ask me to delete your messages and any attachments</li>
-          <li>Opt out of analytics using your browser settings or a blocker</li>
           <li>
-            Skip the form entirely and email me at{' '}
-            <a className="link-underline" href={MAILTO}>
-              {SITE.email}
-            </a>
+            <span className="hi">ldsConsent</span>: your Accept or Decline choice, so the banner
+            doesn&rsquo;t ask again.
+          </li>
+          <li>
+            <span className="hi">ldsContactDraft</span>: the contact-form draft described above.
+          </li>
+          <li>License keys and 30-day passes you bought, so the tools remember them.</li>
+        </ul>
+        <p>
+          To change your choice, use{' '}
+          <button type="button" className="link-underline legal-inline-button" data-cookie-settings>
+            Cookie settings
+          </button>{' '}
+          (also in the footer of every page). Declining after you had accepted stops Google
+          Analytics and deletes its cookies for this site. You can also clear cookies in your
+          browser. I do not respond to the &ldquo;Do Not Track&rdquo; browser signal, but I honour
+          Decline.
+        </p>
+        <p>
+          There are no advertising pixels, retargeting tags or session recording on this site. The
+          fonts are served from this site, not from Google Fonts.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'processors',
+    title: 'Who else handles your information',
+    content: (
+      <>
+        <p>I use these service providers, each only for the job named:</p>
+        <ul className="list">
+          <li>
+            <strong>Stripe</strong> (payments and receipts). Stripe also uses payment data under
+            its own privacy policy, for example to prevent fraud.
+          </li>
+          <li>
+            <strong>Hetzner Online</strong> (the server at convert.leducsystems.com, in Germany).
+          </li>
+          <li>
+            <strong>Google</strong>: Google Workspace for my email, and Google Analytics if you
+            accept cookies.
+          </li>
+          <li>
+            <strong>EmailJS</strong> (delivers contact-form messages to my mailbox).
+          </li>
+          <li>
+            <strong>GitHub Pages</strong> (hosts this website). GitHub receives the ordinary request
+            information needed to serve a page, such as your IP address; I don&rsquo;t receive those
+            logs.
           </li>
         </ul>
         <p>
-          Requests go to <span className="hi">{SITE.email}</span> and get a reply within one
-          business day.
+          I don&rsquo;t sell or rent personal information, and I don&rsquo;t share it for
+          advertising. I disclose it otherwise only if the law requires it, to protect my rights or
+          prevent fraud, or to a buyer of the business, who would be bound by this policy.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'business-email',
+    title: 'Emails to businesses',
+    content: (
+      <>
+        <p>
+          I sometimes email businesses directly about a product that solves a problem they are
+          likely to have, using a business email address the company publishes. Each email says who
+          I am, gives a postal address, and lets you opt out by replying STOP; I then stop emailing
+          that address. You can also ask me what I hold about you and to delete it.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'your-rights',
+    title: 'Your rights and how to delete your data',
+    content: (
+      <>
+        <p>Wherever you live, you can ask me to:</p>
+        <ul className="list">
+          <li>Tell you what personal information I hold about you and give you a copy</li>
+          <li>Correct it</li>
+          <li>Delete it</li>
+          <li>Stop using it for a purpose you object to</li>
+          <li>Stop emailing you</li>
+        </ul>
+        <p>
+          <strong>To make a request,</strong> email{' '}
+          <a className="link-underline" href={DELETE_MAILTO}>
+            {SITE.email}
+          </a>{' '}
+          from the address you used with me, saying what you want. I reply within one business day
+          and finish the request within 30 days, and I confirm when it&rsquo;s done. I may ask a
+          question to confirm the request comes from you. If I have to keep something (for example,
+          payment records that tax law requires me to keep), I&rsquo;ll tell you what and why.
+          Records held by Stripe can also be requested from Stripe directly.
+        </p>
+        <p>
+          <strong>In the UK and EEA</strong>, you also have the right to data portability, to
+          restrict processing, and to complain to your data protection authority. The legal bases I
+          rely on are: performing a contract with you (purchases, licenses, conversions,
+          subscriptions, replying to you), my legitimate interests (preventing abuse, keeping
+          business records, emailing businesses about relevant products), legal obligations (tax
+          records), and your consent (analytics cookies, which you can withdraw at any time).
+        </p>
+        <p>
+          <strong>In US states with privacy laws</strong> (such as California, Colorado, Connecticut,
+          Virginia and others), you have the rights listed above and the right not to be
+          discriminated against for using them. I don&rsquo;t sell personal information or share it
+          for targeted advertising, and I don&rsquo;t use it for profiling or automated decisions
+          with legal or similarly significant effects. If I turn down a request, you can appeal by
+          replying to my answer.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'transfers',
+    title: 'International transfers',
+    content: (
+      <>
+        <p>
+          I am based in the United States, and some of the providers above store data in the United
+          States. If you are outside the US, your information will be processed there, where privacy
+          law may differ from yours. Uploaded files are processed on my server in Germany.
         </p>
       </>
     ),
@@ -204,11 +331,10 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          The site is served over HTTPS, and form submissions are encrypted in transit. Messages
-          land in an ordinary email account. No system is beyond compromise, and I am not going to
-          claim otherwise, but nothing sensitive needs to be sent through this form. If you have
-          something confidential to share, say so first and we will agree on a sensible way to
-          send it.
+          The site and the conversion server use HTTPS. Uploaded files are deleted on the schedule
+          above, and the conversion software runs with restricted access on the server. No system
+          is completely secure and I can&rsquo;t guarantee yours won&rsquo;t be affected by a
+          breach, but if one affects your information I will tell you as the law requires.
         </p>
       </>
     ),
@@ -219,9 +345,9 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          This site is not directed at children under 13. I do not knowingly collect information
-          from them. If you believe a child has sent something through the form, email me and I
-          will delete it.
+          My products are for businesses and adults. They are not directed at children, and I do
+          not knowingly collect personal information from anyone under 13 (or under 16 in the UK
+          and EEA). If you believe a child has sent me information, email me and I will delete it.
         </p>
       </>
     ),
@@ -232,9 +358,7 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          If what this site does changes, this page changes with it and the date at the top is
-          updated. There is no archive of previous versions; the page you are reading is the
-          current one.
+          When what I do changes, this page changes with it and the date at the top is updated.
         </p>
       </>
     ),
@@ -245,146 +369,42 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          Questions about this policy, or about anything you have sent through the site, go
-          directly to me at{' '}
+          {SITE.legalName}, {SITE.city}, {SITE.region}, United States. Email{' '}
           <a className="link-underline" href={MAILTO}>
             {SITE.email}
-          </a>
-          . {RESPONSE_PROMISE}
+          </a>{' '}
+          or use the{' '}
+          <Link className="link-underline" to="/contact">
+            contact form
+          </Link>
+          .
         </p>
       </>
     ),
   },
 ];
 
-const num = (index) => String(index + 1).padStart(2, '0');
-
 export default function PrivacyPolicyPage() {
   return (
-    <>
-      <SEO
-        title="Privacy Policy"
-        description="What LeDuc Systems collects through this website: contact form submissions delivered by EmailJS and Google Analytics traffic data. Nothing else, and nothing sold."
-        path="/privacy"
-      />
-
-      <section className="section legal-front">
-        <div className="container">
-          <Reveal className="legal-front__head">
-            <p className="legal-mark">
-              <span className="mono">Appendix</span>
-              <span className="legal-mark__glyph">A</span>
-            </p>
-            <div className="legal-front__title">
-              <h1 className="h2">Privacy Policy</h1>
-              <dl className="legal-front__fields">
-                <div>
-                  <dt className="mono">Issued by</dt>
-                  <dd>{SITE.name}</dd>
-                </div>
-                <div>
-                  <dt className="mono">Last updated</dt>
-                  <dd>{LAST_UPDATED}</dd>
-                </div>
-              </dl>
-            </div>
-            <div className="legal-front__act">
-              <Link className="btn btn--primary" to="/contact">
-                Get in touch
-              </Link>
-              <a className="link-arrow" href={MAILTO}>
-                Email {SITE.email}
-              </a>
-            </div>
-          </Reveal>
-
-          <hr className="datum legal-front__datum" />
-
-          <Reveal
-            as="nav"
-            className="legal-index"
-            delay={60}
-            aria-label="Sections of this policy"
-          >
-            <p className="mono legal-index__label">Contents</p>
-            <ul className="legal-index__list">
-              {SECTIONS.map((section, i) => (
-                <li className="legal-index__item" key={section.id}>
-                  <a className="legal-index__link" href={`#${section.id}`}>
-                    <span className="legal-index__num">{num(i)}</span>
-                    <span>{section.title}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section section--rule section--tight">
-        <div className="container">
-          <Reveal className="note legal-summary legal-body">
-            <p>
-              <strong>The short version:</strong> this site collects nothing except what you choose
-              to type into the contact form, plus ordinary traffic statistics from Google
-              Analytics. Your message is emailed to me and used to reply to you. Nothing is sold,
-              nothing is shared beyond the two services named below, and you can have anything you
-              sent me deleted by asking.
-            </p>
-          </Reveal>
-
-          <Reveal as="article" className="legal-doc legal-body" delay={60}>
-            {SECTIONS.map((section, i) => (
-              <section
-                key={section.id}
-                id={section.id}
-                className="legal-clause"
-                aria-labelledby={`${section.id}-title`}
-              >
-                <span className="legal-clause__num" aria-hidden="true">
-                  {num(i)}
-                </span>
-                <h2 className="h3 legal-clause__title" id={`${section.id}-title`}>
-                  {section.title}
-                </h2>
-                <div className="legal-clause__body">{section.content}</div>
-              </section>
-            ))}
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section section--tight">
-        <div className="container">
-          <Reveal className="cta-block legal-body">
-            <p className="eyebrow">
-              {/* The closing clause of the sheet, so it takes the number
-                  after the last one rather than a mark of its own. */}
-              <span className="ordinal">{num(SECTIONS.length)}</span>
-              <span>Next</span>
-            </p>
-            <h2 className="h2">Still have a question about your data?</h2>
-            <p className="lede">
-              Ask me directly rather than guessing at what a policy page means. {RESPONSE_PROMISE}
-            </p>
-            <div className="cluster">
-              <Link className="btn btn--primary btn--lg" to="/contact">
-                Get in touch
-              </Link>
-              <a className="link-arrow" href={MAILTO}>
-                Email {SITE.email}
-              </a>
-            </div>
-            <p className="body--sm muted">
-              See also the{' '}
-              <Link className="link-underline" to="/terms">
-                Terms of Service
-              </Link>
-              .
-            </p>
-          </Reveal>
-        </div>
-      </section>
-    </>
+    <LegalDocument
+      mark="A"
+      title="Privacy Policy"
+      path="/privacy"
+      description="What LeDuc Systems collects, why, how long it keeps it, who processes it (Stripe, Hetzner, Google, EmailJS), and how to get your data deleted."
+      lastUpdated={LAST_UPDATED}
+      summary={
+        <>
+          I collect what each product needs and nothing more: what you send me, files you upload
+          for conversion (deleted within a day, or a week if you paid), purchase and license
+          records, and analytics only if you accept cookies. Nothing is sold. Email{' '}
+          <a className="link-underline" href={DELETE_MAILTO}>
+            {SITE.email}
+          </a>{' '}
+          and I&rsquo;ll send you a copy of your data or delete it.
+        </>
+      }
+      sections={SECTIONS}
+      credit
+    />
   );
 }
