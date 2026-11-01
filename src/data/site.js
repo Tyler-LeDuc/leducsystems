@@ -104,7 +104,7 @@ export const FEATURED_PRODUCTS = [
       'Files are used only to make your download and are deleted automatically, within 24 hours (7 days if you paid).',
     ],
     facts: [
-      ['Price', '$12 per file, or $29 for 30 days of files'],
+      ['Price', '$12 per file, or $19 for 30 days of files'],
       ['Preview', 'Free, every page, before you pay'],
       ['Refund', 'Full refund within 30 days, no questions asked'],
     ],
