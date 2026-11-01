@@ -106,7 +106,7 @@ export const FEATURED_PRODUCTS = [
     facts: [
       ['Price', '$12 per file, or $29 for 30 days of files'],
       ['Preview', 'Free, every page, before you pay'],
-      ['Refund', '30 days, if a result doesn’t work for you'],
+      ['Refund', 'Full refund within 30 days, no questions asked'],
     ],
     primary: { label: 'Convert a .pub file', href: '/tools/publisher-converter/' },
     secondary: { label: 'Bulk converter', href: '/tools/bulk-publisher-converter/' },
@@ -171,7 +171,7 @@ export const PRINCIPLES = {
     },
     {
       title: 'Refunds without a fight',
-      body: 'If Scan Relay or a conversion doesn’t work for you, email me within 30 days for a full refund.',
+      body: 'Email me within 30 days of paying for a conversion and I refund it in full, no questions asked. Scan Relay and the other licenses get a full refund within 30 days if they don’t work for you.',
     },
     {
       title: 'You talk to the developer',
@@ -599,7 +599,7 @@ export const FAQ = [
     id: 'cost',
     question: 'How do I pay, and what if it doesn’t work?',
     answer:
-      'Each product page shows its price before you start, and you can try every product before paying. Scan Relay and the converters have a 30-day refund if they don’t work for you.',
+      'Each product page shows its price before you start, and you can try every product before paying. Publisher and PageMaker conversions are refunded within 30 days, no questions asked; Scan Relay and the other licenses within 30 days if they don’t work for you.',
   },
   {
     id: 'files',

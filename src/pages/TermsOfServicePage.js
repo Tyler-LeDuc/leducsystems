@@ -189,8 +189,9 @@ const SECTIONS = [
           <Link className="link-underline" to="/refunds">
             Refund Policy
           </Link>
-          . In short: email me within 30 days if a paid tool or license doesn&rsquo;t work for you
-          and I refund you in full.
+          . In short: Publisher and PageMaker conversions and passes are refunded in full within 30
+          days, no questions asked; other paid tools and licenses are refunded in full within 30
+          days if they don&rsquo;t work for you.
         </p>
       </>
     ),
