@@ -24,7 +24,7 @@
   .empty p { margin: 0; max-width: 320px; color: #bbb; }
   .row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
   button, .btn { font: inherit; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 999px; padding: 9px 16px; cursor: pointer; min-height: 40px; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
-  button.primary, .btn.primary { background: var(--accent); color: #fff; border-color: transparent; font-weight: 600; }
+  button.primary, .btn.primary { background: #d61f55; color: #fff; border-color: transparent; font-weight: 600; } /* 5.0:1 against white text */
   button:disabled { opacity: .5; cursor: default; }
   input[type=file] { display: none; }
   .toolbar { position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; gap: 8px; justify-content: space-between; }
@@ -64,6 +64,7 @@
     <div class="swatches" id="swatches"></div>
     <label class="slider">Intensity <input type="range" id="op" min="40" max="150" value="100"><span id="opv">100%</span></label>
     <p class="fine">Works in Safari and Chrome on phones and desktops. Good light helps, like it does for a mirror.</p>
+    <p class="fine">Your camera stays on your device: the face is tracked and the makeup drawn in your browser, nothing is sent or stored, and the tracker's files come from leducsystems.com. For adults; not intended for children under 13. <a href="/privacy">Privacy policy</a>.</p>
     <div class="cta"><a class="btn primary" href="/tools/tryon/">Get this on your store</a> <p class="fine" style="margin-top:8px">From $49 a month. One line of code on a product page.</p></div>
   </aside>
 </main>
@@ -83,7 +84,10 @@ const brand = (q.get('brand') || '').slice(0, 40); if (brand) { $('brand').textC
 const state = { shade: SHADES[0], opacity: 1, compare: false };
 let tryon = null; const setStatus = (t) => { $('status').textContent = t; };
 const onStatus = (s) => { if (s && (s.contextLost || s.glError || s.error)) setStatus('Graphics problem: reload the page'); };
-async function ensure() { if (!tryon) tryon = await LeducTryOn.create({ container: $('stage'), onStatus, licenseKey: LICENSE_KEY }); return tryon; }
+// The face tracker's runtime and models come from this site (../mp), not a third-party CDN: the browser contacts leducsystems.com only.
+const MP = new URL('../mp', location.href).href.replace(/\/$/, '');
+const MODELS = { wasmBase: MP, faceModel: `${MP}/face_landmarker.task`, hairModel: `${MP}/hair_segmenter.tflite`, multiclassModel: `${MP}/selfie_multiclass_256x256.tflite`, handModel: `${MP}/hand_landmarker.task` };
+async function ensure() { if (!tryon) tryon = await LeducTryOn.create({ container: $('stage'), onStatus, licenseKey: LICENSE_KEY, models: MODELS }); return tryon; }
 const ready = () => { $('empty').hidden = true; $('toolbar').hidden = false; };
 async function push() { if (!tryon || tryon.mode === 'idle') return; await tryon.apply(state.shade ? { lips: { color: state.shade.hex, finish: state.shade.finish, opacity: state.opacity } } : {}); }
 function renderSwatches() {
