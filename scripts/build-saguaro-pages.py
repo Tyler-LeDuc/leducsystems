@@ -81,6 +81,8 @@ urls.append(page("Privacy Policy", prep(SRC / "privacy-policy-draft.md", docs), 
                  "What Saguaro Hours for Jira stores, where it stays, and how it is deleted."))
 urls.append(page("Support", prep(SRC / "support-and-sla-draft.md", docs), "support",
                  "How to reach support for Saguaro Hours for Jira and our response times."))
+urls.append(page("Terms", prep(SRC / "terms.md", docs), "terms",
+                 "Terms for Saguaro Hours for Jira: the Atlassian Marketplace standard end user agreement."))
 urls.append(page("Security", prep(SRC / "docs" / "security.md", docs), "security",
                  "How Saguaro Hours for Jira keeps your data on Atlassian Forge."))
 ordered = [d for d in DOC_ORDER if d in docs] + sorted(docs - set(DOC_ORDER))
