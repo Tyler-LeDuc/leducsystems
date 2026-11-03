@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How Jira time tracking app pricing works | Saguaro Hours</title>
+<meta name="description" content="How Atlassian Marketplace bills Jira Cloud apps: every Jira user counts, prices by user band, annual at 10 times monthly. Worked examples.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/jira-time-tracking-pricing/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>How Jira time tracking app pricing works</h1>
+<p>A Jira Cloud app listed on the Atlassian Marketplace as paid via Atlassian is billed by Atlassian. The billing rules are the same for every such app; only the prices differ. This page explains them, with sources, and shows where Saguaro Hours for Jira sits.</p>
+<p>All sources were read on 2026-11-03.</p>
+<h2>The rules</h2>
+<h3>1. Every Jira user is counted, not only the people who log time</h3>
+<p>The app is billed for the same number of users as your Jira site.</p>
+<ul>
+<li>"Marketplace apps for Jira are priced based on the maximum number of users of Jira apps on your site." Atlassian, "Understand billing for Marketplace apps", <a href="https://support.atlassian.com/subscriptions-and-billing/docs/understand-billing-for-cloud-apps/">https://support.atlassian.com/subscriptions-and-billing/docs/understand-billing-for-cloud-apps/</a></li>
+<li>"All Marketplace apps must match (or exceed) the parent product's tier." Atlassian Purchasing and Licensing FAQ, <a href="https://www.atlassian.com/licensing/purchase-licensing">https://www.atlassian.com/licensing/purchase-licensing</a></li>
+<li>"For example, if a customer has a Confluence license for 500 users, they need to purchase the same license for apps." Atlassian developer docs, "Pricing, payment, and billing" (last updated 2025-06-17), <a href="https://developer.atlassian.com/platform/marketplace/pricing-payment-and-billing/">https://developer.atlassian.com/platform/marketplace/pricing-payment-and-billing/</a></li>
+</ul>
+<p>So a site with 200 Jira users and 20 people who log time pays for 200 users.</p>
+<h3>2. Monthly bills use the highest user count in the month</h3>
+<ul>
+<li>"For monthly Cloud subscriptions, pricing is now based on the maximum number of users throughout your billing period." Atlassian Purchasing and Licensing FAQ, link above.</li>
+<li>Atlassian calls this maximum quantity billing. Its announcement lists Marketplace apps among the subscriptions moving to it. Users added during the month are charged pro rata. Users removed during the month do not lower that month's bill; the lower count shows on the next bill. Annual subscriptions are currently not affected. Source: "Upcoming changes to your Atlassian billing" (2025-05-27, updated 2025-06-13), <a href="https://www.atlassian.com/blog/announcements/maximum-quantity-billing">https://www.atlassian.com/blog/announcements/maximum-quantity-billing</a></li>
+<li>The app's billing cycle must match the Jira subscription's: "The billing cycle of the Marketplace app must match the billing cycle of the parent Atlassian app." Source: "Understand billing for Marketplace apps", link above.</li>
+</ul>
+<h3>3. Annual costs 10 times monthly, bought by user tier</h3>
+<ul>
+<li>"We charge 10 times monthly price as annual price for cloud apps." Atlassian developer docs, "Pricing, payment, and billing", link above.</li>
+<li>"For annual Cloud subscriptions, pricing is based on user tiers." Atlassian Purchasing and Licensing FAQ, link above.</li>
+</ul>
+<p>An annual subscription is bought for a tier, such as 15, 25, 50, 100, 200 or 500 users. Those are the annual tiers in Tempo's public Marketplace price list (<a href="https://marketplace.atlassian.com/rest/2/addons/is.origo.jira.tempo-plugin/pricing/cloud/live">https://marketplace.atlassian.com/rest/2/addons/is.origo.jira.tempo-plugin/pricing/cloud/live</a>). In that list, a site with 11 users would buy the 15-user tier.</p>
+<h3>4. Prices are set per band of users, and each band is charged at its own rate</h3>
+<p>The partner sets a price per user for each band: 11 to 100 (the form labels it 1 to 100), 101 to 250, 251 to 1,000, and so on. The 1 to 10 tier is a flat price, which can be $0. (Bands as shown in Atlassian's pricing form for partners when this app's listing was filled in, 2026-11-03.) Atlassian announced the $0 option for the 1 to 10 tier on 2021-12-07 (<a href="https://community.developer.atlassian.com/t/introducing-a-new-0-price-point-for-your-1-10-cloud-app-user-tier/54225">https://community.developer.atlassian.com/t/introducing-a-new-0-price-point-for-your-1-10-cloud-app-user-tier/54225</a>).</p>
+<p>Above 10 users, the bill is graduated. The first band's rate applies to users 1 to 100, the next band's rate to users 101 to 250, and so on. Atlassian's price guidance for partners reads tier prices the same way: to get a tier's per-user price, "Subtract the total monthly price of the previous lower tier from the tier's price", then divide by the users added (developer docs, link above).</p>
+<p>Published totals show it. Tempo's annual price for 200 users is $10,200:</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Calculation</th>
+<th>Annual price</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Graduated (each band at its own rate)</td>
+<td>10 x (100 x $5.99 + 100 x $4.21)</td>
+<td>$10,200.00</td>
+</tr>
+<tr>
+<td>Flat (whole site at the 101 to 250 rate)</td>
+<td>10 x 200 x $4.21</td>
+<td>$8,420.00</td>
+</tr>
+<tr>
+<td>Tempo's published price</td>
+<td></td>
+<td>$10,200.00</td>
+</tr>
+</tbody>
+</table>
+<p>Two results follow:</p>
+<ul>
+<li>At 11 users the free or flat tier ends, and all 11 users are billed at the 11 to 100 rate. Tempo's annual price for 15 users is $898.50, which is 10 x 15 x $5.99.</li>
+<li>The total never drops when a site adds a user. Only the step from 10 to 11 users is a jump.</li>
+</ul>
+<h2>Worked examples</h2>
+<p>Monthly list prices in US dollars, for a whole site.</p>
+<table>
+<thead>
+<tr>
+<th>Jira users</th>
+<th>Saguaro Hours calculation</th>
+<th>Saguaro Hours</th>
+<th>Tempo Timesheets calculation</th>
+<th>Tempo Timesheets</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>free tier</td>
+<td>$0.00</td>
+<td>flat tier</td>
+<td>$10.00</td>
+</tr>
+<tr>
+<td>11</td>
+<td>11 x $2.00</td>
+<td>$22.00</td>
+<td>11 x $5.99</td>
+<td>$65.89</td>
+</tr>
+<tr>
+<td>50</td>
+<td>50 x $2.00</td>
+<td>$100.00</td>
+<td>50 x $5.99</td>
+<td>$299.50</td>
+</tr>
+<tr>
+<td>100</td>
+<td>100 x $2.00</td>
+<td>$200.00</td>
+<td>100 x $5.99</td>
+<td>$599.00</td>
+</tr>
+<tr>
+<td>250</td>
+<td>100 x $2.00 + 150 x $1.50</td>
+<td>$425.00</td>
+<td>100 x $5.99 + 150 x $4.21</td>
+<td>$1,230.50</td>
+</tr>
+<tr>
+<td>500</td>
+<td>$425.00 + 250 x $1.00</td>
+<td>$675.00</td>
+<td>$1,230.50 + 250 x $1.99</td>
+<td>$1,728.00</td>
+</tr>
+<tr>
+<td>1,000</td>
+<td>$425.00 + 750 x $1.00</td>
+<td>$1,175.00</td>
+<td>$1,230.50 + 750 x $1.99</td>
+<td>$2,723.00</td>
+</tr>
+</tbody>
+</table>
+<p>Annual, at 10 times the monthly price for the tier:</p>
+<table>
+<thead>
+<tr>
+<th>Annual user tier</th>
+<th>Saguaro Hours (computed)</th>
+<th>Tempo Timesheets (published)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15</td>
+<td>$300.00</td>
+<td>$898.50</td>
+</tr>
+<tr>
+<td>50</td>
+<td>$1,000.00</td>
+<td>$2,995.00</td>
+</tr>
+<tr>
+<td>100</td>
+<td>$2,000.00</td>
+<td>$5,990.00</td>
+</tr>
+<tr>
+<td>500</td>
+<td>$6,750.00</td>
+<td>$17,280.00</td>
+</tr>
+<tr>
+<td>1,000</td>
+<td>$11,750.00</td>
+<td>$27,230.00</td>
+</tr>
+</tbody>
+</table>
+<p>Tempo figures come from Tempo's public Marketplace price list (link above, last changed 2026-10-13) and <a href="https://www.tempo.io/pricing/jira-time-tracking">https://www.tempo.io/pricing/jira-time-tracking</a> . Saguaro's annual figures are computed with the 10 times rule; the live listing will show Atlassian's figures.</p>
+<h2>Where Saguaro Hours sits</h2>
+<table>
+<thead>
+<tr>
+<th>Users</th>
+<th>Saguaro Hours per user per month</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 to 10</td>
+<td>free</td>
+</tr>
+<tr>
+<td>11 to 100</td>
+<td>$2.00</td>
+</tr>
+<tr>
+<td>101 to 250</td>
+<td>$1.50</td>
+</tr>
+<tr>
+<td>251 to 1,000</td>
+<td>$1.00</td>
+</tr>
+<tr>
+<td>Above 1,000</td>
+<td>$1.00</td>
+</tr>
+</tbody>
+</table>
+<p>These are the prices entered in the Marketplace listing, submitted on 2026-11-03 and waiting for Atlassian's approval. Billing is done by Atlassian under the rules above, so every Jira user on the site counts.</p>
+<p>Because the bill covers every Jira user, the cost per person who logs time depends on how many of your users track time. For a 100-user site where 20 people log time: Saguaro Hours costs $200.00 / 20 = $10.00 per person a month, and Tempo Timesheets costs $599.00 / 20 = $29.95.</p>
+<p>See the <a href="/saguaro-hours/">product page</a> and <a href="/saguaro-hours/tempo-alternative/">Saguaro Hours as a Tempo alternative</a>. To try it early, <a href="mailto:tyler@leducsystems.com?subject=Saguaro%20early%20access">email tyler@leducsystems.com with the subject "Saguaro early access"</a>.</p>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>

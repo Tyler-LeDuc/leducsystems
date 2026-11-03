@@ -4,6 +4,8 @@ import html
 import re
 from pathlib import Path
 
+import shutil
+
 import markdown
 
 SRC = Path("C:/Users/Tyler/apps/jira-time/listing")
@@ -22,7 +24,7 @@ h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.
 a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
 code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
-.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
 @media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
 </style>"""
 
@@ -45,14 +47,14 @@ def autolink(text):
     return re.sub(r"(?<!\]\()(?<![<\[])(https://[^\s)]+[^\s).,])", r"<\1>", text)
 
 
-def page(title, body_md, path, description):
+def page(title, body_md, path, description, full_title=False):
     body = markdown.markdown(body_md, extensions=["tables"])
     out = OUT / path / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     url = f"https://leducsystems.com/saguaro-hours/{path + '/' if path else ''}"
     out.write_text(f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{html.escape(title)} | Saguaro Hours for Jira</title>
+<title>{html.escape(title if full_title else title + ' | Saguaro Hours for Jira')}</title>
 <meta name="description" content="{html.escape(description)}">
 <link rel="canonical" href="{url}">
 <link rel="icon" href="/favicon.ico">
@@ -95,5 +97,17 @@ for name in ordered:
 index_md = "# Saguaro Hours for Jira documentation\n\n" + "\n".join(items) + \
     "\n\nAlso see [Support](/saguaro-hours/support/), [Security](/saguaro-hours/security/) and the [Privacy Policy](/saguaro-hours/privacy/).\n"
 urls.append(page("Documentation", index_md, "docs", "Guides for installing and using Saguaro Hours for Jira."))
+# Marketing pages: front matter gives the exact title, description and output path.
+SITE = Path("C:/Users/Tyler/apps/jira-time/site")
+for f in sorted(SITE.glob("*.md")):
+    text = f.read_text(encoding="utf-8")
+    m = re.match(r"---\n(.*?)\n---\n", text, re.S)
+    meta = dict(re.findall(r'^(\w+): "(.*)"$', m.group(1), re.M))
+    body = autolink(link_doc_mentions(text[m.end():], docs))
+    urls.append(page(meta["title"], body, meta["path"], meta["description"], full_title=True))
+img = OUT / "img"
+img.mkdir(parents=True, exist_ok=True)
+for png in (SRC / "assets" / "screens").glob("*.png"):
+    shutil.copy2(png, img / png.name)
 print("\n".join(urls))
 print(len(ordered), "doc pages")
