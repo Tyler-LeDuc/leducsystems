@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weekly timesheet | Saguaro Hours for Jira</title>
+<meta name="description" content="Saguaro Hours for Jira documentation: Weekly timesheet.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/docs/weekly-timesheet/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Weekly timesheet</h1>
+<p>Open Saguaro Hours from the Apps menu. Everyone sees the My timesheet and Reports tabs. Team leads and Jira administrators also see Approvals.</p>
+<h2>The grid</h2>
+<ul>
+<li>Rows are issues. Columns are Monday to Sunday of the shown week. Today is highlighted and weekends are shaded.</li>
+<li>The header shows your name and Jira time zone. Prev, Next, This week and Refresh move and reload the view.</li>
+<li>Row totals, day totals and a week total are shown.</li>
+<li>A small green $ in a cell means at least one worklog in it is marked billable.</li>
+</ul>
+<h2>Entering time</h2>
+<ul>
+<li>Click a cell and type. Enter or leaving the cell saves. Escape reverts.</li>
+<li>Accepted forms: 1.5, 1:30, 1h 30m, 90m. Invalid text gets a red border and is not saved.</li>
+<li>A new worklog starts at 09:00 in your Jira time zone on that day.</li>
+<li>Emptying a cell or entering 0 deletes every worklog in that cell.</li>
+<li>If a cell holds one worklog, its duration changes and its comment is kept. Clearing it deletes that worklog. Neither asks first.</li>
+<li>A cell that holds several worklogs shows "n entries" under the total. If you type a new total there, the first worklog gets the total and keeps its comment, and the others are deleted with their comments. The grid asks first: a dialog under the cell says how many worklogs will be deleted, that their comments go with them (and how many have one), and that this cannot be undone. Clearing such a cell asks the same way before deleting all of them.</li>
+<li>Cancel (focused first; Escape or a click outside does the same) writes nothing and puts the old total back in the cell. The confirm button names what it does, for example "Save 4h and delete 2 worklogs".</li>
+<li>To change one of several worklogs, use the Log work panel on the issue or Jira's Work log tab.</li>
+</ul>
+<h2>Adding rows</h2>
+<ul>
+<li>Type an issue key in the box above the grid and press Enter or Add row. As you type, Jira's issue search suggests issues. Pick one with the mouse or the arrow keys and Enter.</li>
+<li>Rows added by hand exist only on the page. They are lost when you reload, unless they have a worklog that week. Rows with hours come back by themselves.</li>
+<li>Remove a row with the remove button when it has no hours.</li>
+<li>Copy last week adds last week's rows without hours. It is disabled when the whole shown week is locked. Rows you added by hand, or copied, carry across weeks until you close the page.</li>
+</ul>
+<h2>Required hours</h2>
+<p>A chip under the status row compares your logged hours with the required hours per week set by the admin. It reads, for example, "36.5h short of 40h" in amber or "40h met" in green. The chip is always per week, also when periods are monthly.</p>
+<h2>Locked days</h2>
+<p>When a period is submitted or approved, its cells turn grey and read-only, and the add box is hidden if the whole week is locked. See <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</p>
+<h2>Reminder banner</h2>
+<p>A banner appears for the previous period if it is short of the required hours or unsubmitted. It links to that period. It also shows for periods that are already submitted or approved but short, where you cannot change anything. The wording follows the status (for example, it mentions a rejection).</p>
+<p>The banner only shows if you were using time tracking by then, so a new user is not told about a week before they started. At least one of these must be true:</p>
+<ul>
+<li>The period has hours or a timesheet record.</li>
+<li>You have a worklog dated on or before the last day of the period.</li>
+<li>Your first timesheet record is on or before that day.</li>
+</ul>
+<h2>Notes</h2>
+<ul>
+<li>Your worklogs are real Jira worklogs. You can edit them in Jira too, but not inside a locked period without the app flagging it (post-lock-warnings.md).</li>
+<li>The grid shows your own worklogs only.</li>
+</ul>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>

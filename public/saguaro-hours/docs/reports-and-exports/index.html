@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reports and exports | Saguaro Hours for Jira</title>
+<meta name="description" content="Saguaro Hours for Jira documentation: Reports and exports.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/docs/reports-and-exports/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Reports and exports</h1>
+<p>Reports is a tab on the Saguaro Hours page, open to every user.</p>
+<h2>Run a report</h2>
+<ol>
+<li>Choose a range: this week, last week, this month, last month or custom.</li>
+<li>Optional filters: team, users, projects.</li>
+<li>Group by one field, then optionally by a second: user, team, project, epic or parent, issue type, label, billable, or any attribute.</li>
+<li>The screen shows totals per group, a grand total and a detail table.</li>
+</ol>
+<p>Regrouping after the report has loaded is instant.</p>
+<p>A long run shows how far it has got, an estimate of the time left once a few seconds have been timed, and a Cancel button. Cancel shows nothing from that run. The estimate is rough: a Jira rate limit wait or one very long issue moves it.</p>
+<h2>What counts</h2>
+<ul>
+<li>Hours are native Jira worklogs, read as you. You see worklogs on issues you can browse.</li>
+<li>Days are bucketed in your Jira time zone.</li>
+<li>A worklog with several labels, or a person in several teams, is placed under one combined label. Totals do not double count.</li>
+<li>The screen shows the first 500 detail rows. Exports include all rows, up to the 25,000 limit.</li>
+<li>A report holds up to 25,000 worklogs. Above that it stops and shows no totals, because partial totals would be wrong for billing. Narrow the date range, or filter by team, user or project, and run it again.</li>
+<li>If the billable and attribute data cannot be read, the screen warns you instead of showing everything as not billable.</li>
+</ul>
+<h2>Saved reports</h2>
+<ul>
+<li>Save the current setup under a name. You can keep up to 50.</li>
+<li>Saved reports belong to you. Load, Update and Delete (with confirmation) are available.</li>
+<li>A preset range such as This week moves forward when you load it. A custom range stays fixed.</li>
+</ul>
+<h2>Exports</h2>
+<ul>
+<li>Summary CSV.</li>
+<li>Detail CSV.</li>
+<li>Excel (.xlsx) with Summary and Detail sheets.</li>
+</ul>
+<p>CSV files use UTF-8 with a byte order mark and CRLF line ends. Text that starts with =, +, - or @ gets a leading quote so a worklog description cannot run as a spreadsheet formula. The files are built in your browser and are not sent anywhere.</p>
+<h2>Limits</h2>
+<ul>
+<li>Up to 25,000 worklogs per report.</li>
+<li>If Jira keeps refusing with a rate limit after 90 seconds of waiting on one call, the report stops with a message and no table. It never shows part of the hours.</li>
+</ul>
+<p>Measured in our load test, on 300 issues with one person's worklogs and one viewer:</p>
+<ul>
+<li>A report of 4,644 worklogs took 15 to 18 seconds.</li>
+</ul>
+<p>Estimates, not measured. No report near 25,000 worklogs has been run. These figures are extrapolated from that load test of 5,970 worklogs, as about 4 ms per issue to search, 31 ms per issue to read and 1.1 ms per worklog for billable flags:</p>
+<table>
+<thead>
+<tr>
+<th>25,000 worklogs spread over</th>
+<th>Estimated time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1,600 issues</td>
+<td>1.5 minutes</td>
+</tr>
+<tr>
+<td>5,000 issues</td>
+<td>3.5 minutes</td>
+</tr>
+<tr>
+<td>25,000 issues</td>
+<td>15 minutes, and likely to meet Jira's rate limits</td>
+</tr>
+</tbody>
+</table>
+<p>Time depends mostly on the number of issues. Many people, several viewers at once and very large sites have not been measured.</p>
+<p>At 5 worklogs per person per working day, 25,000 is about 238 people for a month, 79 for a quarter and 19 for a year. These are arithmetic, not measurements. Larger ranges need a filter or a shorter range.</p>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>

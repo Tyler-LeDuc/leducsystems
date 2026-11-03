@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy Policy | Saguaro Hours for Jira</title>
+<meta name="description" content="What Saguaro Hours for Jira stores, where it stays, and how it is deleted.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/privacy/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Privacy Policy for Saguaro Hours for Jira</h1>
+<p>Effective date: on publication.
+Vendor: LeDuc Systems LLC, an Arizona limited liability company ("LeDuc Systems", "we", "us").
+Contact: tyler@leducsystems.com
+Website: <a href="https://leducsystems.com">https://leducsystems.com</a></p>
+<h2>1. Summary</h2>
+<p>Saguaro Hours for Jira (the "app") runs on Atlassian Forge. It keeps its data in Atlassian's Forge hosted storage, inside your Jira Cloud site's installation. The app makes no calls to servers outside Atlassian. LeDuc Systems does not receive, copy or host your data. We share nothing with third parties.</p>
+<h2>2. What the app stores</h2>
+<p>All of the following is stored in Atlassian Forge hosted storage for your installation.</p>
+<ol>
+<li>Settings. Billable default, attribute definitions (names, types, list options), period type (week or month), required hours per week.</li>
+<li>Worklog tags. For each worklog you tag: the Jira worklog ID, the issue key, the author's Atlassian account ID, the billable flag, attribute values, the day of the worklog and the time of the last update. The worklog itself (time, comment, date) is stored by Jira, not by the app.</li>
+<li>Teams. Team name, the lead's account ID and display name, and for each member the account ID, display name and avatar link.</li>
+<li>Timesheet records. For each person and period: status (open, submitted, approved, rejected), submitted hours, comment, the account ID and display name of the person who made each change, timestamps, and an audit history of up to the last 100 entries. Post-lock warnings (counts and hours) are kept here. Markers for pending approvals.</li>
+<li>Saved reports. For each person: the name and settings of a report (range, filters, grouping). At most 50 per person.</li>
+<li>Tempo import data, if an administrator runs the import. For each imported row: the matched Jira worklog ID, the author account ID and author name from the Tempo file, the description, the raw billable figure, the account name and the Tempo worklog ID. The values are stored as they appear in the file. While a job runs, the plan is kept in storage in chunks and removed as chunks are processed. A job record remains until an administrator discards it.</li>
+<li>Personal data reporting records. For each account ID found in the records above: the account ID, the time the app first stored that person's data (or last refreshed it), and the time the app last reported the account to Atlassian (section 7). The record is removed when the app no longer holds data about that account.</li>
+</ol>
+<h2>3. What the app logs</h2>
+<p>When Jira reports a worklog change, the app writes one log line with the event type (created, updated or deleted), the worklog ID, whether the change came from the app, the timesheet period IDs it checked and the result of the check. Error lines name the worklog ID or storage key concerned and the error message. The hourly personal data run writes one line of counts (records read, accounts reported, accounts erased or refreshed) and any answer Atlassian gave other than success. The app writes no names, email addresses, account IDs, worklog comments or IP addresses to its logs.</p>
+<p>Atlassian keeps these logs and shows them to us in its developer console for 30 days (<a href="https://developer.atlassian.com/platform/forge/view-app-logs/">https://developer.atlassian.com/platform/forge/view-app-logs/</a>). We use them only to find and fix faults.</p>
+<h2>4. What the app reads from Jira while you use it</h2>
+<p>The app reads issues, worklogs and user details through Jira's own interfaces, as the signed-in user, to build the grid, reports and approval views. It shows them to you. It does not copy worklog times or comments into its storage, except as listed above. Reports, CSV and Excel files and data exports are built in your browser. They are not uploaded. A Tempo file chosen for import is read in your browser. Only the matched rows listed in section 2 are stored.</p>
+<h2>5. What the app does not collect</h2>
+<ul>
+<li>No payment card or bank details. Atlassian handles billing.</li>
+<li>No passwords, API tokens or personal access tokens.</li>
+<li>No email addresses. The team user picker searches Jira by name or email, but the app stores only the account ID, display name and avatar link of the person you pick. The Tempo import stores the author name as written in the file.</li>
+<li>No analytics, advertising or tracking code, and no cookies set by us.</li>
+<li>No location data, device data or IP addresses.</li>
+<li>No data about people outside your Jira site.</li>
+<li>No data is sold, and none is used to train models.</li>
+</ul>
+<h2>6. Where data goes</h2>
+<ul>
+<li>Storage location. Forge hosted storage keeps the app's data in the same location as your Jira site, and it supports Atlassian data residency. If your administrator moves your Jira site's data to another location, the app's data moves with it (<a href="https://developer.atlassian.com/platform/forge/storage-reference/hosted-storage-data-lifecycle/">https://developer.atlassian.com/platform/forge/storage-reference/hosted-storage-data-lifecycle/</a>).</li>
+<li>Third parties. None. The app declares no external network access.</li>
+<li>Atlassian. Once per reporting cycle (7 days unless Atlassian sets another), the app sends Atlassian's personal data reporting service (<a href="https://developer.atlassian.com/platform/forge/user-privacy-guidelines/">https://developer.atlassian.com/platform/forge/user-privacy-guidelines/</a>) each stored account ID and the time its data was stored, and nothing else. Atlassian answers which accounts were closed or changed. This is how Atlassian asks apps to keep personal data current, and the request stays inside Atlassian.</li>
+<li>Our access. We do not access your stored data to run or support the app. If you need help with your data, your Jira administrator can send us a data export, or the part that matters, and we use it only for that request.</li>
+</ul>
+<h2>7. Retention and deletion</h2>
+<ul>
+<li>The app keeps stored data while it is installed, so history and audit trails remain available.</li>
+<li>Jira administrators can export everything the app stores at any time from the admin page, also when the subscription is not active.</li>
+<li>When the app is uninstalled, Atlassian deletes its stored data. Atlassian's Forge storage documentation says hosted storage keeps data for 28 days after uninstall (<a href="https://developer.atlassian.com/platform/forge/storage-reference/">https://developer.atlassian.com/platform/forge/storage-reference/</a>). If you reinstall and want the old data back, email us within 21 days of uninstalling and we will ask Atlassian to restore it.</li>
+<li>Worklogs stay in Jira after uninstall, because the app writes native Jira worklogs.</li>
+<li>To remove one person's data while the app is installed, email tyler@leducsystems.com. We will tell you what we can remove and how long it takes.</li>
+<li>Closed and changed accounts. The app reports the account IDs it stores to Atlassian once per reporting cycle (section 6). When Atlassian says an account is closed, the app erases that person's data from its storage in its next runs, usually within a few hours: the person is removed from teams (and as team lead), their saved reports and pending-approval markers are deleted, and a saved report that filtered only on them is deleted. Records other people rely on are kept with the person replaced by "Former user": their timesheet records keep status and hours under an anonymous key, audit entries they made keep the action and comment, and worklog tags keep the billable flag and attributes. The Tempo import data and import job are treated the same way. The app does not delete Jira's worklogs, which Jira manages. When Atlassian says an account's details changed, the app reads the person's current display name and avatar from Jira and updates its copies, or removes the stored name if Jira does not return one. Free text that people typed, such as approval comments and Tempo descriptions, is kept as written.</li>
+</ul>
+<h2>8. Security</h2>
+<p>Data is held by Atlassian under Atlassian's security controls. The app checks permissions on every server call: Jira administrators for settings, teams, import and export; team leads or Jira administrators for approvals; the worklog's author for billable flags and attributes. Our dependency audit of 1 November 2026 found no critical or high findings. We do not claim any security certification for the app. We do not have a penetration test or a bug bounty. Report security issues to tyler@leducsystems.com.</p>
+<h2>9. Children</h2>
+<p>The app is for workplace use and is not directed to children.</p>
+<h2>10. International transfers</h2>
+<p>The app itself sends no data anywhere. Its data is stored where your Jira site's data is stored (section 6). Atlassian hosts that storage under the Forge Data Processing Addendum, which covers transfers through the EU-U.S. Data Privacy Framework and Standard Contractual Clauses (<a href="https://developer.atlassian.com/platform/forge/faq-privacy-security/">https://developer.atlassian.com/platform/forge/faq-privacy-security/</a>).</p>
+<h2>11. Changes</h2>
+<p>We will post changes on this page and update the effective date.</p>
+<h2>12. Privacy law roles</h2>
+<ul>
+<li>GDPR and UK GDPR. You (the customer) decide why and how the data above is used, so you are the controller. To the extent LeDuc Systems LLC processes that data, it does so only to provide the app and on your instructions, as your processor. Atlassian hosts the app and its storage as a sub-processor under the Forge Data Processing Addendum.</li>
+<li>Data Processing Agreement. We do not publish a standard DPA. If your organization needs one, email us.</li>
+<li>California (CCPA). LeDuc Systems LLC acts as a service provider for this data. We do not sell or share personal information, and we do not use it for any purpose other than providing the app.</li>
+<li>Your rights. People whose data is stored in the app can ask their Jira administrator, or us, to access, correct or delete it. See section 7 for how deletion works.</li>
+</ul>
+<h2>13. Contact</h2>
+<p>LeDuc Systems LLC
+Email: tyler@leducsystems.com
+Website: <a href="https://leducsystems.com">https://leducsystems.com</a></p>
+<hr />
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>

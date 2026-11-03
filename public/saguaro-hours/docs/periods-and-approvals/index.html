@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Periods and approvals | Saguaro Hours for Jira</title>
+<meta name="description" content="Saguaro Hours for Jira documentation: Periods and approvals.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/docs/periods-and-approvals/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Periods and approvals</h1>
+<h2>Periods</h2>
+<p>The admin chooses one period type for the site.</p>
+<ul>
+<li>Weekly: Monday to Sunday.</li>
+<li>Monthly: a calendar month.</li>
+</ul>
+<p>Required hours per week default to 40 (0 to 168). For a month the required hours are the weekly figure divided by 5, times the number of weekdays in the month.</p>
+<h2>Submit</h2>
+<ol>
+<li>In My timesheet, the status row shows the period, a status badge, the last action, a shortfall chip and a Submit timesheet button.</li>
+<li>Submit stores the period's hours, computed from Jira, with the record. You can submit when the status is Open or Rejected. A rejected sheet shows Resubmit timesheet.</li>
+<li>The period is now locked: grid cells are grey and read-only, and the Log work panel refuses those dates.</li>
+</ol>
+<h2>Statuses</h2>
+<p>Open, Submitted, Approved, Rejected. Each change adds an entry to an audit trail with the actor, time, comment and hours. The last 100 entries are kept.</p>
+<h2>Approve or reject (team leads and Jira administrators)</h2>
+<p>Open the Approvals tab. A tab count shows how many sheets wait.</p>
+<ul>
+<li>Pick a team and a period. Prev, Next, Current and Refresh move through periods.</li>
+<li>Each member row shows hours (amber if under the required hours), the status and the last action. Expand it for the audit trail.</li>
+<li>Approve, or Reject with a reason. A rejection needs a comment.</li>
+<li>Approve is offered only for a submitted sheet. An open sheet (never submitted) or a rejected one shows no Approve button: the person submits or resubmits it first. The server refuses any other approval too.</li>
+<li>A submitted or approved sheet can be rejected. An approved sheet can be rejected again.</li>
+<li>Approve all (n) approves every member's submitted sheet for the period. n is that number, and the button is greyed out at 0. Open, rejected and already approved sheets are left as they are, and the message after it says how many.</li>
+<li>The lead or a Jira administrator can act. The person must be a member of the team.</li>
+</ul>
+<h2>Locks</h2>
+<p>A submitted or approved period is locked in the app. The app enforces it in the grid, the panel and its own stored data. Jira's own Work log tab and API are not blocked by the app. Edits made there are detected and flagged. See <a href="/saguaro-hours/docs/post-lock-warnings/">post lock warnings</a>.</p>
+<p>To unlock, reject the sheet. The user can then edit and resubmit.</p>
+<h2>Notes</h2>
+<ul>
+<li>Approvals hours come from Jira as the viewer, so only issues the viewer can browse count, and the viewer's time zone buckets the days.</li>
+<li>If Jira keeps refusing with a rate limit, Approvals shows a message and "n/a" for hours, and disables Approve and Approve all, so no sheet is approved with wrong hours.</li>
+<li>Email reminders are not part of this release. Reminders are banners and the pending count.</li>
+</ul>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>
