@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Permissions | Saguaro Hours for Jira</title>
+<meta name="description" content="Saguaro Hours for Jira documentation: Permissions.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/docs/permissions/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Permissions</h1>
+<h2>What the app asks Jira for</h2>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>read:jira-work</td>
+<td>Read issues and worklogs, run searches for your week and for reports, and receive worklog events.</td>
+</tr>
+<tr>
+<td>write:jira-work</td>
+<td>Create, edit and delete your worklogs when you use the grid or the panel.</td>
+</tr>
+<tr>
+<td>read:jira-user</td>
+<td>Look up your account and time zone, and search for users when an admin builds a team.</td>
+</tr>
+<tr>
+<td>storage:app</td>
+<td>Store billable flags, attributes, settings, teams, timesheet records and saved reports in Atlassian's Forge storage.</td>
+</tr>
+<tr>
+<td>report:personal-data</td>
+<td>Report the account IDs the app stores to Atlassian once a week, as Atlassian requires, so the app can erase people whose accounts were closed and update changed names.</td>
+</tr>
+</tbody>
+</table>
+<p>Worklog calls from the grid and panel run as the signed-in user, so Jira's own permissions apply.</p>
+<h2>Who can do what</h2>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Who</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Log time, submit own timesheet, run and save reports</td>
+<td>Any user</td>
+</tr>
+<tr>
+<td>Set billable and attributes on a worklog</td>
+<td>The worklog's author</td>
+</tr>
+<tr>
+<td>Review a team's timesheets, approve, reject</td>
+<td>The team's lead, or a Jira administrator for any team</td>
+</tr>
+<tr>
+<td>See the dashboard gadget for a team</td>
+<td>Team members, the lead, and Jira administrators</td>
+</tr>
+<tr>
+<td>Admin page: settings, attributes, teams, Tempo import, data export</td>
+<td>Jira administrators only (checked with Jira's Administer Jira permission on each call)</td>
+</tr>
+</tbody>
+</table>
+<p>There are no separate app roles. The roles are Jira administrator, team lead and everyone else.</p>
+<p>A team lead sees only the teams they lead in Approvals. A lead cannot review a team they do not lead, or a person outside their team.</p>
+<h2>What a user can see</h2>
+<p>Reports and the grid use native Jira reads as the viewer. A user sees worklogs on issues they can browse. The billable flag and attributes of a worklog are shown only to people Jira lets see that worklog. Imported Tempo author data is never shown on these screens.</p>
+<h2>When the subscription is not active</h2>
+<p>The timesheet page, the panel, the gadget and the admin page show a message instead of data. Jira administrators can still download all app data from the admin page. The app keeps its stored data in step with worklog changes made in Jira, so the data is correct if the subscription returns.</p>
+<h2>Network</h2>
+<p>The app makes no calls to servers outside Atlassian. Files you import are read in your browser, and exports are built in your browser.</p>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Log work panel | Saguaro Hours for Jira</title>
+<meta name="description" content="Saguaro Hours for Jira documentation: Log work panel.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/docs/log-work-panel/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Log work panel</h1>
+<p>The Log work panel appears on an issue. It writes a normal Jira worklog as you and stores the billable flag and attributes next to it.</p>
+<h2>Add the panel to the issue view</h2>
+<p>In the new Jira issue view, select the Apps button under the issue title and choose Log work. Jira shows that button only to people who can edit the issue. Jira administrators also get an option to show an app's panel on all work items.</p>
+<h2>The form</h2>
+<ul>
+<li>Date. Defaults to today in your Jira time zone.</li>
+<li>Time spent. Same forms as the grid: 1.5, 1:30, 1h 30m, 90m.</li>
+<li>Billable. Ticked by default when the admin turned on the billable default.</li>
+<li>Attributes. One field per attribute the admin defined: a select for list attributes, a text box for text attributes.</li>
+<li>Description. Saved as the worklog comment in Jira.</li>
+<li>Log work button.</li>
+</ul>
+<h2>Your work on this issue</h2>
+<p>Under the form, the panel lists your own worklogs on the issue with their billable mark, attribute tags and description.</p>
+<ul>
+<li>Edit loads an entry into the form. Save changes or Cancel.</li>
+<li>Delete asks for Confirm or Keep inline.</li>
+</ul>
+<p>The panel writes to Jira first. If saving the billable flag or attributes fails afterwards, the panel says so and the worklog stays.</p>
+<h2>Locked periods</h2>
+<p>If the chosen date falls in a submitted or approved period, the panel shows a red message and disables Log work. The check runs when the date changes and again just before saving. See <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</p>
+<h2>Who can tag what</h2>
+<p>Only the author of a worklog can set its billable flag or attributes through the app.</p>
+<h2>Known limits</h2>
+<ul>
+<li>First open of the panel can take a couple of seconds.</li>
+<li>Native Jira edits made outside the app keep the billable flag and attributes. Deleting a worklog in Jira removes its stored tags when Jira reports the deletion (post-lock-warnings.md).</li>
+</ul>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>

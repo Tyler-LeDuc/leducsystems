@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teams | Saguaro Hours for Jira</title>
+<meta name="description" content="Saguaro Hours for Jira documentation: Teams.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/docs/teams/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Teams</h1>
+<p>A team has a name, a lead and members. Teams drive approvals, the team filter in reports, and the dashboard gadget.</p>
+<h2>Create a team (Jira administrator)</h2>
+<ol>
+<li>Open Jira settings, Apps, Saguaro Hours, Teams section.</li>
+<li>Enter a name.</li>
+<li>Pick a lead with the user picker. It searches active Atlassian accounts by name or email as you type.</li>
+<li>Add members the same way. Remove a member with Remove.</li>
+<li>Create team. Existing teams show Save team and Delete. Delete asks for inline confirmation.</li>
+</ol>
+<h2>What the app stores</h2>
+<p>Team name, the lead's account ID and display name, and each member's account ID, display name and avatar link. Email addresses are not stored. Names are copied when you pick the person. When Atlassian reports that a person's account details changed, the app reads the current name and avatar from Jira, within about a week. When an account is closed, the person is removed from the team, and as its lead.</p>
+<h2>What a team does</h2>
+<ul>
+<li>The lead can review the team's timesheets in the Approvals tab. Jira administrators can review every team.</li>
+<li>The Reports filter can limit a report to a team.</li>
+<li>The dashboard gadget shows one team.</li>
+</ul>
+<h2>Known limits</h2>
+<ul>
+<li>Per-period membership dates are not built. Membership is the current list.</li>
+<li>A lead who is also a member can approve their own timesheet once they have submitted it.</li>
+<li>The admin card does not show the lead's avatar.</li>
+</ul>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>

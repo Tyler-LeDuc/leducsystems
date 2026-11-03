@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Getting started | Saguaro Hours for Jira</title>
+<meta name="description" content="Saguaro Hours for Jira documentation: Getting started.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/docs/getting-started/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Getting started</h1>
+<p>Saguaro Hours for Jira adds time tracking to Jira Cloud. You log work in a weekly grid or from an issue. Every entry is a normal Jira worklog written as you. Teams, billable flags, approvals and reports sit on top.</p>
+<h2>What you get</h2>
+<ul>
+<li>A Saguaro Hours page with a weekly grid, a Reports tab and, for team leads and Jira administrators, an Approvals tab. See <a href="/saguaro-hours/docs/weekly-timesheet/">weekly timesheet</a>, <a href="/saguaro-hours/docs/reports-and-exports/">reports and exports</a> and <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</li>
+<li>A Log work panel on issues. See <a href="/saguaro-hours/docs/log-work-panel/">log work panel</a>.</li>
+<li>An admin page under Jira settings, Apps. See <a href="/saguaro-hours/docs/billable-and-attributes/">billable and attributes</a>, <a href="/saguaro-hours/docs/teams/">teams</a> and <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</li>
+<li>A dashboard gadget. See <a href="/saguaro-hours/docs/dashboard-gadget/">dashboard gadget</a>.</li>
+</ul>
+<h2>Install and first steps (Jira administrator)</h2>
+<ol>
+<li>Install the app from the Marketplace. Accept the permissions listed in <a href="/saguaro-hours/docs/permissions/">permissions</a>.</li>
+<li>Open Jira settings, then Apps, then Saguaro Hours. The first load can take several seconds.</li>
+<li>Set the period type (weekly or monthly) and the required hours per week. The default is weekly and 40.</li>
+<li>Optional: turn on the billable default and add attributes (billable-and-attributes.md).</li>
+<li>Optional: create a team and name its lead (teams.md).</li>
+<li>Tell your users to open Saguaro Hours from the Apps menu in Jira.</li>
+</ol>
+<h2>First steps (everyone)</h2>
+<ol>
+<li>Open Saguaro Hours. The page shows this week in your Jira time zone.</li>
+<li>Type an issue key in the box above the grid and press Enter, then type hours in a day cell (for example 1.5, 1:30, 1h 30m or 90m).</li>
+<li>Open the Work log tab on that issue. Your entry is there, under your name.</li>
+<li>When the week is done, press Submit timesheet (periods-and-approvals.md).</li>
+</ol>
+<h2>Add the Log work panel to an issue</h2>
+<p>Jira does not show an app's issue panel on its own in the new issue view. Open an issue, select the Apps button under the issue title, and choose Log work. Jira shows that button only to people who can edit the issue. Jira administrators also get an option to show an app's panel on all work items.</p>
+<h2>Limits to know</h2>
+<ul>
+<li>The app reads worklogs from issues you can browse. Hours on issues you cannot browse are not counted in your views.</li>
+<li>Dates are grouped by day in the time zone of the person looking at the page.</li>
+<li>Start/stop timers, rates, invoicing, capacity planning and email reminders are not part of this release.</li>
+<li>When the subscription is not active, the app's pages show a message instead of data. Jira administrators can still download all app data (data-export.md).</li>
+</ul>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>

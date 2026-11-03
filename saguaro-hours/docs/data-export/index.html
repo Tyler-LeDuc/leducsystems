@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data export | Saguaro Hours for Jira</title>
+<meta name="description" content="Saguaro Hours for Jira documentation: Data export.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/docs/data-export/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Data export</h1>
+<p>A Jira administrator can download everything Saguaro Hours for Jira stores.</p>
+<h2>How</h2>
+<ol>
+<li>Open Jira settings, Apps, Saguaro Hours.</li>
+<li>In the Data export section, press Download all app data.</li>
+<li>The button shows how many records it has read. The browser collects the data page by page (20 records per call) and saves one file, <code>timesheets-data-&lt;date&gt;.json</code>. The page then reads "Exported n records."</li>
+</ol>
+<h2>What it contains</h2>
+<p>The raw stored records: settings, worklog tags (billable, attributes, day, and imported Tempo data), teams, timesheets with their audit trails and post-lock warnings, pending markers, saved reports, the Tempo import job if one exists, and the personal data reporting records (each stored account ID with when its data was stored and last reported to Atlassian).</p>
+<p>Worklogs themselves are not in the file. They are in Jira and stay there.</p>
+<p>The file holds your users' account IDs and names. Handle it accordingly.</p>
+<h2>Notes</h2>
+<ul>
+<li>The export is the raw store. Settings the admin never changed are not listed, because defaults are applied when read.</li>
+<li>Only a Jira administrator can export. Each page is checked on the server, and other users are refused.</li>
+<li>The export stays available when the subscription is not active, so you can always get your data out.</li>
+<li>Exports are produced on request. The app keeps no copy.</li>
+</ul>
+<h2>Uninstalling</h2>
+<p>Worklogs stay in Jira. The app's own data is deleted by Atlassian after uninstall. See the <a href="/saguaro-hours/privacy/">privacy policy</a> for the retention period.</p>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>
