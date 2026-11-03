@@ -73,6 +73,30 @@
     <priority>0.4</priority>
   </url>
   <url>
+    <loc>https://leducsystems.com/saguaro-hours/</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://leducsystems.com/saguaro-hours/tempo-alternative/</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://leducsystems.com/saguaro-hours/jira-timesheet-approval/</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://leducsystems.com/saguaro-hours/jira-time-tracking-pricing/</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://leducsystems.com/saguaro-hours/privacy/</loc>
     <lastmod>2026-11-03</lastmod>
     <changefreq>monthly</changefreq>
