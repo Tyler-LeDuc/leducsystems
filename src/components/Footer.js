@@ -46,6 +46,9 @@ function Footer() {
                 {product.name}
               </a>
             ))}
+            <a className="site-footer__link" href="/saguaro-hours/">
+              Saguaro Hours for Jira
+            </a>
             <a className="site-footer__link" href="/tools/">
               All products
             </a>

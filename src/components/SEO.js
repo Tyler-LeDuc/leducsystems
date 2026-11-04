@@ -34,7 +34,8 @@ export default function SEO({ title, description, path = '/' }) {
   useEffect(() => {
     const fullTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
     const desc = description || SITE.description;
-    const url = `${SITE.url}${path === '/' ? '' : path}`;
+    // Trailing slash: GitHub Pages serves /about as /about/ (see scripts/prerender.js).
+    const url = `${SITE.url}${path.endsWith('/') ? path : `${path}/`}`;
     const image = `${SITE.url}/images/og-card.jpg`;
 
     document.title = fullTitle;

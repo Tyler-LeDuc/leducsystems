@@ -95,7 +95,10 @@ function render(template, routePath, meta) {
   const fullTitle = `${meta.title} — ${SITE_NAME}`;
   /* A route may declare a different canonical path when it exists only to
      redirect. Everything that points search engines at a page uses it. */
-  const url = `${ORIGIN}${meta.canonical || routePath}`;
+  /* GitHub Pages serves each prerendered route as a folder, so /about answers with a
+     redirect to /about/. The canonical (and og:url) must name the URL that answers 200. */
+  const canonicalPath = meta.canonical || routePath;
+  const url = `${ORIGIN}${canonicalPath.endsWith('/') ? canonicalPath : `${canonicalPath}/`}`;
 
   let html = template;
   html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${attr(fullTitle)}</title>`);

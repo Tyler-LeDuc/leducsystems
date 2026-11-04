@@ -60,14 +60,14 @@ describe('prerender output', () => {
     expect(html).toContain('<title>About — LeDuc Systems</title>');
   });
 
-  it('rewrites the canonical to the route', () => {
-    expect(html).toContain('href="https://leducsystems.com/about"');
+  it('rewrites the canonical to the route, with the trailing slash GitHub Pages serves', () => {
+    expect(html).toContain('href="https://leducsystems.com/about/"');
   });
 
   it('rewrites description and open graph tags', () => {
     expect(html).toContain('content="About the practice."');
     expect(html).toContain('content="About — LeDuc Systems"');
-    expect(html).toContain('content="https://leducsystems.com/about"');
+    expect(html).toContain('content="https://leducsystems.com/about/"');
   });
 
   it('escapes quotes so a description cannot break out of the attribute', () => {

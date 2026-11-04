@@ -163,11 +163,12 @@ export default function HomePage() {
           <Reveal className="section-head">
             <p className="eyebrow">Also live</p>
             <h2 id="more-title" className="h2">
-              Smaller tools for specific jobs.
+              More apps and tools.
             </h2>
             <p className="body muted">
-              Mostly the leftovers of retired software and changed government systems: the IRS
-              moving 1099 filing from FIRE to IRIS, InfoPath reaching end of life.
+              Apps for Jira, Azure DevOps and Shopify stores, and tools for the leftovers of retired
+              software and changed government systems: the IRS moving 1099 filing from FIRE to IRIS,
+              InfoPath reaching end of life.
             </p>
             <a className="link-arrow" href="/tools/">
               All products and guides
