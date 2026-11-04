@@ -47,7 +47,7 @@ def autolink(text):
     return re.sub(r"(?<!\]\()(?<![<\[])(https://[^\s)]+[^\s).,])", r"<\1>", text)
 
 
-def page(title, body_md, path, description, full_title=False):
+def page(title, body_md, path, description, full_title=False, product="Saguaro Hours for Jira"):
     body = markdown.markdown(body_md, extensions=["tables"])
     out = OUT / path / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -65,7 +65,7 @@ def page(title, body_md, path, description, full_title=False):
 <main>
 {body}
 </main>
-<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+<footer>{product} · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
 </body></html>
 """, encoding="utf-8")
     return url
@@ -105,6 +105,13 @@ for f in sorted(SITE.glob("*.md")):
     meta = dict(re.findall(r'^(\w+): "(.*)"$', m.group(1), re.M))
     body = autolink(link_doc_mentions(text[m.end():], docs))
     urls.append(page(meta["title"], body, meta["path"], meta["description"], full_title=True))
+# The Azure DevOps version's pre-launch page lives in its own repo.
+for f in sorted(Path("C:/Users/Tyler/apps/saguaro-ado/listing/site-prelaunch").glob("*.md")):
+    text = f.read_text(encoding="utf-8")
+    m = re.match(r"---\n(.*?)\n---\n", text, re.S)
+    meta = dict(re.findall(r'^(\w+): "(.*)"$', m.group(1), re.M))
+    urls.append(page(meta["title"], autolink(text[m.end():]), meta["path"], meta["description"], full_title=True,
+                     product="Saguaro Hours for Azure DevOps"))
 img = OUT / "img"
 img.mkdir(parents=True, exist_ok=True)
 for png in (SRC / "assets" / "screens").glob("*.png"):
