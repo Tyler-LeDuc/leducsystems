@@ -29,6 +29,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <li>A Log work panel on issues. See <a href="/saguaro-hours/docs/log-work-panel/">log work panel</a>.</li>
 <li>An admin page under Jira settings, Apps. See <a href="/saguaro-hours/docs/billable-and-attributes/">billable and attributes</a>, <a href="/saguaro-hours/docs/teams/">teams</a> and <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</li>
 <li>A dashboard gadget. See <a href="/saguaro-hours/docs/dashboard-gadget/">dashboard gadget</a>.</li>
+<li>Optional email reminders, sent through Jira's own mail: one email to people whose timesheet is not submitted when a period closes, and a weekly list for team leads of timesheets waiting for them. See <a href="/saguaro-hours/docs/email-reminders/">email reminders</a>.</li>
 </ul>
 <h2>Install and first steps (Jira administrator)</h2>
 <ol>
@@ -37,6 +38,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <li>Set the period type (weekly or monthly) and the required hours per week. The default is weekly and 40. Optional: add holidays, and working hours for part-time people (periods-and-approvals.md).</li>
 <li>Optional: turn on the billable default and add attributes (billable-and-attributes.md).</li>
 <li>Optional: create a team and name its lead, and if you like a backup approver and the team's own period type (teams.md).</li>
+<li>Optional: turn on email reminders (email-reminders.md).</li>
 <li>Tell your users to open Saguaro Hours from the Apps menu in Jira.</li>
 </ol>
 <h2>First steps (everyone)</h2>
@@ -57,7 +59,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <ul>
 <li>The app reads worklogs from issues you can browse. Hours on issues you cannot browse are not counted in your views.</li>
 <li>Dates are grouped by day in the time zone of the person looking at the page.</li>
-<li>Invoices (numbering, tax, accounting sync), capacity planning and email reminders are not part of this release; the billing summary is a printable summary, not an invoice. Timers do not start by themselves on a status change.</li>
+<li>Invoices (numbering, tax, accounting sync), and capacity planning are not part of this release; the billing summary is a printable summary, not an invoice. Timers do not start by themselves on a status change.</li>
 <li>When the subscription is not active, the app's pages show a message instead of data. Jira administrators can still download all app data (data-export.md).</li>
 </ul>
 </main>
