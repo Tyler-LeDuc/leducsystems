@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moving from Tempo | Saguaro Hours for Jira</title>
+<meta name="description" content="Saguaro Hours for Jira documentation: Moving from Tempo.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/docs/moving-from-tempo/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Moving from Tempo</h1>
+<p>Checked end to end on 3 November 2026 with "Timesheets by Tempo - Jira Time Tracking" (Tempo on Forge, Cloud) on a test site: real worklogs logged in Tempo by two people, exported from Tempo, imported here. Every row matched its own Jira worklog. Tempo changes its screens often, so the menu names below may move.</p>
+<h2>What stays in Jira</h2>
+<p>If you used Tempo, your worklogs are already in Jira. Tempo writes each one as a Jira worklog with the same work item, date, start time and duration. In Jira the author is the Tempo app ("Timesheets by Tempo - Jira Time Tracking") and the comment is "time-tracking". The real author, the description, the account and the work attributes stay in Tempo. Source: <a href="https://help.tempo.io/kb/latest/why-do-we-see-timesheets-as-the-worklog-author">https://help.tempo.io/kb/latest/why-do-we-see-timesheets-as-the-worklog-author</a>.</p>
+<h2>What the import does</h2>
+<p>The import reads Tempo's raw data CSV, matches each row to a Jira worklog by work item, date, duration, author and start time, and stores the rest next to the matched worklog:</p>
+<ul>
+<li>the billable flag (any billable time counts as billable),</li>
+<li>the account name, in a text attribute you choose or one the import creates,</li>
+<li>work attributes such as "Work type", each in a text attribute you choose or one the import creates (up to five),</li>
+<li>the real author, the description, the raw billable figure and the Tempo worklog ID, kept in the app's storage.</li>
+</ul>
+<p>The import never changes anything in Jira. No worklog is created, edited or deleted. No timesheet record is written.</p>
+<h2>Honest limit: authors</h2>
+<p>Migrated history stays under the Tempo app as the author in Jira, in the grid, in approvals and in reports. The import stores the real author but this release does not display it. Re-authoring worklogs as the real person is not built, and it needs a riskier permission that this app does not request. Because of this, per-person reports on migrated history will group it under the Tempo app.</p>
+<h2>Steps</h2>
+<h3>1. Make sure your export includes everyone</h3>
+<p>Tempo only exports the worklogs you may view in Tempo. A Jira administrator is not automatically allowed to see other people's worklogs, and the export does not warn about rows it leaves out. Before exporting, open Tempo, Settings, Permission Roles, Add permission role, tick View Worklogs, add yourself under Add users, keep Role access on All resources, and save. Then compare the report's people with the people you expect.</p>
+<h3>2. Export the raw data from Tempo</h3>
+<ol>
+<li>In Jira, open Tempo from the Apps menu, then Reports.</li>
+<li>Under Logged Time, choose Create Report and then Create. The grouping does not matter for the export.</li>
+<li>Set the date range at the top left to cover all the history you want to move, and press Apply.</li>
+<li>Press Export at the top right and choose Download Raw Data.</li>
+<li>In "Select export option", press the CSV icon (the third icon). "Include Approval Status" can be on or off. Tempo saves a file named like <code>Report_01_Oct_26_30_Nov_26_Raw_Data_Logged_Time.csv</code>.</li>
+</ol>
+<p>The XLS and XLSX icons give Excel files. This app does not read those; it says so if you pick one.</p>
+<p>The CSV Tempo gives is UTF-8 with commas. "Work date" holds the date and the start time ("2026-10-20 10:00"). Each Tempo work attribute is its own column, named after the attribute. A worklog logged without a description is exported with Tempo's text "Working on work item KEY-1".</p>
+<h3>3. Import it here</h3>
+<ol>
+<li>In Jira, open Settings, Apps, Saguaro Hours, and find "Import from Tempo".</li>
+<li>Choose the CSV file. The page says how many rows and columns it found.</li>
+<li>Check the column mapping. The page fills it in from Tempo's column names and shows the first value of each. On an English Tempo export no change was needed. Tempo renames columns over time and by Jira language (<a href="https://www.tempo.io/product-news/changes-to-logged-time-report-raw-data-export">https://www.tempo.io/product-news/changes-to-logged-time-report-raw-data-export</a>), so check it anyway. Set the date order if the page asks.</li>
+<li>Look at the five-row preview.</li>
+<li>Press "Check against Jira". This is a dry run and writes nothing. It shows matched, ambiguous, unmatched and unreadable rows, and how many matched worklogs already have data. "Download the full result (CSV)" lists every row with the Jira worklog it matched.</li>
+<li>Choose where Account goes ("Store Account in"). Under "Work attributes", the page suggests the columns that are not standard Tempo columns, such as "Work type". For each, choose an existing text attribute or "Create a new text attribute". "Add a column" adds one the page did not suggest; "Remove" drops one.</li>
+<li>Press "Import N worklogs". Progress is shown. Pause, Resume and Discard are available. If you close the tab the run stops. Resume continues from where it was, in any browser, without the file.</li>
+</ol>
+<p>When it finishes, the page says how many worklogs were written, where Account and each work attribute went, and lists any worklog it left alone and why.</p>
+<h2>How rows are matched</h2>
+<ul>
+<li>Matching uses work item, date and duration, then author. The Tempo app as author fits any row. A real person who is not the Tempo app never does.</li>
+<li>When two worklogs on the same work item, day and duration are left (for example two people logging the same hours), the start time separates them, because Tempo exports it and keeps it in Jira. If the times do not line up one to one, nothing is guessed.</li>
+<li>Hours are compared with a tolerance based on the column's decimals. Logged Seconds is used when present, and it is exact.</li>
+<li>Rows that still fit several worklogs are ambiguous and are not imported. The result CSV lists the candidate worklog IDs. There is no way to resolve them by hand in the app yet.</li>
+<li>Days inside a submitted or approved period are left alone, even with overwrite on. Reopen the period and run again.</li>
+<li>Running the same file twice changes nothing new: the second run reports every row as already having data. With "Overwrite worklogs that already have data" on, it stores the same values again and keeps other attributes.</li>
+</ul>
+<h2>Who can see imported data</h2>
+<p>Imported author and description data is hidden from the normal screens. Only the admin data export includes it. Account and work attribute values are ordinary attribute values and show wherever attributes show.</p>
+<h2>Limits</h2>
+<ul>
+<li>Only a Jira administrator can import. 100 MB file cap. CSV only.</li>
+<li>Account and work attributes go to text attributes, not list attributes.</li>
+<li>At most five work attribute columns per import.</li>
+<li>A stopped upload cannot continue after a reload. Discard and check again.</li>
+<li>Not yet checked: exports in other Jira languages, people in different time zones from each other, very large exports, and whether Jira worklogs stay unchanged after Tempo is uninstalled.</li>
+</ul>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>
