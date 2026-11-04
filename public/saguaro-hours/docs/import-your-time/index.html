@@ -106,7 +106,7 @@ main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{
 <p>Each row you import becomes a normal Jira worklog written as you. That is why only your own time can be imported: Jira does not let an app log work in someone else's name, so a Jira administrator cannot import other people's time with it. (Moving a whole team from Tempo is a different job: see <a href="/saguaro-hours/docs/moving-from-tempo/">moving from tempo</a>.)</p>
 <p>Files are read in your browser. They are not uploaded or stored, and the app makes no calls outside Jira.</p>
 <h2>A worklog CSV</h2>
-<p>Any CSV with one time entry per line, for example an export of Clockwork, Toggl or Harvest, or your own spreadsheet. Semicolon and tab separated files work too; Excel files must be saved as CSV first. Up to 2,000 rows at a time.</p>
+<p>Any CSV with one time entry per line, for example an export of Clockify, Harvest, TMetric, Toggl or Clockwork, or your own spreadsheet. A column that holds a Jira link or key (Harvest's external reference, TMetric's Issue Id) is found on its own. Semicolon and tab separated files work too; Excel files must be saved as CSV first. Up to 2,000 rows at a time.</p>
 <ol>
 <li>Choose the file. The columns are matched by their names; check them and change any that are wrong:</li>
 <li>Issue key (required): a column with the key, or with text that contains one, such as a Toggl description "SAM-12 fix login". The first key in the text is used.</li>
