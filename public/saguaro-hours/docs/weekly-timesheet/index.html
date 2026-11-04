@@ -21,7 +21,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
 <main>
 <h1>Weekly timesheet</h1>
-<p>Open Saguaro Hours from the Apps menu. Everyone sees the My timesheet and Reports tabs. Team leads, backup approvers and Jira administrators also see Approvals.</p>
+<p>Open Saguaro Hours from Apps in the Jira sidebar (under Your apps). Everyone sees the My timesheet and Reports tabs. Team leads, backup approvers and Jira administrators also see Approvals.</p>
 <p>The status row shows your timesheet period: weekly, or monthly if your team uses monthly timesheets (periods-and-approvals.md).</p>
 <h2>Your timers</h2>
 <p>When you have a timer (started on an issue's Log work panel), it is listed above the status row: running, paused or stopped, the time counted, the issue and its summary. Pause, Resume and Stop and log work as on the panel, and Stop and log opens the same prefilled worklog form (log-work-panel.md). After the worklog is saved the grid reloads with it. The list is read again when you come back to the tab and every 30 seconds, so a timer started in another tab or on another computer shows up.</p>
@@ -45,7 +45,8 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </ul>
 <h2>Adding rows</h2>
 <ul>
-<li>Type an issue key in the box above the grid and press Enter or Add row. As you type, Jira's issue search suggests issues. Pick one with the mouse or the arrow keys and Enter.</li>
+<li>Type an issue key in the box below the grid and press Enter or Add row. As you type, the box suggests issues: Jira's issue search, issues whose summary has the words you typed, and, for a key or a project key such as KAN, that project's recent issues. Pick one with the mouse or the arrow keys and Enter. When nothing matches, the box says so.</li>
+<li>An empty week says how to start: add an issue here, or use Log work on an issue (log-work-panel.md).</li>
 <li>An exact key, such as PRJ-1, is always the first suggestion when you can browse that issue, followed by keys that start with what you typed (PRJ-10, PRJ-11 and so on). A project key and a dash, such as PRJ-, lists that project's most recently updated issues.</li>
 <li>Rows added by hand exist only on the page. They are lost when you reload, unless they have a worklog that week. Rows with hours come back by themselves.</li>
 <li>Remove a row with the remove button when it has no hours.</li>
