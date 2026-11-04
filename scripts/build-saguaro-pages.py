@@ -10,7 +10,7 @@ import markdown
 
 SRC = Path("C:/Users/Tyler/apps/jira-time/listing")
 OUT = Path("public/saguaro-hours")
-SKIP_DOCS = {"moving-from-tempo.md"}  # marked not for publication
+SKIP_DOCS = set()
 DOC_ORDER = ["getting-started", "weekly-timesheet", "log-work-panel", "periods-and-approvals", "teams",
              "billable-and-attributes", "reports-and-exports", "dashboard-gadget", "post-lock-warnings",
              "permissions", "data-export"]
