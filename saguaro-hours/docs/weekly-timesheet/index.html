@@ -68,6 +68,8 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <ul>
 <li>Your worklogs are real Jira worklogs. You can edit them in Jira too, but not inside a locked period without the app flagging it (post-lock-warnings.md).</li>
 <li>The grid shows your own worklogs only.</li>
+<li>Remaining estimate. Worklogs written in Saguaro Hours change the issue's remaining estimate in Jira the way Log work in Jira does (the default): logging 2h lowers it by 2h (not below zero), changing a worklog moves it by the difference, deleting one gives the time back. A Jira administrator can choose "Leave the remaining estimate unchanged" on the admin page instead. This applies to the grid, the Log work panel, the timer and the imports; worklogs logged in Jira itself follow Jira.</li>
+<li>The grid does not save a cell until the site settings have loaded (a moment after the page opens), since they decide the lock, the billable default and the remaining estimate rule.</li>
 </ul>
 </main>
 <footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>

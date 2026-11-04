@@ -36,7 +36,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </tr>
 <tr>
 <td>write:jira-work</td>
-<td>Create, edit and delete your worklogs when you use the grid or the panel.</td>
+<td>Create, edit and delete your worklogs when you use the grid, the panel, the timer or the Import tab.</td>
 </tr>
 <tr>
 <td>read:jira-user</td>
@@ -44,7 +44,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </tr>
 <tr>
 <td>storage:app</td>
-<td>Store billable flags, attributes, settings (including holidays and timer rounding), teams, timesheet records, saved reports, people's working hours, timers, and hourly rates in Atlassian's Forge storage.</td>
+<td>Store billable flags, attributes, settings (including holidays and timer rounding), teams, timesheet records, saved reports, people's working hours, timers, hourly rates and each person's remembered calendar event titles in Atlassian's Forge storage.</td>
 </tr>
 <tr>
 <td>report:personal-data</td>
@@ -52,7 +52,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </tr>
 </tbody>
 </table>
-<p>Worklog calls from the grid and panel run as the signed-in user, so Jira's own permissions apply.</p>
+<p>Worklog calls from the grid, the panel, the timer and the Import tab run as the signed-in user, so Jira's own permissions apply.</p>
 <h2>Who can do what</h2>
 <table>
 <thead>
@@ -65,6 +65,10 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <tr>
 <td>Log time, submit own timesheet, run and save reports</td>
 <td>Any user</td>
+</tr>
+<tr>
+<td>Import time from a worklog CSV or a calendar file</td>
+<td>Any user, for their own time only: every imported worklog is written as them, and rows naming someone else are refused. Nobody, administrators included, can import another person's time</td>
 </tr>
 <tr>
 <td>Start, pause, stop, log and discard a timer</td>

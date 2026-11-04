@@ -56,6 +56,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <li>Delete asks for Confirm or Keep inline.</li>
 </ul>
 <p>The panel writes to Jira first. If saving the billable flag or attributes fails afterwards, the panel says so and the worklog stays.</p>
+<p>Remaining estimate. Worklogs written in Saguaro Hours change the issue's remaining estimate in Jira the way Log work in Jira does (the default): logging 2h lowers it by 2h (not below zero), changing a worklog moves it by the difference, deleting one gives the time back. A Jira administrator can choose "Leave the remaining estimate unchanged" on the admin page instead. This applies to the grid, the Log work panel, the timer and the imports; worklogs logged in Jira itself follow Jira.</p>
 <h2>Locked periods</h2>
 <p>If the chosen date falls in a submitted or approved period, the panel shows a red message and disables Log work. The check runs when the date changes and again just before saving. See <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</p>
 <h2>Who can tag what</h2>
