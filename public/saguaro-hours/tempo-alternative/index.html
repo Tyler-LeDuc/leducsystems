@@ -226,7 +226,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </tbody>
 </table>
 <h2>Features side by side</h2>
-<p>Tempo's column uses the feature names on Tempo's pricing page (<a href="https://www.tempo.io/pricing/jira-time-tracking">https://www.tempo.io/pricing/jira-time-tracking</a>) and its product page (<a href="https://www.tempo.io/products/jira-time-tracking">https://www.tempo.io/products/jira-time-tracking</a>), read on 2026-11-03. It is not a review of how well those features work. Saguaro's column describes version 1, the release waiting for approval.</p>
+<p>Tempo's column uses the feature names on Tempo's pricing page (<a href="https://www.tempo.io/pricing/jira-time-tracking">https://www.tempo.io/pricing/jira-time-tracking</a>) and its product page (<a href="https://www.tempo.io/products/jira-time-tracking">https://www.tempo.io/products/jira-time-tracking</a>), read on 2026-11-03. It is not a review of how well those features work. Saguaro's column describes the build tested on my development site as of 2026-11-04. Items marked "newer build" are not in the older build under Marketplace review; I plan to release them to the live app on the day the listing is approved.</p>
 <table>
 <thead>
 <tr>
@@ -264,7 +264,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <tr>
 <td>Weekly or monthly periods</td>
 <td>Not checked</td>
-<td>Yes, one period type per site</td>
+<td>Yes, set per team (newer build; the build under review has one period type per site)</td>
 </tr>
 <tr>
 <td>Locked periods after submit</td>
@@ -284,12 +284,12 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <tr>
 <td>Accounts and customers</td>
 <td>Yes ("Tempo accounts")</td>
-<td>No</td>
+<td>No. A list attribute such as Account can stand in, and can set the billing rate (newer build)</td>
 </tr>
 <tr>
 <td>Holiday and workload schemes</td>
 <td>Yes</td>
-<td>No. One required-hours figure per week for the site</td>
+<td>Site holidays, days off, and hours per weekday for each person (newer build)</td>
 </tr>
 <tr>
 <td>Custom reports</td>
@@ -299,7 +299,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <tr>
 <td>Planned vs. actual, revenue reports</td>
 <td>Yes</td>
-<td>No</td>
+<td>Estimate vs. logged per issue, and cost and revenue from hourly rates (newer build)</td>
 </tr>
 <tr>
 <td>Report export</td>
@@ -314,7 +314,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <tr>
 <td>Reminders</td>
 <td>Slack and email</td>
-<td>In-app banners and a pending count only</td>
+<td>Email through Jira's own notifications (newer build), plus in-app banners and a pending count</td>
 </tr>
 <tr>
 <td>Calendar and IDE integrations, AI suggestions</td>
@@ -339,17 +339,17 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <tr>
 <td>Start and stop timer</td>
 <td>Not checked</td>
-<td>No</td>
+<td>Yes, on the issue (newer build)</td>
 </tr>
 <tr>
 <td>Rates, cost and invoicing</td>
 <td>Revenue reports; Financial Manager is a separate Tempo app</td>
-<td>No</td>
+<td>Cost and billing rates, cost and revenue in reports, and a printable billing summary per project or account (newer build). No invoices</td>
 </tr>
 </tbody>
 </table>
 <p>"Not checked" means the Tempo pages above did not name the feature. It does not mean Tempo lacks it.</p>
-<p>If you rely on Tempo accounts, planning, cost tracking, integrations or its API, Saguaro Hours is not a replacement today.</p>
+<p>If you rely on Tempo accounts, capacity planning, integrations, its API, or its mobile and Slack apps, Saguaro Hours is not a replacement today.</p>
 <h2>What Saguaro Hours does differently</h2>
 <ul>
 <li>Worklogs are normal Jira worklogs, written as the signed-in user. Jira's Work log tab and worklogAuthor searches show them. If you uninstall Saguaro, the worklogs stay in Jira.</li>
