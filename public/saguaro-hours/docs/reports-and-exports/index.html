@@ -26,7 +26,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <ol>
 <li>Choose a range: this week, last week, this month, last month or custom.</li>
 <li>Optional filters: team, users, projects, projects to exclude, and a JQL filter.</li>
-<li>Group by one field, then optionally by a second: user, team, project, epic or parent, issue type, label, billable, any attribute, or a Jira field (see below).</li>
+<li>Group by one field, then optionally by a second: user, team, project, epic or parent, issue, issue type, label, billable, any attribute, or a Jira field (see below).</li>
 <li>Optional: add Jira fields as extra columns of the detail table and the Detail CSV and Excel exports.</li>
 <li>The screen shows totals per group, a grand total and a detail table.</li>
 </ol>
@@ -35,6 +35,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <ul>
 <li>Projects: only these projects. Exclude projects: every project but these, so a site with 50 projects does not need 49 picked.</li>
 <li>JQL filter: only issues that match a JQL query you type, for example <code>component = Billing AND labels != internal</code> or the query of a saved Jira filter. Check asks Jira whether the query is valid and shows Jira's message if not. The report runs it the same way before it reads anything. An ORDER BY at the end is ignored. The query is added to the report's own conditions (the date range and the filters above), so it can narrow a report but never widen it. Brackets and quotes must be balanced.</li>
+<li>Only issues over estimate: keeps the issues whose time logged (by everyone, all time) is above their original estimate. It needs no new run and applies to the screen and every export.</li>
 <li>Every filter runs as you, so Jira's permissions decide what you see.</li>
 </ul>
 <h2>Jira fields</h2>
@@ -54,6 +55,18 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <li>The screen shows the first 500 detail rows. Exports include all rows, up to the 25,000 limit.</li>
 <li>A report holds up to 25,000 worklogs. Above that it stops and shows no totals, because partial totals would be wrong for billing. Narrow the date range, or filter by team, user, project or JQL, and run it again.</li>
 <li>If the billable and attribute data cannot be read, the screen warns you instead of showing everything as not billable.</li>
+</ul>
+<h2>Estimate versus logged</h2>
+<p>Grouped by issue, epic or parent, or project, the summary adds Jira's own time tracking figures:</p>
+<ul>
+<li>Estimate: the original estimate. Remaining: the remaining estimate. Logged all time: the time logged on the issue in Jira by everyone, at any date.</li>
+<li>Hours in range: what the report counted (your range and filters), next to Logged all time.</li>
+<li>% used: Logged all time on the issues that have an original estimate, as a share of that estimate. Over 100% is highlighted.</li>
+<li>An issue over its estimate is tagged "Over estimate"; a group says how many of its issues are. Detail rows carry the same tag.</li>
+<li>Each issue counts once in a group, however many people logged on it. An issue's own figures are used (Jira's, without its sub-tasks or, for an epic, its child issues), and a group adds up the issues in the report, that is the issues with worklogs in the range. An epic's own estimate counts only if work was logged on the epic itself.</li>
+<li>An issue without an estimate shows blanks, not zero, and is never over.</li>
+<li>Summary CSV and Excel gain Original estimate, Remaining estimate, Logged all time, % of estimate used and Issues over estimate columns for these groupings, and the Hours column is called "Hours in range". Other groupings export exactly as before.</li>
+<li>The figures are read in the same Jira search that finds the issues, so they add no calls.</li>
 </ul>
 <h2>Cost and revenue</h2>
 <p>Jira administrators set hourly rates on the admin page (Rates). Reports then add money to the hours, for people allowed to see it:</p>
@@ -78,7 +91,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <li>Save the current setup under a name. You can keep up to 50.</li>
 <li>Saved reports belong to you. Load, Update and Delete (with confirmation) are available.</li>
 <li>A preset range such as This week moves forward when you load it. A custom range stays fixed.</li>
-<li>The JQL filter, excluded projects, Jira field grouping and extra columns are saved with the report. Reports saved before these options existed load as they were, with the new options empty.</li>
+<li>The JQL filter, excluded projects, Jira field grouping, extra columns and the over-estimate filter are saved with the report. Reports saved before these options existed load as they were, with the new options empty.</li>
 </ul>
 <h2>Exports</h2>
 <ul>
