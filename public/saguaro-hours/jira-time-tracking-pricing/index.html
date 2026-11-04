@@ -341,6 +341,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
         body: JSON.stringify({
           service_id: 'service_zeogjbm', template_id: 'template_mfizbds', user_id: 'HIVHympEPP7sMQ_Pl',
           template_params: {
+            title: subject, name: email, email: email,
             from_name: email, from_email: email, reply_to: email, to_email: 'tyler@leducsystems.com', subject: subject,
             message: 'Launch list: please email me when it is live.\nEmail: ' + email + '\nPage: ' + location.pathname
           }
@@ -366,6 +367,11 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
     var block = a.closest('p, li') || a;
     if (a.id === 'cta') a.style.display = 'none';
     block.parentNode.insertBefore(build(subject, ++n), block.nextSibling);
+  });
+  // Approval day: every link to the Marketplace listing counts as a "get it" click.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com"]') : null;
+    if (a) track('marketplace_click', { link_url: a.href, page_path: location.pathname });
   });
 })();
 </script>
