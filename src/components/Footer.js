@@ -63,6 +63,10 @@ function Footer() {
                 {item.label}
               </Link>
             ))}
+            {/* A static page written by scripts/site-map-page.js, outside the router. */}
+            <a className="site-footer__link" href="/site-map/">
+              Site map
+            </a>
           </nav>
 
           <nav className="site-footer__col" aria-labelledby="footer-elsewhere">
