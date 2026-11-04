@@ -92,7 +92,7 @@
 <link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/fonts/plex.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"For MSPs: Rolling Out Microsoft 365 Scan to Email Changes Across Client Offices","description":"A practical plan for IT providers and copier dealers to move every client MFP off SMTP basic authentication before Microsoft 365 turns it off at the end of December 2026: inventory, triage by model, and a repeatable setup.","url":"https://leducsystems.com/tools/msp-scan-to-email-microsoft-365-rollout/","author":{"@type":"Person","name":"Tyler LeDuc"},"publisher":{"@type":"Organization","name":"LeDuc Systems"}}</script>
-  <link rel="stylesheet" crossorigin href="/tools/assets/style-DiXpDszc.css">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-DmnL12ms.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -132,6 +132,7 @@
 <main id="main" tabindex="-1">
   <section class="hero">
     <h1>Scan to email across many client offices</h1>
+    
     <p class="lede">If you look after dozens of client offices, the end of SMTP basic authentication in Microsoft 365 isn't one problem, it's one per MFP. Here's how I'd plan it so January isn't a week of &quot;my scans aren't coming through&quot; tickets.</p>
   </section>
   <p class="cta"><a class="btn" href="/tools/scan-relay-resellers/">See wholesale pricing</a> <span>Scan Relay dealer packs from $19 per office.</span></p>
@@ -150,11 +151,12 @@
 <h2>3. Make the "everything else" fix repeatable</h2>
 <p>What you want is one setup that works the same at every site and that a tech can do remotely in a few minutes. A local relay on an always-on PC does that. <a href="../scan-to-email-microsoft-365/">Scan Relay</a> is the one I make: a Windows service that takes the copier's mail on the LAN (port 25, no auth) and sends it through Microsoft Graph with OAuth. Per site it's:</p>
 <ol>
-  <li>Install it on a PC that stays on.</li>
-  <li>Sign in with the scanning mailbox. The first time in each tenant, an admin approves it once for the organization.</li>
+  <li>Install it on a PC that stays on. From your RMM tool that's <code>ScanRelay.exe install --quiet --license KEY --alert-email you@yourmsp.com</code>, with no prompts.</li>
+  <li>Sign in with the scanning mailbox, in a browser on that PC. The first time in each tenant, an admin approves it once for the organization.</li>
   <li>Change the copier's SMTP server to that PC's address, port 25, no SSL.</li>
-  <li>Send a test scan and enter the license key.</li>
+  <li>Send a test scan.</li>
 </ol>
+<p>After that, <code>ScanRelay.exe status</code> gives your RMM an exit code to watch, and alerts go to your email, a webhook or the Windows event log when a site's scans stop getting through.</p>
 <p>It's $99 per office retail, with a 14-day free trial. For providers there are <a href="../scan-relay-resellers/">dealer packs</a> at $29, $25 and $19 per office (10, 25 and 100 offices). Licenses don't expire, and you set your own price to clients.</p>
 
 <h2>4. Do it before the end of December</h2>
