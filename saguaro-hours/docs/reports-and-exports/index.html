@@ -55,6 +55,24 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <li>A report holds up to 25,000 worklogs. Above that it stops and shows no totals, because partial totals would be wrong for billing. Narrow the date range, or filter by team, user, project or JQL, and run it again.</li>
 <li>If the billable and attribute data cannot be read, the screen warns you instead of showing everything as not billable.</li>
 </ul>
+<h2>Cost and revenue</h2>
+<p>Jira administrators set hourly rates on the admin page (Rates). Reports then add money to the hours, for people allowed to see it:</p>
+<ul>
+<li>Cost: every hour at the person's cost rate on the worklog's day. A person's own cost rate comes first, then the default cost rate.</li>
+<li>Revenue: billable hours only, at the billing rate on the worklog's day. The rate of the worklog's value of the chosen attribute (for example Account = Client A) comes first, then its project's rate, then the default billing rate.</li>
+<li>Each rate starts on a day (or "from the start") and lasts until the next one. A rate change prices later work at the new rate and keeps earlier work at the old rate, so past months still add up the same.</li>
+<li>An hour with no rate on its day shows no amount, rather than a guess.</li>
+<li>The summary gains Cost and Revenue columns, grouped and sub-grouped like the hours, with totals. The detail table gains Cost and Revenue per worklog (the tooltip shows hours x rate). Summary CSV and Excel gain "Cost (USD)" and "Revenue (USD)" columns (in the site's currency); Detail CSV and Excel gain the cost rate, cost, billing rate and revenue of each worklog.</li>
+</ul>
+<p>Who sees money: Jira administrators, and the people an administrator lists under "Who can see money" on the admin page. Team leads are not added on their own, as approving time is a different job from seeing what it costs. Everyone else gets the same reports without any money column; the app never sends rates to them. A person who may see money still only sees it for worklogs Jira lets them see.</p>
+<h2>Billing summary</h2>
+<p>With money shown, Billing summary (next to the exports) turns the report into a one-page summary per project, or per value of an attribute such as Account: hours, billable hours, billing rate and amount (billable hours x rate), with a total. A rate change inside the range gives two lines for that project, one per rate, so each line can be checked by hand. You can change the title.</p>
+<ul>
+<li>Print opens your browser's print dialog with only the summary on the page, in dark text on white whatever your Jira theme. Choose "Save as PDF" there for a PDF.</li>
+<li>Download for printing (.html) saves the same summary as a file you can open and print from your browser.</li>
+<li>Billable hours with no billing rate are counted in the hours and named in a warning, and add nothing to the amount.</li>
+<li>The summary uses the report's range and filters: run the report for the client's period first. It is not an invoice: there is no invoice number, tax or accounting sync.</li>
+</ul>
 <h2>Saved reports</h2>
 <ul>
 <li>Save the current setup under a name. You can keep up to 50.</li>
@@ -67,6 +85,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <li>Summary CSV.</li>
 <li>Detail CSV.</li>
 <li>Excel (.xlsx) with Summary and Detail sheets.</li>
+<li>Billing summary, printable (see above), for people allowed to see money.</li>
 </ul>
 <p>CSV files use UTF-8 with a byte order mark and CRLF line ends. Text that starts with =, +, - or @ gets a leading quote so a worklog description cannot run as a spreadsheet formula. The files are built in your browser and are not sent anywhere.</p>
 <h2>Limits</h2>

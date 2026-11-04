@@ -24,7 +24,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <p>Saguaro Hours for Jira runs entirely on Atlassian Forge.</p>
 <ul>
 <li>Hosting. The app's code and data run on Atlassian's infrastructure. Its data sits in Forge hosted storage, in the same location as your Jira site. The app declares no external network access, so it cannot send data outside Atlassian.</li>
-<li>Access. We do not have routine access to your stored data. Every server call checks permissions: Jira administrators for settings, teams, import and export, and team leads, backup approvers or administrators for approvals.</li>
+<li>Access. We do not have routine access to your stored data. Every server call checks permissions: Jira administrators for settings, rates, teams, import and export, team leads, backup approvers or administrators for approvals, and administrators or named rate viewers for anything priced with rates.</li>
 <li>Dependencies. We audit the app's dependencies before each release and fix known high and critical issues before shipping.</li>
 <li>Personal data. The app reports stored account IDs to Atlassian's personal data reporting service and removes the data of closed accounts. See the <a href="/saguaro-hours/privacy/">privacy policy</a>.</li>
 <li>Certifications. The app has no security certification of its own, no penetration test and no bug bounty.</li>
