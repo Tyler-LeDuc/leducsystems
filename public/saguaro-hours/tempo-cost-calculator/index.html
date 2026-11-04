@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tempo cost calculator for Jira Cloud | Saguaro Hours</title>
+<meta name="description" content="Enter your number of Jira users and see what Tempo Timesheets costs per month and per year next to Saguaro Hours. Published prices, sources cited.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/tempo-cost-calculator/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Tempo cost calculator</h1>
+<p>Enter the number of users on your Jira Cloud site. That is the only thing this page asks for, and nothing you type leaves your browser.</p>
+<div id="calc" style="margin:1.5em 0;padding:1em 1.25em;border:1px solid #ccc;border-radius:8px;max-width:640px">
+<label for="users" style="font-weight:600">Jira users on your site</label><br>
+<input id="users" type="number" min="1" max="100000" step="1" value="50" inputmode="numeric" style="font-size:1.2em;width:9em;margin:.4em 0;padding:.3em">
+<p id="out" aria-live="polite" style="margin:.8em 0 0"></p>
+<table id="tbl" style="margin-top:.8em"></table>
+</div>
+<script>
+(function () {
+  var TEMPO_BANDS = [[100, 5.99], [250, 4.21], [1000, 1.99], [2500, 1.11], [5000, 0.64], [7500, 0.43], [15000, 0.36], [Infinity, 0.28]];
+  var SAGUARO_BANDS = [[100, 2.00], [250, 1.50], [Infinity, 1.00]];
+  function graduated(n, bands) {
+    var total = 0, prev = 0;
+    for (var i = 0; i < bands.length && n > prev; i++) {
+      var top = bands[i][0], rate = bands[i][1];
+      var users = Math.min(n, top) - prev;
+      total += users * rate;
+      prev = top;
+    }
+    return Math.round(total * 100) / 100;
+  }
+  function tempo(n) { return n <= 10 ? 10 : graduated(n, TEMPO_BANDS); }
+  function saguaro(n) { return n <= 10 ? 0 : graduated(n, SAGUARO_BANDS); }
+  function usd(x) { return '$' + x.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  var input = document.getElementById('users'), out = document.getElementById('out'), tbl = document.getElementById('tbl');
+  function render() {
+    var n = Math.floor(Number(input.value));
+    if (!(n >= 1 && n <= 100000)) { out.textContent = 'Enter a whole number of users from 1 to 100,000.'; tbl.innerHTML = ''; return; }
+    var t = tempo(n), s = saguaro(n), save = Math.round((t - s) * 100) / 100;
+    out.innerHTML = 'For <strong>' + n.toLocaleString('en-US') + '</strong> Jira users, Saguaro Hours costs <strong>' + usd(save) + ' less per month</strong>, or <strong>' + usd(save * 10) + ' less per year</strong> on an annual subscription.';
+    tbl.innerHTML = '<thead><tr><th></th><th>Per month</th><th>Per year (annual, 10 x monthly)</th></tr></thead><tbody>' +
+      '<tr><td>Timesheets by Tempo</td><td>' + usd(t) + '</td><td>' + usd(t * 10) + '</td></tr>' +
+      '<tr><td>Saguaro Hours</td><td>' + (s === 0 ? 'Free' : usd(s)) + '</td><td>' + (s === 0 ? 'Free' : usd(s * 10)) + '</td></tr>' +
+      '<tr><td>Difference</td><td>' + usd(save) + '</td><td>' + usd(save * 10) + '</td></tr></tbody>';
+  }
+  input.addEventListener('input', render);
+  render();
+})();
+</script>
+
+<h2>Which prices this uses</h2>
+<p><strong>Tempo:</strong> the published Atlassian Marketplace price list for "Timesheets by Tempo - Jira Time Tracking", Cloud, the standard per-user subscription that every Jira Cloud site buys through the Marketplace. Read on 3 November 2026; Tempo last changed it on 13 October 2026. It does not include Tempo's separate add-on apps (Tempo Planner, Cost Tracker and others), and it does not know about any discount you may have negotiated.</p>
+<table>
+<thead>
+<tr>
+<th>Jira users</th>
+<th>Tempo per month</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 to 10</td>
+<td>$10.00 flat for the site</td>
+</tr>
+<tr>
+<td>11 to 100</td>
+<td>$5.99 per user</td>
+</tr>
+<tr>
+<td>101 to 250</td>
+<td>$4.21 per user</td>
+</tr>
+<tr>
+<td>251 to 1,000</td>
+<td>$1.99 per user</td>
+</tr>
+<tr>
+<td>1,001 to 2,500</td>
+<td>$1.11 per user</td>
+</tr>
+<tr>
+<td>2,501 to 5,000</td>
+<td>$0.64 per user</td>
+</tr>
+<tr>
+<td>5,001 to 7,500</td>
+<td>$0.43 per user</td>
+</tr>
+<tr>
+<td>7,501 to 15,000</td>
+<td>$0.36 per user</td>
+</tr>
+<tr>
+<td>15,001 and up</td>
+<td>$0.28 per user</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Saguaro Hours:</strong> free for up to 10 users, then $2.00 per user for users 1 to 100, $1.50 for users 101 to 250 and $1.00 per user from 251.</p>
+<p><strong>How the total is worked out:</strong> above 10 users, each band is charged at its own rate (graduated): for 250 users, Tempo is 100 x $5.99 + 150 x $4.21 = $1,230.50 a month, Saguaro Hours is 100 x $2.00 + 150 x $1.50 = $425.00. Annual subscriptions cost 10 times the monthly price. This matches the totals Atlassian publishes for both apps. Atlassian bills every user on your Jira license, so use your Jira user count, not the number of people who log time.</p>
+<p>Sources: Tempo's Marketplace price list, <a href="https://marketplace.atlassian.com/rest/2/addons/is.origo.jira.tempo-plugin/pricing/cloud/live">https://marketplace.atlassian.com/rest/2/addons/is.origo.jira.tempo-plugin/pricing/cloud/live</a> , and Tempo's pricing page, <a href="https://www.tempo.io/pricing/jira-time-tracking">https://www.tempo.io/pricing/jira-time-tracking</a> . How Marketplace billing works: <a href="/saguaro-hours/jira-time-tracking-pricing/">Jira time tracking app pricing</a>.</p>
+<p>Prices can change. Check the sources before you decide.</p>
+<h2>What you get for the difference</h2>
+<p>Saguaro Hours covers weekly timesheets on Jira's own worklogs, billable flags and custom attributes, teams with a lead, submit and approve, reports with CSV and Excel export and a dashboard gadget. It does not have start and stop timers, capacity planning, cost tracking or a public API. The full list, including what Tempo has that Saguaro Hours does not: <a href="/saguaro-hours/tempo-alternative/">Tempo alternative</a>. Moving your history: <a href="/saguaro-hours/docs/moving-from-tempo/">move from Tempo guide</a>.</p>
+<p>Saguaro Hours is waiting for Atlassian Marketplace approval. To try it early, email tyler@leducsystems.com with the subject "Saguaro early access".</p>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>
