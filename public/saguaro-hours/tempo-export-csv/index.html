@@ -3,17 +3,22 @@
 <title>How to export Tempo worklogs to CSV | Saguaro Hours</title>
 <meta name="description" content="Export Tempo Timesheets worklogs to CSV: the menu path, the View Worklogs permission that keeps everyone in the file, and what each column means.">
 <link rel="canonical" href="https://leducsystems.com/saguaro-hours/tempo-export-csv/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:title" content="How to export Tempo worklogs to CSV | Saguaro Hours"><meta property="og:description" content="Export Tempo Timesheets worklogs to CSV: the menu path, the View Worklogs permission that keeps everyone in the file, and what each column means.">
+<meta property="og:url" content="https://leducsystems.com/saguaro-hours/tempo-export-csv/"><meta property="og:image" content="https://leducsystems.com/saguaro-hours/img/01-weekly-grid.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico">
 <style>
 :root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
 header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
-nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+nav{display:flex;flex-wrap:wrap;gap:4px 16px}nav a{color:var(--muted);font-size:.95rem;white-space:nowrap}nav a:first-child{color:var(--ink);font-weight:600}
 h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
 a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
 code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
-main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{overflow-x:auto}pre code{overflow-wrap:normal}
+.sg-app{margin:20px 0;padding:12px 16px;border-left:4px solid #1d6b4f;background:#fff;font-size:.95rem}.sg-app a{font-weight:600}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
 @media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
 </style>
 <script>
@@ -94,11 +99,12 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </script>
 </head><body>
 <header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
-<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<nav><a href="/saguaro-hours/">Saguaro Hours</a><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
 <main>
 <h1>How to export Tempo worklogs to CSV</h1>
 <p>You may want Tempo's worklogs in a file for a backup, for billing in a spreadsheet, or to move to another app. Tempo's Logged Time report has a raw data export that gives one row per worklog. This page gives the steps, the permission that decides whose time is in the file, and what the columns mean.</p>
 <p>I checked these steps on 2026-11-03 with "Timesheets by Tempo - Jira Time Tracking" on a Jira Cloud test site. Tempo changes its screens often, so a menu name may have moved since.</p>
+<aside class="sg-app"><strong>Saguaro Hours for Jira</strong>: weekly timesheets, team lead approval and billable reports on native Jira worklogs. Free for up to 10 users. <a href="/saguaro-hours/">See the app</a> or <a href="#launch">get one email when it is live</a>.</aside>
 <h2>Before you export: make sure everyone is in the file</h2>
 <p>Tempo exports only the worklogs you are allowed to view in Tempo. Being a Jira administrator does not give you that, and the export does not warn about the rows it leaves out.</p>
 <ol>
@@ -200,7 +206,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <p><strong>Status:</strong> Saguaro Hours was submitted to the Atlassian Marketplace on 2026-11-03 and is waiting for approval. The import is built and was tested on my development site with a real Tempo export. Counting migrated hours under the real author everywhere was added on 2026-11-03, after the build under review.</p>
 <h2>Compare the cost</h2>
 <p>At 100 Jira users, Tempo Timesheets lists at $599.00 a month and Saguaro Hours at $200.00 (Tempo's Marketplace price list, read 2026-11-04; Saguaro's prices as entered in its listing). Work out your own figure with the <a href="/saguaro-hours/tempo-cost-calculator/">Tempo cost calculator</a>, and see what each app does in <a href="/saguaro-hours/jira-time-tracking-apps-compared/">Jira time tracking apps compared</a> and <a href="/saguaro-hours/tempo-alternative/">Saguaro Hours as a Tempo alternative</a>.</p>
-<h2>Email me when it's live</h2>
+<h2 id="launch">Email me when it's live</h2>
 <p><a href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch">Email me when it's live</a> and I will send one email on the day the listing is approved.</p>
 <p>Tempo and Timesheets by Tempo belong to Tempo Software. Saguaro Hours and LeDuc Systems LLC are not affiliated with Tempo.</p>
 </main>
@@ -281,7 +287,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
   });
   // Approval day: every link to the Marketplace listing counts as a "get it" click.
   document.addEventListener('click', function (e) {
-    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com"]') : null;
+    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com/apps/"]') : null;
     if (a) track('marketplace_click', { link_url: a.href, page_path: location.pathname });
   });
 })();

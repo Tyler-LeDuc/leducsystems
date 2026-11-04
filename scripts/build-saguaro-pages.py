@@ -19,12 +19,13 @@ STYLE = """<style>
 :root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
 header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
-nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+nav{display:flex;flex-wrap:wrap;gap:4px 16px}nav a{color:var(--muted);font-size:.95rem;white-space:nowrap}nav a:first-child{color:var(--ink);font-weight:600}
 h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
 a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
 code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
-main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{overflow-x:auto}pre code{overflow-wrap:normal}
+.sg-app{margin:20px 0;padding:12px 16px;border-left:4px solid #1d6b4f;background:#fff;font-size:.95rem}.sg-app a{font-weight:600}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
 @media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
 </style>"""
 
@@ -113,7 +114,7 @@ NOTIFY = r"""<style>
   });
   // Approval day: every link to the Marketplace listing counts as a "get it" click.
   document.addEventListener('click', function (e) {
-    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com"]') : null;
+    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com/apps/"]') : null;
     if (a) track('marketplace_click', { link_url: a.href, page_path: location.pathname });
   });
 })();
@@ -138,8 +139,18 @@ def autolink(text):
     return re.sub(r"(?<!\]\()(?<![<\[])(https://[^\s)]+[^\s).,])", r"<\1>", text)
 
 
-def page(title, body_md, path, description, full_title=False, product="Saguaro Hours for Jira"):
+def page(title, body_md, path, description, full_title=False, product="Saguaro Hours for Jira", promo=False):
     body = markdown.markdown(body_md, extensions=["tables"])
+    home = "/saguaro-hours/azure-devops/" if "Azure" in product else "/saguaro-hours/"
+    # Guides: the launch-list heading gets an anchor, and a short product box goes before the first section,
+    # so a reader from search sees what the app is and can jump to the sign-up without scrolling to the end.
+    body, n = re.subn(r"<h2>(Email me when it.s live)</h2>", r'<h2 id="launch">\1</h2>', body, count=1)
+    if promo and n and "<h2" in body:
+        box = ('<aside class="sg-app"><strong>Saguaro Hours for Jira</strong>: weekly timesheets, team lead approval and '
+               'billable reports on native Jira worklogs. Free for up to 10 users. '
+               '<a href="/saguaro-hours/">See the app</a> or <a href="#launch">get one email when it is live</a>.</aside>\n')
+        i = body.index("<h2")
+        body = body[:i] + box + body[i:]
     out = OUT / path / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     url = f"https://leducsystems.com/saguaro-hours/{path + '/' if path else ''}"
@@ -148,12 +159,16 @@ def page(title, body_md, path, description, full_title=False, product="Saguaro H
 <title>{html.escape(title if full_title else title + ' | Saguaro Hours for Jira')}</title>
 <meta name="description" content="{html.escape(description)}">
 <link rel="canonical" href="{url}">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:title" content="{html.escape(title)}"><meta property="og:description" content="{html.escape(description)}">
+<meta property="og:url" content="{url}"><meta property="og:image" content="https://leducsystems.com/saguaro-hours/img/01-weekly-grid.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico">
 {STYLE}
 {CONSENT}
 </head><body>
 <header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
-<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<nav><a href="{home}">{html.escape(product.replace(" for Jira", ""))}</a><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
 <main>
 {body}
 </main>
@@ -197,7 +212,8 @@ for f in sorted(SITE.glob("*.md")):
     m = re.match(r"---\n(.*?)\n---\n", text, re.S)
     meta = dict(re.findall(r'^(\w+): "(.*)"$', m.group(1), re.M))
     body = autolink(link_doc_mentions(text[m.end():], docs))
-    urls.append(page(meta["title"], body, meta["path"], meta["description"], full_title=True))
+    urls.append(page(meta["title"], body, meta["path"], meta["description"], full_title=True,
+                     promo=f.stem not in ("index", "tempo-cost-calculator", "tempo-preview")))
 # The Azure DevOps version's pre-launch page lives in its own repo.
 for f in sorted(Path("C:/Users/Tyler/apps/saguaro-ado/listing/site-prelaunch").glob("*.md")):
     text = f.read_text(encoding="utf-8")
