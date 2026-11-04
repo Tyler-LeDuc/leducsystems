@@ -92,9 +92,9 @@
 <link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/fonts/plex.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Scan Relay for Copier Dealers and IT Providers: Wholesale Licenses","description":"Fix scan to email for every client office before Microsoft 365 turns off SMTP basic authentication. Scan Relay reseller packs from $19 per office, lifetime licenses, no subscription.","url":"https://leducsystems.com/tools/scan-relay-resellers/","author":{"@type":"Person","name":"Tyler LeDuc"},"publisher":{"@type":"Organization","name":"LeDuc Systems"}}</script>
-  <script type="module" crossorigin src="/tools/assets/scan-relay-resellers-Dzvaojll.js"></script>
+  <script type="module" crossorigin src="/tools/assets/scan-relay-resellers-BAc8CK0K.js"></script>
   <link rel="modulepreload" crossorigin href="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js">
-  <link rel="stylesheet" crossorigin href="/tools/assets/style-DmnL12ms.css">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-qJ6DStyr.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -135,10 +135,12 @@
   <section class="hero">
     <h1>Scan Relay for copier dealers and IT providers</h1>
     
-    <p class="lede">At the end of December 2026, Microsoft 365 stops accepting username-and-password email from copiers. Every client whose MFP sends scans through smtp.office365.com will call you in January. Scan Relay fixes it in about five minutes per office, and you can buy it wholesale.</p>
+    <p class="lede">At the end of December 2026, Microsoft 365 turns off username-and-password (basic) SMTP authentication by default. An admin can switch it back on for a while, but clients whose MFPs send scans through smtp.office365.com with a password will start calling you in January. Scan Relay fixes it in about five minutes per office, and you can buy it wholesale.</p>
   </section>
   <p class="cta"><a class="btn" href="/tools/scan-to-email-microsoft-365/">Try Scan Relay free first</a> <span>Free 14-day trial on any office PC.</span></p>
   <article class="guide">
+<p class="price-strip"><b>Wholesale:</b> $29 per office in a 10-pack, $25 per office in a 25-pack and $19 per office in a 100-pack. Lifetime licenses, no subscription. One office on its own is $99. Every install starts with the free 14-day trial. <a href="#pricing">See the packs</a></p>
+
 <h2>What it does</h2>
 <p>Scan Relay is a small Windows service you install on any always-on PC at the client's office. The copier sends scan-to-email the way it always has, to that PC on port 25, 587 or 2525, with any username and password. Scan Relay sends each scan on to Microsoft 365 with Microsoft's modern sign-in (OAuth, through Microsoft Graph). No firmware update, no static IP, no connector, no DNS changes.</p>
 <ul>
@@ -165,8 +167,9 @@
 <h2>Which clients are affected?</h2>
 <p>Paste your client domains into the <a href="../microsoft-365-scan-to-email-domain-checker/">Microsoft 365 domain checker</a>: it shows which ones are on Microsoft 365 and gives you a CSV. In those tenants, the SMTP AUTH clients report (Exchange admin center, Reports, Mail flow) lists every device still signing in with a password.</p>
 
-<h2>Wholesale pricing</h2>
-<p>One license covers one office (one PC running Scan Relay, any number of copiers pointing at it). Lifetime licenses with free updates: no subscription for you or your client. Charge your clients what you like.</p>
+<h2 id="pricing">Wholesale pricing</h2>
+<p>One license covers one office (one PC running Scan Relay, any number of copiers pointing at it). Lifetime licenses with free updates: no subscription for you or your client.</p>
+<p><b>Billing your clients is up to you.</b> Charge what you like, for example as a line on the install visit, or rolled into a managed print or managed IT agreement. The license is a one-time cost to you, so there's nothing recurring to pass on.</p>
 <div class="packs" id="packs" data-api="https://convert.leducsystems.com">
   <div class="pack"><b>10 offices</b><span class="price">$290</span><span class="each">$29 per office</span><button class="btn" type="button" data-pack="10">Buy 10 licenses</button></div>
   <div class="pack"><b>25 offices</b><span class="price">$625</span><span class="each">$25 per office</span><button class="btn" type="button" data-pack="25">Buy 25 licenses</button></div>
@@ -174,7 +177,7 @@
 </div>
 <p class="status" id="pack-status" role="status"></p>
 <div class="license-list" id="license-list" hidden></div>
-<p>Unused licenses are refunded within 30 days. Need more than 100, or want invoicing? Email <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
+<p>Your keys appear on this page right after checkout. Install at each office with the free 14-day trial, then enter one key per office on its setup page (or pass it with <code>--license</code>). Unused licenses are refunded within 30 days. Just one office? It's $99 on the <a href="../scan-to-email-microsoft-365/">Scan Relay page</a>. Need more than 100, or want invoicing? Email <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
 
 <h2>Setting up a client</h2>
 <ol>
