@@ -29,6 +29,91 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </style>"""
 
 
+# Same cookie banner and GA4 tag as the rest of leducsystems.com (one source: leduc-tools/src/consent.js).
+_consent_src = Path("C:/Users/Tyler/apps/leduc-tools/src/consent.js").read_text(encoding="utf-8")
+CONSENT = re.search(r"consentScript = `(.*?)`;", _consent_src, re.S).group(1).replace(
+    "${GA_ID}", re.search(r"GA_ID = '([^']+)'", _consent_src).group(1))
+
+# Launch list: each "Email me when it's live" mailto (subject "... launch") gets a one-field form
+# after it. It sends through the site's EmailJS contact template to tyler@leducsystems.com, keeps the
+# mailto as the fallback, and records a GA4 generate_lead event (only counted after cookie consent).
+NOTIFY = r"""<style>
+.sg-notify{margin:12px 0 20px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;max-width:560px}
+.sg-notify label{display:block;font-weight:600;margin-bottom:6px}.sg-notify .sg-row{display:flex;gap:8px;flex-wrap:wrap}
+.sg-notify input[type=email]{flex:1 1 220px;min-height:44px;font:inherit;padding:6px 10px;border:1px solid rgba(21,19,15,.4);border-radius:4px}
+.sg-notify button{min-height:44px;font:inherit;font-weight:600;padding:6px 16px;border:0;border-radius:4px;background:#1d6b4f;color:#fff;cursor:pointer}
+.sg-notify button[disabled]{opacity:.6;cursor:default}.sg-notify .sg-note{margin:8px 0 0;color:var(--muted);font-size:.9rem}
+.sg-notify .sg-status{margin:8px 0 0;font-weight:600}.sg-notify .sg-hp{position:absolute;left:-9999px}
+.sg-notify input:focus-visible,.sg-notify button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sg-notify [hidden]{display:none}
+</style>
+<script>
+(function () {
+  var DONE = 'sgLaunchList';
+  function track(name, params) { if (window.gtag) window.gtag('event', name, params); }
+  function done(form, msg) {
+    form.querySelector('.sg-row').hidden = true;
+    form.querySelector('.sg-note').hidden = true;
+    form.querySelector('label').hidden = true;
+    form.querySelector('.sg-status').textContent = msg;
+  }
+  function build(subject, n) {
+    var id = 'sg-email-' + n, f = document.createElement('form');
+    f.className = 'sg-notify';
+    f.noValidate = true;
+    f.innerHTML = '<label for="' + id + '">Your work email</label>'
+      + '<div class="sg-row"><input id="' + id + '" type="email" name="email" autocomplete="email" required placeholder="you@company.com">'
+      + '<button type="submit">Email me when it\'s live</button></div>'
+      + '<input class="sg-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
+      + '<p class="sg-note">One email on the day it is live on the Atlassian Marketplace. I use your address for nothing else and never share it.</p>'
+      + '<p class="sg-status" role="status" aria-live="polite"></p>';
+    var stored = null;
+    try { stored = window.localStorage.getItem(DONE + ':' + subject); } catch (e) {}
+    if (stored) { done(f, 'You are on the list (' + stored + '). I will email you the day it is live.'); return f; }
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = f.querySelector('input[type=email]'), btn = f.querySelector('button'), st = f.querySelector('.sg-status');
+      var email = input.value.trim();
+      if (f.querySelector('.sg-hp').value) return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { st.textContent = 'Enter a valid email address.'; input.focus(); return; }
+      btn.disabled = true;
+      st.textContent = 'Sending...';
+      fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: 'service_zeogjbm', template_id: 'template_mfizbds', user_id: 'HIVHympEPP7sMQ_Pl',
+          template_params: {
+            from_name: email, from_email: email, reply_to: email, to_email: 'tyler@leducsystems.com', subject: subject,
+            message: 'Launch list: please email me when it is live.\nEmail: ' + email + '\nPage: ' + location.pathname
+          }
+        })
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        try { window.localStorage.setItem(DONE + ':' + subject, email); } catch (e2) {}
+        track('generate_lead', { form: 'launch_list', list: subject, page_path: location.pathname });
+        done(f, 'Thanks. I will email ' + email + ' the day it is live.');
+      }).catch(function () {
+        btn.disabled = false;
+        st.innerHTML = 'That did not send. Please email <a href="mailto:tyler@leducsystems.com?subject=' + encodeURIComponent(subject) + '">tyler@leducsystems.com</a> with the subject "' + subject + '" instead.';
+      });
+    });
+    return f;
+  }
+  var n = 0;
+  [].slice.call(document.querySelectorAll('main a[href^="mailto:"]')).forEach(function (a) {
+    var m = /[?&]subject=([^&]*)/.exec(a.getAttribute('href'));
+    var subject = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+    if (!/ launch$/i.test(subject)) return;
+    a.addEventListener('click', function () { track('launch_list_mailto', { list: subject, page_path: location.pathname }); });
+    var block = a.closest('p, li') || a;
+    if (a.id === 'cta') a.style.display = 'none';
+    block.parentNode.insertBefore(build(subject, ++n), block.nextSibling);
+  });
+})();
+</script>"""
+
+
 def doc_title(text):
     m = re.search(r"^# (.+)$", text, re.M)
     return m.group(1).strip() if m else "Saguaro Hours"
@@ -59,13 +144,15 @@ def page(title, body_md, path, description, full_title=False, product="Saguaro H
 <link rel="canonical" href="{url}">
 <link rel="icon" href="/favicon.ico">
 {STYLE}
+{CONSENT}
 </head><body>
 <header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
 <nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
 <main>
 {body}
 </main>
-<footer>{product} · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+<footer>{product} · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> · <a href="/privacy#cookies" data-cookie-settings>Cookie settings</a></footer>
+{NOTIFY}
 </body></html>
 """, encoding="utf-8")
     return url
