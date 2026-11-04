@@ -24,13 +24,14 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <p>A team has a name, a lead, an optional backup approver, a timesheet period and members. Teams drive approvals, the team filter in reports, and the dashboard gadget.</p>
 <h2>Create a team (Jira administrator)</h2>
 <ol>
-<li>Open Jira settings, Apps, Saguaro Hours, Teams section.</li>
+<li>Open the Saguaro Hours settings (the gear at the top right of Jira, Marketplace apps, then Saguaro Hours under Apps in the left sidebar), Teams section. On a new site the Get started card's Create a team button opens a new team there.</li>
 <li>Enter a name.</li>
 <li>Pick a lead with the user picker. It searches active Atlassian accounts by name or email as you type.</li>
 <li>Optional: pick a backup approver, who can approve the team like the lead (for example while the lead is away).</li>
 <li>Timesheet period: Site default, Weekly or Monthly. A person in several teams needs the same period type in each; see <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</li>
 <li>Add members the same way. Remove a member with Remove.</li>
-<li>Create team. Existing teams show Save team and Delete. Delete asks for inline confirmation.</li>
+<li>Create team ("Team ... created." confirms it). Existing teams show Save team and Delete; after a change the card shows "Unsaved changes" until Save team. Delete asks for inline confirmation.</li>
+<li>The lead approves the members' timesheets. A lead who also wants to submit their own timesheet adds themselves as a member. People in no team cannot submit a timesheet.</li>
 </ol>
 <h2>What the app stores</h2>
 <p>Team name, period type, the lead's and the backup approver's account ID and display name, and each member's account ID, display name and avatar link. Email addresses are not stored. Names are copied when you pick the person. When Atlassian reports that a person's account details changed, the app reads the current name and avatar from Jira, within about a week. When an account is closed, the person is removed from the team, and as its lead or backup approver.</p>

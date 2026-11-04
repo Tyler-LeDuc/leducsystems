@@ -31,22 +31,28 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <li>A dashboard gadget. See <a href="/saguaro-hours/docs/dashboard-gadget/">dashboard gadget</a>.</li>
 <li>Optional email reminders, sent through Jira's own mail: one email to people whose timesheet is not submitted when a period closes, and a weekly list for team leads of timesheets waiting for them. See <a href="/saguaro-hours/docs/email-reminders/">email reminders</a>.</li>
 </ul>
+<h2>Where to find it</h2>
+<ul>
+<li>The timesheet: in the Jira sidebar, select Apps, then Saguaro Hours under Your apps. Everyone who logs time uses this page.</li>
+<li>The settings (Jira administrators): select the gear (Settings) at the top right of Jira, then Marketplace apps (under Jira admin settings). Saguaro Hours is listed in the left sidebar under Apps. The settings page has an Open the timesheet button, and the timesheet shows administrators an Open settings button while the site is not set up.</li>
+<li>The first load of either page can take several seconds.</li>
+</ul>
 <h2>Install and first steps (Jira administrator)</h2>
 <ol>
 <li>Install the app from the Marketplace. Accept the permissions listed in <a href="/saguaro-hours/docs/permissions/">permissions</a>.</li>
-<li>Open Jira settings, then Apps, then Saguaro Hours. The first load can take several seconds.</li>
-<li>Set the period type (weekly or monthly) and the required hours per week. The default is weekly and 40. Optional: add holidays, and working hours for part-time people (periods-and-approvals.md).</li>
-<li>Optional: turn on the billable default and add attributes (billable-and-attributes.md).</li>
-<li>Optional: create a team and name its lead, and if you like a backup approver and the team's own period type (teams.md).</li>
-<li>Optional: turn on email reminders (email-reminders.md).</li>
-<li>Tell your users to open Saguaro Hours from the Apps menu in Jira.</li>
+<li>Open the settings page (above). On a new site a Get started card at the top lists the three steps below, each with a button, and ticks each one off as it is done. Hide puts the card away in this browser.</li>
+<li>Set the required hours: the period type (weekly or monthly) and the required hours per week. The default is weekly and 40. Press Save settings (below Worklog attributes; it saves everything above it, and says "Settings saved." next to the button). Optional: add holidays, and working hours for part-time people (periods-and-approvals.md).</li>
+<li>Create a team: Create a team (or New team in the Teams section), enter a name, pick the lead who approves, and add the members, including yourself if you want to try a timesheet. Press Create team. If you add members after that, press Save team; the card says "Unsaved changes" until you do. See <a href="/saguaro-hours/docs/teams/">teams</a>.</li>
+<li>Log time: open the timesheet (Open the timesheet) and follow "First steps (everyone)" below.</li>
+<li>Optional: turn on the billable default and add attributes (billable-and-attributes.md), set rates (reports show Cost and Revenue once a rate is set), and turn on email reminders (email-reminders.md).</li>
+<li>Tell your users to open Saguaro Hours from Apps in the Jira sidebar, and add them to a team: a person in no team can log time but cannot submit a timesheet, because nobody could approve it.</li>
 </ol>
 <h2>First steps (everyone)</h2>
 <ol>
 <li>Open Saguaro Hours. The page shows this week in your Jira time zone.</li>
-<li>Type an issue key in the box above the grid and press Enter, then type hours in a day cell (for example 1.5, 1:30, 1h 30m or 90m).</li>
+<li>In the box below the grid, type an issue key (KAN-12), a project key (KAN) or words from the issue's summary, pick the issue from the list (or press Enter on a key), then type hours in a day cell (for example 1.5, 1:30, 1h 30m or 90m) and press Enter or Tab. If nothing matches, the box says so.</li>
 <li>Open the Work log tab on that issue. Your entry is there, under your name.</li>
-<li>When the week is done, press Submit timesheet (periods-and-approvals.md).</li>
+<li>When the week is done, press Submit timesheet (periods-and-approvals.md). Submit needs you to be in a team; until then the page says so and the button is off.</li>
 </ol>
 <h2>Add the Log work panel to an issue</h2>
 <p>Jira does not show an app's issue panel on its own in the new issue view. Open an issue, select the Apps button under the issue title, and choose Log work. Jira shows that button only to people who can edit the issue. Jira administrators also get an option to show an app's panel on all work items.</p>
