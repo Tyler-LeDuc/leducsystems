@@ -27,7 +27,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <input id="users" type="number" min="1" max="100000" step="1" value="50" inputmode="numeric" style="font-size:1.2em;width:9em;margin:.4em 0;padding:.3em">
 <p id="out" aria-live="polite" style="margin:.8em 0 0"></p>
 <table id="tbl" style="margin-top:.8em"></table>
-<p style="margin:1em 0 0"><a id="cta" href="mailto:tyler@leducsystems.com?subject=Saguaro%20early%20access" style="display:inline-block;padding:.5em 1em;background:#1d6b4f;color:#fff;border-radius:6px;text-decoration:none;font-weight:600">Get early access by email</a> <span style="color:#555;font-size:.9em">Saguaro Hours is in Atlassian Marketplace review. Early teams get it free while we work through their feedback.</span></p>
+<p style="margin:1em 0 0"><a id="cta" href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch" style="display:inline-block;padding:.5em 1em;background:#1d6b4f;color:#fff;border-radius:6px;text-decoration:none;font-weight:600">Email me when it's live</a> <span style="color:#555;font-size:.9em">Saguaro Hours is in Atlassian Marketplace review. You get one email on launch day, nothing else.</span></p>
 </div>
 <script>
 (function () {
@@ -62,8 +62,8 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
   render = function () {
     baseRender();
     var n = Math.floor(Number(input.value));
-    var body = (n >= 1 ? 'We have ' + n + ' Jira users. ' : '') + 'Please send early access to Saguaro Hours.';
-    cta.href = 'mailto:tyler@leducsystems.com?subject=' + encodeURIComponent('Saguaro early access') + '&body=' + encodeURIComponent(body);
+    var body = (n >= 1 ? 'We have ' + n + ' Jira users. ' : '') + 'Please email me when Saguaro Hours is live.';
+    cta.href = 'mailto:tyler@leducsystems.com?subject=' + encodeURIComponent('Saguaro launch') + '&body=' + encodeURIComponent(body);
   };
   input.addEventListener('input', render);
   render();
@@ -125,7 +125,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <h2>What you get for the difference</h2>
 <p>See your own Tempo export as Saguaro Hours timesheets, in your browser: <a href="/saguaro-hours/tempo-preview/">Tempo data preview</a>.</p>
 <p>Saguaro Hours covers weekly timesheets on Jira's own worklogs, billable flags and custom attributes, teams with a lead, submit and approve, reports with CSV and Excel export and a dashboard gadget. It does not have start and stop timers, capacity planning, cost tracking or a public API. The full list, including what Tempo has that Saguaro Hours does not: <a href="/saguaro-hours/tempo-alternative/">Tempo alternative</a>. Moving your history: <a href="/saguaro-hours/docs/moving-from-tempo/">move from Tempo guide</a>.</p>
-<p>Saguaro Hours is waiting for Atlassian Marketplace approval. To try it early, <a href="mailto:tyler@leducsystems.com?subject=Saguaro%20early%20access">email tyler@leducsystems.com</a> with the subject "Saguaro early access".</p>
+<p>Saguaro Hours is waiting for Atlassian Marketplace approval. To get one email the day it is live, <a href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch">email tyler@leducsystems.com</a> with the subject "Saguaro launch".</p>
 </main>
 <footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
 </body></html>
