@@ -7,37 +7,37 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://leducsystems.com/about</loc>
+    <loc>https://leducsystems.com/about/</loc>
     <lastmod>2026-10-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://leducsystems.com/contact</loc>
+    <loc>https://leducsystems.com/contact/</loc>
     <lastmod>2026-10-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://leducsystems.com/games</loc>
+    <loc>https://leducsystems.com/games/</loc>
     <lastmod>2026-10-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://leducsystems.com/privacy</loc>
+    <loc>https://leducsystems.com/privacy/</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://leducsystems.com/terms</loc>
+    <loc>https://leducsystems.com/terms/</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://leducsystems.com/refunds</loc>
+    <loc>https://leducsystems.com/refunds/</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
