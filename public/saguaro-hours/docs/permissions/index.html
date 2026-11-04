@@ -36,7 +36,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </tr>
 <tr>
 <td>write:jira-work</td>
-<td>Create, edit and delete your worklogs when you use the grid, the panel, the timer or the Import tab.</td>
+<td>Create, edit and delete your worklogs when you use the grid, the panel, the timer or the Import tab. If an administrator turns on email reminders, also send them through Jira's own mail (Jira's "Send notification for issue", which needs this scope).</td>
 </tr>
 <tr>
 <td>read:jira-user</td>
@@ -52,7 +52,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </tr>
 </tbody>
 </table>
-<p>Worklog calls from the grid, the panel, the timer and the Import tab run as the signed-in user, so Jira's own permissions apply.</p>
+<p>Worklog calls from the grid, the panel, the timer and the Import tab run as the signed-in user, so Jira's own permissions apply. Email reminders are sent as the app, on the reminder issue the administrator picks, and Jira sends them only to people who can browse that issue.</p>
 <h2>Who can do what</h2>
 <table>
 <thead>
@@ -91,7 +91,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <td>Team members, the lead, the backup approver, and Jira administrators</td>
 </tr>
 <tr>
-<td>Admin page: settings, holidays, timer rounding, working hours, rates and who can see money, attributes, teams, Tempo import, data export</td>
+<td>Admin page: settings, holidays, timer rounding, working hours, rates and who can see money, attributes, teams, email reminders (including the test email and the preview), Tempo import, data export</td>
 <td>Jira administrators only (checked with Jira's Administer Jira permission on each call)</td>
 </tr>
 <tr>

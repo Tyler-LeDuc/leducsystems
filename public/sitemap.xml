@@ -247,6 +247,12 @@
     <priority>0.4</priority>
   </url>
   <url>
+    <loc>https://leducsystems.com/saguaro-hours/docs/email-reminders/</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://leducsystems.com/saguaro-hours/azure-devops/</loc>
     <lastmod>2026-11-04</lastmod>
     <changefreq>monthly</changefreq>
