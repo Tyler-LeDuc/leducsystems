@@ -301,6 +301,18 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://leducsystems.com/saguaro-hours/tempo-pricing/</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://leducsystems.com/saguaro-hours/tempo-worklog-author/</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://leducsystems.com/saguaro-hours/jira-time-tracking-apps-compared/</loc>
     <lastmod>2026-11-04</lastmod>
     <changefreq>monthly</changefreq>
@@ -320,6 +332,30 @@
   </url>
   <url>
     <loc>https://leducsystems.com/saguaro-hours/tempo-export-csv/</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://leducsystems.com/restock/how-to-add-back-in-stock-alerts-shopify/</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://leducsystems.com/size-charts/how-to-add-size-chart-shopify/</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://leducsystems.com/order-limits/how-to-limit-quantity-per-order-shopify/</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://leducsystems.com/sold-out-sorter/how-to-move-sold-out-products-to-bottom-shopify/</loc>
     <lastmod>2026-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
