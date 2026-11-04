@@ -41,6 +41,31 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <h2>Install</h2>
 <p>When it's listed, an organization administrator installs it from the Visual Studio Marketplace. It works with Azure DevOps Services (the cloud version).</p>
 <p>Saguaro Hours is made by LeDuc Systems LLC, an Arizona limited liability company in Phoenix, Arizona.</p>
+<div id="sh-key" hidden style="border:2px solid #15130F;padding:16px 20px;margin:32px 0"></div>
+
+<script>
+(function () {
+  var session = new URLSearchParams(location.search).get('license_session');
+  if (!session) return;
+  var box = document.getElementById('sh-key');
+  function show(title, text, key) {
+    box.hidden = false;
+    box.textContent = '';
+    var h = document.createElement('h2'); h.textContent = title; box.appendChild(h);
+    if (key) { var c = document.createElement('code'); c.textContent = key; c.style.fontSize = '1.2rem'; c.style.userSelect = 'all'; box.appendChild(c); }
+    var p = document.createElement('p'); p.textContent = text; box.appendChild(p);
+    box.scrollIntoView();
+  }
+  show('Getting your key', 'One moment.');
+  fetch('<https://convert.leducsystems.com/api/license/claim?session='> + encodeURIComponent(session))
+    .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, b: b }; }); })
+    .then(function (x) {
+      if (x.ok && x.b.license) show('Your license key', 'Copy it into Saguaro Hours: Timesheet, Settings, License key, then Check and save.' + (x.b.seats ? ' It covers ' + x.b.seats + ' seats.' : '') + ' Keep this key; this page shows it again if you reopen this link.', x.b.license);
+      else show('Your key is not ready', (x.b && x.b.error) || 'Email tyler@leducsystems.com and I will send it.');
+    })
+    .catch(function () { show('Your key is not ready', 'The license server could not be reached. Reload this page in a minute, or email tyler@leducsystems.com.'); });
+})();
+</script>
 </main>
 <footer>Saguaro Hours for Azure DevOps · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
 </body></html>
