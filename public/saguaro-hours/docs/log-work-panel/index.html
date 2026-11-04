@@ -24,6 +24,22 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <p>The Log work panel appears on an issue. It writes a normal Jira worklog as you and stores the billable flag and attributes next to it.</p>
 <h2>Add the panel to the issue view</h2>
 <p>In the new Jira issue view, select the Apps button under the issue title and choose Log work. Jira shows that button only to people who can edit the issue. Jira administrators also get an option to show an app's panel on all work items.</p>
+<h2>Timer</h2>
+<p>The top line of the panel is a timer for this issue.</p>
+<ul>
+<li>Start timer starts counting. The panel shows Running and the time, for example 0:12:34.</li>
+<li>Pause stops counting and keeps the time. Resume continues.</li>
+<li>Stop and log stops the timer and opens a worklog form filled in for you:</li>
+<li>Date and Start time: when you first started the timer, in your Jira time zone. A timer that ran past midnight logs on the day it started.</li>
+<li>Time spent: the counted time, rounded as the admin set it (none, or up to 1, 5, 6, 10 or 15 minutes; with no rounding, to the nearest minute), and at least the admin's minimum and at least one minute.</li>
+<li>Billable (the site default), attributes and description, as in the form below.</li>
+<li>Log work writes a normal Jira worklog as you, stores the billable flag and attributes, and removes the timer. Resume timer goes back to counting. Discard asks once more, then throws the time away.</li>
+<li>More than 12 hours in Time spent needs a tick in "Yes, log ..." before Log work is enabled. A timer that has counted more than 12 hours also shows a warning while it runs, in case you forgot to stop it.</li>
+<li>One timer runs per person. Starting a timer here pauses the one running on another issue, which keeps its time; the panel names that timer before you start. You can hold up to 10 timers (running, paused or stopped) at once.</li>
+<li>Timers are stored by the app, not in the browser: closing the panel, another tab or another computer shows the same timer. Times come from Atlassian's servers, not from your computer's clock.</li>
+<li>A timer cannot start when today is in your submitted or approved period, and the worklog form refuses a locked date, like the form below.</li>
+<li>The weekly timesheet page lists all your timers with Pause, Resume and Stop and log (weekly-timesheet.md).</li>
+</ul>
 <h2>The form</h2>
 <ul>
 <li>Date. Defaults to today in your Jira time zone.</li>
@@ -46,7 +62,13 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <p>Only the author of a worklog can set its billable flag or attributes through the app.</p>
 <h2>Known limits</h2>
 <ul>
-<li>First open of the panel can take a couple of seconds.</li>
+<li>Jira has no app area in its top bar, so a running timer shows on the issue's Log work panel and on the Saguaro Hours page, not on every Jira page or on board cards.</li>
+<li>
+<p>Timers do not start or stop by themselves when an issue changes status.</p>
+</li>
+<li>
+<p>First open of the panel can take a couple of seconds.</p>
+</li>
 <li>Native Jira edits made outside the app keep the billable flag and attributes. Deleting a worklog in Jira removes its stored tags when Jira reports the deletion (post-lock-warnings.md).</li>
 </ul>
 </main>

@@ -44,7 +44,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </tr>
 <tr>
 <td>storage:app</td>
-<td>Store billable flags, attributes, settings (including holidays), teams, timesheet records, saved reports and people's working hours in Atlassian's Forge storage.</td>
+<td>Store billable flags, attributes, settings (including holidays and timer rounding), teams, timesheet records, saved reports, people's working hours, timers, and hourly rates in Atlassian's Forge storage.</td>
 </tr>
 <tr>
 <td>report:personal-data</td>
@@ -67,6 +67,14 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <td>Any user</td>
 </tr>
 <tr>
+<td>Start, pause, stop, log and discard a timer</td>
+<td>Any user, on issues they can browse, for their own timers only</td>
+</tr>
+<tr>
+<td>See rates, cost and revenue in reports and the billing summary</td>
+<td>Jira administrators and the people an administrator lists under "Who can see money". Not team leads by default. Everyone else never receives rates or amounts from the app</td>
+</tr>
+<tr>
 <td>Set billable and attributes on a worklog</td>
 <td>The worklog's author</td>
 </tr>
@@ -79,7 +87,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <td>Team members, the lead, the backup approver, and Jira administrators</td>
 </tr>
 <tr>
-<td>Admin page: settings, holidays, working hours, attributes, teams, Tempo import, data export</td>
+<td>Admin page: settings, holidays, timer rounding, working hours, rates and who can see money, attributes, teams, Tempo import, data export</td>
 <td>Jira administrators only (checked with Jira's Administer Jira permission on each call)</td>
 </tr>
 <tr>
@@ -88,7 +96,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </tr>
 </tbody>
 </table>
-<p>There are no separate app roles. The roles are Jira administrator, team lead, backup approver and everyone else.</p>
+<p>There are no separate app roles beyond one list. The roles are Jira administrator, team lead, backup approver, rate viewer (the "Who can see money" list) and everyone else.</p>
 <p>A team lead or backup approver sees only their own teams in Approvals. They cannot review another team, or a person outside their team.</p>
 <h2>What a user can see</h2>
 <p>Reports and the grid use native Jira reads as the viewer. A user sees worklogs on issues they can browse. The billable flag and attributes of a worklog are shown only to people Jira lets see that worklog. The real author a Tempo import stored for a worklog is shown with that worklog's hours, also only to people Jira lets see the worklog. The imported description is never shown on these screens.</p>
