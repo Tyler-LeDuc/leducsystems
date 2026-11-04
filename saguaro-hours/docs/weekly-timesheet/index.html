@@ -21,7 +21,8 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
 <main>
 <h1>Weekly timesheet</h1>
-<p>Open Saguaro Hours from the Apps menu. Everyone sees the My timesheet and Reports tabs. Team leads and Jira administrators also see Approvals.</p>
+<p>Open Saguaro Hours from the Apps menu. Everyone sees the My timesheet and Reports tabs. Team leads, backup approvers and Jira administrators also see Approvals.</p>
+<p>The status row shows your timesheet period: weekly, or monthly if your team uses monthly timesheets (periods-and-approvals.md).</p>
 <h2>The grid</h2>
 <ul>
 <li>Rows are issues. Columns are Monday to Sunday of the shown week. Today is highlighted and weekends are shaded.</li>
@@ -43,16 +44,18 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <h2>Adding rows</h2>
 <ul>
 <li>Type an issue key in the box above the grid and press Enter or Add row. As you type, Jira's issue search suggests issues. Pick one with the mouse or the arrow keys and Enter.</li>
+<li>An exact key, such as PRJ-1, is always the first suggestion when you can browse that issue, followed by keys that start with what you typed (PRJ-10, PRJ-11 and so on). A project key and a dash, such as PRJ-, lists that project's most recently updated issues.</li>
 <li>Rows added by hand exist only on the page. They are lost when you reload, unless they have a worklog that week. Rows with hours come back by themselves.</li>
 <li>Remove a row with the remove button when it has no hours.</li>
 <li>Copy last week adds last week's rows without hours. It is disabled when the whole shown week is locked. Rows you added by hand, or copied, carry across weeks until you close the page.</li>
 </ul>
 <h2>Required hours</h2>
-<p>A chip under the status row compares your logged hours with the required hours per week set by the admin. It reads, for example, "36.5h short of 40h" in amber or "40h met" in green. The chip is always per week, also when periods are monthly.</p>
+<p>A chip under the status row compares your logged hours with your required hours for the shown week. It reads, for example, "36.5h short of 40h" in amber or "40h met" in green. The chip is always per week, also when periods are monthly.</p>
+<p>Your required hours are the site default (the admin's hours per week, Monday to Friday), or the working hours an admin set for you (for example part-time), less holidays and your days off. A holiday or day off is labelled under the date in the grid header, and the chip's tooltip names the week's holidays. See <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</p>
 <h2>Locked days</h2>
 <p>When a period is submitted or approved, its cells turn grey and read-only, and the add box is hidden if the whole week is locked. See <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</p>
 <h2>Reminder banner</h2>
-<p>A banner appears for the previous period if it is short of the required hours or unsubmitted. It links to that period. It also shows for periods that are already submitted or approved but short, where you cannot change anything. The wording follows the status (for example, it mentions a rejection).</p>
+<p>A banner appears for the previous period if it is short of your required hours or unsubmitted. It links to that period. It also shows for periods that are already submitted or approved but short, where you cannot change anything. The wording follows the status (for example, it mentions a rejection).</p>
 <p>The banner only shows if you were using time tracking by then, so a new user is not told about a week before they started. At least one of these must be true:</p>
 <ul>
 <li>The period has hours or a timesheet record.</li>

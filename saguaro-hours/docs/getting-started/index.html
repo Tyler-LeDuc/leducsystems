@@ -24,7 +24,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <p>Saguaro Hours for Jira adds time tracking to Jira Cloud. You log work in a weekly grid or from an issue. Every entry is a normal Jira worklog written as you. Teams, billable flags, approvals and reports sit on top.</p>
 <h2>What you get</h2>
 <ul>
-<li>A Saguaro Hours page with a weekly grid, a Reports tab and, for team leads and Jira administrators, an Approvals tab. See <a href="/saguaro-hours/docs/weekly-timesheet/">weekly timesheet</a>, <a href="/saguaro-hours/docs/reports-and-exports/">reports and exports</a> and <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</li>
+<li>A Saguaro Hours page with a weekly grid, a Reports tab and, for team leads, backup approvers and Jira administrators, an Approvals tab. See <a href="/saguaro-hours/docs/weekly-timesheet/">weekly timesheet</a>, <a href="/saguaro-hours/docs/reports-and-exports/">reports and exports</a> and <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</li>
 <li>A Log work panel on issues. See <a href="/saguaro-hours/docs/log-work-panel/">log work panel</a>.</li>
 <li>An admin page under Jira settings, Apps. See <a href="/saguaro-hours/docs/billable-and-attributes/">billable and attributes</a>, <a href="/saguaro-hours/docs/teams/">teams</a> and <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</li>
 <li>A dashboard gadget. See <a href="/saguaro-hours/docs/dashboard-gadget/">dashboard gadget</a>.</li>
@@ -33,9 +33,9 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <ol>
 <li>Install the app from the Marketplace. Accept the permissions listed in <a href="/saguaro-hours/docs/permissions/">permissions</a>.</li>
 <li>Open Jira settings, then Apps, then Saguaro Hours. The first load can take several seconds.</li>
-<li>Set the period type (weekly or monthly) and the required hours per week. The default is weekly and 40.</li>
+<li>Set the period type (weekly or monthly) and the required hours per week. The default is weekly and 40. Optional: add holidays, and working hours for part-time people (periods-and-approvals.md).</li>
 <li>Optional: turn on the billable default and add attributes (billable-and-attributes.md).</li>
-<li>Optional: create a team and name its lead (teams.md).</li>
+<li>Optional: create a team and name its lead, and if you like a backup approver and the team's own period type (teams.md).</li>
 <li>Tell your users to open Saguaro Hours from the Apps menu in Jira.</li>
 </ol>
 <h2>First steps (everyone)</h2>
@@ -47,6 +47,11 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </ol>
 <h2>Add the Log work panel to an issue</h2>
 <p>Jira does not show an app's issue panel on its own in the new issue view. Open an issue, select the Apps button under the issue title, and choose Log work. Jira shows that button only to people who can edit the issue. Jira administrators also get an option to show an app's panel on all work items.</p>
+<h2>Projects and themes</h2>
+<ul>
+<li>Saguaro Hours reads and writes Jira's own worklogs, which team-managed and company-managed projects both have, so logging, reports and approvals work in either kind of project and across projects in one timesheet. Your Jira permissions still apply: you need Browse and Work on issues in a project to log time there.</li>
+<li>The app follows your Jira theme. In Jira's dark theme (your profile, Theme), the grid, reports, approvals, the Log work panel, the admin page and the gadget are dark too.</li>
+</ul>
 <h2>Limits to know</h2>
 <ul>
 <li>The app reads worklogs from issues you can browse. Hours on issues you cannot browse are not counted in your views.</li>

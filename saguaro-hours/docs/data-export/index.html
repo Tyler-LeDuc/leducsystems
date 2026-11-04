@@ -29,7 +29,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <li>The button shows how many records it has read. The browser collects the data page by page (20 records per call) and saves one file, <code>timesheets-data-&lt;date&gt;.json</code>. The page then reads "Exported n records."</li>
 </ol>
 <h2>What it contains</h2>
-<p>The raw stored records: settings, worklog tags (billable, attributes, day, and imported Tempo data), teams, timesheets with their audit trails and post-lock warnings, pending markers, saved reports, the Tempo import job if one exists, and the personal data reporting records (each stored account ID with when its data was stored and last reported to Atlassian).</p>
+<p>The raw stored records: settings, worklog tags (billable, attributes, day, and imported Tempo data), teams, timesheets with their audit trails and post-lock warnings, pending markers, saved reports, people's working hours and days off, the Tempo import job if one exists, and the personal data reporting records (each stored account ID with when its data was stored and last reported to Atlassian).</p>
 <p>Worklogs themselves are not in the file. They are in Jira and stay there.</p>
 <p>The file holds your users' account IDs and names. Handle it accordingly.</p>
 <h2>Notes</h2>

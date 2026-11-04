@@ -44,7 +44,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </tr>
 <tr>
 <td>storage:app</td>
-<td>Store billable flags, attributes, settings, teams, timesheet records and saved reports in Atlassian's Forge storage.</td>
+<td>Store billable flags, attributes, settings (including holidays), teams, timesheet records, saved reports and people's working hours in Atlassian's Forge storage.</td>
 </tr>
 <tr>
 <td>report:personal-data</td>
@@ -72,20 +72,24 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </tr>
 <tr>
 <td>Review a team's timesheets, approve, reject</td>
-<td>The team's lead, or a Jira administrator for any team</td>
+<td>The team's lead or backup approver, or a Jira administrator for any team. With "Nobody approves their own timesheet" on, not for one's own sheet</td>
 </tr>
 <tr>
 <td>See the dashboard gadget for a team</td>
-<td>Team members, the lead, and Jira administrators</td>
+<td>Team members, the lead, the backup approver, and Jira administrators</td>
 </tr>
 <tr>
-<td>Admin page: settings, attributes, teams, Tempo import, data export</td>
+<td>Admin page: settings, holidays, working hours, attributes, teams, Tempo import, data export</td>
 <td>Jira administrators only (checked with Jira's Administer Jira permission on each call)</td>
+</tr>
+<tr>
+<td>See a person's required hours</td>
+<td>The person, the leads and backup approvers of their teams (Approvals, reports), their team (the gadget, totals only), and Jira administrators. Days off dates: Jira administrators only (admin page), and the person in their own grid</td>
 </tr>
 </tbody>
 </table>
-<p>There are no separate app roles. The roles are Jira administrator, team lead and everyone else.</p>
-<p>A team lead sees only the teams they lead in Approvals. A lead cannot review a team they do not lead, or a person outside their team.</p>
+<p>There are no separate app roles. The roles are Jira administrator, team lead, backup approver and everyone else.</p>
+<p>A team lead or backup approver sees only their own teams in Approvals. They cannot review another team, or a person outside their team.</p>
 <h2>What a user can see</h2>
 <p>Reports and the grid use native Jira reads as the viewer. A user sees worklogs on issues they can browse. The billable flag and attributes of a worklog are shown only to people Jira lets see that worklog. The real author a Tempo import stored for a worklog is shown with that worklog's hours, also only to people Jira lets see the worklog. The imported description is never shown on these screens.</p>
 <h2>When the subscription is not active</h2>
