@@ -21,7 +21,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
 <main>
 <h1>Dashboard gadget</h1>
-<p>The Saguaro Hours gadget shows one team's status for the current period on a Jira dashboard.</p>
+<p>The Saguaro Hours gadget shows one team's status for the team's current period (weekly or monthly, as the team is set) on a Jira dashboard.</p>
 <h2>Add it</h2>
 <ol>
 <li>Open a dashboard and choose Add gadget.</li>
@@ -30,13 +30,13 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </ol>
 <h2>What it shows</h2>
 <ul>
-<li>Team hours this period against the required hours.</li>
+<li>Team hours this period against the team's required hours (each member's required hours added up: their working hours, less holidays and days off).</li>
 <li>Members who are missing or have not submitted.</li>
 <li>Pending approvals.</li>
-<li>Each member's hours and status.</li>
+<li>Each member's hours (amber when under their required hours) and status.</li>
 </ul>
 <h2>Who can see data</h2>
-<p>The gadget answers team members, the team lead and Jira administrators. Anyone else gets no data for that team. It returns status only, never the audit trail or comments.</p>
+<p>The gadget answers team members, the team lead, the backup approver and Jira administrators. Anyone else gets no data for that team. It returns status only, never the audit trail or comments.</p>
 <h2>Limits</h2>
 <ul>
 <li>Hours need Browse permission on the issues and use the viewer's time zone.</li>

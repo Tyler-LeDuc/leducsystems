@@ -21,27 +21,31 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
 <main>
 <h1>Teams</h1>
-<p>A team has a name, a lead and members. Teams drive approvals, the team filter in reports, and the dashboard gadget.</p>
+<p>A team has a name, a lead, an optional backup approver, a timesheet period and members. Teams drive approvals, the team filter in reports, and the dashboard gadget.</p>
 <h2>Create a team (Jira administrator)</h2>
 <ol>
 <li>Open Jira settings, Apps, Saguaro Hours, Teams section.</li>
 <li>Enter a name.</li>
 <li>Pick a lead with the user picker. It searches active Atlassian accounts by name or email as you type.</li>
+<li>Optional: pick a backup approver, who can approve the team like the lead (for example while the lead is away).</li>
+<li>Timesheet period: Site default, Weekly or Monthly. A person in several teams needs the same period type in each; see <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</li>
 <li>Add members the same way. Remove a member with Remove.</li>
 <li>Create team. Existing teams show Save team and Delete. Delete asks for inline confirmation.</li>
 </ol>
 <h2>What the app stores</h2>
-<p>Team name, the lead's account ID and display name, and each member's account ID, display name and avatar link. Email addresses are not stored. Names are copied when you pick the person. When Atlassian reports that a person's account details changed, the app reads the current name and avatar from Jira, within about a week. When an account is closed, the person is removed from the team, and as its lead.</p>
+<p>Team name, period type, the lead's and the backup approver's account ID and display name, and each member's account ID, display name and avatar link. Email addresses are not stored. Names are copied when you pick the person. When Atlassian reports that a person's account details changed, the app reads the current name and avatar from Jira, within about a week. When an account is closed, the person is removed from the team, and as its lead or backup approver.</p>
 <h2>What a team does</h2>
 <ul>
-<li>The lead can review the team's timesheets in the Approvals tab. Jira administrators can review every team.</li>
+<li>The lead and the backup approver can review the team's timesheets in the Approvals tab. Jira administrators can review every team.</li>
+<li>The team's period type decides whether its members submit weekly or monthly timesheets.</li>
 <li>The Reports filter can limit a report to a team.</li>
 <li>The dashboard gadget shows one team.</li>
 </ul>
 <h2>Known limits</h2>
 <ul>
 <li>Per-period membership dates are not built. Membership is the current list.</li>
-<li>A lead who is also a member can approve their own timesheet once they have submitted it.</li>
+<li>By default a lead who is also a member can approve their own timesheet once they have submitted it. The admin page setting "Nobody approves their own timesheet" stops that (periods-and-approvals.md).</li>
+<li>One backup approver per team.</li>
 <li>The admin card does not show the lead's avatar.</li>
 </ul>
 </main>

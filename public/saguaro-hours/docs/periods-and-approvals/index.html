@@ -22,12 +22,22 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <main>
 <h1>Periods and approvals</h1>
 <h2>Periods</h2>
-<p>The admin chooses one period type for the site.</p>
+<p>The admin chooses the site's period type, and each team can use its own.</p>
 <ul>
 <li>Weekly: Monday to Sunday.</li>
 <li>Monthly: a calendar month.</li>
 </ul>
-<p>Required hours per week default to 40 (0 to 168). For a month the required hours are the weekly figure divided by 5, times the number of weekdays in the month.</p>
+<p>On the admin page, Period sets the site default. In a team's card, Timesheet period is "Site default", Weekly or Monthly. A person's timesheets use their team's period type; someone in no team uses the site default. A person can be in several teams only if those teams use the same period type: saving a team, or a site default change, that would give someone two period types is refused with a message naming the person and the teams.</p>
+<p>Changing a period type does not convert timesheets already submitted under the old type. They stay in the audit trail; new submissions use the new type. Change it between periods.</p>
+<h2>Required hours</h2>
+<ul>
+<li>Site default: required hours per week, 40 unless the admin changes it (0 to 168), spread evenly over Monday to Friday (40 h is 8 h a weekday). For a month that is the weekly figure divided by 5, times the number of weekdays in the month.</li>
+<li>Holidays: the admin lists site-wide holidays (date and name) on the admin page. A holiday needs no hours, for everyone, so it lowers the required hours of that week or month. The grid labels the day with the holiday's name.</li>
+<li>Working hours per person: under Working hours on the admin page, a Jira administrator adds a person and sets their hours for each weekday, Monday to Sunday, for example 4 h a day for a 20 h part-time week, or 8 h on Monday to Wednesday only. The same card takes the person's days off (dates, such as leave), which need no hours either. Remove puts the person back on the site default.</li>
+<li>Required hours of a period: each day's hours for that person, less holidays and their days off.</li>
+<li>Where they are used: the shortfall chip and the reminder banner in My timesheet, the Required column and the amber hours in Approvals, the dashboard gadget, and the Required column of a report grouped by user (reports-and-exports.md).</li>
+<li>Who sees them: people see their own required hours and days off. Approvers and the gadget see each member's required hours as a number only; the dates of someone's days off are shown only on the admin page.</li>
+</ul>
 <h2>Submit</h2>
 <ol>
 <li>In My timesheet, the status row shows the period, a status badge, the last action, a shortfall chip and a Submit timesheet button.</li>
@@ -36,17 +46,21 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </ol>
 <h2>Statuses</h2>
 <p>Open, Submitted, Approved, Rejected. Each change adds an entry to an audit trail with the actor, time, comment and hours. The last 100 entries are kept.</p>
-<h2>Approve or reject (team leads and Jira administrators)</h2>
+<h2>Approve or reject (team leads, backup approvers and Jira administrators)</h2>
 <p>Open the Approvals tab. A tab count shows how many sheets wait.</p>
 <ul>
-<li>Pick a team and a period. Prev, Next, Current and Refresh move through periods.</li>
-<li>Each member row shows hours (amber if under the required hours), the status and the last action. Expand it for the audit trail.</li>
+<li>Pick a team and a period. Prev, Next, Current and Refresh move through periods, in that team's period type. The line under the bar names the period type, the lead and the backup approver.</li>
+<li>Each member row shows hours (amber if under that member's required hours), the member's required hours for the period, the status and the last action. Expand it for the audit trail.</li>
 <li>Approve, or Reject with a reason. A rejection needs a comment.</li>
 <li>Approve is offered only for a submitted sheet. An open sheet (never submitted) or a rejected one shows no Approve button: the person submits or resubmits it first. The server refuses any other approval too.</li>
 <li>A submitted or approved sheet can be rejected. An approved sheet can be rejected again.</li>
 <li>Approve all (n) approves every member's submitted sheet for the period. n is that number, and the button is greyed out at 0. Open, rejected and already approved sheets are left as they are, and the message after it says how many.</li>
-<li>The lead or a Jira administrator can act. The person must be a member of the team.</li>
+<li>The lead, the team's backup approver or a Jira administrator can act. The person must be a member of the team.</li>
 </ul>
+<h2>Backup approver</h2>
+<p>A team can have one backup approver, picked in the team's card on the admin page. The backup approver sees the team in Approvals, its pending count and the gadget, and can approve and reject exactly like the lead, at any time, so nothing waits while the lead is away and no hand-over is needed. The lead cannot also be the backup.</p>
+<h2>Approving your own timesheet</h2>
+<p>By default a lead who is also a member of their team can approve their own submitted timesheet, as can a Jira administrator. To stop that, turn on "Nobody approves their own timesheet" on the admin page. Then nobody (lead, backup approver or Jira administrator) can approve their own sheet: Approvals shows a note instead of Approve on your own row, Approve all leaves it and says so, and the pending count leaves it out. The backup approver, the lead or another Jira administrator approves it. You can still reject your own sheet, which only unlocks it for editing.</p>
 <h2>Locks</h2>
 <p>A submitted or approved period is locked in the app. The app enforces it in the grid, the panel and its own stored data. Jira's own Work log tab and API are not blocked by the app. Edits made there are detected and flagged. See <a href="/saguaro-hours/docs/post-lock-warnings/">post lock warnings</a>.</p>
 <p>To unlock, reject the sheet. The user can then edit and resubmit.</p>

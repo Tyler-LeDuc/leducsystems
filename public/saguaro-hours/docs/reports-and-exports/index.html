@@ -25,11 +25,26 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <h2>Run a report</h2>
 <ol>
 <li>Choose a range: this week, last week, this month, last month or custom.</li>
-<li>Optional filters: team, users, projects.</li>
-<li>Group by one field, then optionally by a second: user, team, project, epic or parent, issue type, label, billable, or any attribute.</li>
+<li>Optional filters: team, users, projects, projects to exclude, and a JQL filter.</li>
+<li>Group by one field, then optionally by a second: user, team, project, epic or parent, issue type, label, billable, any attribute, or a Jira field (see below).</li>
+<li>Optional: add Jira fields as extra columns of the detail table and the Detail CSV and Excel exports.</li>
 <li>The screen shows totals per group, a grand total and a detail table.</li>
 </ol>
-<p>Regrouping after the report has loaded is instant.</p>
+<p>Regrouping after the report has loaded is instant, except to a Jira field the last run did not read: the screen then asks you to run the report again.</p>
+<h2>Filters</h2>
+<ul>
+<li>Projects: only these projects. Exclude projects: every project but these, so a site with 50 projects does not need 49 picked.</li>
+<li>JQL filter: only issues that match a JQL query you type, for example <code>component = Billing AND labels != internal</code> or the query of a saved Jira filter. Check asks Jira whether the query is valid and shows Jira's message if not. The report runs it the same way before it reads anything. An ORDER BY at the end is ignored. The query is added to the report's own conditions (the date range and the filters above), so it can narrow a report but never widen it. Brackets and quotes must be balanced.</li>
+<li>Every filter runs as you, so Jira's permissions decide what you see.</li>
+</ul>
+<h2>Jira fields</h2>
+<p>Group by and Extra detail columns list the Jira fields of your site that make sense as groups: select lists (single, multiple, radio, cascading), text, number, user pickers, labels-style fields, components, fix and affects versions, priority, status, resolution, sprint, assignee, reporter and creator, custom fields included. Dates, time tracking fields and rich text system fields are not listed.</p>
+<ul>
+<li>A field with several values (components, a multi-select, sprints) is grouped under one combined value, like labels, so totals never double count.</li>
+<li>Issues without a value are grouped under "Not set".</li>
+<li>The values are read in the same Jira search that finds the issues, so a field adds no extra calls.</li>
+<li>Up to 10 extra columns. They appear after the attribute columns and before Description. Reports without them export exactly the same columns as before.</li>
+</ul>
 <p>A long run shows how far it has got, an estimate of the time left once a few seconds have been timed, and a Cancel button. Cancel shows nothing from that run. The estimate is rough: a Jira rate limit wait or one very long issue moves it.</p>
 <h2>What counts</h2>
 <ul>
@@ -37,7 +52,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <li>Days are bucketed in your Jira time zone.</li>
 <li>A worklog with several labels, or a person in several teams, is placed under one combined label. Totals do not double count.</li>
 <li>The screen shows the first 500 detail rows. Exports include all rows, up to the 25,000 limit.</li>
-<li>A report holds up to 25,000 worklogs. Above that it stops and shows no totals, because partial totals would be wrong for billing. Narrow the date range, or filter by team, user or project, and run it again.</li>
+<li>A report holds up to 25,000 worklogs. Above that it stops and shows no totals, because partial totals would be wrong for billing. Narrow the date range, or filter by team, user, project or JQL, and run it again.</li>
 <li>If the billable and attribute data cannot be read, the screen warns you instead of showing everything as not billable.</li>
 </ul>
 <h2>Saved reports</h2>
@@ -45,6 +60,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <li>Save the current setup under a name. You can keep up to 50.</li>
 <li>Saved reports belong to you. Load, Update and Delete (with confirmation) are available.</li>
 <li>A preset range such as This week moves forward when you load it. A custom range stays fixed.</li>
+<li>The JQL filter, excluded projects, Jira field grouping and extra columns are saved with the report. Reports saved before these options existed load as they were, with the new options empty.</li>
 </ul>
 <h2>Exports</h2>
 <ul>
