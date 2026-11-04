@@ -32,6 +32,14 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <li>Row totals, day totals and a week total are shown.</li>
 <li>A small green $ in a cell means at least one worklog in it is marked billable.</li>
 </ul>
+<h2>How hours are shown</h2>
+<p>Everywhere in Saguaro Hours (grid, Log work panel, timer, approvals, gadget, reports, exports and reminder emails), time is shown as decimal hours with up to two decimals: 1.5 is 1 hour 30 minutes, 0.75 is 45 minutes, 0.25 is 15 minutes, 0.02 is 1 minute.</p>
+<ul>
+<li>A cell shows the total of all your worklogs on that issue and day. Hover it for the exact time, for example 3.77 is "3h 46m in 3 worklogs" (3 hours, 45 minutes and a 1-minute timer entry).</li>
+<li>Two decimals always stand for one exact number of minutes, so typing the shown figure back saves the same time.</li>
+<li>Messages about one entry add the exact time when the decimals round: "Logged 0.02h (1m) on KAN-8". The timer's Time spent box shows "= 1m" under such a figure.</li>
+<li>A running timer shows a clock (1:02:05) until you stop it.</li>
+</ul>
 <h2>Entering time</h2>
 <ul>
 <li>Click a cell and type. Enter or leaving the cell saves. Escape reverts.</li>
