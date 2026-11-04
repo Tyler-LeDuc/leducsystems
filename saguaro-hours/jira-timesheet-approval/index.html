@@ -39,20 +39,28 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </ul>
 <h2>How Saguaro Hours does it</h2>
 <p>Saguaro Hours adds periods, submission, approval and locking on top of normal Jira worklogs.</p>
-<h3>1. The admin sets periods and teams</h3>
-<p>A Jira administrator picks one period type for the site: weekly (Monday to Sunday) or monthly (a calendar month). The admin sets the required hours per week, 40 by default. A month's required hours are the weekly figure divided by 5, times the weekdays in that month. The admin then creates teams, each with a lead and members.</p>
+<h3>1. The admin sets periods, teams and required hours</h3>
+<ul>
+<li><strong>Periods.</strong> A Jira administrator picks the site's default period: weekly (Monday to Sunday) or monthly (a calendar month). Each team can use the site default or its own type, so one team can sign off weekly and another monthly. A person in several teams needs the same period type in each; the admin page refuses a change that would give someone two.</li>
+<li><strong>Teams.</strong> Each team has a name, a lead, members and, if you want one, a backup approver. People in no team cannot submit, because nobody would approve their sheet.</li>
+<li><strong>Required hours.</strong> The site default is 40 hours a week unless the admin changes it, spread over Monday to Friday. A month's figure is the weekly one divided by 5, times the weekdays in the month. The admin can enter site-wide holidays, and for any person their hours per weekday (for example 4 hours a day for a 20-hour week) and their days off. Holidays and days off need no hours, so a part-timer or someone on leave is not shown as short.</li>
+</ul>
 <h3>2. Each person submits their period</h3>
 <p>People log time in the weekly grid or from the Log work panel on an issue. Every entry is a normal Jira worklog written as that person. When the period is done, they press Submit timesheet. The app stores the hours it read from Jira with the submission.</p>
+<p><strong>Short periods.</strong> If the period has less than the person's required hours, Submit asks first, for example: "You are 6.5h short of 40h this week. Submit anyway?" Cancel leaves the period open to add the missing time.</p>
+<p><strong>Require full hours.</strong> An administrator can turn on "Require full hours before submit". Then a short period cannot be submitted at all; the page says how many hours are missing. The app checks again on the server, after reading the hours from Jira, so the rule cannot be skipped. It applies to everyone, administrators included. For leave or sickness, a day off or a holiday lowers the required hours. The option is off by default.</p>
 <p>A submitted period is locked in the app. Its grid cells turn grey and read-only, and the Log work panel refuses those dates.</p>
 <p><img alt="A submitted week is read-only until the team lead approves or rejects it. A banner points to earlier weeks that are short of the required hours." src="/saguaro-hours/img/05-submitted-locked.png" /></p>
-<h3>3. The lead approves or rejects</h3>
-<p>The lead opens the Approvals tab, picks the team and the period, and sees each member's hours, status and last action. Hours under the required figure show in amber.</p>
+<h3>3. The lead or the backup approver approves or rejects</h3>
+<p>The lead opens the Approvals tab, picks the team and the period, and sees each member's hours, their required hours for the period, the status and the last action. Hours under a member's required hours show in amber.</p>
 <ul>
 <li><strong>Approve</strong> a submitted sheet.</li>
 <li><strong>Reject</strong> with a comment. A rejection needs a comment. A rejected sheet opens again, and the person edits and resubmits it.</li>
 <li><strong>Approve all</strong> approves every submitted sheet in the team for that period. Sheets that are open, rejected or already approved are left as they are.</li>
 </ul>
 <p>Only a submitted sheet can be approved. A Jira administrator can act on any team.</p>
+<p><strong>Backup approver.</strong> A team can have one backup approver, who sees the team in Approvals and can approve and reject exactly like the lead, at any time. Nothing waits while the lead is away, and no hand-over is needed.</p>
+<p><strong>Nobody approves their own timesheet.</strong> By default a lead who is also a member of the team can approve their own submitted sheet, as can a Jira administrator. With this option on, nobody can: the backup approver, the lead or another administrator approves it instead.</p>
 <p><img alt="Team leads review submitted timesheets, approve or reject with a comment, or approve a whole team at once." src="/saguaro-hours/img/04-approvals.png" /></p>
 <h3>4. Approved periods stay locked, and later edits are flagged</h3>
 <p>An approved period stays locked in the app. The app cannot stop someone from editing a worklog in Jira's own Work log tab, because Jira saves that edit without asking the app. So the app watches for it. When Jira reports a worklog change on a day in a submitted or approved period, the app:</p>
@@ -66,19 +74,28 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <ul>
 <li>The Approvals tab shows a count of sheets waiting.</li>
 <li>A banner in the grid points to the previous period if it is short of the required hours or not submitted.</li>
-<li>A dashboard gadget shows a team's hours this period, who has not submitted, and pending approvals.</li>
+<li>A dashboard gadget shows a team's hours this period against its required hours, who has not submitted, and pending approvals.</li>
+<li>Email reminders, if an administrator turns them on: on the first day of a new period, each member whose last period is not submitted gets one email, and once a week each lead and backup approver gets a list of the timesheets waiting for them. Jira's own mail sends them; the app makes no calls outside Atlassian.</li>
 <li>Each status change is kept in an audit trail with the person, time, comment and hours. The last 100 entries are kept.</li>
 </ul>
 <h2>Limits</h2>
 <ul>
-<li>Reminders are in the app only. There are no email or Slack reminders in this release.</li>
 <li>Team membership is the current list. Membership by period is not built.</li>
-<li>A lead who is also a member of the team can approve their own submitted timesheet.</li>
+<li>One backup approver per team.</li>
+<li>Email delivery is decided by Jira. If outgoing mail is off on the site, Jira refuses the email and the admin page shows why.</li>
 <li>Hours come from Jira as the viewer sees them. Issues the viewer cannot browse are not counted, and days follow the viewer's time zone.</li>
 </ul>
-<p>Full details: <a href="/saguaro-hours/docs/periods-and-approvals/">Periods and approvals</a> and <a href="/saguaro-hours/docs/post-lock-warnings/">Post-lock warnings</a>.</p>
-<h2>Try it</h2>
-<p>Saguaro Hours was submitted to the Atlassian Marketplace on 2026-11-03 and is waiting for approval. It is free for up to 10 users. To get one email the day it is live, <a href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch">email tyler@leducsystems.com with the subject "Saguaro launch"</a>. See the <a href="/saguaro-hours/">product page</a> for prices.</p>
+<p>Full details: <a href="/saguaro-hours/docs/periods-and-approvals/">Periods and approvals</a>, <a href="/saguaro-hours/docs/teams/">Teams</a>, <a href="/saguaro-hours/docs/email-reminders/">Email reminders</a> and <a href="/saguaro-hours/docs/post-lock-warnings/">Post-lock warnings</a>.</p>
+<p><strong>Status:</strong> Saguaro Hours was submitted to the Atlassian Marketplace on 2026-11-03 and is waiting for approval. Everything above is built and tested on my development site as of 2026-11-04. The build under review has steps 2 to 5 without the newer options: it has one period type for the site, one required-hours figure for everyone, the lead (no backup approver) and in-app reminders only. It does not yet have per-team periods, the backup approver, per-person hours, holidays and days off, the short-period question, "Require full hours before submit", "Nobody approves their own timesheet" or email reminders.</p>
+<h2>Related</h2>
+<ul>
+<li><a href="/saguaro-hours/jira-weekly-timesheet/">Weekly timesheets in Jira</a>, with a free Excel template</li>
+<li><a href="/saguaro-hours/jira-worklog-report/">How to get a worklog report in Jira Cloud</a></li>
+<li><a href="/saguaro-hours/jira-time-tracking-apps-compared/">Jira time tracking apps compared</a>, including which other apps have approvals</li>
+<li><a href="/saguaro-hours/tempo-cost-calculator/">Tempo cost calculator</a></li>
+</ul>
+<h2>Email me when it's live</h2>
+<p>Saguaro Hours is free for up to 10 users. <a href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch">Email me when it's live</a> and I will send one email on the day the listing is approved. See the <a href="/saguaro-hours/">product page</a> for prices.</p>
 </main>
 <footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
 </body></html>

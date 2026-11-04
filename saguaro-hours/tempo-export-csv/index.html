@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to export Tempo worklogs to CSV | Saguaro Hours</title>
+<meta name="description" content="Export Tempo Timesheets worklogs to CSV: the menu path, the View Worklogs permission that keeps everyone in the file, and what each column means.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/tempo-export-csv/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>How to export Tempo worklogs to CSV</h1>
+<p>You may want Tempo's worklogs in a file for a backup, for billing in a spreadsheet, or to move to another app. Tempo's Logged Time report has a raw data export that gives one row per worklog. This page gives the steps, the permission that decides whose time is in the file, and what the columns mean.</p>
+<p>I checked these steps on 2026-11-03 with "Timesheets by Tempo - Jira Time Tracking" on a Jira Cloud test site. Tempo changes its screens often, so a menu name may have moved since.</p>
+<h2>Before you export: make sure everyone is in the file</h2>
+<p>Tempo exports only the worklogs you are allowed to view in Tempo. Being a Jira administrator does not give you that, and the export does not warn about the rows it leaves out.</p>
+<ol>
+<li>Open Tempo, then Settings, then Permission Roles.</li>
+<li>Choose Add permission role and tick View Worklogs.</li>
+<li>Add yourself under Add users, keep Role access on All resources, and save.</li>
+</ol>
+<p>After exporting, compare the people in the file with the people you expect.</p>
+<h2>Export the raw data</h2>
+<ol>
+<li>In Jira, open Tempo from the Apps menu, then Reports.</li>
+<li>Under Logged Time, choose Create Report, then Create. The grouping does not matter for the export.</li>
+<li>Set the date range at the top left to cover the history you want, and press Apply.</li>
+<li>Press Export at the top right and choose Download Raw Data.</li>
+<li>In "Select export option", press the CSV icon (the third icon). "Include Approval Status" can be on or off.</li>
+</ol>
+<p>Tempo saves a file named like <code>Report_01_Oct_26_30_Nov_26_Raw_Data_Logged_Time.csv</code>. The file is UTF-8 with commas. The XLS and XLSX icons give Excel files instead.</p>
+<p>Tip: keep the original CSV. If you open it in Excel and save it again, Excel may rewrite the dates and number formats.</p>
+<h2>What the columns mean</h2>
+<p>Column names below are from the export I took on 2026-11-03. Tempo renames columns from time to time and by Jira language (Tempo, <a href="https://www.tempo.io/product-news/changes-to-logged-time-report-raw-data-export">https://www.tempo.io/product-news/changes-to-logged-time-report-raw-data-export</a>), so yours may differ. Atlassian now calls issues "work items" and projects "spaces", and the export follows that.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Work Item Key, Work Item summary</td>
+<td>The Jira issue the time was logged on</td>
+</tr>
+<tr>
+<td>Logged Hours, Logged Seconds</td>
+<td>The time spent. Seconds is exact; hours is rounded</td>
+</tr>
+<tr>
+<td>Work date</td>
+<td>The date and the start time, for example <code>2026-10-20 10:00</code></td>
+</tr>
+<tr>
+<td>User Account ID, Full name</td>
+<td>The person who logged the time in Tempo</td>
+</tr>
+<tr>
+<td>Work Description</td>
+<td>The worklog's description. A worklog without one is exported as "Working on work item KEY-1"</td>
+</tr>
+<tr>
+<td>Billable Hours, Billable Seconds</td>
+<td>The billable part of the time</td>
+</tr>
+<tr>
+<td>Account Key, Account Name, and other Account columns</td>
+<td>The Tempo account the time was logged against</td>
+</tr>
+<tr>
+<td>Tempo Team, Team Lead ID</td>
+<td>The person's Tempo team</td>
+</tr>
+<tr>
+<td>Space Key, Space Name</td>
+<td>The Jira project</td>
+</tr>
+<tr>
+<td>Work Item Type, Work Item Status, Epic, Parent Key, Component, Version Name</td>
+<td>Fields of the issue at export time</td>
+</tr>
+<tr>
+<td>Work Item Original Estimate, Work Item Remaining Estimate (hours and seconds)</td>
+<td>The issue's estimates at export time</td>
+</tr>
+<tr>
+<td>One column per work attribute, named after it (for example "Work type")</td>
+<td>The value of each Tempo work attribute</td>
+</tr>
+<tr>
+<td>Approval status</td>
+<td>Only when "Include Approval Status" is on</td>
+</tr>
+<tr>
+<td>Date created, Date updated</td>
+<td>When the worklog was created and last changed</td>
+</tr>
+<tr>
+<td>Tempo Worklog ID</td>
+<td>Tempo's own ID for the worklog</td>
+</tr>
+</tbody>
+</table>
+<h2>What is in Jira and what is only in this file</h2>
+<p>Tempo writes each worklog into Jira as well, with the same issue, date, start time and duration. In Jira, though, the author is the Tempo app ("Timesheets by Tempo - Jira Time Tracking") and the comment is "time-tracking". The real author, the description, the account and the work attributes stay in Tempo. Source: Tempo, <a href="https://help.tempo.io/kb/latest/why-do-we-see-timesheets-as-the-worklog-author">https://help.tempo.io/kb/latest/why-do-we-see-timesheets-as-the-worklog-author</a></p>
+<p>So the hours survive in Jira without Tempo, but who logged them, whether they were billable and for which account are only in Tempo and in this export.</p>
+<h2>See your export as weekly timesheets</h2>
+<p>The <a href="/saguaro-hours/tempo-preview/">Tempo data preview</a> reads the CSV in your browser and shows it the way Saguaro Hours for Jira shows timesheets: one week per screen, a row per issue, a column per day, per person. The file is not uploaded.</p>
+<h2>Import it into Saguaro Hours</h2>
+<p>The admin page of Saguaro Hours imports this exact CSV. It matches each row to its Jira worklog by issue, date, duration and start time, and stores next to it the billable flag, the account name, up to five work attributes and the real author. Reports, approvals, the dashboard gadget and the weekly totals then count those hours for the person who logged them, marked "from Tempo". In Jira itself the Tempo app stays the author, because the app never edits Jira worklogs. A check against Jira runs first and writes nothing, and running the same file twice changes nothing new.</p>
+<p>On my test site, a report grouped by person for 20 October to 3 November gave 16.83 h and 4 h, 20.83 h in total, the same as Tempo's own Logged Time report for that range. Step by step: <a href="/saguaro-hours/docs/moving-from-tempo/">Moving from Tempo</a>.</p>
+<p><strong>Status:</strong> Saguaro Hours was submitted to the Atlassian Marketplace on 2026-11-03 and is waiting for approval. The import is built and was tested on my development site with a real Tempo export. Counting migrated hours under the real author everywhere was added on 2026-11-03, after the build under review.</p>
+<h2>Compare the cost</h2>
+<p>At 100 Jira users, Tempo Timesheets lists at $599.00 a month and Saguaro Hours at $200.00 (Tempo's Marketplace price list, read 2026-11-04; Saguaro's prices as entered in its listing). Work out your own figure with the <a href="/saguaro-hours/tempo-cost-calculator/">Tempo cost calculator</a>, and see what each app does in <a href="/saguaro-hours/jira-time-tracking-apps-compared/">Jira time tracking apps compared</a> and <a href="/saguaro-hours/tempo-alternative/">Saguaro Hours as a Tempo alternative</a>.</p>
+<h2>Email me when it's live</h2>
+<p><a href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch">Email me when it's live</a> and I will send one email on the day the listing is approved.</p>
+<p>Tempo and Timesheets by Tempo belong to Tempo Software. Saguaro Hours and LeDuc Systems LLC are not affiliated with Tempo.</p>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>

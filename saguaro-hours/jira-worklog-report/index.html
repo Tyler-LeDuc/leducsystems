@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to get a worklog report in Jira Cloud | Saguaro Hours</title>
+<meta name="description" content="Hours per person, issue and week from Jira Cloud worklogs: what JQL, columns, dashboards and export give you, where they stop, and an app that adds it up.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/jira-worklog-report/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>How to get a worklog report in Jira Cloud</h1>
+<p>The question is usually simple: how many hours did each person log last week, and on what? Jira Cloud stores every worklog, but it has no screen that adds them up per person and date range. This page shows what Jira gives you on its own, where each option stops, and how Saguaro Hours for Jira does it.</p>
+<p>Atlassian pages quoted here were read on 2026-11-04.</p>
+<h2>What Jira stores</h2>
+<p>Each time someone logs time on an issue, Jira keeps a worklog: the author, the date and start time, the time spent and a comment. People need the Work On Work Items permission to log time (Atlassian, "Configure time tracking", <a href="https://support.atlassian.com/jira-cloud-administration/docs/configure-time-tracking/">https://support.atlassian.com/jira-cloud-administration/docs/configure-time-tracking/</a>). An issue's Time Spent field is the total of all its worklogs, from everyone, on every date.</p>
+<h2>Option 1: search with JQL</h2>
+<p>Jira's search has three worklog fields:</p>
+<ul>
+<li><code>worklogDate</code>: issues where someone logged work on a date. It takes <code>=</code>, <code>!=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code> and functions such as <code>startOfWeek()</code> and <code>endOfMonth()</code>.</li>
+<li><code>worklogComment</code>: issues with given text in a worklog comment. It takes only <code>~</code>.</li>
+<li><code>worklogAuthor</code>: issues where a given person logged work, for example <code>worklogAuthor = currentUser()</code>. It works in Jira Cloud (Saguaro Hours runs this search itself), although Atlassian's JQL fields page did not list it when I read it.</li>
+</ul>
+<p>Source for the first two: Atlassian, "JQL fields", <a href="https://support.atlassian.com/jira-software-cloud/docs/jql-fields/">https://support.atlassian.com/jira-software-cloud/docs/jql-fields/</a></p>
+<p>A search for one person's week:</p>
+<pre><code>worklogAuthor = currentUser() AND worklogDate &gt;= "2026-10-26" AND worklogDate &lt;= "2026-11-01"
+</code></pre>
+<p>Where it stops:</p>
+<ul>
+<li>The result is a list of issues, not of worklogs or hours.</li>
+<li>The Time Spent column shows each issue's total from everyone at any date. If you logged 1 hour last week on an issue the team has spent 40 hours on, the column says 40 hours.</li>
+<li>"If a work item has more than 1,000 worklogs, JQL will only search the most recent ones." (JQL fields page, above.)</li>
+</ul>
+<p>To get your 1 hour, you open the issue's Work log tab and add up your entries for the week, issue by issue.</p>
+<h2>Option 2: columns, dashboards and export</h2>
+<ul>
+<li>In the issue list you can add the Time Spent, Original Estimate and Remaining Estimate columns. They are issue totals, with the same limit as above.</li>
+<li>You can save the search as a filter and show it on a dashboard in a Filter Results gadget. Same figures.</li>
+<li>You can export the list to CSV. The export is one row per issue. Turning it into hours per person per week is spreadsheet work.</li>
+</ul>
+<p>These are fine for "which issues did people work on". They do not answer "how many hours did each person log in this range".</p>
+<h2>Option 3: the REST API</h2>
+<p>If you can write a script, Jira's REST API gives the worklogs themselves:</p>
+<ol>
+<li>Search issues with the JQL above (<code>POST /rest/api/3/search/jql</code>).</li>
+<li>For each issue, read its worklogs with <code>GET /rest/api/3/issue/{issueIdOrKey}/worklog</code>, using <code>startedAfter</code> and <code>startedBefore</code> to limit the dates.</li>
+<li>Add the time up per author and per day.</li>
+</ol>
+<p>Reference: <a href="https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-worklogs/">https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-worklogs/</a></p>
+<p>Three things catch people out:</p>
+<ul>
+<li>Days depend on a time zone. A worklog started at 23:30 in New York is already the next day in London. Pick one zone and use it for every day.</li>
+<li>You only see worklogs on issues you can browse, so two people can run the same script and get different totals.</li>
+<li>If your site used Tempo, Tempo's worklogs show the Tempo app as their author in Jira, not the person who logged them (Tempo, <a href="https://help.tempo.io/kb/latest/why-do-we-see-timesheets-as-the-worklog-author">https://help.tempo.io/kb/latest/why-do-we-see-timesheets-as-the-worklog-author</a>). A per-author total puts all of that time under the app.</li>
+</ul>
+<h2>How Saguaro Hours does it</h2>
+<p>Saguaro Hours runs those steps for you, as the signed-in user, and shows the result in a Reports tab that every user can open.</p>
+<ol>
+<li>Pick a range: this week, last week, this month, last month or custom dates.</li>
+<li>Filter if you need to: team, people, projects, projects to leave out, or a JQL query (Jira checks it before the report runs).</li>
+<li>Group by user, team, project, epic or parent, issue, issue type, label, billable, one of your own worklog attributes, or a Jira field such as a Customer dropdown or components. Add a second grouping if you want one, for example user, then issue.</li>
+<li>Read the totals per group, the grand total and a table of the worklogs behind them.</li>
+</ol>
+<p><img alt="Group hours by user, team, project, epic, issue type, label, billable or attribute. Save the report and export CSV or Excel." src="/saguaro-hours/img/06-reports.png" /></p>
+<ul>
+<li><strong>Exports:</strong> Summary CSV, Detail CSV, or Excel (.xlsx) with both sheets. The files are built in your browser.</li>
+<li><strong>Saved reports:</strong> up to 50 per person. A saved "Last week" moves forward each week.</li>
+<li><strong>Estimate vs logged:</strong> grouped by issue, epic or project, the summary adds the original estimate, the remaining estimate, time logged all time and the % used, with a filter for issues over their estimate.</li>
+<li><strong>Cost and revenue:</strong> once a Jira administrator sets hourly rates, administrators and the people they name see cost and revenue next to the hours. Everyone else sees hours only. See <a href="/saguaro-hours/jira-billable-hours/">billable hours in Jira</a>.</li>
+</ul>
+<p>How it keeps the totals right:</p>
+<ul>
+<li>Hours come from Jira's own worklogs, read as you, so Jira's permissions decide what you see.</li>
+<li>Days are counted in your Jira time zone.</li>
+<li>A worklog with several labels, or a person in several teams, goes under one combined value, so nothing is counted twice.</li>
+<li>A report holds up to 25,000 worklogs. Above that it stops and shows no totals, because partial totals would be wrong for billing. The same happens if Jira keeps refusing with a rate limit.</li>
+<li>If your site used Tempo, the import on the admin page records who really logged each Tempo worklog, and reports count those hours for that person, marked "from Tempo".</li>
+</ul>
+<p>Speed: in my load test, a report of 4,644 worklogs took 15 to 18 seconds. Larger reports have not been measured. Details: <a href="/saguaro-hours/docs/reports-and-exports/">Reports and exports</a>.</p>
+<p><strong>Status:</strong> Saguaro Hours was submitted to the Atlassian Marketplace on 2026-11-03 and is waiting for approval. Everything above is built and tested on my development site as of 2026-11-04. The build under review is older: it does not yet have the JQL filter, projects to leave out, grouping by Jira fields, estimate vs logged, or cost and revenue.</p>
+<h2>Related</h2>
+<ul>
+<li><a href="/saguaro-hours/jira-weekly-timesheet/">Weekly timesheets in Jira</a>, with a free Excel template</li>
+<li><a href="/saguaro-hours/jira-billable-hours/">Tracking billable hours in Jira</a></li>
+<li><a href="/saguaro-hours/jira-time-tracking-apps-compared/">Jira time tracking apps compared</a></li>
+<li><a href="/saguaro-hours/tempo-cost-calculator/">Tempo cost calculator</a></li>
+</ul>
+<h2>Email me when it's live</h2>
+<p>Saguaro Hours is free for up to 10 users. <a href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch">Email me when it's live</a> and I will send one email on the day the listing is approved.</p>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>
