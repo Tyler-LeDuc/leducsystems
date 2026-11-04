@@ -105,6 +105,7 @@ main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{
 <p>The Import tab on the Saguaro Hours page brings in time you recorded somewhere else: a CSV from another time tracker or a spreadsheet, or the events of a calendar file. Every user has it.</p>
 <p>Each row you import becomes a normal Jira worklog written as you. That is why only your own time can be imported: Jira does not let an app log work in someone else's name, so a Jira administrator cannot import other people's time with it. (Moving a whole team from Tempo is a different job: see <a href="/saguaro-hours/docs/moving-from-tempo/">moving from tempo</a>.)</p>
 <p>Files are read in your browser. They are not uploaded or stored, and the app makes no calls outside Jira.</p>
+<p>Status (2026-11-04): the Import tab, including the Clockify, Harvest and TMetric column matching below, is built and tested on my development site. It is newer than the build under Atlassian Marketplace review, and I plan to release it to the live app on the day the listing is approved.</p>
 <h2>A worklog CSV</h2>
 <p>Any CSV with one time entry per line, for example an export of Clockify, Harvest, TMetric, Toggl or Clockwork, or your own spreadsheet. A column that holds a Jira link or key (Harvest's external reference, TMetric's Issue Id) is found on its own. Semicolon and tab separated files work too; Excel files must be saved as CSV first. Up to 2,000 rows at a time.</p>
 <ol>
