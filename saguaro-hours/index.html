@@ -3,17 +3,22 @@
 <title>Saguaro Hours for Jira: timesheets and approvals</title>
 <meta name="description" content="Weekly timesheets, billable tags, team approvals and reports for Jira Cloud. Free for up to 10 users. Worklogs stay native Jira worklogs.">
 <link rel="canonical" href="https://leducsystems.com/saguaro-hours/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:title" content="Saguaro Hours for Jira: timesheets and approvals"><meta property="og:description" content="Weekly timesheets, billable tags, team approvals and reports for Jira Cloud. Free for up to 10 users. Worklogs stay native Jira worklogs.">
+<meta property="og:url" content="https://leducsystems.com/saguaro-hours/"><meta property="og:image" content="https://leducsystems.com/saguaro-hours/img/01-weekly-grid.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico">
 <style>
 :root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
 header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
-nav a{margin-left:16px;color:var(--muted);font-size:.95rem}nav a:first-child{margin-left:0}
+nav{display:flex;flex-wrap:wrap;gap:4px 16px}nav a{color:var(--muted);font-size:.95rem;white-space:nowrap}nav a:first-child{color:var(--ink);font-weight:600}
 h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
 a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
 code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
-main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{overflow-x:auto}pre code{overflow-wrap:normal}
+.sg-app{margin:20px 0;padding:12px 16px;border-left:4px solid #1d6b4f;background:#fff;font-size:.95rem}.sg-app a{font-weight:600}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
 @media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
 </style>
 <script>
@@ -94,7 +99,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 </script>
 </head><body>
 <header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
-<nav><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<nav><a href="/saguaro-hours/">Saguaro Hours</a><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
 <main>
 <h1>Saguaro Hours for Jira</h1>
 <p>Weekly timesheets, lead approval and billable reports for Jira Cloud.</p>
@@ -337,7 +342,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
   });
   // Approval day: every link to the Marketplace listing counts as a "get it" click.
   document.addEventListener('click', function (e) {
-    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com"]') : null;
+    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com/apps/"]') : null;
     if (a) track('marketplace_click', { link_url: a.href, page_path: location.pathname });
   });
 })();
