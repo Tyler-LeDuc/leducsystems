@@ -31,7 +31,7 @@ main img{max-width:100%;height:auto}.docs-list li{margin:6px 0}footer{margin-top
 <li>Pause stops counting and keeps the time. Resume continues.</li>
 <li>Stop and log stops the timer and opens a worklog form filled in for you:</li>
 <li>Date and Start time: when you first started the timer, in your Jira time zone. A timer that ran past midnight logs on the day it started.</li>
-<li>Time spent: the counted time, rounded as the admin set it (none, or up to 1, 5, 6, 10 or 15 minutes; with no rounding, to the nearest minute), and at least the admin's minimum and at least one minute.</li>
+<li>Time spent: the counted time in decimal hours (0.5 is 30 minutes, 0.02 is 1 minute, with the exact time shown under a rounded figure), rounded as the admin set it (none, or up to 1, 5, 6, 10 or 15 minutes; with no rounding, to the nearest minute), and at least the admin's minimum and at least one minute. You can type 1h 30m or 1:30 instead.</li>
 <li>Billable (the site default), attributes and description, as in the form below.</li>
 <li>Log work writes a normal Jira worklog as you, stores the billable flag and attributes, and removes the timer. Resume timer goes back to counting. Discard asks once more, then throws the time away.</li>
 <li>More than 12 hours in Time spent needs a tick in "Yes, log ..." before Log work is enabled. A timer that has counted more than 12 hours also shows a warning while it runs, in case you forgot to stop it.</li>
