@@ -1,4 +1,4 @@
-/* Send Delay 1.0.0 | LeDuc Systems LLC | built 2026-11-05T22:25:17.173Z */
+/* Send Delay 1.0.0 | LeDuc Systems LLC | built 2026-11-05T22:31:43.864Z */
 /*
  * Send Delay core logic. Pure functions, no Office.js.
  * Loaded three ways: concatenated into launchevent.js (classic Outlook JS runtime has no imports),
@@ -549,6 +549,15 @@
   };
 
   log("script loaded", typeof Office !== "undefined" && Office.actions ? "associate ok" : "no Office.actions");
+  // Office.js finishes its host handshake only once onReady/initialize is registered. Without it Outlook on the web
+  // loaded the runtime but never dispatched OnMessageSend, so Send stuck on "taking longer than expected".
+  if (typeof Office !== "undefined" && typeof Office.onReady === "function") {
+    try {
+      Office.onReady(function (info) {
+        log("onReady", info && info.host);
+      });
+    } catch (e) {}
+  }
   if (typeof Office !== "undefined" && Office.actions && Office.actions.associate) {
     Office.actions.associate("onMessageSendHandler", onMessageSendHandler);
     Office.actions.associate("onMessageComposeHandler", onMessageComposeHandler);

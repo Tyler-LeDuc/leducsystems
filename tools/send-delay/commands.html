@@ -14,11 +14,11 @@
       window.SendDelayPost = post;
       window.addEventListener("error", function (e) { post("page error: " + (e.message || e.type) + " " + (e.filename || "") + ":" + (e.lineno || "")); });
       window.addEventListener("unhandledrejection", function (e) { post("unhandled rejection: " + ((e.reason && e.reason.message) || e.reason)); });
-      post("commands.html 1.0.0+mw44673p loaded");
+      post("commands.html 1.0.0+mw44ehh4 loaded");
     })();
   </script>
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-  <script src="launchevent.js?v=mw44673p"></script>
+  <script src="launchevent.js?v=mw44ehh4"></script>
   <script>
     if (typeof Office !== "undefined" && Office.onReady) {
       Office.onReady(function (info) { window.SendDelayPost("Office.onReady host=" + (info && info.host)); });
