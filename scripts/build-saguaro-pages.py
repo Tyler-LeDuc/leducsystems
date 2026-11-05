@@ -139,9 +139,15 @@ def autolink(text):
     return re.sub(r"(?<!\]\()(?<![<\[])(https://[^\s)]+[^\s).,])", r"<\1>", text)
 
 
-def page(title, body_md, path, description, full_title=False, product="Saguaro Hours for Jira", promo=False):
-    body = markdown.markdown(body_md, extensions=["tables"])
-    home = "/saguaro-hours/azure-devops/" if "Azure" in product else "/saguaro-hours/"
+def page(title, body_md, path, description, full_title=False, product="Saguaro Hours for Jira", promo=False, root=None):
+    body = markdown.markdown(body_md, extensions=["tables", "fenced_code"])
+    root = root or {}
+    out_dir = root.get("out", OUT)
+    base = root.get("base", "/saguaro-hours/")
+    og_image = root.get("og", "https://leducsystems.com/saguaro-hours/img/01-weekly-grid.png")
+    home = root.get("home") or ("/saguaro-hours/azure-devops/" if "Azure" in product else "/saguaro-hours/")
+    nav_html = root.get("nav") or (f'<a href="{home}">{html.escape(product.replace(" for Jira", ""))}</a><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a>')
+    notify = NOTIFY if root.get("notify", True) else ""
     # Guides: the launch-list heading gets an anchor, and a short product box goes before the first section,
     # so a reader from search sees what the app is and can jump to the sign-up without scrolling to the end.
     body, n = re.subn(r"<h2>(Email me when it.s live)</h2>", r'<h2 id="launch">\1</h2>', body, count=1)
@@ -151,29 +157,29 @@ def page(title, body_md, path, description, full_title=False, product="Saguaro H
                '<a href="/saguaro-hours/">See the app</a> or <a href="#launch">get one email when it is live</a>.</aside>\n')
         i = body.index("<h2")
         body = body[:i] + box + body[i:]
-    out = OUT / path / "index.html"
+    out = out_dir / path / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
-    url = f"https://leducsystems.com/saguaro-hours/{path + '/' if path else ''}"
+    url = f"https://leducsystems.com{base}{path + '/' if path else ''}"
     out.write_text(f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{html.escape(title if full_title else title + ' | Saguaro Hours for Jira')}</title>
+<title>{html.escape(title if full_title else title + ' | ' + product)}</title>
 <meta name="description" content="{html.escape(description)}">
 <link rel="canonical" href="{url}">
 <meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
 <meta property="og:title" content="{html.escape(title)}"><meta property="og:description" content="{html.escape(description)}">
-<meta property="og:url" content="{url}"><meta property="og:image" content="https://leducsystems.com/saguaro-hours/img/01-weekly-grid.png">
+<meta property="og:url" content="{url}"><meta property="og:image" content="{og_image}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico">
 {STYLE}
 {CONSENT}
 </head><body>
 <header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
-<nav><a href="{home}">{html.escape(product.replace(" for Jira", ""))}</a><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<nav>{nav_html}</nav></header>
 <main>
 {body}
 </main>
 <footer>{product} · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> · <a href="/privacy#cookies" data-cookie-settings>Cookie settings</a></footer>
-{NOTIFY}
+{notify}
 </body></html>
 """, encoding="utf-8")
     return url
@@ -221,6 +227,51 @@ for f in sorted(Path("C:/Users/Tyler/apps/saguaro-ado/listing/site-prelaunch").g
     meta = dict(re.findall(r'^(\w+): "(.*)"$', m.group(1), re.M))
     urls.append(page(meta["title"], autolink(text[m.end():]), meta["path"], meta["description"], full_title=True,
                      product="Saguaro Hours for Azure DevOps"))
+
+def frontmatter(text):
+    m = re.match(r"---\n(.*?)\n---\n", text, re.S)
+    meta = {}
+    for line in m.group(1).splitlines():
+        k, _, v = line.partition(":")
+        meta[k.strip()] = v.strip().strip('"')
+    return meta, text[m.end():]
+
+
+# Saguaro Hours for Azure DevOps: privacy, support and terms (sources in apps/saguaro-ado/listing/site).
+for name in ("privacy", "support", "terms"):
+    meta, body = frontmatter((Path("C:/Users/Tyler/apps/saguaro-ado/listing/site") / f"{name}.md").read_text(encoding="utf-8"))
+    body = body.replace("[date of publishing]", "November 5, 2026").replace("](../privacy/)", "](/saguaro-hours/azure-devops/privacy/)")
+    urls.append(page(meta["title"], body, f"azure-devops/{name}", meta["description"], full_title=True,
+                     product="Saguaro Hours for Azure DevOps"))
+
+# Team Calendar Pro and PR Conflict Resolver for Azure DevOps (sources in each app's listing/site).
+EXTENSIONS = [
+    {"app": "ado-team-calendar", "slug": "team-calendar", "product": "Team Calendar Pro for Azure DevOps",
+     "short": "Team Calendar Pro", "pages": ["support", "privacy", "terms"], "shot": "1-month-view.png"},
+    {"app": "ado-pr-conflicts", "slug": "pr-conflict-resolver", "product": "PR Conflict Resolver for Azure DevOps",
+     "short": "PR Conflict Resolver", "pages": ["support", "privacy"], "shot": "1-merge-editor.png"},
+]
+for ext in EXTENSIONS:
+    src = Path("C:/Users/Tyler/apps") / ext["app"] / "listing"
+    out = Path("public") / ext["slug"]
+    base = f"/{ext['slug']}/"
+    home = base + "azure-devops/"
+    nav = f'<a href="{home}">{ext["short"]}</a>' + "".join(
+        f'<a href="{home}{n}/">{n.capitalize()}</a>' for n in ext["pages"])
+    root = {"out": out, "base": base, "home": home, "nav": nav, "notify": False,
+            "og": f"https://leducsystems.com{home}img/{ext['shot']}"}
+    for name in ["index"] + ext["pages"]:
+        meta, body = frontmatter((src / "site" / f"{name}.md").read_text(encoding="utf-8"))
+        urls.append(page(meta["title"], autolink(body), meta["path"], meta["description"], full_title=True,
+                         product=ext["product"], root=root))
+    imgdir = out / "azure-devops" / "img"
+    imgdir.mkdir(parents=True, exist_ok=True)
+    for png in (src / "screenshots").glob("*.png"):
+        shutil.copy2(png, imgdir / png.name)
+ps1 = Path("public/team-calendar/azure-devops/tools")
+ps1.mkdir(parents=True, exist_ok=True)
+shutil.copy2("C:/Users/Tyler/apps/ado-team-calendar/tools/export-team-calendar.ps1", ps1 / "export-team-calendar.ps1")
+
 img = OUT / "img"
 img.mkdir(parents=True, exist_ok=True)
 for png in (SRC / "assets" / "screens").glob("*.png"):
