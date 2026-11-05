@@ -1,4 +1,4 @@
-/* Send Delay 1.0.0 | LeDuc Systems LLC | built 2026-11-05T21:10:23.166Z */
+/* Send Delay 1.0.0 | LeDuc Systems LLC | built 2026-11-05T22:21:11.418Z */
 /*
  * Send Delay core logic. Pure functions, no Office.js.
  * Loaded three ways: concatenated into launchevent.js (classic Outlook JS runtime has no imports),
@@ -270,14 +270,56 @@
   var OVERRIDE_KEY = "sd-override";
   var HELD_NOTICE_ID = "sendDelayHeld";
 
-  function call(fn) {
+  var T = root.SendDelayTimeouts || {};
+  var CALL_TIMEOUT_MS = T.call || 5000; // one Office.js async call
+  var SEND_TIMEOUT_MS = T.send || 12000; // whole OnMessageSend handler
+  var TRACE_KEY = "sd-last-send";
+  var trace = [];
+
+  /** Lightweight diagnostics: console, localStorage (task pane reads it) and a postMessage to the host page. */
+  function log(step, detail) {
+    var line = new Date().toISOString().slice(11, 23) + " " + step + (detail !== undefined ? " " + String(detail) : "");
+    trace.push(line);
+    if (trace.length > 40) trace.shift();
+    try {
+      console.log("[SendDelay] " + line);
+    } catch (e) {}
+    try {
+      if (typeof localStorage !== "undefined") localStorage.setItem(TRACE_KEY, JSON.stringify(trace));
+    } catch (e) {}
+    try {
+      if (typeof window !== "undefined" && window.parent && window.parent !== window) {
+        window.parent.postMessage({ source: "send-delay", line: line }, "*");
+      }
+    } catch (e) {}
+  }
+
+  /** Wraps an Office.js callback API in a promise that always settles (failure or timeout rejects). */
+  function call(fn, label, ms) {
     return new Promise(function (resolve, reject) {
+      var done = false;
+      var timer = setTimeout(function () {
+        if (done) return;
+        done = true;
+        log("timeout", label || "call");
+        reject(new Error((label || "Office call") + " timed out"));
+      }, ms || CALL_TIMEOUT_MS);
       try {
         fn(function (r) {
-          if (r && r.status === Office.AsyncResultStatus.Failed) reject(r.error || new Error("failed"));
-          else resolve(r ? r.value : undefined);
+          if (done) return;
+          done = true;
+          clearTimeout(timer);
+          if (r && r.status === Office.AsyncResultStatus.Failed) {
+            var err = r.error || new Error("failed");
+            log("failed", (label || "call") + ": " + (err.message || err.code || err));
+            reject(err);
+          } else resolve(r ? r.value : undefined);
         });
       } catch (e) {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        log("threw", (label || "call") + ": " + (e && e.message));
         reject(e);
       }
     });
@@ -302,7 +344,7 @@
   function getExistingDelivery(item) {
     return call(function (cb) {
       item.delayDeliveryTime.getAsync(cb);
-    }).then(
+    }, "delayDeliveryTime.getAsync").then(
       function (v) {
         if (!v) return null;
         var d = v instanceof Date ? v : new Date(v);
@@ -317,14 +359,14 @@
   function setDelivery(item, date) {
     return call(function (cb) {
       item.delayDeliveryTime.setAsync(date, cb);
-    });
+    }, "delayDeliveryTime.setAsync");
   }
 
   function getOverride(item) {
     if (!item.sessionData) return Promise.resolve(null);
     return call(function (cb) {
       item.sessionData.getAsync(OVERRIDE_KEY, cb);
-    }).then(
+    }, "sessionData.getAsync").then(
       function (v) {
         if (v === undefined || v === null || v === "") return null;
         var n = parseInt(v, 10);
@@ -343,7 +385,7 @@
         if (!item[f] || !item[f].getAsync) return Promise.resolve([]);
         return call(function (cb) {
           item[f].getAsync(cb);
-        }).catch(function () {
+        }, f + ".getAsync").catch(function () {
           return [];
         });
       })
@@ -369,12 +411,13 @@
     };
     return call(function (cb) {
       item.notificationMessages.replaceAsync(HELD_NOTICE_ID, msg, cb);
-    }).catch(function () {});
+    }, "notificationMessages.replaceAsync").catch(function () {});
   }
 
   /** Runs the rules for the item being sent and applies the result. Returns the decision. */
   function applyRules(item, now) {
     return Promise.all([getOverride(item), getExistingDelivery(item), getRecipients(item)]).then(function (res) {
+      log("read", "override=" + JSON.stringify(res[0]) + " existing=" + (res[1] ? res[1].toISOString() : "none") + " recipients=" + res[2].length);
       var decision = Core.decide({
         settings: loadSettings(),
         now: now,
@@ -383,30 +426,75 @@
         recipients: res[2],
         userEmail: userEmail()
       });
+      log("decision", decision.action + (decision.sendAt ? " " + decision.sendAt.toISOString() : ""));
       if (decision.action === "delay") return setDelivery(item, decision.sendAt).then(function () { return decision; });
       if (decision.action === "clear") return setDelivery(item, now).then(function () { return decision; });
       return decision;
     });
   }
 
-  /** OnMessageSend (Smart Alerts, softBlock). Holds the mail server-side, then lets the send continue. */
+  function errorText(err) {
+    return (err && (err.message || err.code)) || String(err || "unknown error");
+  }
+
+  /** OnMessageSend (Smart Alerts, softBlock). Holds the mail server-side, then lets the send continue.
+   *  event.completed is called exactly once on every path: success, failure, exception or timeout. */
   function onMessageSendHandler(event) {
-    var item = Office.context.mailbox.item;
-    applyRules(item, new Date()).then(
-      function () {
-        event.completed({ allowEvent: true });
-      },
-      function (err) {
-        // Could not set the hold. Never trap the mail: tell the user and let them choose.
-        var opts = {
-          allowEvent: false,
-          errorMessage:
-            "Send Delay could not hold this message (" + ((err && err.message) || "unknown error") + "). Choose Send Anyway to send it now, or Don't Send to keep editing."
-        };
-        if (isSet("1.14")) opts.sendModeOverride = Office.MailboxEnums.SendModeOverride.PromptUser;
+    trace = [];
+    var finished = false;
+    var timer = null;
+
+    function finish(opts, why) {
+      if (finished) return;
+      finished = true;
+      if (timer) clearTimeout(timer);
+      log("completed", why + " " + JSON.stringify(opts));
+      try {
         event.completed(opts);
+      } catch (e) {
+        log("completed threw", errorText(e));
+        // Options the host rejected: never trap the mail.
+        try {
+          event.completed({ allowEvent: true });
+        } catch (e2) {}
       }
-    );
+    }
+
+    function promptOpts(reason) {
+      var opts = {
+        allowEvent: false,
+        errorMessage: (
+          "Send Delay could not hold this message (" + reason + "). Choose Send Anyway to send it now, or Don't Send to keep editing."
+        ).slice(0, 500)
+      };
+      try {
+        if (isSet("1.14") && Office.MailboxEnums.SendModeOverride) opts.sendModeOverride = Office.MailboxEnums.SendModeOverride.PromptUser;
+      } catch (e) {}
+      return opts;
+    }
+
+    log("send start", "mailbox 1.13=" + isSet("1.13") + " 1.14=" + isSet("1.14"));
+    timer = setTimeout(function () {
+      finish(promptOpts("it took too long"), "timeout");
+    }, SEND_TIMEOUT_MS);
+
+    try {
+      var item = Office.context.mailbox.item;
+      if (!item || !item.delayDeliveryTime) {
+        finish(promptOpts("this Outlook does not support delayed delivery"), "no delayDeliveryTime");
+        return;
+      }
+      applyRules(item, new Date()).then(
+        function (decision) {
+          finish({ allowEvent: true }, "ok " + (decision && decision.action));
+        },
+        function (err) {
+          finish(promptOpts(errorText(err)), "rejected");
+        }
+      );
+    } catch (e) {
+      finish(promptOpts(errorText(e)), "threw");
+    }
   }
 
   /** OnMessageCompose: when a held draft is reopened from Drafts, say so. */
@@ -456,9 +544,11 @@
     onMessageComposeHandler: onMessageComposeHandler,
     holdThisMessage: holdThisMessage,
     applyRules: applyRules,
+    TRACE_KEY: TRACE_KEY,
     OVERRIDE_KEY: OVERRIDE_KEY
   };
 
+  log("script loaded", typeof Office !== "undefined" && Office.actions ? "associate ok" : "no Office.actions");
   if (typeof Office !== "undefined" && Office.actions && Office.actions.associate) {
     Office.actions.associate("onMessageSendHandler", onMessageSendHandler);
     Office.actions.associate("onMessageComposeHandler", onMessageComposeHandler);
