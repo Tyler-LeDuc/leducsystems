@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Send Delay for Outlook. Add-in only (XML) manifest. Built by scripts/build.mjs: https://leducsystems.com/tools/send-delay is replaced with the host URL. -->
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+           xsi:type="MailApp">
+  <Id>5a95d227-0bd2-430e-b972-aa3d091bf1c6</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>LeDuc Systems LLC</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Send Delay for Outlook"/>
+  <Description DefaultValue="Holds every message you send for a few minutes, like the classic defer delivery rule, with business hours and send-right-away exceptions."/>
+  <IconUrl DefaultValue="https://leducsystems.com/tools/send-delay/assets/icon-64.png"/>
+  <HighResolutionIconUrl DefaultValue="https://leducsystems.com/tools/send-delay/assets/icon-128.png"/>
+  <SupportUrl DefaultValue="https://leducsystems.com/tools/send-delay/support.html"/>
+  <AppDomains>
+    <AppDomain>https://leducsystems.com</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.1"/>
+    </Sets>
+  </Requirements>
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://leducsystems.com/tools/send-delay/taskpane.html"/>
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+  <Permissions>ReadWriteItem</Permissions>
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  </Rule>
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+      <Requirements>
+        <bt:Sets DefaultMinVersion="1.13">
+          <bt:Set Name="Mailbox"/>
+        </bt:Sets>
+      </Requirements>
+      <Hosts>
+        <Host xsi:type="MailHost">
+          <Runtimes>
+            <!-- Browser runtime (web, new Outlook, Mac) loads commands.html; classic Outlook on Windows loads the JS file directly. -->
+            <Runtime resid="WebViewRuntime.Url">
+              <Override type="javascript" resid="JSRuntime.Url"/>
+            </Runtime>
+          </Runtimes>
+          <DesktopFormFactor>
+            <FunctionFile resid="Commands.Url"/>
+
+            <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="sdComposeGroup">
+                  <Label resid="Group.Label"/>
+                  <Control xsi:type="Button" id="sdHoldButton">
+                    <Label resid="HoldButton.Label"/>
+                    <Supertip>
+                      <Title resid="HoldButton.Label"/>
+                      <Description resid="HoldButton.Tooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16x16"/>
+                      <bt:Image size="32" resid="Icon.32x32"/>
+                      <bt:Image size="80" resid="Icon.80x80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>holdThisMessage</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="msgComposeOpenPaneButton">
+                    <Label resid="PaneButton.Label"/>
+                    <Supertip>
+                      <Title resid="PaneButton.Label"/>
+                      <Description resid="PaneButton.Tooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16x16"/>
+                      <bt:Image size="32" resid="Icon.32x32"/>
+                      <bt:Image size="80" resid="Icon.80x80"/>
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="Taskpane.Url"/>
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+
+            <ExtensionPoint xsi:type="MessageReadCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="sdReadGroup">
+                  <Label resid="Group.Label"/>
+                  <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                    <Label resid="ReadPaneButton.Label"/>
+                    <Supertip>
+                      <Title resid="ReadPaneButton.Label"/>
+                      <Description resid="ReadPaneButton.Tooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16x16"/>
+                      <bt:Image size="32" resid="Icon.32x32"/>
+                      <bt:Image size="80" resid="Icon.80x80"/>
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="Taskpane.Url"/>
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+
+            <ExtensionPoint xsi:type="LaunchEvent">
+              <LaunchEvents>
+                <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler" SendMode="SoftBlock"/>
+                <LaunchEvent Type="OnMessageCompose" FunctionName="onMessageComposeHandler"/>
+              </LaunchEvents>
+              <SourceLocation resid="WebViewRuntime.Url"/>
+            </ExtensionPoint>
+          </DesktopFormFactor>
+        </Host>
+      </Hosts>
+      <Resources>
+        <bt:Images>
+          <bt:Image id="Icon.16x16" DefaultValue="https://leducsystems.com/tools/send-delay/assets/icon-16.png"/>
+          <bt:Image id="Icon.32x32" DefaultValue="https://leducsystems.com/tools/send-delay/assets/icon-32.png"/>
+          <bt:Image id="Icon.80x80" DefaultValue="https://leducsystems.com/tools/send-delay/assets/icon-80.png"/>
+        </bt:Images>
+        <bt:Urls>
+          <bt:Url id="Commands.Url" DefaultValue="https://leducsystems.com/tools/send-delay/commands.html"/>
+          <bt:Url id="Taskpane.Url" DefaultValue="https://leducsystems.com/tools/send-delay/taskpane.html"/>
+          <bt:Url id="WebViewRuntime.Url" DefaultValue="https://leducsystems.com/tools/send-delay/commands.html"/>
+          <bt:Url id="JSRuntime.Url" DefaultValue="https://leducsystems.com/tools/send-delay/launchevent.js"/>
+        </bt:Urls>
+        <bt:ShortStrings>
+          <bt:String id="Group.Label" DefaultValue="Send Delay"/>
+          <bt:String id="HoldButton.Label" DefaultValue="Delay this message"/>
+          <bt:String id="PaneButton.Label" DefaultValue="Send Delay"/>
+          <bt:String id="ReadPaneButton.Label" DefaultValue="Send Delay rules"/>
+        </bt:ShortStrings>
+        <bt:LongStrings>
+          <bt:String id="HoldButton.Tooltip" DefaultValue="Hold this message for your default delay. Press Send afterwards; it waits in Drafts until the time shown."/>
+          <bt:String id="PaneButton.Tooltip" DefaultValue="Choose a hold time for this message, or change the rules for every message."/>
+          <bt:String id="ReadPaneButton.Tooltip" DefaultValue="Change how long Send Delay holds your outgoing mail."/>
+        </bt:LongStrings>
+      </Resources>
+    </VersionOverrides>
+  </VersionOverrides>
+</OfficeApp>
