@@ -1,0 +1,40 @@
+{
+  "id": "/tools/pub-opener/",
+  "name": "PUB File Opener: Publisher to Word, PDF",
+  "short_name": "PUB Opener",
+  "description": "Open Microsoft Publisher .pub files without Publisher. Free preview of every page, then save as PDF or as editable Word, PowerPoint and InDesign files.",
+  "start_url": "/tools/pub-opener/?source=pwa",
+  "scope": "/tools/",
+  "display": "standalone",
+  "background_color": "#FFFBF3",
+  "theme_color": "#1F1710",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    { "src": "/tools/pub-opener/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/tools/pub-opener/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/tools/pub-opener/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "file_handlers": [
+    {
+      "action": "/tools/pub-opener/?source=file",
+      "name": "Publisher document",
+      "icons": [
+        { "src": "/tools/pub-opener/icons/file-256.png", "sizes": "256x256", "type": "image/png" }
+      ],
+      "accept": {
+        "application/x-mspublisher": [".pub"],
+        "application/vnd.ms-publisher": [".pub"]
+      },
+      "launch_type": "multiple-clients"
+    }
+  ],
+  "launch_handler": {
+    "client_mode": ["navigate-new", "auto"]
+  },
+  "screenshots": [
+    { "src": "/tools/pub-opener/screenshots/1-open.png", "sizes": "1366x768", "type": "image/png", "form_factor": "wide", "label": "Open a .pub file" },
+    { "src": "/tools/pub-opener/screenshots/2-preview.png", "sizes": "1366x768", "type": "image/png", "form_factor": "wide", "label": "Free preview of every page" }
+  ]
+}
