@@ -1,4 +1,4 @@
-/* Send Delay 1.0.0 | LeDuc Systems LLC | built 2026-11-05T22:21:11.418Z */
+/* Send Delay 1.0.0 | LeDuc Systems LLC | built 2026-11-05T22:25:17.173Z */
 /*
  * Send Delay core logic. Pure functions, no Office.js.
  * Loaded three ways: concatenated into launchevent.js (classic Outlook JS runtime has no imports),
