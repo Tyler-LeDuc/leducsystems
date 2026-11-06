@@ -200,6 +200,14 @@ export const MORE_PRODUCTS = [
     href: '/tools/infopath-to-excel/',
   },
   {
+    slug: 'mpp-viewer',
+    name: 'MPP Viewer',
+    category: 'Microsoft Project',
+    line: 'Opens Microsoft Project .mpp files without Project, on Mac or Windows: Gantt chart, WBS task table and resources.',
+    price: 'Free to view, $19 once for Excel, CSV and PDF export',
+    href: '/tools/mpp-viewer/',
+  },
+  {
     slug: 'file-tools',
     name: 'PageMaker, Rhino and PowerPoint tools',
     category: 'File converters',
