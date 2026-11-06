@@ -250,6 +250,8 @@ EXTENSIONS = [
      "short": "Team Calendar Pro", "pages": ["support", "privacy", "terms"], "shot": "1-month-view.png"},
     {"app": "ado-pr-conflicts", "slug": "pr-conflict-resolver", "product": "PR Conflict Resolver for Azure DevOps",
      "short": "PR Conflict Resolver", "pages": ["support", "privacy"], "shot": "1-merge-editor.png"},
+    {"app": "ado-sprint-goals", "slug": "sprint-goals", "product": "Sprint Goals for Azure DevOps",
+     "short": "Sprint Goals", "pages": ["support", "privacy", "terms"], "shot": "1-sprint-goal-tab.png"},
 ]
 for ext in EXTENSIONS:
     src = Path("C:/Users/Tyler/apps") / ext["app"] / "listing"
