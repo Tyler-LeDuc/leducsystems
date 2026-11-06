@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sprint Goals for Azure DevOps: a goal per team per sprint</title>
+<meta name="description" content="A goal for each team in each sprint, on the Sprints page, the backlog and a dashboard widget. Mark goals achieved, partly achieved or missed and track each team&#x27;s hit rate. Free for one team.">
+<link rel="canonical" href="https://leducsystems.com/sprint-goals/azure-devops/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:title" content="Sprint Goals for Azure DevOps: a goal per team per sprint"><meta property="og:description" content="A goal for each team in each sprint, on the Sprints page, the backlog and a dashboard widget. Mark goals achieved, partly achieved or missed and track each team&#x27;s hit rate. Free for one team.">
+<meta property="og:url" content="https://leducsystems.com/sprint-goals/azure-devops/"><meta property="og:image" content="https://leducsystems.com/sprint-goals/azure-devops/img/1-sprint-goal-tab.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav{display:flex;flex-wrap:wrap;gap:4px 16px}nav a{color:var(--muted);font-size:.95rem;white-space:nowrap}nav a:first-child{color:var(--ink);font-weight:600}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{overflow-x:auto}pre code{overflow-wrap:normal}
+.sg-app{margin:20px 0;padding:12px 16px;border-left:4px solid #1d6b4f;background:#fff;font-size:.95rem}.sg-app a{font-weight:600}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/sprint-goals/azure-devops/">Sprint Goals</a><a href="/sprint-goals/azure-devops/support/">Support</a><a href="/sprint-goals/azure-devops/privacy/">Privacy</a><a href="/sprint-goals/azure-devops/terms/">Terms</a></nav></header>
+<main>
+<h1>Sprint Goals for Azure DevOps</h1>
+<p>Give every team a goal for every sprint, keep it in front of the team, and record whether it was met. Built for organizations with more than one team: each team sees only its own goal, even when teams share the same sprints.</p>
+<p><img alt="The Goal tab on the Sprints page" src="/sprint-goals/azure-devops/img/1-sprint-goal-tab.png" /></p>
+<p><img alt="Another team on the same sprint sees its own goal" src="/sprint-goals/azure-devops/img/5-same-sprint-other-team.png" /></p>
+<h2>What it does</h2>
+<ul>
+<li><strong>A Goal tab on the Sprints page,</strong> next to Taskboard, Backlog and Capacity, for the sprint and team you are looking at. A <strong>Sprint goal</strong> tab on the Backlogs page shows the current sprint's goal.</li>
+<li><strong>Every team on one page.</strong> <strong>Boards &gt; Sprint Goals</strong> lists each team's goal for its current sprint, its outcome and the team's hit rate. Pick a team to edit its goals.</li>
+<li><strong>A dashboard widget</strong> with a team's current goal, days left, last sprint's outcome and the hit rate.</li>
+<li><strong>Achieved, partly or missed.</strong> Judge the goal at the sprint review and add a note. A sprint that ended without an outcome asks for one.</li>
+<li><strong>History.</strong> Every past goal with its outcome, a hit rate (partly counts as half) and a streak. A missed or partly achieved goal can be carried over to the next sprint in one click.</li>
+<li><strong>Saves as you type.</strong> No Save button. Text typed just before the page closes is kept in the browser and saved next time. Two people editing the same goal keep both sets of changes.</li>
+</ul>
+<p><img alt="Every team's goal on one page" src="/sprint-goals/azure-devops/img/2-all-teams.png" /></p>
+<p><img alt="History and outcomes" src="/sprint-goals/azure-devops/img/3-history-outcome.png" /></p>
+<p><img alt="Dashboard widget" src="/sprint-goals/azure-devops/img/4-dashboard-widget.png" /></p>
+<p>The screenshots are from a test organization; the team names and goals are sample data.</p>
+<h2>Your data stays in Azure DevOps</h2>
+<p>Goals are stored in your organization's Extension Data Service. Sprint Goals has no server of its own and sends goal text nowhere else. See the <a href="/sprint-goals/azure-devops/privacy/">privacy policy</a>.</p>
+<h2>Permissions</h2>
+<ul>
+<li>Work items (read): the teams' sprints and working days.</li>
+<li>Project and team (read): the list of teams.</li>
+</ul>
+<h2>Pricing</h2>
+<p>Free for one team per organization. Unlimited teams for $19 a year per organization. During early access every team can use every feature. Azure DevOps Services only.</p>
+<h2>Support</h2>
+<p>Email <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> or see the <a href="/sprint-goals/azure-devops/support/">support page</a>. I answer support email myself.</p>
+<h2>FAQ</h2>
+<p><strong>Several teams run on the same sprints. Does each team get its own goal?</strong> Yes. Goals are stored per team, and the tab reads the team from the page it is opened on.</p>
+<p><strong>Do I have to press Save?</strong> No. Changes save a moment after you stop typing.</p>
+<p><strong>Does it work on Azure DevOps Server?</strong> Not in this version. It targets Azure DevOps Services.</p>
+<p><strong>Is anything sent to LeDuc Systems?</strong> No goal text. The extension has no analytics.</p>
+<p>Sprint Goals is made by LeDuc Systems LLC. It is not made by or affiliated with Microsoft.</p>
+</main>
+<footer>Sprint Goals for Azure DevOps · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> · <a href="/privacy#cookies" data-cookie-settings>Cookie settings</a></footer>
+
+</body></html>
