@@ -59,6 +59,7 @@ const GROUPS = [
   { title: 'Saguaro Hours for Azure DevOps', test: (p) => p.startsWith('/saguaro-hours/azure-devops/') },
   { title: 'Team Calendar Pro for Azure DevOps', test: (p) => p.startsWith('/team-calendar/') },
   { title: 'PR Conflict Resolver for Azure DevOps', test: (p) => p.startsWith('/pr-conflict-resolver/') },
+  { title: 'Excel Round-Trip for Azure Boards', test: (p) => p.startsWith('/excel-roundtrip/') },
   { title: 'Sprint Goals for Azure DevOps', test: (p) => p.startsWith('/sprint-goals/') },
   { title: 'Saguaro Hours for Jira: documentation', test: (p) => p.startsWith('/saguaro-hours/docs/') },
   { title: 'Saguaro Hours for Jira', test: (p) => p.startsWith('/saguaro-hours/') },
