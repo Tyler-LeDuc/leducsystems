@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Excel Round-Trip for Azure Boards: edit work items in Excel, on Windows or Mac</title>
-<meta name="description" content="Export Azure Boards work items to .xlsx in the browser, edit them in Excel, upload the file, review a field-level diff and apply bulk updates. No desktop add-in. Free up to 100 rows per import.">
+<meta name="description" content="Export Azure Boards work items to .xlsx in the browser, edit them in Excel, upload the file, review a field-level diff and apply bulk updates. No desktop add-in. Free up to 100 rows per import; Pro is $19/month per organization.">
 <link rel="canonical" href="https://leducsystems.com/excel-roundtrip/azure-devops/">
 <meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
-<meta property="og:title" content="Excel Round-Trip for Azure Boards: edit work items in Excel, on Windows or Mac"><meta property="og:description" content="Export Azure Boards work items to .xlsx in the browser, edit them in Excel, upload the file, review a field-level diff and apply bulk updates. No desktop add-in. Free up to 100 rows per import.">
+<meta property="og:title" content="Excel Round-Trip for Azure Boards: edit work items in Excel, on Windows or Mac"><meta property="og:description" content="Export Azure Boards work items to .xlsx in the browser, edit them in Excel, upload the file, review a field-level diff and apply bulk updates. No desktop add-in. Free up to 100 rows per import; Pro is $19/month per organization.">
 <meta property="og:url" content="https://leducsystems.com/excel-roundtrip/azure-devops/"><meta property="og:image" content="https://leducsystems.com/excel-roundtrip/azure-devops/img/1-export.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico">
@@ -124,9 +124,57 @@ main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{
 <h2>No Office add-in</h2>
 <p>The classic "Open in Excel" route needs Excel for Windows with the Azure DevOps Office Integration installed. Excel Round-Trip needs neither: the workbook is built and read in your browser, and the file is a standard .xlsx.</p>
 <h2>Your data stays in Azure DevOps</h2>
-<p>Work items are read and written through the Azure DevOps REST API, from your browser, with the Work items (read and write) scope. The .xlsx file is created and read in your browser. Undo logs are kept in your organization's extension data storage for your user. Nothing is sent to LeDuc Systems. See the <a href="/excel-roundtrip/azure-devops/privacy/">privacy policy</a>.</p>
-<h2>Pricing</h2>
-<p>Free during the early release: export any number of work items, and import up to 100 changed rows per import. Azure DevOps Services only.</p>
+<p>Work items are read and written through the Azure DevOps REST API, from your browser, with the Work items (read and write) scope. The .xlsx file is created and read in your browser. Undo logs are kept in your organization's extension data storage for your user. Work item data is never sent to LeDuc Systems; with Pro, only the license key is checked with my license server. See the <a href="/excel-roundtrip/azure-devops/privacy/">privacy policy</a>.</p>
+
+<h2 id="pricing">Pricing</h2>
+<ul>
+<li><strong>Free:</strong> export any number of work items, and import up to 100 changed rows per import.</li>
+<li><strong>Pro:</strong> $19 a month per Azure DevOps organization, with no row limit. One key covers everyone in the organization.</li>
+</ul>
+<p><button type="button" id="xr-buy" style="min-height:44px;font:inherit;font-weight:600;padding:8px 20px;border:0;border-radius:4px;background:#185C37;color:#fff;cursor:pointer">Buy Excel Round-Trip Pro, $19/month</button></p>
+<p id="xr-buy-status" role="status" aria-live="polite"></p>
+<p>Checkout is by Stripe. After payment this page shows your license key. In Azure DevOps, open Boards, Excel Round-Trip, the <strong>Pro</strong> tab, paste the key and select <strong>Check and save</strong>. To cancel, email <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>. Azure DevOps Services only.</p>
+<div id="xr-key" hidden style="border:2px solid #15130F;padding:16px 20px;margin:24px 0"></div>
+<script>
+(function () {
+  var SERVER = 'https://convert.leducsystems.com';
+  var btn = document.getElementById('xr-buy'), status = document.getElementById('xr-buy-status');
+  btn.addEventListener('click', function () {
+    btn.disabled = true;
+    status.textContent = 'Opening checkout...';
+    if (window.gtag) window.gtag('event', 'begin_checkout', { item_id: 'excel-roundtrip', value: 19, currency: 'USD' });
+    fetch(SERVER + '/api/license/checkout/excel-roundtrip', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ src: 'site' }) })
+      .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, b: b }; }); })
+      .then(function (x) {
+        if (x.ok && x.b.url && x.b.url.indexOf('https://') === 0) { location.href = x.b.url; return; }
+        throw new Error((x.b && x.b.error) || 'Checkout is unavailable right now.');
+      })
+      .catch(function (e) {
+        btn.disabled = false;
+        status.textContent = (e && e.message ? e.message : 'Checkout is unavailable right now.') + ' Please try again in a minute, or email tyler@leducsystems.com.';
+      });
+  });
+  var session = new URLSearchParams(location.search).get('license_session');
+  if (!session) return;
+  var box = document.getElementById('xr-key');
+  function show(title, text, key) {
+    box.hidden = false;
+    box.textContent = '';
+    var h = document.createElement('h2'); h.textContent = title; box.appendChild(h);
+    if (key) { var c = document.createElement('code'); c.textContent = key; c.style.fontSize = '1.2rem'; c.style.userSelect = 'all'; box.appendChild(c); }
+    var p = document.createElement('p'); p.textContent = text; box.appendChild(p);
+    box.scrollIntoView();
+  }
+  show('Getting your key', 'One moment.');
+  fetch(SERVER + '/api/license/claim?session=' + encodeURIComponent(session))
+    .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, b: b }; }); })
+    .then(function (x) {
+      if (x.ok && x.b.license) show('Your Excel Round-Trip Pro key', 'In Azure DevOps: Boards, Excel Round-Trip, Pro tab. Paste the key, then select Check and save. Keep this key; this page shows it again if you reopen this link.', x.b.license);
+      else show('Your key is not ready', (x.b && x.b.error) || 'Email tyler@leducsystems.com and I will send it.');
+    })
+    .catch(function () { show('Your key is not ready', 'The license server could not be reached. Reload this page in a minute, or email tyler@leducsystems.com.'); });
+})();
+</script>
 <h2>FAQ</h2>
 <p><strong>Does uploading a file change anything?</strong> No. The upload shows a preview. Nothing is written until you select <strong>Apply</strong>.</p>
 <p><strong>What happens to formatting in Description?</strong> Rich text fields are plain text in the sheet. Cells you do not edit are not touched; an edited cell replaces that field's formatting.</p>

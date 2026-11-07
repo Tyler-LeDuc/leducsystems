@@ -102,17 +102,21 @@ main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{
 <nav><a href="/excel-roundtrip/azure-devops/">Excel Round-Trip</a><a href="/excel-roundtrip/azure-devops/support/">Support</a><a href="/excel-roundtrip/azure-devops/privacy/">Privacy</a></nav></header>
 <main>
 <h1>Privacy policy</h1>
-<p>Last updated: November 5, 2026</p>
+<p>Last updated: November 7, 2026</p>
 <p>This page covers the Excel Round-Trip extension for Azure DevOps, made by LeDuc Systems LLC ("I" below; I run the company myself).</p>
 <h2>Where your data is stored</h2>
 <ul>
 <li><strong>Work items</strong> are read from and written to Azure DevOps in your browser, using the Work items (read and write) scope.</li>
 <li><strong>Workbooks</strong> are created and read in your browser. The file you download is saved where your browser saves downloads.</li>
+<li><strong>The Pro license key</strong>, if one is entered, and the result of its last check are stored in your organization's extension data storage at organization scope, so everyone in the organization uses the same key.</li>
 <li><strong>Undo logs</strong> (the previous values of fields an import changed, and the IDs of items it created) are stored in your Azure DevOps organization's extension data storage at user scope. If that storage cannot be opened, they are kept in your browser's local storage. The newest 25 are kept. Microsoft hosts that storage as part of your organization; Microsoft's own privacy terms apply.</li>
 </ul>
 <p>I do not run a server that receives or stores any of this.</p>
 <h2>What is sent to LeDuc Systems</h2>
-<p>Nothing. The extension makes no requests to LeDuc Systems servers. It has no analytics, tracking pixels or advertising. I do not sell data.</p>
+<p>No work item data, workbooks or undo logs. Without a Pro key, the extension makes no requests to LeDuc Systems servers.</p>
+<p>When a Pro key is entered, the extension sends that key to my license server (convert.leducsystems.com) to check it, and checks it again when Excel Round-Trip is opened, at most once an hour. The request carries only the key. Like any web server, the license server sees the IP address the request comes from, and its log keeps the request with that address. The answer is whether the key is valid.</p>
+<p>When you buy Pro, payment is handled by Stripe. I receive the email address you give at checkout and the subscription status, and I use them to run the subscription and answer support email.</p>
+<p>The extension has no analytics, tracking pixels or advertising. I do not sell data.</p>
 <h2>Contact</h2>
 <p><a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>. LeDuc Systems LLC, an Arizona limited liability company in Phoenix, Arizona.</p>
 </main>
