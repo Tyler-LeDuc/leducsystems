@@ -138,7 +138,7 @@ main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{
     box.scrollIntoView();
   }
   show('Getting your key', 'One moment.');
-  fetch('<https://convert.leducsystems.com/api/license/claim?session='> + encodeURIComponent(session))
+  fetch('https://convert.leducsystems.com/api/license/claim?session=' + encodeURIComponent(session))
     .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, b: b }; }); })
     .then(function (x) {
       if (x.ok && x.b.license) show('Your license key', 'Copy it into Saguaro Hours: Timesheet, Settings, License key, then Check and save.' + (x.b.seats ? ' It covers ' + x.b.seats + ' seats.' : '') + ' Keep this key; this page shows it again if you reopen this link.', x.b.license);
