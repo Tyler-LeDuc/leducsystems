@@ -79,10 +79,10 @@
 })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PageMaker Converter — Open .pmd Files in InDesign, Affinity or PowerPoint</title>
+<title>PageMaker Converter: Open .pmd Files in InDesign, Affinity or PowerPoint</title>
 <meta name="description" content="Convert Adobe PageMaker .pmd and .p65 files into editable InDesign, Affinity, PowerPoint and Canva files. Text, pictures and columns stay editable. Free preview.">
 <link rel="canonical" href="https://leducsystems.com/tools/pagemaker-converter/">
-<meta property="og:title" content="PageMaker Converter — Open .pmd Files in InDesign, Affinity or PowerPoint">
+<meta property="og:title" content="PageMaker Converter: Open .pmd Files in InDesign, Affinity or PowerPoint">
 <meta property="og:description" content="Convert Adobe PageMaker .pmd and .p65 files into editable InDesign, Affinity, PowerPoint and Canva files. Text, pictures and columns stay editable. Free preview.">
 <meta property="og:url" content="https://leducsystems.com/tools/pagemaker-converter/">
 <meta property="og:type" content="website">
@@ -94,7 +94,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"PageMaker File Converter","url":"https://leducsystems.com/tools/pagemaker-converter/","applicationCategory":"DesignApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"12","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why won't my PageMaker files open?","acceptedAnswer":{"@type":"Answer","text":"Adobe discontinued PageMaker in 2004. InDesign CS6 and earlier came with a PageMaker converter, but newer InDesign versions dropped it, and PageMaker itself no longer runs on current Windows or macOS."}},{"@type":"Question","name":"Is the PDF free?","acceptedAnswer":{"@type":"Answer","text":"The preview of every page is free, no account needed. The clean PDF, with the page pictures, is $4.99 per file, and it's included free with the editable versions ($12) or the $19 pass."}},{"@type":"Question","name":"What do I get if I pay?","acceptedAnswer":{"@type":"Answer","text":"Three editable files for $12: an IDML file for InDesign or Affinity, a PowerPoint file (.pptx) for PowerPoint, Canva, Google Slides or Keynote, and a Word file (.docx). Every page, text box, picture, shape and line comes across as something you can edit, and the clean PDF and page pictures are included. You see a preview of every page before you pay."}},{"@type":"Question","name":"I have a lot of files. Is there a better deal?","acceptedAnswer":{"@type":"Answer","text":"Yes. The 30-day pass is $19 and covers every file you convert in those 30 days, PageMaker and Publisher alike. It pays for itself at two files."}},{"@type":"Question","name":"What if it doesn't come out right?","acceptedAnswer":{"@type":"Answer","text":"Email tyler@leducsystems.com within 30 days and I'll refund you in full, no questions asked. If you can, attach the file so I can fix the converter for the next person."}},{"@type":"Question","name":"Which PageMaker versions work?","acceptedAnswer":{"@type":"Answer","text":"PageMaker 6.0, 6.5 and 7.0 (.pmd, .p65, .pm6 and template files). Files from PageMaker 5 and earlier aren't supported yet. If yours doesn't convert, the preview tells you before you pay anything."}},{"@type":"Question","name":"What about pictures?","acceptedAnswer":{"@type":"Answer","text":"PageMaker often linked pictures instead of storing them in the file. Pictures stored in the file come across; linked ones that aren't inside the file can't, so you'd place those again in your new app."}},{"@type":"Question","name":"What about fonts?","acceptedAnswer":{"@type":"Answer","text":"Your text keeps the font names it used in PageMaker. Many old fonts aren't on today's computers, so your app substitutes a similar one and some text may reflow. Headlines in unusual fonts are the most likely to need a touch-up."}},{"@type":"Question","name":"What happens to my file?","acceptedAnswer":{"@type":"Answer","text":"Your file is converted on my server, used only to make your download, and deleted automatically within 24 hours, or within 7 days once paid, so you can download it again. I never look at it or share it."}},{"@type":"Question","name":"Is this made by Adobe?","acceptedAnswer":{"@type":"Answer","text":"No. I'm an independent developer. PageMaker and InDesign are trademarks of Adobe, PowerPoint of Microsoft, and Canva and Affinity of Canva."}}]}]}</script>
   <script type="module" crossorigin src="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js"></script>
   <script type="module" crossorigin src="/tools/assets/publisher-DurgYW3L.js"></script>
-  <link rel="stylesheet" crossorigin href="/tools/assets/style-Dv9aJ1n1.css">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-DcyjTq6b.css">
 </head>
 <body data-api="https://convert.leducsystems.com" data-price="$12" data-pass-price="$19" data-accept=".pmd,.p65,.pm6,.pmt,.t65" data-app="PageMaker" data-image="jpg">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -134,22 +134,24 @@
 <main id="main" tabindex="-1">
   <section class="hero">
     <h1>Bring your PageMaker files back to life</h1>
-    
     <p class="lede">Today's InDesign can't open PageMaker files, and PageMaker won't run on a modern computer. Drop a .pmd or .p65 file and get it back as an editable file for InDesign, Affinity, PowerPoint or Canva.</p>
-    
   </section>
 
   <section class="tool" aria-label="Converter">
     <label class="drop" id="drop">
       <input type="file" id="file" accept=".pmd,.p65,.pm6,.pmt,.t65" class="sr-only">
       <span class="drop-title">Drop a .pmd file here</span>
-      <span class="drop-sub">or click to choose · free preview of every page · $12 for editable InDesign, Affinity, PowerPoint and Word files · $19 for every file for 30 days · full refund within 30 days, no questions asked</span>
+      <span class="drop-sub">or click to choose · <b>free preview of every page</b>, no sign-up</span>
     </label>
+    <p class="price-line"><span><b>Free</b> preview</span><span><b>$12</b> editable InDesign, Affinity, PowerPoint and Word files</span><span><b>$19</b> every file for 30 days</span></p>
+    <p class="price-note">One payment, no subscription. Full refund within 30 days, no questions asked.</p>
     <p class="status" id="status" role="status"></p>
     <div class="result" id="result" hidden></div>
     <p class="pass" id="pass" hidden>Two or more files? <button class="link" id="buy-pass" type="button">Get a 30-day pass for $19</button> and convert as many as you like.</p>
-    <p class="fine">Payments go to LeDuc Systems LLC in Phoenix, Arizona, through Stripe. Questions before you pay: <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
+    <p class="fine">I'm Tyler LeDuc, and I built and run this converter. Payments go to my company, LeDuc Systems LLC in Phoenix, Arizona, through Stripe. <a href="/refunds">Refund policy</a>. Questions before you pay: <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
   </section>
+  
+  
 
   <section class="steps">
     <div><b>1</b><p>Drop your PageMaker file and preview every page free.</p></div>

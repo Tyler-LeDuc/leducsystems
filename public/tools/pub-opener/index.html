@@ -99,7 +99,7 @@
 <script>if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('/tools/pub-opener/sw.js').catch(() => {}));</script>
   <script type="module" crossorigin src="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js"></script>
   <script type="module" crossorigin src="/tools/assets/publisher-DurgYW3L.js"></script>
-  <link rel="stylesheet" crossorigin href="/tools/assets/style-Dv9aJ1n1.css">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-DcyjTq6b.css">
 </head>
 <body data-api="https://convert.leducsystems.com" data-price="$12" data-pass-price="$19" data-accept=".pub" data-app="Publisher" data-image="jpg">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -139,22 +139,24 @@
 <main id="main" tabindex="-1">
   <section class="hero">
     <h1>Open your Publisher files</h1>
-    <p class="fire-notice"><b>Microsoft retired Publisher in October 2026.</b> Microsoft 365 subscribers lost access on or shortly after October 1, and support for the one-time-purchase versions ended October 13. Source: <a href="https://support.microsoft.com/en-us/office/microsoft-publisher-will-no-longer-be-supported-after-october-2026-ee6302a2-4bc7-4841-babf-8e9be3acbfd7">Microsoft Support</a>.</p>
     <p class="lede">Open a .pub file to see every page free, then save it as a PDF or as files you can keep editing in Word, PowerPoint, Canva, Affinity or InDesign. Installed as an app, it opens .pub files with a double-click.</p>
-    <p class="store-link"><a href="https://apps.microsoft.com/detail/9P93TG2B86QJ">Get PUB File Opener from the Microsoft Store</a> for Windows, and .pub files open with a double-click.</p>
   </section>
 
   <section class="tool" aria-label="Converter">
     <label class="drop" id="drop">
       <input type="file" id="file" accept=".pub" class="sr-only">
       <span class="drop-title">Drop a .pub file here</span>
-      <span class="drop-sub">or click to choose · free preview of every page · $4.99 for the PDF · $12 for editable Word, PowerPoint and InDesign files · $19 for every file for 30 days · full refund within 30 days, no questions asked</span>
+      <span class="drop-sub">or click to choose · <b>free preview of every page</b>, no sign-up</span>
     </label>
+    <p class="price-line"><span><b>Free</b> preview</span><span><b>$4.99</b> PDF</span><span><b>$12</b> editable PowerPoint, Word and InDesign files</span><span><b>$19</b> every file for 30 days</span></p>
+    <p class="price-note">One payment, no subscription. Full refund within 30 days, no questions asked.</p>
     <p class="status" id="status" role="status"></p>
     <div class="result" id="result" hidden></div>
     <p class="pass" id="pass" hidden>Two or more files? <button class="link" id="buy-pass" type="button">Get a 30-day pass for $19</button> and convert as many as you like.</p>
-    <p class="fine">Payments go to LeDuc Systems LLC in Phoenix, Arizona, through Stripe. Questions before you pay: <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
+    <p class="fine">I'm Tyler LeDuc, and I built and run this converter. Payments go to my company, LeDuc Systems LLC in Phoenix, Arizona, through Stripe. <a href="/refunds">Refund policy</a>. Questions before you pay: <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
   </section>
+  <p class="fire-notice"><b>Microsoft retired Publisher in October 2026.</b> Microsoft 365 subscribers lost access on or shortly after October 1, and support for the one-time-purchase versions ended October 13. Source: <a href="https://support.microsoft.com/en-us/office/microsoft-publisher-will-no-longer-be-supported-after-october-2026-ee6302a2-4bc7-4841-babf-8e9be3acbfd7">Microsoft Support</a>.</p>
+  <p class="store-link"><a href="https://apps.microsoft.com/detail/9P93TG2B86QJ">Get PUB File Opener from the Microsoft Store</a> for Windows, and .pub files open with a double-click.</p>
 
   <section class="steps">
     <div><b>1</b><p>Drop your Publisher file and preview every page free.</p></div>
