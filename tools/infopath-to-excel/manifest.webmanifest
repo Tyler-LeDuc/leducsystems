@@ -1,0 +1,66 @@
+{
+  "id": "/tools/infopath-to-excel/",
+  "name": "InfoPath to Excel Converter",
+  "short_name": "InfoPath to Excel",
+  "description": "Turn filled-in InfoPath forms (.xml) into one spreadsheet, a row per form and a column per field. Read on your computer; free for up to 25 forms.",
+  "start_url": "/tools/infopath-to-excel/?source=pwa",
+  "scope": "/tools/",
+  "display": "standalone",
+  "background_color": "#FFFBF3",
+  "theme_color": "#1F1710",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": [
+    "productivity",
+    "business",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "/tools/infopath-to-excel/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/tools/infopath-to-excel/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/tools/infopath-to-excel/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/tools/infopath-to-excel/?source=file",
+      "name": "InfoPath form",
+      "icons": [
+        {
+          "src": "/tools/infopath-to-excel/icons/file-256.png",
+          "sizes": "256x256",
+          "type": "image/png"
+        }
+      ],
+      "accept": {
+        "text/xml": [
+          ".xml"
+        ],
+        "application/xml": [
+          ".xml"
+        ]
+      },
+      "launch_type": "single-client"
+    }
+  ],
+  "launch_handler": {
+    "client_mode": [
+      "navigate-existing",
+      "auto"
+    ]
+  }
+}
