@@ -136,7 +136,8 @@ def link_doc_mentions(text, docs):
 
 
 def autolink(text):
-    return re.sub(r"(?<!\]\()(?<![<\[])(https://[^\s)]+[^\s).,])", r"<\1>", text)
+    # Skip URLs already linked, or quoted inside inline HTML/JS (e.g. fetch('https://...')).
+    return re.sub(r"""(?<!\]\()(?<![<\['"])(https://[^\s)'"]+[^\s).,'"])""", r"<\1>", text)
 
 
 def page(title, body_md, path, description, full_title=False, product="Saguaro Hours for Jira", promo=False, root=None):
