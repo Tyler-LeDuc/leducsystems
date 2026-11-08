@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import LegalDocument from '../components/LegalDocument';
 import { SITE } from '../data/site';
 
-const LAST_UPDATED = 'October 31, 2026';
+const LAST_UPDATED = 'November 7, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
 const DELETE_MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent('Privacy request')}`;
@@ -179,6 +179,28 @@ const SECTIONS = [
     ),
   },
   {
+    id: 'fax',
+    title: 'Sending a fax',
+    content: (
+      <>
+        <p>
+          To send a fax, the files you add, the fax number and any cover page text are sent to my
+          server, turned into one PDF and kept only to send it. Files you add but don&rsquo;t send
+          are deleted after 24 hours, and unpaid faxes after 2 days. After a fax is sent (or fails
+          for good), the document and the cover page text are deleted 7 days later. A short record
+          (the fax number, page count, times, the outcome and the Stripe payment ID) is kept for 90
+          days so the delivery confirmation and refunds work, then deleted.
+        </p>
+        <p>
+          The fax is delivered through Telnyx, a telecom provider, which fetches the PDF from my
+          server and transmits it to the number you entered. I don&rsquo;t read your faxes. The
+          link to a fax&rsquo;s status page is kept in your browser&rsquo;s local storage so you can
+          find recent faxes again; clear site data to remove it.
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'cookies',
     title: 'Cookies and similar storage',
     content: (
@@ -238,6 +260,9 @@ const SECTIONS = [
           </li>
           <li>
             <strong>Hetzner Online</strong> (the server at convert.leducsystems.com, in Germany).
+          </li>
+          <li>
+            <strong>Telnyx</strong> (transmits faxes you send to the number you enter).
           </li>
           <li>
             <strong>Google</strong>: Google Workspace for my email, and Google Analytics if you

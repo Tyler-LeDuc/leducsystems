@@ -208,6 +208,14 @@ export const MORE_PRODUCTS = [
     href: '/tools/mpp-viewer/',
   },
   {
+    slug: 'fax',
+    name: 'Send a fax online',
+    category: 'Fax',
+    line: 'Fax a PDF or phone photos to any US or Canada number, with a cover page and a delivery confirmation. No subscription. Sending opens soon.',
+    price: '$3.99 per fax, up to 25 pages',
+    href: '/tools/fax/',
+  },
+  {
     slug: 'file-tools',
     name: 'PageMaker, Rhino and PowerPoint tools',
     category: 'File converters',

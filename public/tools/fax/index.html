@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Send a Fax Online: $3.99 Per Fax, No Subscription</title>
+<meta name="description" content="Send a fax from your phone or computer to any US or Canada fax number. Upload a PDF or photos, add a cover page, pay $3.99 for up to 25 pages. No account, no subscription, refunded if it fails.">
+<link rel="canonical" href="https://leducsystems.com/tools/fax/">
+<meta property="og:title" content="Send a Fax Online: $3.99 Per Fax, No Subscription">
+<meta property="og:description" content="Send a fax from your phone or computer to any US or Canada fax number. Upload a PDF or photos, add a cover page, pay $3.99 for up to 25 pages. No account, no subscription, refunded if it fails.">
+<meta property="og:url" content="https://leducsystems.com/tools/fax/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:image" content="https://leducsystems.com/images/og-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/fonts/plex.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Send a Fax Online","url":"https://leducsystems.com/tools/fax/","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","name":"One fax, up to 25 pages","price":"3.99","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does it cost?","acceptedAnswer":{"@type":"Answer","text":"$3.99 per fax, for up to 25 pages including the cover page. That is the whole price: no subscription, no account, no trial that turns into a weekly charge. You pay once, by card through Stripe, and the fax is sent."}},{"@type":"Question","name":"Where can I send a fax?","acceptedAnswer":{"@type":"Answer","text":"To any fax number in the United States (the 50 states and DC) and Canada, including toll-free fax numbers. Premium-rate numbers (900 and 976), service numbers like 411 and numbers outside the US and Canada are refused."}},{"@type":"Question","name":"What if the fax does not go through?","acceptedAnswer":{"@type":"Answer","text":"Busy lines and no-answers are tried again automatically, up to 3 attempts over about 15 minutes. If the fax still cannot be delivered, or the number is not a fax line, the payment is refunded in full automatically. The refund shows on your card in 5 to 10 business days, depending on your bank."}},{"@type":"Question","name":"How do I know it arrived?","acceptedAnswer":{"@type":"Answer","text":"The status on this page changes from queued to sending to delivered as it happens. Once the receiving fax machine has accepted every page, you can download a delivery confirmation PDF with the date, time, number and page count."}},{"@type":"Question","name":"Which files can I send?","acceptedAnswer":{"@type":"Answer","text":"PDFs, and photos or scans as JPEG, PNG, WebP, GIF, TIFF or BMP. On a phone you can take pictures of the pages right from the page. Several files are combined into one fax in the order you add them. Password-protected PDFs need the password removed first."}},{"@type":"Question","name":"What happens to my documents?","acceptedAnswer":{"@type":"Answer","text":"They are sent over an encrypted connection to my server, kept there only to send the fax, and deleted 7 days after it is sent (so you can still download the confirmation with a picture of the first page). Unpaid faxes are deleted after 2 days. I do not read or share them."}},{"@type":"Question","name":"Is it HIPAA compliant?","acceptedAnswer":{"@type":"Answer","text":"No. This service is not HIPAA-certified and I do not sign business associate agreements. A patient can use it to send their own forms, but clinics, insurers and other covered entities should not use it to send patient records."}},{"@type":"Question","name":"Can I receive faxes?","acceptedAnswer":{"@type":"Answer","text":"No, this only sends faxes. If a form asks for a fax number for the reply, give your email or mailing address instead where you can."}},{"@type":"Question","name":"Can I send ads or marketing faxes?","acceptedAnswer":{"@type":"Answer","text":"No. Sending unsolicited advertisements by fax is illegal under the Telephone Consumer Protection Act as amended by the Junk Fax Prevention Act, and it is against the terms of this service. Each number can receive only a few faxes a day from here, so it cannot be used for broadcast faxing."}}]}]}</script>
+<style>
+  .fx .row { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; }
+  .fx fieldset { border: 1px solid var(--line); border-radius: 8px; padding: 14px; margin: 0 0 14px; background: var(--panel); min-width: 0; }
+  .fx legend { font-weight: 600; padding: 0 6px; }
+  .fx label.f { display: block; font-size: 14px; color: var(--muted); margin: 8px 0 4px; }
+  .fx input[type=text], .fx input[type=tel], .fx input[type=email], .fx textarea { font: inherit; width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg, #fff); color: var(--ink); }
+  .fx input[type=tel] { font-size: 20px; letter-spacing: .02em; max-width: 320px; }
+  .fx .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+  @media (max-width: 620px) { .fx .grid { grid-template-columns: 1fr; } }
+  .fx .check { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; margin: 10px 0; }
+  .fx .check input { margin-top: 4px; width: 18px; height: 18px; flex: none; }
+  .fx-hint { font-size: 14px; margin: 6px 0 0; min-height: 1.3em; } .fx-hint.good { color: var(--good, #1a7f37); } .fx-hint.bad { color: var(--bad, #b42318); }
+  .fx-summary { font-size: 18px; font-weight: 600; margin: 14px 0 8px; } .fx-summary.bad { color: var(--bad, #b42318); }
+  .fx-soon { padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+  .fx-soon h2 { margin-top: 0; }
+  .fx-steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0; margin: 14px 0; }
+  .fx-steps li { padding: 10px; border: 1px solid var(--line); border-radius: 8px; text-align: center; color: var(--muted); font-size: 15px; }
+  .fx-steps li.done { color: var(--ink); border-color: var(--ink); } .fx-steps li.now { color: var(--ink); font-weight: 600; border-color: var(--ink); border-width: 2px; }
+  .fx-head h2 { margin-bottom: 2px; } .fx-head .meta { color: var(--muted); margin: 0; }
+  .fx-history { font-size: 14px; color: var(--muted); }
+</style>
+  <script type="module" crossorigin src="/tools/assets/fax-CR41BPMP.js"></script>
+  <link rel="modulepreload" crossorigin href="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-Dv9aJ1n1.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+    <nav class="nav" aria-label="Primary">
+      <ul><li><a class="nav__link nav__link--active" href="/tools/">Products</a></li><li><a class="nav__link" href="/about/">About</a></li><li><a class="nav__link" href="/contact/">Contact</a></li></ul>
+    </nav>
+    <div class="nav__actions">
+      <a class="site-btn site-btn--primary site-btn--sm site-header__cta" href="/contact/">Get in touch</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
+  <ul><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:60ms">Products</a></li><li><a class="mobile-menu__link" href="/about/" style="--menu-delay:105ms">About</a></li><li><a class="mobile-menu__link" href="/contact/" style="--menu-delay:150ms">Contact</a></li></ul>
+  <div class="mobile-menu__actions" style="--menu-delay:195ms">
+    <a class="site-btn site-btn--primary site-btn--lg" href="/contact/">Get in touch</a>
+    <a class="site-btn site-btn--ghost site-btn--lg" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+  </div>
+</nav>
+<script>
+(() => {
+  const b = document.querySelector('.menu-toggle'), m = document.getElementById('site-mobile-menu');
+  const set = (open) => {
+    b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    m.classList.toggle('mobile-menu--open', open); document.body.style.overflow = open ? 'hidden' : '';
+  };
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  matchMedia('(min-width: 861px)').addEventListener('change', (e) => { if (e.matches) set(false); });
+})();
+</script>
+<main id="main" tabindex="-1">
+  <section class="hero">
+    <h1>Send a fax online. Pay per fax, no subscription.</h1>
+    <p class="lede">Upload a PDF or take photos of the pages, enter the fax number and pay $3.99 for one fax of up to 25 pages. No account, no weekly plan, nothing to cancel. If the fax can't be delivered, you get your money back automatically.</p>
+  </section>
+
+  <section class="tool fx" id="fax" data-api="https://convert.leducsystems.com" aria-label="Send a fax">
+    <div class="fx-soon" id="fx-soon">
+      <h2>Fax sending opens soon</h2>
+      <p>The page is ready; I'm finishing the connection to the fax network. No payments are taken until it opens. When it does, it will be $3.99 per fax for up to 25 pages, with no subscription.</p>
+      <form class="notify" id="fx-notify">
+        <label for="fx-email">Get one email when it opens:</label>
+        <div class="notify-row"><input type="email" id="fx-email" required autocomplete="email" placeholder="you@example.com"><button class="btn" type="submit">Tell me</button></div>
+        <p class="status" id="fx-notify-status" role="status"></p>
+      </form>
+    </div>
+
+    <form id="fx-form" hidden novalidate>
+      <fieldset>
+        <legend>1. Pages</legend>
+        <label class="drop" id="fx-drop">
+          <input type="file" id="fx-file" accept="application/pdf,image/*,.pdf,.jpg,.jpeg,.png,.heic,.tif,.tiff" multiple class="sr-only">
+          <span class="drop-title">Add a PDF or photos of the pages</span>
+          <span class="drop-sub">Drop files here or click to choose · PDF, JPEG, PNG, TIFF · up to 25 pages</span>
+        </label>
+        <div class="row"><label class="btn ghost" for="fx-camera">Take a photo of a page</label><input type="file" id="fx-camera" accept="image/*" capture="environment" class="sr-only"></div>
+        <ul class="files" id="fx-files"></ul>
+      </fieldset>
+      <fieldset>
+        <legend>2. Fax number</legend>
+        <label class="f" for="fx-to">US or Canada fax number</label>
+        <input type="tel" id="fx-to" inputmode="tel" autocomplete="off" placeholder="(555) 201-4567">
+        <p class="fx-hint" id="fx-to-msg" role="status"></p>
+      </fieldset>
+      <fieldset>
+        <legend>3. Cover page (optional)</legend>
+        <label class="check"><input type="checkbox" id="fx-cover"> Add a cover page</label>
+        <div id="fx-cover-fields" hidden>
+          <div class="grid">
+            <div><label class="f" for="fx-to_name">To</label><input type="text" id="fx-to_name" maxlength="80" placeholder="Medical Records, Attn: Maria"></div>
+            <div><label class="f" for="fx-from_name">From</label><input type="text" id="fx-from_name" maxlength="80" autocomplete="name"></div>
+            <div><label class="f" for="fx-from_phone">Your phone (so they can call back)</label><input type="text" id="fx-from_phone" maxlength="40" autocomplete="tel"></div>
+            <div><label class="f" for="fx-subject">Re</label><input type="text" id="fx-subject" maxlength="120" placeholder="Signed records release"></div>
+          </div>
+          <label class="f" for="fx-message">Message</label><textarea id="fx-message" rows="4" maxlength="1500"></textarea>
+        </div>
+      </fieldset>
+      <p class="fx-summary" id="fx-summary" aria-live="polite"></p>
+      <label class="check"><input type="checkbox" id="fx-agree"> <span>This fax is not an advertisement sent to someone who did not ask for it. I agree to the <a href="/terms#fax">terms</a>: unsolicited fax advertising is illegal under the Junk Fax Prevention Act and is not allowed here.</span></label>
+      <button class="btn" type="submit" id="fx-pay" disabled>Pay and send</button>
+      <p class="status" id="fx-status" role="status"></p>
+      <p class="fine">Payment by card through Stripe to LeDuc Systems LLC, Phoenix, Arizona. Busy or unanswered lines are retried up to 3 times; if the fax can't be delivered, the payment is refunded in full automatically. Your document is deleted from my server 7 days after it is sent. <b>This service is not HIPAA-certified.</b> Questions: <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
+    </form>
+
+    <div id="fx-track" hidden aria-live="polite"></div>
+    <div id="fx-recent" class="more"></div>
+  </section>
+
+  <section class="steps">
+    <div><b>1</b><p>Add a PDF, or take a photo of each page with your phone.</p></div>
+    <div><b>2</b><p>Type the fax number and add a cover page if you want one.</p></div>
+    <div><b>3</b><p>Pay $3.99 once. Watch it go from queued to delivered, then download the confirmation.</p></div>
+  </section>
+
+  <section class="faq">
+    <h2>Questions</h2>
+    <details><summary>How much does it cost?</summary><p>$3.99 per fax, for up to 25 pages including the cover page. That is the whole price: no subscription, no account, no trial that turns into a weekly charge. You pay once, by card through Stripe, and the fax is sent.</p></details>
+    <details><summary>Where can I send a fax?</summary><p>To any fax number in the United States (the 50 states and DC) and Canada, including toll-free fax numbers. Premium-rate numbers (900 and 976), service numbers like 411 and numbers outside the US and Canada are refused.</p></details>
+    <details><summary>What if the fax does not go through?</summary><p>Busy lines and no-answers are tried again automatically, up to 3 attempts over about 15 minutes. If the fax still cannot be delivered, or the number is not a fax line, the payment is refunded in full automatically. The refund shows on your card in 5 to 10 business days, depending on your bank.</p></details>
+    <details><summary>How do I know it arrived?</summary><p>The status on this page changes from queued to sending to delivered as it happens. Once the receiving fax machine has accepted every page, you can download a delivery confirmation PDF with the date, time, number and page count.</p></details>
+    <details><summary>Which files can I send?</summary><p>PDFs, and photos or scans as JPEG, PNG, WebP, GIF, TIFF or BMP. On a phone you can take pictures of the pages right from the page. Several files are combined into one fax in the order you add them. Password-protected PDFs need the password removed first.</p></details>
+    <details><summary>What happens to my documents?</summary><p>They are sent over an encrypted connection to my server, kept there only to send the fax, and deleted 7 days after it is sent (so you can still download the confirmation with a picture of the first page). Unpaid faxes are deleted after 2 days. I do not read or share them.</p></details>
+    <details><summary>Is it HIPAA compliant?</summary><p>No. This service is not HIPAA-certified and I do not sign business associate agreements. A patient can use it to send their own forms, but clinics, insurers and other covered entities should not use it to send patient records.</p></details>
+    <details><summary>Can I receive faxes?</summary><p>No, this only sends faxes. If a form asks for a fax number for the reply, give your email or mailing address instead where you can.</p></details>
+    <details><summary>Can I send ads or marketing faxes?</summary><p>No. Sending unsolicited advertisements by fax is illegal under the Telephone Consumer Protection Act as amended by the Junk Fax Prevention Act, and it is against the terms of this service. Each number can receive only a few faxes a day from here, so it cannot be used for broadcast faxing.</p></details>
+  </section>
+
+  <nav class="more" aria-label="Guides">
+    <h2>Guides</h2>
+    <ul class="guides"><li><a href="/tools/fax-the-irs-from-your-phone/">How to fax the IRS from your phone</a></li><li><a href="/tools/fax-a-doctors-office-from-your-phone/">Fax a doctor's office from your phone</a></li><li><a href="/tools/send-a-fax-without-a-fax-machine/">Send a fax without a fax machine</a></li></ul>
+  </nav>
+<p class="fine">Not HIPAA-certified. Sending unsolicited advertisements by fax is prohibited. Payments are handled by Stripe.</p>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+        <p class="site-footer__blurb">Focused software built and sold by Tyler LeDuc in Phoenix, Arizona.</p>
+        <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+        <a class="site-footer__link site-footer__email" href="tel:+16233205633">(623) 320-5633</a>
+      </div>
+      <nav class="site-footer__col" aria-labelledby="footer-products">
+        <h2 class="site-footer__title" id="footer-products">Products</h2>
+        <a class="site-footer__link" href="/tools/scan-to-email-microsoft-365/">Scan Relay</a>
+        <a class="site-footer__link" href="/tools/tryon/demo/">Virtual try-on</a>
+        <a class="site-footer__link" href="/tools/publisher-converter/">Publisher converter</a>
+        <a class="site-footer__link" href="/saguaro-hours/">Saguaro Hours for Jira</a>
+        <a class="site-footer__link" href="/tools/">All products</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-company">
+        <h2 class="site-footer__title" id="footer-company">Company</h2>
+        <a class="site-footer__link" href="/about/">About</a>
+        <a class="site-footer__link" href="/games/">Games</a>
+        <a class="site-footer__link" href="/contact/">Contact</a>
+        <a class="site-footer__link" href="/site-map/">Site map</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-elsewhere">
+        <h2 class="site-footer__title" id="footer-elsewhere">Elsewhere</h2>
+        <a class="site-footer__link" href="https://github.com/Tyler-LeDuc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://raxeris.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-legal">
+        <h2 class="site-footer__title" id="footer-legal">Legal</h2>
+        <a class="site-footer__link" href="/privacy/">Privacy Policy</a>
+        <a class="site-footer__link" href="/terms/">Terms of Service</a>
+        <a class="site-footer__link" href="/refunds/">Refund Policy</a>
+        <button type="button" class="site-footer__link site-footer__button" data-cookie-settings>Cookie settings</button>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p>&copy; 2026 LeDuc Systems LLC, an Arizona limited liability company</p>
+      <p>Phoenix, Arizona</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

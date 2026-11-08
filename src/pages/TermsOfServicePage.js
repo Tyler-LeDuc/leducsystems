@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import LegalDocument from '../components/LegalDocument';
 import { SITE } from '../data/site';
 
-const LAST_UPDATED = 'October 31, 2026';
+const LAST_UPDATED = 'November 7, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
 const CANCEL_MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent('Cancel my try-on plan')}`;
@@ -140,6 +140,41 @@ const SECTIONS = [
             for complying with the laws that apply to your store.
           </li>
           <li>The try-on is for business use by store owners, not for personal use.</li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    id: 'fax',
+    title: 'Sending a fax',
+    content: (
+      <>
+        <ul className="list">
+          <li>
+            A fax costs the price shown on the fax page (currently $3.99 for one fax of up to 25
+            pages, cover page included), paid once by card. There is no subscription.
+          </li>
+          <li>
+            The fax is sent only after Stripe confirms the payment. Busy or unanswered lines are
+            retried up to 3 times. If the fax can&rsquo;t be delivered, the payment is refunded in
+            full automatically. A delivered fax means the receiving fax machine accepted the pages,
+            not that a person read them.
+          </li>
+          <li>
+            Faxes go only to US and Canada numbers. Premium-rate and service numbers are refused,
+            and each number can receive only a few faxes a day through this service.
+          </li>
+          <li>
+            <strong>Don&rsquo;t send unsolicited advertisements.</strong> Faxing ads to people who
+            haven&rsquo;t asked for them is illegal under the Telephone Consumer Protection Act as
+            amended by the Junk Fax Prevention Act, and it isn&rsquo;t allowed here. You are
+            responsible for having the right to send what you fax to the number you enter.
+          </li>
+          <li>
+            The fax service is <strong>not HIPAA-certified</strong> and I don&rsquo;t sign business
+            associate agreements. Covered entities must not use it to send protected health
+            information.
+          </li>
         </ul>
       </>
     ),
