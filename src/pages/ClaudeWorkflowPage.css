@@ -1,0 +1,94 @@
+/* =========================================================================
+   Claude Workflow Setup: page-specific styles only. Type, buttons, cards,
+   lists, ruled rows, FAQ and the closing .cta-block come from components.css.
+   ========================================================================= */
+
+/* ── Facts strip (same pattern as the About page) ──────────────────────── */
+.cw-facts {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0;
+}
+.cw-facts__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  padding-inline: var(--sp-5);
+  border-left: 1px solid var(--line);
+}
+.cw-facts__item:first-child { padding-left: 0; border-left: 0; }
+.cw-facts dt {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--text-xlo);
+}
+.cw-facts dd {
+  margin: 0;
+  font-size: var(--fs-base);
+  font-weight: 500;
+  color: var(--text-hi);
+}
+@media (max-width: 860px) {
+  .cw-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-5) 0; }
+  .cw-facts__item:nth-child(odd) { padding-left: 0; border-left: 0; }
+}
+@media (max-width: 420px) {
+  .cw-facts { grid-template-columns: minmax(0, 1fr); }
+  .cw-facts__item { padding-left: 0; border-left: 0; }
+}
+
+/* ── Split layout ──────────────────────────────────────────────────────── */
+.cw-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: var(--sp-9);
+  align-items: start;
+}
+.cw-split .section-head { align-items: flex-start; }
+@media (max-width: 960px) {
+  .cw-split { grid-template-columns: minmax(0, 1fr); gap: var(--sp-6); }
+}
+
+.cw-head { margin-bottom: var(--sp-7); }
+
+/* ── Steps ─────────────────────────────────────────────────────────────── */
+.cw-steps { border-top: 1px solid var(--line-heavy); }
+.cw-steps__item {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: var(--sp-4);
+  padding-block: var(--sp-5);
+  border-bottom: 1px solid var(--line);
+}
+.cw-steps__item .ordinal { padding-top: 0.3em; color: var(--accent-600); }
+.cw-steps__title { font-size: var(--fs-h4); margin-bottom: var(--sp-2); }
+.cw-steps__body { font-size: var(--fs-sm); color: var(--text-lo); max-width: 60ch; }
+
+/* ── Pricing ───────────────────────────────────────────────────────────── */
+.cw-price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin: 0;
+}
+.cw-price__amount {
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  letter-spacing: var(--ls-snug);
+  color: var(--text-hi);
+  font-variant-numeric: tabular-nums;
+}
+.cw-price__unit {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--text-xlo);
+}
+.cw-plan-note { margin-top: var(--sp-6); max-width: 70ch; }
+
+/* ── Fit ───────────────────────────────────────────────────────────────── */
+.cw-fit__title { font-size: var(--fs-h4); }

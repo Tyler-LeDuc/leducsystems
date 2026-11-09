@@ -7,6 +7,7 @@ import { FEATURED_PRODUCTS, LEGAL_NAV, SITE } from '../data/site';
 const COMPANY = [
   { to: '/about', label: 'About' },
   { to: '/games', label: 'Games' },
+  { to: '/services/claude-workflow-setup', label: 'Claude workflow setup' },
   { to: '/contact', label: 'Contact' },
 ];
 

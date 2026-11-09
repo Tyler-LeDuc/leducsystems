@@ -700,3 +700,141 @@ export const FAQ = [
 ];
 
 export const RESPONSE_PROMISE = 'I reply to every message within one business day.';
+
+/* Claude Workflow Setup: a fixed-price, async service page at
+   /services/claude-workflow-setup. Every claim here is a term of the offer;
+   no case studies, testimonials or invented numbers. No em dashes. */
+const WORKFLOW_SUBJECT = 'Claude workflow setup';
+const WORKFLOW_BODY = [
+  'The task (the steps, or attach a screen recording of you doing it once):',
+  '',
+  'How often it happens:',
+  '',
+  'Which tools and files are involved:',
+  '',
+  'A sample (one example input and the finished result; dummy data is fine):',
+  '',
+].join('\n');
+
+export const CLAUDE_WORKFLOW = {
+  path: '/services/claude-workflow-setup',
+  seoTitle: 'Claude Workflow Setup for Small Businesses | LeDuc Systems',
+  seoDescription:
+    'Send me one repetitive task by email. I cut the steps that shouldn’t exist and turn the rest into a Claude skill you run yourself. $349, delivered in 5 business days, no calls.',
+  eyebrow: 'Service · Fixed price · By email',
+  title: 'Claude Workflow Setup',
+  lede:
+    'Send me one repetitive task your business does by hand. I audit the steps, cut the ones that shouldn’t exist, and turn the clean process into a Claude skill you run yourself.',
+  ctaLabel: 'Describe your task',
+  mailto: `mailto:${SITE.email}?subject=${encodeURIComponent(WORKFLOW_SUBJECT)}&body=${encodeURIComponent(WORKFLOW_BODY)}`,
+  facts: [
+    { label: 'Price', value: '$349 per workflow' },
+    { label: 'Delivery', value: 'Within 5 business days' },
+    { label: 'Calls', value: 'None needed' },
+    { label: 'Changes', value: 'One round within 14 days' },
+    { label: 'Refund', value: 'In full if I can’t deliver' },
+  ],
+  steps: [
+    {
+      title: 'You describe the task',
+      body: 'Email me the steps, written out or as a screen recording, with a sample of the files involved.',
+    },
+    {
+      title: 'I confirm it’s a fit',
+      body: 'I reply in writing to say I can build it, or why I can’t. If it fits, I send an invoice.',
+    },
+    {
+      title: 'I audit the steps',
+      body: 'Before building anything, I cut the steps that only exist because of how the work grew, like typing the same value into two places.',
+    },
+    {
+      title: 'I build the skill',
+      body: 'The clean process becomes a Claude skill, or a Claude project with instructions if that suits the task better.',
+    },
+    {
+      title: 'You get the files',
+      body: 'Within 5 business days of getting your description and sample files, you get the skill files and a short written setup guide. One round of changes is included within 14 days.',
+    },
+  ],
+  plans: [
+    {
+      name: 'One workflow',
+      price: '$349',
+      unit: 'per workflow',
+      points: [
+        'One task turned into one Claude skill',
+        'Skill files and a short written setup guide',
+        'One round of changes within 14 days',
+        'Full refund if I can’t deliver a working skill',
+      ],
+    },
+    {
+      name: 'Monthly',
+      price: '$790',
+      unit: 'per month',
+      points: [
+        'Up to 3 new workflows a month',
+        'Fixes to the workflows I’ve built for you',
+        'Same delivery and refund terms per workflow',
+        'Cancel anytime',
+      ],
+    },
+  ],
+  planNote:
+    'I invoice you after I confirm the task is a fit, so there is nothing to pay up front. You need your own Claude Pro or Team plan. If your business uses ChatGPT instead, I can set the workflow up there.',
+  goodFits: [
+    'Turning intake emails into a filled spreadsheet row',
+    'Drafting quotes from your price list',
+    'A weekly report built from exported CSV files',
+    'Cleaning up and renaming the data from scanned files',
+    'First-draft replies to the questions customers ask most',
+  ],
+  notFits: [
+    'Anything that needs access to bank accounts',
+    'Anything involving medical records',
+    'Tasks that must run unattended on a server. A skill runs when someone starts it in Claude.',
+  ],
+  template: [
+    { label: 'The task', body: 'What you do, step by step, or a screen recording of you doing it once.' },
+    { label: 'How often', body: 'Daily, weekly, or once per customer or order.' },
+    { label: 'Tools and files', body: 'Which programs, spreadsheets, folders or inboxes are involved.' },
+    { label: 'A sample', body: 'One example input and the finished result. Dummy data is fine.' },
+  ],
+  faq: [
+    {
+      id: 'call',
+      question: 'Do we need a call?',
+      answer:
+        'No. Everything happens by email. If something in your description is unclear, I ask in writing.',
+    },
+    {
+      id: 'need',
+      question: 'What do I need?',
+      answer:
+        'A Claude Pro or Team plan, a description of the task, and one or more sample files. If your business uses ChatGPT, I can set the workflow up there instead.',
+    },
+    {
+      id: 'skill',
+      question: 'What is a Claude skill?',
+      answer:
+        'A folder of instructions, and sometimes templates or small scripts, that Claude uses when you start the task, so it follows your process the same way each time.',
+    },
+    {
+      id: 'data',
+      question: 'Is my data safe?',
+      answer:
+        'I only see the samples you send me. If you prefer, send dummy data with the same layout as the real thing. I delete your samples after delivery.',
+    },
+    {
+      id: 'refund',
+      question: 'What if it doesn’t work?',
+      answer: 'If I can’t deliver a working skill for your task, I refund you in full.',
+    },
+    {
+      id: 'more',
+      question: 'Can you do more than one?',
+      answer:
+        'Yes. Each workflow is $349, or the monthly plan covers up to 3 new workflows a month plus fixes for $790 a month. You can cancel it anytime.',
+    },
+  ],
+};

@@ -30,9 +30,12 @@ function upsertCanonical(href) {
   tag.setAttribute('href', href);
 }
 
-export default function SEO({ title, description, path = '/' }) {
+/* `fullTitle` replaces the whole <title> (no site-name suffix added), and
+   `imageAlt` replaces the share image's alt text, for pages whose copy rules
+   rule out the default em-dash format. */
+export default function SEO({ title, fullTitle: fullTitleProp, description, path = '/', imageAlt }) {
   useEffect(() => {
-    const fullTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
+    const fullTitle = fullTitleProp || (title ? `${title} — ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`);
     const desc = description || SITE.description;
     // Trailing slash: GitHub Pages serves /about as /about/ (see scripts/prerender.js).
     const url = `${SITE.url}${path.endsWith('/') ? path : `${path}/`}`;
@@ -51,13 +54,13 @@ export default function SEO({ title, description, path = '/' }) {
     upsertMeta('property', 'og:image', image);
     upsertMeta('property', 'og:image:width', '1200');
     upsertMeta('property', 'og:image:height', '630');
-    upsertMeta('property', 'og:image:alt', `${SITE.name} — ${SITE.tagline}`);
+    upsertMeta('property', 'og:image:alt', imageAlt || `${SITE.name} — ${SITE.tagline}`);
 
     upsertMeta('name', 'twitter:card', 'summary_large_image');
     upsertMeta('name', 'twitter:title', fullTitle);
     upsertMeta('name', 'twitter:description', desc);
     upsertMeta('name', 'twitter:image', image);
-  }, [title, description, path]);
+  }, [title, fullTitleProp, description, path, imageAlt]);
 
   return null;
 }

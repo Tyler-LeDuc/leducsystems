@@ -69,6 +69,7 @@ const GROUPS = [
   { title: 'Publisher and PageMaker files', test: (p) => /publisher|pagemaker|pub|pmd|newsletter|bulletin/.test(p) },
   { title: 'Virtual try-on', test: (p) => p.startsWith('/tools/tryon') },
   { title: 'InfoPath', test: (p) => /infopath/.test(p) },
+  { title: 'Services', test: (p) => p.startsWith('/services/') },
   { title: 'Other tools and guides', test: () => true },
 ];
 

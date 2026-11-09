@@ -10,6 +10,7 @@ import ContactPage from './pages/ContactPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import RefundPolicyPage from './pages/RefundPolicyPage';
+import ClaudeWorkflowPage from './pages/ClaudeWorkflowPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 const EMAILJS_PUBLIC_KEY = 'HIVHympEPP7sMQ_Pl';
@@ -56,6 +57,7 @@ export function AppShell() {
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/terms" element={<TermsOfServicePage />} />
           <Route path="/refunds" element={<RefundPolicyPage />} />
+          <Route path="/services/claude-workflow-setup" element={<ClaudeWorkflowPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

@@ -25,7 +25,7 @@ const BUILD = path.join(__dirname, '..', 'build');
 const SITE_NAME = 'LeDuc Systems';
 const ORIGIN = 'https://leducsystems.com';
 
-/* path -> { title, description, canonical? }. Title is rendered as
+/* path -> { title, description, canonical?, fullTitle?, imageAlt? }. Title is rendered as
    "<title> — LeDuc Systems", matching what src/components/SEO.js does at
    runtime. An optional `canonical` points the canonical link and og:url at a
    different path — used by routes that still exist and must still serve a
@@ -54,6 +54,14 @@ const ROUTES = {
     title: 'Terms of Service',
     description:
       "The terms for LeDuc Systems' website and products: prices and payment, licenses, try-on subscriptions, acceptable use, warranty, liability and Arizona law.",
+  },
+  '/services/claude-workflow-setup': {
+    title: 'Claude Workflow Setup',
+    /* Used whole, without the em-dash suffix: this page's copy has none. */
+    fullTitle: 'Claude Workflow Setup for Small Businesses | LeDuc Systems',
+    imageAlt: 'LeDuc Systems: Claude Workflow Setup',
+    description:
+      'Send me one repetitive task by email. I cut the steps that shouldn’t exist and turn the rest into a Claude skill you run yourself. $349, delivered in 5 business days, no calls.',
   },
   '/refunds': {
     title: 'Refund Policy',
@@ -92,7 +100,7 @@ function setMeta(html, attrName, key, value) {
 }
 
 function render(template, routePath, meta) {
-  const fullTitle = `${meta.title} — ${SITE_NAME}`;
+  const fullTitle = meta.fullTitle || `${meta.title} — ${SITE_NAME}`;
   /* A route may declare a different canonical path when it exists only to
      redirect. Everything that points search engines at a page uses it. */
   /* GitHub Pages serves each prerendered route as a folder, so /about answers with a
@@ -113,6 +121,7 @@ function render(template, routePath, meta) {
   html = setMeta(html, 'property', 'og:url', url);
   html = setMeta(html, 'name', 'twitter:title', fullTitle);
   html = setMeta(html, 'name', 'twitter:description', meta.description);
+  if (meta.imageAlt) html = setMeta(html, 'property', 'og:image:alt', meta.imageAlt);
 
   return html;
 }
