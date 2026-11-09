@@ -208,6 +208,14 @@ export const MORE_PRODUCTS = [
     href: '/tools/mpp-viewer/',
   },
   {
+    slug: 'visio-viewer',
+    name: 'Visio Viewer',
+    category: 'Microsoft Visio',
+    line: 'Opens Visio .vsdx and .vsd drawings without Visio, on Mac, Windows or a Chromebook. Every page shows in the browser.',
+    price: 'Free to view, $19 once for PDF and PNG downloads',
+    href: '/tools/visio-viewer/',
+  },
+  {
     slug: 'fax',
     name: 'Send a fax online',
     category: 'Fax',
