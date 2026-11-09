@@ -25,8 +25,11 @@ own sitemap at `/tools/sitemap.xml`, listed in `robots.txt`. They share this sit
 footer through a static copy in that repo's `src/chrome.js` + `src/chrome.css`; keep the two in
 step when the nav or footer changes.
 
-This is a product company, not a consultancy: no client services, engagement models or "hire
-me" pitches (the old consulting content was retired in September 2026 — don't bring it back).
+This is a product company first. The one service is the fixed-price, async **Claude Workflow
+Setup** at `/services/claude-workflow-setup/` (Tyler approved it on 2026-11-09): $349 per
+workflow or $790/month, by email, no calls. Keep it a productized offer with fixed prices; don't
+add hourly consulting, engagement models or other "hire me" pitches (the old consulting content
+was retired in September 2026).
 The home page shows each featured product's price (hardcoded in `src/data/site.js`). When a price
 changes on a tool page or the server, change it there too.
 

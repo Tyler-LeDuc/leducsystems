@@ -77,6 +77,11 @@ const SECTIONS = [
             work for your forms.
           </li>
           <li>
+            <strong>Claude Workflow Setup:</strong> I invoice only after I confirm the task is a
+            fit. If I can&rsquo;t deliver a working skill for it, I refund you in full. Monthly
+            plans can be cancelled anytime; months already paid aren&rsquo;t refunded in part.
+          </li>
+          <li>
             <strong>Pre-orders</strong> (a product paid for before it ships): a full refund any
             time before it ships, then the product&rsquo;s own 30-day refund after.
           </li>
