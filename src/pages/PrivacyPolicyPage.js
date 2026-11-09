@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import LegalDocument from '../components/LegalDocument';
 import { SITE } from '../data/site';
 
-const LAST_UPDATED = 'November 7, 2026';
+const LAST_UPDATED = 'November 8, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
 const DELETE_MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent('Privacy request')}`;
@@ -29,7 +29,7 @@ const SECTIONS = [
           This policy covers the website at <span className="hi">leducsystems.com</span>, the tools
           under <span className="hi">leducsystems.com/tools/</span>, the conversion and licensing
           server at <span className="hi">convert.leducsystems.com</span>, Scan Relay, the virtual
-          try-on, and email you exchange with me. It does not cover the games on itch.io, which
+          try-on, the LeDuc File Opener browser extension, and email you exchange with me. It does not cover the games on itch.io, which
           itch.io runs under its own policy.
         </p>
       </>
@@ -146,6 +146,28 @@ const SECTIONS = [
             How Scan Relay handles your mail
           </a>
           .
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'file-opener',
+    title: 'The LeDuc File Opener browser extension',
+    content: (
+      <>
+        <p>
+          The extension collects nothing and sends nothing to me on its own. It has no analytics
+          and no ads, and it runs no code from the internet. It looks at your browser&rsquo;s
+          download list only to find Publisher, Project, Visio and InfoPath files, and it stores
+          only your notification setting, in your browser.
+        </p>
+        <p>
+          When you click &ldquo;Open in viewer&rdquo; (or &ldquo;Open with LeDuc viewer&rdquo; on a
+          link), the extension reads that one file, from your disk if you have allowed file access,
+          otherwise again from the site it was downloaded from, and hands it to the matching tool
+          page on leducsystems.com. To read from a site, it asks your permission for that site
+          first. From there the file is handled exactly as if you had dropped it on the page, as
+          described above.
         </p>
       </>
     ),
