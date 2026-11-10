@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import LegalDocument from '../components/LegalDocument';
 import { SITE } from '../data/site';
 
-const LAST_UPDATED = 'November 8, 2026';
+const LAST_UPDATED = 'November 10, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
 const DELETE_MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent('Privacy request')}`;
@@ -223,6 +223,30 @@ const SECTIONS = [
     ),
   },
   {
+    id: 'ai-visibility',
+    title: 'AI visibility check',
+    content: (
+      <>
+        <p>
+          When you run the free AI visibility check, the business name, category, city, website and
+          email address you enter are sent to my server. The business details and a few buyer-style
+          questions built from them are sent to OpenAI to get ChatGPT&rsquo;s answers, and my server
+          fetches the public pages of the website you entered. Your email address is not sent to
+          OpenAI.
+        </p>
+        <p>
+          The check&rsquo;s result is kept for 60 days so the report link works, then deleted. A short
+          record of the request (the details above and the time) is kept so I can limit free checks
+          and follow up with you once about the result, until you ask me to delete it. Email{' '}
+          <a className="link-underline" href={`mailto:${SITE.email}`}>
+            {SITE.email}
+          </a>{' '}
+          and I&rsquo;ll delete it.
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'cookies',
     title: 'Cookies and similar storage',
     content: (
@@ -285,6 +309,9 @@ const SECTIONS = [
           </li>
           <li>
             <strong>Telnyx</strong> (transmits faxes you send to the number you enter).
+          </li>
+          <li>
+            <strong>OpenAI</strong> (answers the questions in the free AI visibility check).
           </li>
           <li>
             <strong>Google</strong>: Google Workspace for my email, and Google Analytics if you
