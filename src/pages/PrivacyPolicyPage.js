@@ -29,7 +29,8 @@ const SECTIONS = [
           This policy covers the website at <span className="hi">leducsystems.com</span>, the tools
           under <span className="hi">leducsystems.com/tools/</span>, the conversion and licensing
           server at <span className="hi">convert.leducsystems.com</span>, Scan Relay, the virtual
-          try-on, the LeDuc File Opener browser extension, and email you exchange with me. It does not cover the games on itch.io, which
+          try-on, the LeDuc File Opener browser extension, the LeDuc Systems connector for Claude,
+          and email you exchange with me. It does not cover the games on itch.io, which
           itch.io runs under its own policy.
         </p>
       </>
@@ -242,6 +243,70 @@ const SECTIONS = [
             {SITE.email}
           </a>{' '}
           and I&rsquo;ll delete it.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'claude-connector',
+    title: 'The LeDuc Systems connector for Claude',
+    content: (
+      <>
+        <p>
+          <strong>What it receives.</strong> When you use my connector in Claude, Claude sends it
+          only what the tool needs: the file (as a link, as file data, or through an upload link you
+          open), the output format you asked for, and a license key if you give one. It does not
+          receive your conversation, your Claude memory or your account details, and it
+          doesn&rsquo;t ask for them.
+        </p>
+        <p>
+          <strong>How files are handled.</strong> Files are converted on my server in Germany
+          (Hetzner), the same one that runs the tools on this site, and the rules are the same:
+        </p>
+        <ul className="list">
+          <li>
+            Publisher and PageMaker files: converted and kept for 24 hours, or 7 days once paid, so
+            you can download again. Then they are deleted automatically.
+          </li>
+          <li>Visio and Project files: read or rendered, then deleted before the answer is sent.</li>
+          <li>InfoPath forms: read in memory on the connector server and not stored.</li>
+          <li>
+            Upload links: a file you upload through a link Claude gives you waits up to 30 minutes
+            for Claude to use it, then is deleted. An unused link expires after 30 minutes.
+          </li>
+          <li>
+            Licensed downloads (Visio PDF/PNG, Project Excel/CSV, InfoPath Excel/CSV): the converted
+            file is held for up to 15 minutes or 5 downloads, whichever comes first, then deleted.
+          </li>
+        </ul>
+        <p>
+          I never open, read or share your files. Restarting the server deletes any files that are
+          waiting.
+        </p>
+        <p>
+          <strong>Logs.</strong> The connector logs which tool was used, whether it worked, how long
+          it took, and the size of an upload. It does not log file names, file contents or anything
+          you said to Claude. The convert server behind it keeps the same request log as for the
+          website: time, the address requested (which includes a license key when one is checked)
+          and short notes such as a page count. Rate limits use a scrambled (hashed) form of your
+          network address or Claude session, not your IP. Logs are rotated by the server&rsquo;s
+          operating system when they reach its size limit.
+        </p>
+        <p>
+          <strong>Payments.</strong> Paid downloads use Stripe Checkout, which you complete in your
+          browser. I never see your card details. Stripe&rsquo;s privacy policy applies to the
+          payment.
+        </p>
+        <p>
+          <strong>Third parties.</strong> Files are not shared with anyone. The only outside
+          services involved are Hetzner (hosting) and Stripe (only if you buy something).
+        </p>
+        <p>
+          <strong>Questions or deletion requests:</strong>{' '}
+          <a className="link-underline" href={DELETE_MAILTO}>
+            {SITE.email}
+          </a>
+          .
         </p>
       </>
     ),
