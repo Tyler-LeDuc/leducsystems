@@ -64,6 +64,10 @@ function Footer() {
                 {item.label}
               </Link>
             ))}
+            {/* The second fixed-price service; a static tools page, outside the router. */}
+            <a className="site-footer__link" href="/tools/ai-visibility-check/">
+              AI visibility check
+            </a>
             {/* A static page written by scripts/site-map-page.js, outside the router. */}
             <a className="site-footer__link" href="/site-map/">
               Site map

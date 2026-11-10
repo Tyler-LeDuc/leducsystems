@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Does ChatGPT Recommend Your Business? Free AI Visibility Check</title>
+<meta name="description" content="See if ChatGPT names your business when customers ask for the best in your city, who it names instead, and which websites it cites. Free check, results on the page in a few minutes.">
+<link rel="canonical" href="https://leducsystems.com/tools/ai-visibility-check/">
+<meta property="og:title" content="Does ChatGPT Recommend Your Business? Free AI Visibility Check">
+<meta property="og:description" content="See if ChatGPT names your business when customers ask for the best in your city, who it names instead, and which websites it cites. Free check, results on the page in a few minutes.">
+<meta property="og:url" content="https://leducsystems.com/tools/ai-visibility-check/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:image" content="https://leducsystems.com/images/og-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/fonts/plex.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Free AI Visibility Check","url":"https://leducsystems.com/tools/ai-visibility-check/","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","offers":[{"@type":"Offer","name":"Free check","price":"0","priceCurrency":"USD"},{"@type":"Offer","name":"Full AI visibility audit","price":"149","priceCurrency":"USD"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this what I'd see in the ChatGPT app?","acceptedAnswer":{"@type":"Answer","text":"Close, but not identical. I use OpenAI's official API with web search turned on. Answers also vary from one run to the next, which is why I ask several questions and report the pattern, not one answer."}},{"@type":"Question","name":"Which AI engines does the free check use?","acceptedAnswer":{"@type":"Answer","text":"ChatGPT, through the OpenAI API. If an answer fails during your check, the result says so and leaves it out of the count."}},{"@type":"Question","name":"How long does it take?","acceptedAnswer":{"@type":"Answer","text":"Usually one to three minutes. Keep the page open; the result shows here when it is done, and the address of the page brings it back later."}},{"@type":"Question","name":"Why only one free check per business a week?","acceptedAnswer":{"@type":"Answer","text":"Each check costs me real API money, and answers rarely change much in a week. If you need a re-run, email me."}},{"@type":"Question","name":"What do you do with my email?","acceptedAnswer":{"@type":"Answer","text":"I keep it with the business details so I can answer questions about your result, and I may email you once about it. I do not sell or share it. You can ask me to delete it at any time."}},{"@type":"Question","name":"Can you make ChatGPT recommend me?","acceptedAnswer":{"@type":"Answer","text":"Nobody controls what an AI says, and I won't promise you'll be named. What I can do is measure it honestly and give you a fix list for the things in your control: your website, your listings and the review sites the answers lean on."}},{"@type":"Question","name":"Who is behind this?","acceptedAnswer":{"@type":"Answer","text":"Me, Tyler LeDuc. LeDuc Systems is my one-person software company in Phoenix. Questions go straight to tyler@leducsystems.com."}}]}]}</script>
+<style>
+  .aiv-form { max-width: 520px; }
+  .aiv-form input { width: 100%; }
+  .aiv-summary { font-size: 20px; font-weight: 600; margin: 0 0 10px; }
+  .aiv-muted, .aiv-offer__fine { color: var(--muted); font-size: 14px; }
+  .aiv-sample { font-weight: 600; color: var(--bad, #b42318); }
+  .aiv-offer { margin: 18px 0; padding: 16px 18px; border: 2px solid var(--ink); border-radius: 8px; background: var(--panel); }
+  .aiv-offer h3 { margin: 0 0 6px; }
+  .aiv-offer ul { padding-left: 20px; display: grid; gap: 4px; margin: 8px 0 12px; }
+  #aiv-result h3 { margin: 16px 0 6px; }
+  #aiv-result { overflow-wrap: anywhere; }
+</style>
+  <script type="module" crossorigin src="/tools/assets/ai-visibility-check-4dhBnKiN.js"></script>
+  <link rel="modulepreload" crossorigin href="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-Cq7fBZ0f.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+    <nav class="nav" aria-label="Primary">
+      <ul><li><a class="nav__link nav__link--active" href="/tools/">Products</a></li><li><a class="nav__link" href="/about/">About</a></li><li><a class="nav__link" href="/contact/">Contact</a></li></ul>
+    </nav>
+    <div class="nav__actions">
+      <a class="site-btn site-btn--primary site-btn--sm site-header__cta" href="/contact/">Get in touch</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
+  <ul><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:60ms">Products</a></li><li><a class="mobile-menu__link" href="/about/" style="--menu-delay:105ms">About</a></li><li><a class="mobile-menu__link" href="/contact/" style="--menu-delay:150ms">Contact</a></li></ul>
+  <div class="mobile-menu__actions" style="--menu-delay:195ms">
+    <a class="site-btn site-btn--primary site-btn--lg" href="/contact/">Get in touch</a>
+    <a class="site-btn site-btn--ghost site-btn--lg" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+  </div>
+</nav>
+<script>
+(() => {
+  const b = document.querySelector('.menu-toggle'), m = document.getElementById('site-mobile-menu');
+  const set = (open) => {
+    b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    m.classList.toggle('mobile-menu--open', open); document.body.style.overflow = open ? 'hidden' : '';
+  };
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  matchMedia('(min-width: 861px)').addEventListener('change', (e) => { if (e.matches) set(false); });
+})();
+</script>
+<main id="main" tabindex="-1">
+  <section class="hero">
+    <h1>Does ChatGPT recommend your business?</h1>
+    <p class="lede">More people now ask an AI assistant &quot;who's the best med spa in Scottsdale?&quot; and go with whatever it names. Type your business below and I'll ask ChatGPT real buyer questions for your category and city, then show you whether it names you, who it names instead, and which websites it got that from.</p>
+  </section>
+
+  <section class="tool dc-tool" id="aiv" data-api="https://convert.leducsystems.com" data-price="$149" aria-label="Free AI visibility check">
+    <p class="status" id="aiv-mode" hidden></p>
+    <form id="aiv-form" class="dc-form aiv-form" novalidate>
+      <label for="aiv-business">Business name</label>
+      <input id="aiv-business" name="business" type="text" autocomplete="organization" maxlength="120" required placeholder="Desert Rose Aesthetics">
+      <label for="aiv-category">What you do</label>
+      <input id="aiv-category" name="category" type="text" maxlength="60" required list="aiv-categories" placeholder="med spa">
+      <datalist id="aiv-categories">
+        <option value="med spa"><option value="dentist"><option value="orthodontist"><option value="HVAC company">
+        <option value="roofer"><option value="plumber"><option value="personal injury lawyer"><option value="family law attorney">
+        <option value="chiropractor"><option value="veterinarian"><option value="wedding venue">
+      </datalist>
+      <label for="aiv-city">City</label>
+      <input id="aiv-city" name="city" type="text" autocomplete="address-level2" maxlength="60" required placeholder="Scottsdale, AZ">
+      <label for="aiv-website">Website (optional)</label>
+      <input id="aiv-website" name="website" type="text" inputmode="url" autocomplete="url" autocapitalize="off" spellcheck="false" maxlength="300" placeholder="yourbusiness.com">
+      <label for="aiv-email">Your email</label>
+      <input id="aiv-email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@yourbusiness.com">
+      <div aria-hidden="true" style="position:absolute;left:-9999px"><label>Leave this empty <input name="company_url" tabindex="-1" autocomplete="off"></label></div>
+      <div><button class="btn" type="submit">Run the free check</button></div>
+    </form>
+    <p class="status" id="aiv-status" role="status" aria-live="polite"></p>
+    <div id="aiv-result" class="scan-result" hidden></div>
+  </section>
+  <p class="fine">Free, no account, one check per business per week. I keep your email and the business details so I can answer questions about your result, and I may email you once about it. I don't sell or share them. <a href="/privacy/">Privacy</a></p>
+
+  <article class="guide">
+    <h2>What the check does</h2>
+    <p>I send ChatGPT a few questions a real customer would type, like "best {category} in {city}" and "who is the most recommended {category} in {city}?", through OpenAI's official API with web search turned on. Then I count:</p>
+    <ul>
+      <li>how many of those answers name your business,</li>
+      <li>which other businesses get named instead, and how often,</li>
+      <li>which websites the answers cite: review sites, directories, articles, maybe yours.</li>
+    </ul>
+    <p>If you give me your website, I also check the home page for the basics AI search reads: business schema, your city and category in plain words, a phone number, an FAQ, and whether your robots.txt blocks AI crawlers.</p>
+
+    <h2>What this tells you, and what it doesn't</h2>
+    <p>AI answers change from one run to the next, and the API isn't exactly the app on your phone. So treat one check as a snapshot, not a verdict. Name matching is automatic, so the full report shows every question and answer I counted. Nobody controls what an AI says, and I won't promise you'll be named. What I can do is measure it honestly.</p>
+
+    <h2>The full audit: $149</h2>
+    <p>The free check is a quick look. The audit asks 50 buyer questions, lists every business named in your market and the sources the answers lean on, checks your website and listings, and gives you a fix list in order. After you make the fixes, I re-check so you can see what changed. It's delivered by email, no call needed. <a href="mailto:tyler@leducsystems.com?subject=AI%20visibility%20audit">Email me</a> and I'll set it up.</p>
+    <p>If you'd rather I do the fixing every month (website fixes, listing clean-up, new pages that answer your buyers' questions, and a monthly re-check), I have fixed-price plans from $499 a month. Email me and I'll send the details.</p>
+  </article>
+
+  <section class="faq">
+    <h2>Questions</h2>
+    <details><summary>Is this what I'd see in the ChatGPT app?</summary><p>Close, but not identical. I use OpenAI's official API with web search turned on. Answers also vary from one run to the next, which is why I ask several questions and report the pattern, not one answer.</p></details>
+    <details><summary>Which AI engines does the free check use?</summary><p>ChatGPT, through the OpenAI API. If an answer fails during your check, the result says so and leaves it out of the count.</p></details>
+    <details><summary>How long does it take?</summary><p>Usually one to three minutes. Keep the page open; the result shows here when it is done, and the address of the page brings it back later.</p></details>
+    <details><summary>Why only one free check per business a week?</summary><p>Each check costs me real API money, and answers rarely change much in a week. If you need a re-run, email me.</p></details>
+    <details><summary>What do you do with my email?</summary><p>I keep it with the business details so I can answer questions about your result, and I may email you once about it. I do not sell or share it. You can ask me to delete it at any time.</p></details>
+    <details><summary>Can you make ChatGPT recommend me?</summary><p>Nobody controls what an AI says, and I won't promise you'll be named. What I can do is measure it honestly and give you a fix list for the things in your control: your website, your listings and the review sites the answers lean on.</p></details>
+    <details><summary>Who is behind this?</summary><p>Me, Tyler LeDuc. LeDuc Systems is my one-person software company in Phoenix. Questions go straight to tyler@leducsystems.com.</p></details>
+  </section>
+<p class="fine">ChatGPT is a trademark of OpenAI. I'm not affiliated with OpenAI.</p>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+        <p class="site-footer__blurb">Focused software built and sold by Tyler LeDuc in Phoenix, Arizona.</p>
+        <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+        <a class="site-footer__link site-footer__email" href="tel:+16233205633">(623) 320-5633</a>
+      </div>
+      <nav class="site-footer__col" aria-labelledby="footer-products">
+        <h2 class="site-footer__title" id="footer-products">Products</h2>
+        <a class="site-footer__link" href="/tools/scan-to-email-microsoft-365/">Scan Relay</a>
+        <a class="site-footer__link" href="/tools/tryon/demo/">Virtual try-on</a>
+        <a class="site-footer__link" href="/tools/publisher-converter/">Publisher converter</a>
+        <a class="site-footer__link" href="/tools/visio-viewer/">Visio Viewer</a>
+        <a class="site-footer__link" href="/tools/mpp-viewer/">MPP Viewer</a>
+        <a class="site-footer__link" href="/tools/infopath-to-excel/">InfoPath to Excel</a>
+        <a class="site-footer__link" href="/tools/fire-to-iris-1099-converter/">FIRE to IRIS converter</a>
+        <a class="site-footer__link" href="/saguaro-hours/">Saguaro Hours for Jira</a>
+        <a class="site-footer__link" href="/tools/">All products</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-company">
+        <h2 class="site-footer__title" id="footer-company">Company</h2>
+        <a class="site-footer__link" href="/about/">About</a>
+        <a class="site-footer__link" href="/games/">Games</a>
+        <a class="site-footer__link" href="/services/claude-workflow-setup/">Claude workflow setup</a>
+        <a class="site-footer__link" href="/tools/ai-visibility-check/">AI visibility check</a>
+        <a class="site-footer__link" href="/contact/">Contact</a>
+        <a class="site-footer__link" href="/site-map/">Site map</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-elsewhere">
+        <h2 class="site-footer__title" id="footer-elsewhere">Elsewhere</h2>
+        <a class="site-footer__link" href="https://github.com/Tyler-LeDuc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://raxeris.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-legal">
+        <h2 class="site-footer__title" id="footer-legal">Legal</h2>
+        <a class="site-footer__link" href="/privacy/">Privacy Policy</a>
+        <a class="site-footer__link" href="/terms/">Terms of Service</a>
+        <a class="site-footer__link" href="/refunds/">Refund Policy</a>
+        <button type="button" class="site-footer__link site-footer__button" data-cookie-settings>Cookie settings</button>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p>&copy; 2026 LeDuc Systems LLC, an Arizona limited liability company</p>
+      <p>Phoenix, Arizona</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

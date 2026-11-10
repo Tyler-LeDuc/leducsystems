@@ -25,11 +25,19 @@ own sitemap at `/tools/sitemap.xml`, listed in `robots.txt`. They share this sit
 footer through a static copy in that repo's `src/chrome.js` + `src/chrome.css`; keep the two in
 step when the nav or footer changes.
 
-This is a product company first. The one service is the fixed-price, async **Claude Workflow
-Setup** at `/services/claude-workflow-setup/` (Tyler approved it on 2026-11-09): $349 per
-workflow or $790/month, by email, no calls. Keep it a productized offer with fixed prices; don't
-add hourly consulting, engagement models or other "hire me" pitches (the old consulting content
-was retired in September 2026).
+This is a product company first. There are two fixed-price, async services, both approved by
+Tyler on 2026-11-09:
+
+- **Claude Workflow Setup** at `/services/claude-workflow-setup/`: $349 per workflow or
+  $790/month, by email, no calls.
+- **AI visibility check and audit** at `/tools/ai-visibility-check/` (a leduc-tools page; the
+  check runs on the convert server, `apps/ai-visibility`): a free check of whether ChatGPT names
+  a business, a $149 audit sold by email ("email me", no Stripe product yet), and monthly plans
+  at $499 / $999 / $1,999 per `apps/ai-visibility/copy/product-page.md`. The free check asks
+  ChatGPT only; don't claim other engines on the site until their keys are live on the server.
+
+Keep both productized offers with fixed prices; don't add hourly consulting, engagement models or
+other "hire me" pitches (the old consulting content was retired in September 2026).
 The home page shows each featured product's price (hardcoded in `src/data/site.js`). When a price
 changes on a tool page or the server, change it there too.
 
