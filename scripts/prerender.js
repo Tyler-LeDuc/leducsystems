@@ -63,6 +63,13 @@ const ROUTES = {
     description:
       'Send me one repetitive task by email. I cut the steps that shouldn’t exist and turn the rest into a Claude skill you run yourself. $349, delivered in 5 business days, no calls.',
   },
+  '/services/forge-migration': {
+    title: 'Connect to Forge Migration',
+    fullTitle: 'Connect to Forge Migration for Atlassian Apps | LeDuc Systems',
+    imageAlt: 'LeDuc Systems: Connect to Forge migration',
+    description:
+      'Fixed-price ports of Atlassian Connect apps to Forge before Connect end of support on January 31, 2027. Starts with a $500 readiness audit that is credited toward the port.',
+  },
   '/refunds': {
     title: 'Refund Policy',
     description:

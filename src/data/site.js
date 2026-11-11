@@ -838,3 +838,181 @@ export const CLAUDE_WORKFLOW = {
     },
   ],
 };
+
+/* Connect to Forge migration: a fixed-price service page at
+   /services/forge-migration. Every claim here is a term of the offer;
+   no case studies, testimonials or invented numbers. No em dashes. */
+export const FORGE_MIGRATION = {
+  path: '/services/forge-migration',
+  seoTitle: 'Connect to Forge Migration for Atlassian Apps | LeDuc Systems',
+  seoDescription:
+    'Fixed-price ports of Atlassian Connect apps to Forge before Connect end of support on January 31, 2027. Starts with a $500 readiness audit that is credited toward the port.',
+  eyebrow: 'Service · Fixed price · Jira and Confluence',
+  title: 'Connect to Forge migration, at a fixed price',
+  lede:
+    'Atlassian ends support for Connect on January 31, 2027. I port Connect apps to Forge for a fixed price, so you know the cost before any work starts.',
+  ctaLabel: 'Email me about an audit',
+  mailto: `mailto:${SITE.email}?subject=${encodeURIComponent('Forge audit')}`,
+  facts: [
+    { label: 'Audit', value: '$500, credited in full' },
+    { label: 'Audit time', value: 'About 5 business days' },
+    { label: 'Port price', value: 'Fixed quote, $3,000 to $10,000' },
+    { label: 'Port time', value: 'Usually 2 to 6 weeks' },
+    { label: 'Payment', value: '50% to start, 50% on delivery' },
+  ],
+  intro: [
+    'After January 31, 2027, Atlassian says Connect gets only critical and security fixes, and Connect modules can be deprecated with little notice. If your Marketplace app or in-house Jira or Confluence app still runs on Connect, it needs to move to Forge.',
+    'Start with a $500 Forge readiness audit. If you go ahead with the port, the full $500 is credited toward it.',
+  ],
+  sources: [
+    {
+      label: 'Atlassian announcement',
+      href: 'https://community.developer.atlassian.com/t/connect-end-of-support-extended-to-january-31-2027/102002',
+    },
+    {
+      label: 'Atlassian blog',
+      href: 'https://www.atlassian.com/blog/developer/announcing-connect-end-of-support-timeline-and-next-steps',
+    },
+  ],
+  whyTitle: 'Why me',
+  why: [
+    'I build on Forge. Saguaro Hours for Jira is a time tracking and timesheet app I built on Forge from scratch: Custom UI on four surfaces (global page, issue panel, admin page, dashboard gadget), product event and scheduled triggers, Forge storage, Forge licensing for a paid Marketplace listing, personal data reporting, and 386 automated tests. It is in Atlassian Marketplace review now.',
+    'That means I have already been through the parts of Forge that slow teams down: the manifest and scopes, the storage and invocation limits, the licensing checks, Marketplace security requirements, and the review process.',
+    'I am a small studio, so you work with me directly, not an account manager.',
+  ],
+  whyLink: { label: 'See Saguaro Hours', href: '/saguaro-hours/' },
+  included: [
+    {
+      name: 'Readiness audit',
+      price: '$500',
+      unit: 'about 5 business days',
+      points: [
+        'A module-by-module map of your Connect descriptor to Forge modules, with every gap flagged (modules with no direct Forge equivalent, or that behave differently)',
+        'A scope and egress review: which Forge scopes you need, and what changing them means for your customers’ admins',
+        'A recommended path: Forge Remote (keep your backend, replace the Connect JWT handshake) or a move to Forge-hosted compute and storage (needed for Atlassian’s “Runs on Atlassian” badge)',
+        'A data plan for existing installs, saved settings, entity properties, custom field values and macro bodies',
+        'A fixed quote and a timeline for the port',
+        'You keep the audit report whether or not you hire me',
+      ],
+    },
+    {
+      name: 'The port',
+      price: 'Fixed quote',
+      unit: 'after the audit',
+      points: [
+        'Forge app registered against your existing app, so it can upgrade in place on the same listing using Atlassian’s path for moving Connect apps to Forge',
+        'Modules rebuilt on Forge (UI Kit or Custom UI), auth moved off Connect JWT, lifecycle and webhook handling moved to Forge equivalents',
+        'Data migration for existing installs',
+        'Automated tests for the migrated code, and a test run on a development site and a staging install',
+        'Help with the Marketplace side: the new version, the release notes, and the migration plan Atlassian asks vendors to share with customers',
+        'Two weeks of fixes after release at no extra cost for anything inside the agreed scope',
+      ],
+    },
+  ],
+  paymentNote:
+    'Payment: the $500 audit is paid upfront and credited in full toward the port. The port is 50% to start and 50% on delivery.',
+  priceTitle: 'Price ranges',
+  priceIntro:
+    'Every port gets a fixed quote after the audit. These ranges show where most apps land.',
+  prices: [
+    {
+      name: 'Small',
+      price: '$3,000 to $4,500',
+      unit: 'fixed price',
+      points: ['1 to 3 simple modules (a page, a panel, a gadget)', 'Forge Remote', 'Little stored data'],
+    },
+    {
+      name: 'Medium',
+      price: '$5,000 to $7,000',
+      unit: 'fixed price',
+      points: [
+        'Several modules',
+        'Admin configuration',
+        'Entity properties or webhooks',
+        'A real data migration',
+      ],
+    },
+    {
+      name: 'Large',
+      price: '$8,000 to $10,000',
+      unit: 'fixed price',
+      points: [
+        'Custom fields, Confluence macros with saved content, or JSM portal modules',
+        'Or a move to Forge-hosted storage',
+      ],
+    },
+  ],
+  priceNote: 'Bigger apps are split into phases, each with its own fixed price.',
+  steps: [
+    {
+      title: 'Email me',
+      body: 'Send your app’s Marketplace link (or descriptor, for a private app). I reply within one business day.',
+    },
+    {
+      title: 'Audit',
+      body: 'You give me read access to the code. I deliver the report and the fixed quote in about 5 business days.',
+    },
+    {
+      title: 'Agreement',
+      body: 'A short statement of work with the scope, price, timeline and payment schedule: 50% to start, 50% on delivery.',
+    },
+    {
+      title: 'Port',
+      body: 'Usually 2 to 6 weeks, depending on size. You get a development build to try early and progress updates each week.',
+    },
+    {
+      title: 'Release',
+      body: 'Staged rollout, release notes, and the customer migration plan.',
+    },
+    {
+      title: 'Support',
+      body: 'Two weeks of in-scope fixes after release.',
+    },
+  ],
+  limitNote: 'Ports are scheduled in the order audits finish.',
+  faq: [
+    {
+      id: 'code',
+      question: 'Do you need access to our source code?',
+      answer:
+        'Yes, read access for the audit and write access for the port. I am happy to sign your NDA first.',
+    },
+    {
+      id: 'reinstall',
+      question: 'Will our customers have to reinstall?',
+      answer:
+        'In most cases no. Atlassian supports moving a Connect app to Forge so existing installs upgrade to the Forge version. If the new version needs new permissions, site admins may be asked to approve the update. The audit tells you if that applies to you.',
+    },
+    {
+      id: 'backend',
+      question: 'Do we have to give up our backend?',
+      answer:
+        'No. Forge Remote lets the Forge app call your existing servers, which is usually the fastest path. Moving fully onto Atlassian-hosted compute and storage is optional and takes longer, but it is what the “Runs on Atlassian” badge requires.',
+    },
+    {
+      id: 'diy',
+      question: 'What if the audit shows we can do it ourselves?',
+      answer: 'Then you have a clear plan and keep the report. The $500 is the full cost.',
+    },
+    {
+      id: 'private',
+      question: 'Do you port in-house (private) Connect apps too?',
+      answer:
+        'Yes. Custom Connect apps that companies built for their own Jira or Confluence sites are covered by the same end of support, and the process is the same without the Marketplace steps.',
+    },
+    {
+      id: 'dc',
+      question: 'Do you work on Data Center apps?',
+      answer:
+        'This service covers Cloud apps moving from Connect to Forge. Data Center apps are not affected by the Connect end of support.',
+    },
+    {
+      id: 'who',
+      question: 'Who does the work?',
+      answer: 'I do. LeDuc Systems is my studio.',
+    },
+  ],
+  closeTitle: 'Get started',
+  closeBody:
+    'Email me your app’s Marketplace link and I will tell you whether the audit makes sense for it.',
+};

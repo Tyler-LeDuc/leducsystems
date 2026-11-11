@@ -8,6 +8,7 @@ const COMPANY = [
   { to: '/about', label: 'About' },
   { to: '/games', label: 'Games' },
   { to: '/services/claude-workflow-setup', label: 'Claude workflow setup' },
+  { to: '/services/forge-migration', label: 'Forge migration' },
   { to: '/contact', label: 'Contact' },
 ];
 
