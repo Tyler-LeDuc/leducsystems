@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import LegalDocument from '../components/LegalDocument';
 import { SITE } from '../data/site';
 
-const LAST_UPDATED = 'November 7, 2026';
+const LAST_UPDATED = 'November 11, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
 const CANCEL_MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent('Cancel my try-on plan')}`;
@@ -210,6 +210,40 @@ const SECTIONS = [
           Don&rsquo;t use the site or the tools to break the law, to upload malware or material you
           have no right to share, to overload or attack the servers, or to get around rate limits or
           payment. I may block access, or cancel a license or plan, that is used this way.
+        </p>
+        <p>
+          That includes material that sexually exploits children, which I report to the National
+          Center for Missing &amp; Exploited Children and to law enforcement as the law requires, and
+          files that infringe someone else&rsquo;s copyright or other rights. I don&rsquo;t look
+          through the files people convert, but I act on reports and on anything I become aware of:
+          I can delete the file, block the account or address that uploaded it, and keep records
+          when the law requires me to.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'reporting',
+    title: 'Reporting abuse and copyright notices',
+    content: (
+      <>
+        <p>
+          To report illegal content or abuse of the tools, email{' '}
+          <a className="link-underline" href={MAILTO}>
+            {SITE.email}
+          </a>{' '}
+          with what you found and, if you have it, the link or time it happened. I answer reports
+          within two business days and act sooner on anything urgent.
+        </p>
+        <p>
+          If you believe something processed or shown through this site infringes your copyright,
+          send a notice to the same address with: your contact details; the work you say is
+          infringed; where the material is, in enough detail for me to find it; a statement that you
+          believe in good faith the use is not authorized by the owner, its agent or the law; a
+          statement that your notice is accurate and, under penalty of perjury, that you are the
+          owner or authorized to act for the owner; and your physical or electronic signature. If
+          material of yours was removed and you believe that was a mistake, you can send a
+          counter-notice with the same details. I end access for repeat infringers.
         </p>
       </>
     ),
