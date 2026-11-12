@@ -11,6 +11,7 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import RefundPolicyPage from './pages/RefundPolicyPage';
 import ClaudeWorkflowPage from './pages/ClaudeWorkflowPage';
+import ScanMigrationPage from './pages/ScanMigrationPage';
 import ForgeMigrationPage from './pages/ForgeMigrationPage';
 import NotFoundPage from './pages/NotFoundPage';
 
@@ -59,6 +60,7 @@ export function AppShell() {
           <Route path="/terms" element={<TermsOfServicePage />} />
           <Route path="/refunds" element={<RefundPolicyPage />} />
           <Route path="/services/claude-workflow-setup" element={<ClaudeWorkflowPage />} />
+          <Route path="/services/scan-to-email-migration" element={<ScanMigrationPage />} />
           <Route path="/services/forge-migration" element={<ForgeMigrationPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

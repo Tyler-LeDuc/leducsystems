@@ -63,6 +63,13 @@ const ROUTES = {
     description:
       'Send me one repetitive task by email. I cut the steps that shouldn’t exist and turn the rest into a Claude skill you run yourself. $349, delivered in 5 business days, no calls.',
   },
+  '/services/scan-to-email-migration': {
+    title: 'Copier Scan-to-Email Migration',
+    fullTitle: 'Copier Scan-to-Email Migration for Microsoft 365, Done for You | LeDuc Systems',
+    imageAlt: 'LeDuc Systems: copier scan-to-email migration',
+    description:
+      'Microsoft 365 disables SMTP basic authentication by default at the end of December 2026. I move each office’s copier scan to email to modern sign-in for $149 per office, and you pay only after scans arrive.',
+  },
   '/services/forge-migration': {
     title: 'Connect to Forge Migration',
     fullTitle: 'Connect to Forge Migration for Atlassian Apps | LeDuc Systems',

@@ -820,6 +820,162 @@ export const CLAUDE_WORKFLOW = {
   ],
 };
 
+/* Copier scan-to-email migration, done for you: a fixed-price service at
+   /services/scan-to-email-migration. Every claim here is a term of the offer.
+   Microsoft timeline wording must match the Exchange Team blog (Jan 27, 2026):
+   disabled by default at the end of December 2026, admins can re-enable,
+   final removal date to come in the second half of 2027. No em dashes. */
+const MIGRATION_SUBJECT = 'Scan-to-email migration';
+const MIGRATION_BODY = [
+  'How many offices:',
+  '',
+  'Copier or MFP make and model at each office:',
+  '',
+  'Do they use Microsoft 365 for email? (yes / not sure):',
+  '',
+  'Is there a Windows PC at each office that stays on during work hours?',
+  '',
+].join('\n');
+
+export const SCAN_MIGRATION = {
+  path: '/services/scan-to-email-migration',
+  seoTitle: 'Copier Scan-to-Email Migration for Microsoft 365, Done for You | LeDuc Systems',
+  seoDescription:
+    'Microsoft 365 disables SMTP basic authentication by default at the end of December 2026. I move each office’s copier scan to email to modern sign-in for $149 per office, and you pay only after scans arrive.',
+  eyebrow: 'Service · Fixed price · Microsoft 365',
+  title: 'Copier scan to email, moved off SMTP basic auth for you',
+  lede:
+    'At the end of December 2026, Microsoft 365 disables SMTP basic authentication by default, and most copiers still scan to email that way. I move each office over for a fixed price, and you pay only after the scans arrive.',
+  ctaLabel: 'Email me your offices',
+  mailto: `mailto:${SITE.email}?subject=${encodeURIComponent(MIGRATION_SUBJECT)}&body=${encodeURIComponent(MIGRATION_BODY)}`,
+  facts: [
+    { label: 'Price', value: '$149 per office' },
+    { label: '10 or more', value: '$99 per office' },
+    { label: 'Includes', value: 'A lifetime Scan Relay license' },
+    { label: 'You pay', value: 'After scans arrive' },
+    { label: 'Calls', value: 'None needed' },
+  ],
+  intro: [
+    'Microsoft has announced that SMTP AUTH with basic authentication is disabled by default for existing Microsoft 365 organizations at the end of December 2026. Copiers that send scans through smtp.office365.com with a mailbox password stop emailing unless an admin turns it back on, and Microsoft says it will announce a final removal date in the second half of 2027.',
+    'Many older copiers can’t do the OAuth sign-in that replaces it. Fixing them one office at a time is slow work for an IT provider in December. Send me the list and I do the setup work for each office.',
+  ],
+  sources: [
+    {
+      label: 'Microsoft Exchange Team blog',
+      href: 'https://techcommunity.microsoft.com/blog/exchange/updated-exchange-online-smtp-auth-basic-authentication-deprecation-timeline/4489835',
+    },
+  ],
+  whyTitle: 'I built the tool this runs on',
+  why: [
+    'Each office gets Scan Relay, a small Windows service I wrote. The copier sends scans to a PC at the office, and Scan Relay passes them on to Microsoft 365 with modern sign-in. It works with any copier brand, with no firmware updates, static IP or DNS changes.',
+    'Because I wrote it, I can read its logs and fix problems directly, without a support queue in between.',
+  ],
+  whyLink: { label: 'See Scan Relay', href: '/tools/scan-to-email-microsoft-365/' },
+  priceTitle: 'One price per office, paid after it works.',
+  priceIntro: 'The license is included, so there is nothing else to buy.',
+  prices: [
+    {
+      name: 'One office',
+      price: '$149',
+      unit: 'per office',
+      points: [
+        'Settings written for that exact copier model',
+        'Scan Relay set up and signed in to Microsoft 365',
+        'Test scans checked until they arrive',
+        'A lifetime Scan Relay license for that office',
+      ],
+    },
+    {
+      name: '10 or more offices',
+      price: '$99',
+      unit: 'per office',
+      points: [
+        'Everything in one office, for each office',
+        'One spreadsheet tracking every office’s status',
+        'Offices done in the order you choose',
+        'For IT providers and copier dealers',
+      ],
+    },
+    {
+      name: 'Just the license',
+      price: '$99',
+      unit: 'or $29 each in a 10-pack',
+      points: [
+        'If your techs would rather do the setup themselves',
+        'Same software, with my written guides',
+        '14-day free trial first',
+        'Bought on the Scan Relay pages',
+      ],
+    },
+  ],
+  priceNote:
+    'I send a Stripe invoice once test scans from an office arrive in the inbox. If I can’t get an office’s scans working, you don’t pay for that office.',
+  limitNote:
+    'Everything happens by email. Someone at the office needs about 15 minutes for the steps that have to happen on site.',
+  steps: [
+    {
+      title: 'You send the list',
+      body: 'Email me each office’s copier make and model and whether it uses Microsoft 365. I reply within one business day with what each office needs.',
+    },
+    {
+      title: 'I write the settings',
+      body: 'For each office you get a one-page sheet: where to install Scan Relay, and the exact menu path and values to enter on that copier model.',
+    },
+    {
+      title: 'Someone runs the installer',
+      body: 'A tech or the office manager runs the installer on a PC that stays on, and a Microsoft 365 admin approves the sign-in. This is the part that has to happen at the office.',
+    },
+    {
+      title: 'I test until scans arrive',
+      body: 'We send test scans, and I fix whatever stops them, by email, until they land in the inbox.',
+    },
+    {
+      title: 'Then you pay',
+      body: 'Once scans arrive, I send the invoice for that office and its license key.',
+    },
+  ],
+  faq: [
+    {
+      id: 'remote',
+      question: 'Do you need remote access to the office?',
+      answer:
+        'No. I write the steps and someone at the office or your tech follows them. If your tech prefers, they can share a screen with me during setup, but it isn’t required.',
+    },
+    {
+      id: 'which',
+      question: 'Which copiers does this work with?',
+      answer:
+        'Any copier or MFP that can scan to email through an SMTP server address you give it, which covers nearly all office models. Send me the model and I’ll confirm before any work starts.',
+    },
+    {
+      id: 'pc',
+      question: 'What if the office has no PC that stays on?',
+      answer:
+        'Scan Relay needs a Windows PC that is on whenever people scan. If there isn’t one, tell me and I’ll say plainly whether another route, like an SMTP relay connector in Microsoft 365, suits that office better.',
+    },
+    {
+      id: 'reenable',
+      question: 'Can’t we just turn SMTP AUTH back on?',
+      answer:
+        'For now, yes. Microsoft has said admins can re-enable it after December, but it leaves a password-only sign-in open, security defaults and Conditional Access often block it, and Microsoft plans to announce a final removal date in the second half of 2027.',
+    },
+    {
+      id: 'pay',
+      question: 'Is there anything to pay up front?',
+      answer:
+        'No. I invoice each office after its test scans arrive. If I can’t get an office working, there is no charge for it.',
+    },
+    {
+      id: 'resell',
+      question: 'Can I resell this to my clients?',
+      answer:
+        'Yes. Charge your clients whatever you like. I work with you or your techs and never contact your clients unless you ask me to.',
+    },
+  ],
+  closeTitle: 'Send me your list of offices.',
+  closeBody: 'Copier models and office count are enough to start.',
+};
+
 /* Connect to Forge migration: a fixed-price service page at
    /services/forge-migration. Every claim here is a term of the offer;
    no case studies, testimonials or invented numbers. No em dashes. */
