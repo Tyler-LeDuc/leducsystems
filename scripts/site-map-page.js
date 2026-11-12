@@ -67,7 +67,6 @@ const GROUPS = [
   { title: 'Scan to email and Microsoft 365', test: (p) => /scan|microsoft-365|smtp|copier/.test(p) },
   { title: '1099s, FIRE and IRIS', test: (p) => /iris|fire|1099|1220|1098|w-2g/.test(p) },
   { title: 'Publisher and PageMaker files', test: (p) => /publisher|pagemaker|pub|pmd|newsletter|bulletin/.test(p) },
-  { title: 'Virtual try-on', test: (p) => p.startsWith('/tools/tryon') },
   { title: 'InfoPath', test: (p) => /infopath/.test(p) },
   { title: 'Services', test: (p) => p.startsWith('/services/') },
   { title: 'Other tools and guides', test: () => true },

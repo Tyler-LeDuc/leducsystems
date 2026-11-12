@@ -2,10 +2,9 @@ import React from 'react';
 import LegalDocument from '../components/LegalDocument';
 import { SITE } from '../data/site';
 
-const LAST_UPDATED = 'October 31, 2026';
+const LAST_UPDATED = 'November 12, 2026';
 
 const REFUND_MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent('Refund request')}`;
-const CANCEL_MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent('Cancel my try-on plan')}`;
 
 /* Each promise here is copied from the product's own page under /tools/ and
    the Stripe product description on the conversion server. If a product page
@@ -90,31 +89,6 @@ const SECTIONS = [
     ),
   },
   {
-    id: 'subscriptions',
-    title: 'Try-on subscriptions',
-    content: (
-      <>
-        <ul className="list">
-          <li>
-            Every plan starts with a 14-day free trial. Cancel during the trial and you are never
-            charged.
-          </li>
-          <li>
-            Cancel any time by emailing{' '}
-            <a className="link-underline" href={CANCEL_MAILTO}>
-              {SITE.email}
-            </a>
-            . I cancel it the same business day and no further charges are made.
-          </li>
-          <li>
-            Months already paid aren&rsquo;t refunded in part. If the try-on doesn&rsquo;t work on
-            your store, email me and we&rsquo;ll sort it out.
-          </li>
-        </ul>
-      </>
-    ),
-  },
-  {
     id: 'free',
     title: 'Free tools',
     content: (
@@ -146,13 +120,12 @@ export default function RefundPolicyPage() {
       mark="C"
       title="Refund Policy"
       path="/refunds"
-      description="LeDuc Systems refunds: 30 days on the converters, Scan Relay, the 1099 tools and InfoPath to Excel; try-on plans cancel by email with no charge in the trial."
+      description="LeDuc Systems refunds: 30 days on the converters, Scan Relay, the 1099 tools and InfoPath to Excel."
       lastUpdated={LAST_UPDATED}
       summary={
         <>
           Try before you pay, and if a paid tool or license doesn&rsquo;t work for you, email me
-          within 30 days for a full refund. Try-on plans have a 14-day free trial and cancel by email
-          the same day.
+          within 30 days for a full refund.
         </>
       }
       sections={SECTIONS}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 /* Schematic visuals for the featured products. They are diagrams of how each
    product works, drawn in HTML/CSS/SVG so they stay sharp, light and
@@ -52,80 +52,6 @@ function RelayDiagram() {
   );
 }
 
-/* Shade names and finishes from the live demo's default palette. */
-const SHADES = [
-  { name: 'Classic red', finish: 'Satin', color: '#B02A3E' },
-  { name: 'Rose tint', finish: 'Sheer', color: '#C86B6A' },
-  { name: 'Brick', finish: 'Matte', color: '#8B4A42' },
-  { name: 'Nude gloss', finish: 'Gloss', color: '#D48B7E' },
-  { name: 'Berry', finish: 'Satin', color: '#7A2A4A' },
-];
-
-function TryOnPanel() {
-  const [active, setActive] = useState(0);
-  const shade = SHADES[active];
-
-  return (
-    <figure className="viz viz--tryon">
-      <div className="viz__bar">
-        <span className="mono">Product page widget</span>
-        <span className="mono">Runs on device</span>
-      </div>
-
-      <div className="viz__body tryon">
-        <div className="tryon__stage">
-          <svg className="tryon__lips" viewBox="0 0 200 110" role="img" aria-label={`Lips in ${shade.name}`}>
-            <path
-              d="M10 52 C38 30 70 16 100 32 C130 16 162 30 190 52 C150 58 50 58 10 52 Z"
-              fill={shade.color}
-            />
-            <path
-              d="M10 52 C50 60 150 60 190 52 C166 84 132 98 100 98 C68 98 34 84 10 52 Z"
-              fill={shade.color}
-            />
-            <path d="M10 52 C50 60 150 60 190 52" fill="none" stroke="rgba(0,0,0,0.28)" strokeWidth="1.5" />
-            <path
-              d="M62 76 C80 84 120 84 138 76"
-              fill="none"
-              stroke="rgba(255,255,255,0.32)"
-              strokeWidth="5"
-              strokeLinecap="round"
-            />
-          </svg>
-          <p className="tryon__readout">
-            <span>{shade.name}</span>
-            <span className="mono">{shade.finish}</span>
-          </p>
-        </div>
-
-        <div className="tryon__picker">
-          <p className="tryon__label">Pick a shade</p>
-          <ul className="tryon__swatches">
-            {SHADES.map((item, index) => (
-              <li key={item.name}>
-                <button
-                  type="button"
-                  className="tryon__swatch"
-                  aria-pressed={index === active}
-                  aria-label={`${item.name}, ${item.finish}`}
-                  onClick={() => setActive(index)}
-                  style={{ '--swatch': item.color }}
-                />
-              </li>
-            ))}
-          </ul>
-          <p className="tryon__hint">Camera or photo. Nothing is uploaded.</p>
-        </div>
-      </div>
-
-      <figcaption className="viz__caption">
-        A sketch of the shade picker. The live demo puts the shade on your own face through your
-        camera.
-      </figcaption>
-    </figure>
-  );
-}
-
 function ConvertDiagram() {
   const outputs = [
     { ext: '.pptx', app: 'PowerPoint' },
@@ -170,7 +96,6 @@ function ConvertDiagram() {
 
 const VISUALS = {
   relay: RelayDiagram,
-  tryon: TryOnPanel,
   convert: ConvertDiagram,
 };
 

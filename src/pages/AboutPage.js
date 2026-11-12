@@ -14,11 +14,6 @@ const BUILT = [
     href: '/tools/scan-to-email-microsoft-365/',
   },
   {
-    name: 'Virtual try-on',
-    what: 'A WebGL makeup engine that puts a store’s exact shade on the shopper’s face from the camera, entirely in the browser.',
-    href: '/tools/tryon/',
-  },
-  {
     name: 'File converters',
     what: 'Tools that read Publisher, PageMaker and Rhino files and write editable PowerPoint, Word, InDesign and older Rhino files.',
     href: '/tools/publisher-converter/',
@@ -56,7 +51,7 @@ function AboutPage() {
     <>
       <SEO
         title="About"
-        description={`${SITE.founder} is the developer behind ${SITE.name}, a one-person software company in ${SITE.city}, ${SITE.region}: Scan Relay, a virtual makeup try-on, file converters and browser games.`}
+        description={`${SITE.founder} is the developer behind ${SITE.name}, a one-person software company in ${SITE.city}, ${SITE.region}: Scan Relay, file converters and browser games.`}
         path="/about"
       />
 
@@ -188,12 +183,10 @@ function AboutPage() {
           <Reveal className="stack about-prose" delay={80}>
             <p className="body">
               Each product does one job. A copier that has stopped scanning, a .pub file nothing
-              opens, a shopper who wants to see a shade before buying it: I would rather solve one
-              of those completely than half-solve five.
+              opens: I would rather solve one of those completely than half-solve five.
             </p>
             <p className="body">
-              You can check everything before paying: a trial, a free preview of your own file, or a
-              live demo. When someone sends me a case a product got wrong, I fix the product for the
+              You can check everything before paying: a trial or a free preview of your own file. When someone sends me a case a product got wrong, I fix the product for the
               next person.
             </p>
             <p className="body">

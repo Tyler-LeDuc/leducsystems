@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import LegalDocument from '../components/LegalDocument';
 import { SITE } from '../data/site';
 
-const LAST_UPDATED = 'November 11, 2026';
+const LAST_UPDATED = 'November 12, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
 const DELETE_MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent('Privacy request')}`;
@@ -28,8 +28,7 @@ const SECTIONS = [
         <p>
           This policy covers the website at <span className="hi">leducsystems.com</span>, the tools
           under <span className="hi">leducsystems.com/tools/</span>, the conversion and licensing
-          server at <span className="hi">convert.leducsystems.com</span>, Scan Relay, the virtual
-          try-on, the LeDuc File Opener browser extension, the LeDuc Systems connector for Claude,
+          server at <span className="hi">convert.leducsystems.com</span>, Scan Relay, the LeDuc File Opener browser extension, the LeDuc Systems connector for Claude,
           the games I publish as raxeris (including the 99% app on Google Play), and email you
           exchange with me. The itch.io and Google Play stores themselves are run by those
           companies under their own policies.
@@ -71,11 +70,6 @@ const SECTIONS = [
             InfoPath to Excel) and <strong>30-day passes</strong>. The key, the product, the
             purchase time, the Stripe checkout ID and your email, kept on my server for as long as
             the key or pass can be used, so I can confirm it is valid and help you if you lose it.
-          </li>
-          <li>
-            <strong>Try-on subscriptions.</strong> Your store&rsquo;s domain, plan, email, the name
-            on the checkout, your Stripe customer and subscription IDs, and the subscription&rsquo;s
-            status. Kept while the subscription runs and afterwards for my business records.
           </li>
           <li>
             <strong>&ldquo;Email me when it&rsquo;s ready&rdquo;.</strong> Your email, the product
@@ -124,7 +118,7 @@ const SECTIONS = [
       <>
         <p>
           <strong>Tools that run in your browser and upload nothing:</strong> the Rhino converter,
-          FIRE to IRIS, spreadsheet to IRIS, InfoPath to Excel and the try-on demo. Your file stays
+          FIRE to IRIS, spreadsheet to IRIS, and InfoPath to Excel. Your file stays
           on your computer. When you buy a license for one of them, the page asks my server whether
           the key is valid, and saves the key in your browser&rsquo;s local storage so you
           don&rsquo;t have to paste it again.
@@ -170,34 +164,6 @@ const SECTIONS = [
           page on leducsystems.com. To read from a site, it asks your permission for that site
           first. From there the file is handled exactly as if you had dropped it on the page, as
           described above.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'tryon',
-    title: 'The virtual try-on',
-    content: (
-      <>
-        <p>
-          The try-on runs entirely in the shopper&rsquo;s browser. Face tracking and drawing the
-          makeup happen on the device; no camera frames, photos or face measurements are sent to
-          me or stored anywhere. On the leducsystems.com try-on pages, the face-tracking model
-          files are served from this site.
-        </p>
-        <p>
-          When a store adds the try-on to its own website, the store decides how it is used there
-          and is responsible for the notices it gives its shoppers. The embed script loads from my
-          server, which checks that the store&rsquo;s plan is active; like any web request, that
-          request includes the shopper&rsquo;s IP address and the store&rsquo;s domain, which appear
-          in the server request log described above.
-        </p>
-        <p>
-          When a store signs up, I keep the details listed under{' '}
-          <a className="link-underline" href="#summary-table">
-            What I collect
-          </a>{' '}
-          (domain, plan, email, Stripe customer and subscription IDs) on my server to run the plan.
         </p>
       </>
     ),

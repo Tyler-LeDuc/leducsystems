@@ -141,11 +141,11 @@ export default function HomePage() {
           <Reveal className="section-head home-section-head">
             <p className="eyebrow">Products</p>
             <h2 id="products-title" className="h2">
-              Three products I sell to businesses.
+              Two products I sell to businesses.
             </h2>
             <p className="lede">
               Each one exists because something changed under people’s feet: an authentication
-              cutoff, a retired app, a store that can’t let shoppers test a shade.
+              cutoff and a retired app.
             </p>
           </Reveal>
 

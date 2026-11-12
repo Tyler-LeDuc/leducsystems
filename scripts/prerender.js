@@ -34,7 +34,7 @@ const ROUTES = {
   '/about': {
     title: 'About',
     description:
-      'Tyler LeDuc is the developer behind LeDuc Systems, a one-person software company in Phoenix, Arizona: Scan Relay, a virtual makeup try-on, file converters and browser games.',
+      'Tyler LeDuc is the developer behind LeDuc Systems, a one-person software company in Phoenix, Arizona: Scan Relay, file converters and browser games.',
   },
   '/contact': {
     title: 'Contact',
@@ -53,7 +53,7 @@ const ROUTES = {
   '/terms': {
     title: 'Terms of Service',
     description:
-      "The terms for LeDuc Systems' website and products: prices and payment, licenses, try-on subscriptions, acceptable use, warranty, liability and Arizona law.",
+      "The terms for LeDuc Systems' website and products: prices and payment, licenses, acceptable use, warranty, liability and Arizona law.",
   },
   '/services/claude-workflow-setup': {
     title: 'Claude Workflow Setup',
@@ -73,7 +73,7 @@ const ROUTES = {
   '/refunds': {
     title: 'Refund Policy',
     description:
-      'LeDuc Systems refunds: 30 days on the converters, Scan Relay, the 1099 tools and InfoPath to Excel; try-on plans cancel by email with no charge in the trial.',
+      'LeDuc Systems refunds: 30 days on the converters, Scan Relay, the 1099 tools and InfoPath to Excel.',
   },
 };
 

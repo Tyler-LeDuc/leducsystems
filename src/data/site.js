@@ -36,7 +36,7 @@ export const SITE = {
   founded: 2026,
   tagline: 'Focused software, built and sold by one developer.',
   description:
-    'LeDuc Systems is Tyler LeDuc’s software company. I build and sell focused software: Scan Relay keeps office copiers scanning to email on Microsoft 365, a virtual makeup try-on for beauty stores, converters for retired file formats, and browser games.',
+    'LeDuc Systems is Tyler LeDuc’s software company. I build and sell focused software: Scan Relay keeps office copiers scanning to email on Microsoft 365, converters for retired file formats, and browser games.',
 };
 
 export const NAV = [
@@ -53,10 +53,10 @@ export const HOME = {
   eyebrow: 'LeDuc Systems LLC · Phoenix, Arizona',
   title: 'Small software that does one job properly.',
   lede:
-    'I build and sell focused software for problems with a deadline or a cost attached: copiers that stop scanning when Microsoft 365 drops basic auth, beauty stores whose shoppers can’t try a shade online, files stranded when Publisher was retired. I also make browser games.',
+    'I build and sell focused software for problems with a deadline or a cost attached: copiers that stop scanning when Microsoft 365 drops basic auth, and files stranded when Publisher was retired. I also make browser games.',
 };
 
-/* The three products I'm actively selling, shown large on the home page.
+/* The two products I'm actively selling, shown large on the home page.
    `facts` are short label/value pairs, each one stated on the product page. */
 export const FEATURED_PRODUCTS = [
   {
@@ -77,25 +77,6 @@ export const FEATURED_PRODUCTS = [
     ],
     primary: { label: 'See Scan Relay', href: '/tools/scan-to-email-microsoft-365/' },
     secondary: { label: 'Pricing for copier dealers', href: '/tools/scan-relay-resellers/' },
-  },
-  {
-    slug: 'tryon',
-    visual: 'tryon',
-    name: 'Virtual try-on',
-    category: 'Retail · In-browser AR',
-    line: 'Lets beauty-store shoppers see your exact shade on their own face, live, on the product page.',
-    body: [
-      'One script tag on a Shopify or WooCommerce product page. The shopper taps “Try it on”, the camera opens, and your lipstick, blush or shadow shade sits on her own face in her own light.',
-      'It runs on my own WebGL engine, entirely in the shopper’s browser. Nothing is uploaded.',
-    ],
-    facts: [
-      ['Starter', '$49 a month, up to 25 shades'],
-      ['Growth', '$149 a month, unlimited shades'],
-      ['Works with', 'Shopify and WooCommerce'],
-      ['Privacy', 'The camera image never leaves the device'],
-    ],
-    primary: { label: 'Try the live demo', href: '/tools/tryon/demo/' },
-    secondary: { label: 'Try-on for stores', href: '/tools/tryon/' },
   },
   {
     slug: 'publisher-converter',
@@ -247,11 +228,11 @@ export const PRINCIPLES = {
   items: [
     {
       title: 'Try it first',
-      body: 'Scan Relay has a 14-day trial, the try-on has a live demo, and the converters show a free preview of your own file.',
+      body: 'Scan Relay has a 14-day trial and the converters show a free preview of your own file.',
     },
     {
       title: 'Your data stays yours',
-      body: 'The try-on and the 1099 tools run in your browser. Scan Relay sends from your network straight to Microsoft 365. Uploaded files are deleted automatically within a day, or a week if you paid.',
+      body: 'The Rhino converter and the 1099 tools run in your browser. Scan Relay sends from your network straight to Microsoft 365. Uploaded files are deleted automatically within a day, or a week if you paid.',
     },
     {
       title: 'Refunds without a fight',
@@ -671,7 +652,7 @@ export const FAQ = [
     id: 'name',
     question: 'What is LeDuc Systems?',
     answer:
-      'My software company, LeDuc Systems LLC. I’m Tyler LeDuc, a developer in Phoenix, and I build and sell focused software: Scan Relay, a virtual makeup try-on, file converters and 1099 tools, plus browser games.',
+      'My software company, LeDuc Systems LLC. I’m Tyler LeDuc, a developer in Phoenix, and I build and sell focused software: Scan Relay, file converters and 1099 tools, plus browser games.',
   },
   {
     id: 'who',
@@ -689,7 +670,7 @@ export const FAQ = [
     id: 'files',
     question: 'What happens to my files and data?',
     answer:
-      'The try-on, the Rhino converter and the 1099 tools run in your browser, so nothing leaves your device. Scan Relay sends straight from your office to Microsoft 365. The Publisher and PageMaker converters use your file only to make the download and delete it automatically within 24 hours (7 days if you paid).',
+      'The Rhino converter and the 1099 tools run in your browser, so nothing leaves your device. Scan Relay sends straight from your office to Microsoft 365. The Publisher and PageMaker converters use your file only to make the download and delete it automatically within 24 hours (7 days if you paid).',
   },
   {
     id: 'games',
