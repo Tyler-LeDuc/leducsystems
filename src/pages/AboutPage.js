@@ -82,7 +82,7 @@ function AboutPage() {
           <Reveal as="figure" className="about-portrait" delay={100}>
             <img
               className="about-portrait__img"
-              src="/images/tyler-leduc.jpg"
+              src="/images/tyler-leduc-2026-11.jpg"
               alt={`Portrait of ${SITE.founder}`}
               width="660"
               height="660"
