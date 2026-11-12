@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Scan Relay Handles Your Mail: Permissions, Data and Network Traffic</title>
+<meta name="description" content="For IT: the Microsoft 365 permissions Scan Relay asks for and why, where scans and the sign-in token are kept, what it sends to LeDuc Systems (only a license key check), what the installer changes, and how to remove it and revoke access.">
+<link rel="canonical" href="https://leducsystems.com/tools/scan-relay-security/">
+<meta property="og:title" content="How Scan Relay Handles Your Mail: Permissions, Data and Network Traffic">
+<meta property="og:description" content="For IT: the Microsoft 365 permissions Scan Relay asks for and why, where scans and the sign-in token are kept, what it sends to LeDuc Systems (only a license key check), what the installer changes, and how to remove it and revoke access.">
+<meta property="og:url" content="https://leducsystems.com/tools/scan-relay-security/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:image" content="https://leducsystems.com/images/og-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/fonts/plex.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How Scan Relay Handles Your Mail: Permissions, Data and Network Traffic","description":"For IT: the Microsoft 365 permissions Scan Relay asks for and why, where scans and the sign-in token are kept, what it sends to LeDuc Systems (only a license key check), what the installer changes, and how to remove it and revoke access.","url":"https://leducsystems.com/tools/scan-relay-security/","author":{"@type":"Person","name":"Tyler LeDuc"},"publisher":{"@type":"Organization","name":"LeDuc Systems"}}</script>
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-Cq7fBZ0f.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+    <nav class="nav" aria-label="Primary">
+      <ul><li><a class="nav__link nav__link--active" href="/tools/">Products</a></li><li><a class="nav__link" href="/about/">About</a></li><li><a class="nav__link" href="/contact/">Contact</a></li></ul>
+    </nav>
+    <div class="nav__actions">
+      <a class="site-btn site-btn--primary site-btn--sm site-header__cta" href="/contact/">Get in touch</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
+  <ul><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:60ms">Products</a></li><li><a class="mobile-menu__link" href="/about/" style="--menu-delay:105ms">About</a></li><li><a class="mobile-menu__link" href="/contact/" style="--menu-delay:150ms">Contact</a></li></ul>
+  <div class="mobile-menu__actions" style="--menu-delay:195ms">
+    <a class="site-btn site-btn--primary site-btn--lg" href="/contact/">Get in touch</a>
+    <a class="site-btn site-btn--ghost site-btn--lg" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+  </div>
+</nav>
+<script>
+(() => {
+  const b = document.querySelector('.menu-toggle'), m = document.getElementById('site-mobile-menu');
+  const set = (open) => {
+    b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    m.classList.toggle('mobile-menu--open', open); document.body.style.overflow = open ? 'hidden' : '';
+  };
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  matchMedia('(min-width: 861px)').addEventListener('change', (e) => { if (e.matches) set(false); });
+})();
+</script>
+<main id="main" tabindex="-1">
+  <section class="hero">
+    <h1>How Scan Relay handles your mail</h1>
+    
+    <p class="lede">This page is for whoever has to approve Scan Relay: what it asks Microsoft 365 for, where your scans and the sign-in are kept, what it sends to me (very little), what the installer changes, and how to take it all back out. I checked every statement against the program's source code. Where something isn't done yet, like code signing, I say so.</p>
+  </section>
+  <p class="cta"><a class="btn" href="/tools/scan-to-email-microsoft-365/">Get Scan Relay, free 14-day trial</a> <span>Questions first? Email tyler@leducsystems.com and you get the developer.</span></p>
+  <article class="guide">
+<h2>The short version</h2>
+<ul>
+  <li>Scans go from the copier to one office PC, and from that PC straight to Microsoft Graph. They never pass through my servers.</li>
+  <li>It asks Microsoft for three delegated permissions: <b>Mail.Send</b>, <b>User.Read</b> and <b>offline_access</b>. None of them lets it read anyone's mail.</li>
+  <li>The only thing it ever sends me is a license key, once, when you type it in. Alerts go only to the email address or webhook you set.</li>
+  <li>The Microsoft sign-in is stored on that PC, encrypted with Windows DPAPI.</li>
+  <li>Two things aren't done yet: the program isn't code-signed, so Windows SmartScreen will warn you, and the publisher isn't verified with Microsoft, so an admin has to approve the app once per organization.</li>
+</ul>
+
+<h2>Microsoft 365 permissions</h2>
+<p>Scan Relay signs in to a single work or school mailbox through Microsoft's own sign-in page. Click <b>Sign in with Microsoft</b> on the setup page, sign in in the browser on that PC, with MFA if your organization uses it, and Microsoft hands Scan Relay a token, so it never sees the password. This standard browser sign-in (authorization code with PKCE) works with Microsoft's security defaults, which block the older "enter a code" device sign-in. It only accepts work or school accounts, not personal Microsoft accounts.</p>
+<p>It asks for these delegated permissions and no others:</p>
+<table>
+  <tr><th>Permission</th><th>What Scan Relay uses it for</th></tr>
+  <tr><td><b>Mail.Send</b></td><td>Sending each scan as the signed-in mailbox. That's the only mailbox it can send as.</td></tr>
+  <tr><td><b>User.Read</b></td><td>Reading the signed-in account's email address once, after sign-in, so it knows which address to send from and can show it on the setup page.</td></tr>
+  <tr><td><b>offline_access</b></td><td>Getting a refresh token, so it keeps sending after the PC restarts without anyone signing in again.</td></tr>
+</table>
+<p>They're delegated permissions, not application permissions, so Scan Relay acts only as the one mailbox that signed in. It asks for no permission to read mail, contacts, calendars or files. I'd suggest a dedicated scanner mailbox, which most offices already have for the copier.</p>
+<p>Before sending, Scan Relay sets the From address to the signed-in mailbox, because Microsoft 365 won't send as anyone else. It keeps the display name the copier used (or "Scanner"), removes the Sender and Return-Path headers, and adds any recipients the copier gave only in the SMTP envelope as Bcc. Each scan goes to Microsoft as one complete message, which Microsoft accepts up to about 3 MB with Mail.Send.</p>
+<p><b>Scan size:</b> with these permissions, Scan Relay sends scans up to about 3 MB per email. Set the copier's maximum email size (often called "split email by size" or a data size limit) to 3 MB, so bigger jobs arrive as several emails; if a scan still lands in the failed folder with a size message, try 2 MB, because some copiers count the file before it is encoded. Larger single emails need an option that isn't released yet, so don't plan on them.</p>
+
+<h2>Why an admin has to approve it once</h2>
+<p>Scan Relay's publisher (LeDuc Systems) isn't verified with Microsoft yet. In most organizations Microsoft won't let ordinary users approve an app from an unverified publisher, so the first sign-in shows "Need admin approval". A Microsoft 365 admin signs in once with the same button and ticks <b>Consent on behalf of your organization</b>. After that, any mailbox in the organization can be used. The consent screen lists the three permissions above.</p>
+
+<h2>Where your scans go</h2>
+<ol>
+  <li><b>Copier to the PC.</b> The copier sends plain SMTP over your local network to the Scan Relay PC, on port 25, 587 or 2525 (you pick one on the setup page). This leg isn't encrypted unless you tick <b>Accept SSL/TLS from copiers</b> on the setup page. With that on, it offers STARTTLS and SSL/TLS on the same port, using a self-signed certificate it makes each time the service starts, and accepts TLS 1.0 and later (including the RSA key exchange suites older copier firmware needs), so the copier's certificate check has to be off. Either way, it refuses connections from any address that isn't loopback, a private range (10.x, 172.16-31.x, 192.168.x, IPv6 unique-local) or link-local.</li>
+  <li><b>The PC to Microsoft.</b> Scan Relay sends each message over HTTPS to <code>graph.microsoft.com</code>, and signs in through <code>login.microsoftonline.com</code>.</li>
+</ol>
+<p>That's the whole path. There's no LeDuc Systems relay or cloud service in between.</p>
+<p>One thing to know: the copier-facing side accepts any username and password, because copiers that insist on one need something to type. In practice, any device on your local network that can reach the PC can send mail through it, as the signed-in mailbox, to any address. It accepts up to 100 recipients and 60 MB per message. Treat it as an internal relay: keep it on a trusted network, and use a scanner mailbox rather than a person's.</p>
+
+<h2>What it sends to LeDuc Systems</h2>
+<p>Exactly one thing, and only when someone enters a license key on the setup page: an HTTPS request to <code>https://convert.leducsystems.com/api/license/&lt;your key&gt;</code>. The key is the only thing in the request. The server answers whether the key is valid and which product it's for. Like any web server, mine sees the public IP address the request comes from, and its request log records it along with the request. Once a key is accepted, Scan Relay doesn't check it again.</p>
+<p><b>Alerts</b> (a scan that can't be delivered, a sign-in that needs renewing, the trial ending) go only to places on your side. They're written to the Windows Application event log on that PC, and emailed through Microsoft Graph from the signed-in mailbox to the alert address on the setup page, which is the signed-in mailbox itself unless you set another. A webhook, if you add one, gets an HTTPS (or HTTP) POST of a small JSON message: the PC's name, the signed-in address, the Scan Relay version, the time, and the alert's text, which can include recipient addresses and Microsoft's error message.</p>
+<p>Scan Relay has no telemetry, crash reporting, analytics or automatic update check. The 14-day trial is counted on the PC from the date it first ran; nothing is sent for that.</p>
+<p>Separately, the <b>download button</b> on my website goes through <code>convert.leducsystems.com/api/dl/scan-relay</code> before it redirects to the file, so I can count downloads. That records the time, the product and the page you clicked from (plus the IP address in the server's request log). That's your browser downloading, not Scan Relay itself.</p>
+
+<h2>Where the sign-in is stored</h2>
+<p>Settings are in <code>%ProgramData%\Scan Relay\config.json</code> (normally <code>C:\ProgramData\Scan Relay\config.json</code>). It holds the port, the signed-in address, the license key, the trial start date and the Microsoft refresh token.</p>
+<p>The refresh token is encrypted with Windows DPAPI in <b>machine scope</b> before it's written, then stored as base64. Machine scope means it can only be decrypted on that PC, so a copy of the file is useless anywhere else. It also means any program running on that PC that can read the file could decrypt it. So treat the PC like any machine that holds a service credential, and limit who can sign in to it. The short-lived access token is only kept in memory.</p>
+<p>Once a day Scan Relay asks Microsoft for a fresh access token with the refresh token, even if no scans came in, so the sign-in doesn't lapse in a quiet office and a revoked sign-in shows up on the setup page before the next scan. That request goes to <code>login.microsoftonline.com</code> like any other sign-in refresh.</p>
+<p><b>Sign out</b> on the setup page deletes the refresh token and the account address from the file.</p>
+
+<h2>The retry queue</h2>
+<p>Every scan is written to disk before the copier is told it was accepted, so a dropped connection or a Microsoft outage doesn't lose it:</p>
+<ul>
+  <li>Waiting scans are in <code>%ProgramData%\Scan Relay\queue\</code>, one <code>.eml</code> file (the message as the copier sent it) and one small <code>.json</code> file (recipients, time received, attempts) per scan. They aren't encrypted, and each is deleted as soon as Microsoft accepts it.</li>
+  <li>It tries straight away, then once a minute.</li>
+  <li>If the sign-in has expired, scans stay queued until someone signs in again on the setup page.</li>
+  <li>If Microsoft rejects a scan outright (a 4xx error other than 401 or 429), or a scan has been failing for more than 72 hours since it arrived, Scan Relay stops trying and moves its <code>.eml</code> file to <code>%ProgramData%\Scan Relay\failed\</code>, with a <code>.txt</code> saying why and the <code>.json</code>, where it stays until you delete it or click <b>Try failed scans again</b> on the setup page.</li>
+</ul>
+<p>Scan Relay also keeps a log in <code>%ProgramData%\Scan Relay\log.txt</code>: times, the copier's IP address, recipient addresses, message sizes and errors. It's never sent anywhere, except that alert text quotes the relevant line. At 5 MB it's renamed <code>log.old.txt</code> (replacing the previous one) and a new log starts.</p>
+
+<h2>What the installer changes</h2>
+<p>Double-clicking <code>ScanRelay.exe</code> asks for administrator permission (UAC), then:</p>
+<ul>
+  <li>Copies itself to <code>C:\Program Files\Scan Relay\ScanRelay.exe</code>.</li>
+  <li>Creates a Windows service named <b>ScanRelay</b> ("Scan Relay"), set to start automatically. It runs as the default service account (LocalSystem), and Windows restarts it if it stops unexpectedly (after 5 seconds, 30 seconds, then 2 minutes).</li>
+  <li>Adds one inbound Windows Firewall rule, <b>Scan Relay (copier mail)</b>: TCP ports 25, 587 and 2525, from the local subnet only, for that program only.</li>
+  <li>Creates <code>%ProgramData%\Scan Relay\</code> for its settings, queue and log.</li>
+  <li>Registers <b>ScanRelay</b> as a Windows event log source (under the Application log), so its alerts appear in Event Viewer.</li>
+  <li>Starts the service and opens the setup page in your browser.</li>
+</ul>
+<p>That's all it changes: no browser extensions, no scheduled tasks, no other startup entries. For unattended installs, <code>ScanRelay.exe install --quiet</code> does the same with no prompts or browser, and options like <code>--license</code> and <code>--alert-email</code> write those settings into <code>config.json</code> before the service starts. <code>ScanRelay.exe help</code> lists them.</p>
+
+<h3>The setup page</h3>
+<p>The setup page is at <code>http://localhost:2526</code>. It listens on the PC's own loopback address only (127.0.0.1 and ::1), so it can't be reached from other computers, and the firewall rule doesn't include its port. It also has these guards:</p>
+<ul>
+  <li>It refuses any request whose Host isn't <code>localhost:2526</code> or <code>127.0.0.1:2526</code>, which stops DNS rebinding attacks from websites.</li>
+  <li>Anything that changes a setting or sends something (sign in, sign out, port, SSL/TLS, license, alerts, test message, test alert, retrying failed scans) must be a POST with a custom <code>X-Scan-Relay</code> header. Another website can't send that without a CORS preflight, and Scan Relay never answers one.</li>
+  <li>The one exception is Microsoft's redirect back after sign-in (<code>/auth/callback</code>), which has to be a plain link. It only works with the single-use code Scan Relay created for that sign-in, which expires after 10 minutes.</li>
+  <li>The page sends a Content-Security-Policy that stops other sites from framing it.</li>
+  <li>Two read-only addresses answer a plain GET: the status (<code>/api/status</code>), which <code>ScanRelay.exe status</code> reads, and the full log (<code>/log</code>). Another website can't read either, because the browser's same-origin rule blocks it and Scan Relay sends no CORS headers.</li>
+</ul>
+<p>It has no password of its own. Anyone signed in to that PC can open it, which is another reason to limit who can sign in to the PC.</p>
+
+<h2>Code signing and SmartScreen</h2>
+<p><b>ScanRelay.exe is not code-signed yet.</b> Windows SmartScreen will warn that it's from an unrecognised publisher the first time it runs. To go ahead, click <b>More info</b>, then <b>Run anyway</b>. If your policy doesn't allow unsigned software, I understand. Email me and I'll tell you when a signed build is out.</p>
+
+<h2>Removing it cleanly</h2>
+<ol>
+  <li>Open <code>http://localhost:2526</code> on the PC and click <b>Sign out</b>. That deletes the stored refresh token.</li>
+  <li>Run <code>"C:\Program Files\Scan Relay\ScanRelay.exe" uninstall</code> (it asks for administrator permission). This stops and deletes the service, removes the firewall rule and the event log source. Add <code>--quiet</code> for no prompts, and <code>--purge</code> to delete <code>C:\ProgramData\Scan Relay\</code> as well.</li>
+  <li>Without <code>--purge</code>, the uninstall deliberately keeps your settings in case you reinstall, and leaves the program file in place. To remove everything, delete <code>C:\Program Files\Scan Relay\</code> and <code>C:\ProgramData\Scan Relay\</code>. The second folder holds any queued or failed scans and the log, so check it first.</li>
+  <li>Point the copier back at whatever it should use instead.</li>
+</ol>
+
+<h3>Revoking its access in Microsoft 365</h3>
+<p>Signing out on the PC deletes Scan Relay's copy of the token, but doesn't tell Microsoft. To cut off access from Microsoft's side as well:</p>
+<ul>
+  <li><b>For the whole organization:</b> in the Microsoft Entra admin center, go to Enterprise applications, open <b>Scan Relay</b>, and delete it or remove its granted permissions.</li>
+  <li><b>For one mailbox:</b> the user can remove Scan Relay from their apps in My Apps (myapps.microsoft.com), if your organization allows that. An admin can also revoke that user's sign-in sessions in Entra, which invalidates their refresh tokens, Scan Relay's included.</li>
+</ul>
+<p>Microsoft moves these menus around from time to time. If the names don't match, look for "Enterprise applications" and "Permissions".</p>
+
+<h2>Questions IT people ask</h2>
+<details><summary>Can Scan Relay read our mail?</summary><p>No. It asks only for Mail.Send, User.Read and offline_access, and none of those lets it read messages. It sends each scan as one message and doesn't create drafts in the mailbox.</p></details>
+<details><summary>How big can a scan be?</summary><p>About 3 MB per email. That's the most Microsoft accepts in one message sent with the Mail.Send permission. Set the copier's maximum email size, or "split email by size", to 3 MB (2 MB if a scan still fails), so a long job arrives as several emails. A scan that's too big isn't sent: it's kept in <code>%ProgramData%Scan Relayailed</code> and the error is in the log. Larger single emails need an option that isn't released yet.</p></details>
+<details><summary>Do scans or email addresses ever reach your servers?</summary><p>No. The program's only request to my server is the license key check, and that carries the key and nothing else. Scans, recipients and the account address stay on the PC and go to Microsoft.</p></details>
+<details><summary>What if the PC is stolen or the disk is copied?</summary><p>The refresh token is encrypted with DPAPI for that machine, so a copied file can't be decrypted elsewhere. Someone with the PC itself and a working sign-in to it is a different matter. If the PC goes missing, revoke Scan Relay's access in Entra as described above. Queued and failed scans on the disk aren't encrypted by Scan Relay, so full-disk encryption like BitLocker is worth having.</p></details>
+<details><summary>Can someone on the internet use it to send spam?</summary><p>Not directly. It refuses connections from anything but private, loopback and link-local addresses, and the firewall rule only lets in the local subnet. But any device on your local network can send through it, so keep it on a network you trust.</p></details>
+<details><summary>Does it need inbound access from the internet, a static IP or DNS changes?</summary><p>No. It only makes outgoing HTTPS connections to Microsoft and, once, to my license server.</p></details>
+<details><summary>What happens when the trial ends without a license?</summary><p>The copier gets a "trial ended" error and new scans aren't accepted. Nothing is sent to me when the trial ends; the count is done on the PC.</p></details>
+<details><summary>Is the source code available?</summary><p>Not publicly. If you're evaluating it for a client or a security review, email <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> with your questions and I'll answer from the code.</p></details>
+<p>Scan Relay is made by LeDuc Systems LLC, an Arizona limited liability company in Phoenix, Arizona. Questions: <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> or <a href="tel:+16233205633">(623) 320-5633</a>. See also the <a href="/privacy#tools">privacy policy</a>.</p>
+  </article>
+  <p class="cta"><a class="btn" href="/tools/scan-to-email-microsoft-365/">Get Scan Relay, free 14-day trial</a> <span>Questions first? Email tyler@leducsystems.com and you get the developer.</span></p>
+  <nav class="more" aria-label="More guides">
+    <h2>More guides</h2>
+    <ul class="guides"><li><a href="/tools/publisher-files-after-retirement/">Publisher is gone. What do you do with your .pub files?</a></li><li><a href="/tools/publisher-to-word/">Converting a Publisher file to Word</a></li><li><a href="/tools/make-a-newsletter-in-word-like-publisher/">Making a newsletter in Word when you used to use Publisher</a></li><li><a href="/tools/move-church-bulletin-from-publisher-to-canva/">Moving a bulletin or newsletter from Publisher to Canva</a></li><li><a href="/tools/publisher-to-google-docs/">Getting a Publisher file into Google Docs</a></li><li><a href="/tools/publisher-alternatives/">What to use now that Publisher is gone</a></li><li><a href="/tools/convert-publisher-files-in-bulk/">Converting a whole folder of Publisher files</a></li><li><a href="/tools/open-old-pagemaker-files/">Opening old PageMaker files today</a></li><li><a href="/tools/wrap-text-around-picture-in-powerpoint/">Wrapping text around a picture in PowerPoint</a></li><li><a href="/tools/microsoft-365-scan-to-email-basic-auth-2026/">Scan to email and Microsoft 365 after December 2026</a></li><li><a href="/tools/correct-fire-1099-after-november-19-iris/">Correcting 1099s filed through FIRE after November 19, 2026</a></li><li><a href="/tools/irs-fire-system-retirement-iris/">The IRS FIRE system is closing: how to file 1099s through IRIS</a></li><li><a href="/tools/iris-1098-csv-template/">The IRIS 1098 CSV template, column by column</a></li><li><a href="/tools/iris-1099-nec-csv-template/">The IRIS 1099-NEC CSV template, column by column</a></li><li><a href="/tools/iris-1099-misc-csv-template/">The IRIS 1099-MISC CSV template, column by column</a></li><li><a href="/tools/iris-1099-int-csv-template/">The IRIS 1099-INT CSV template, column by column</a></li><li><a href="/tools/iris-1099-div-csv-template/">The IRIS 1099-DIV CSV template, column by column</a></li><li><a href="/tools/iris-1099-r-csv-template/">The IRIS 1099-R CSV template, column by column</a></li><li><a href="/tools/iris-1098-t-csv-template/">The IRIS 1098-T CSV template, column by column</a></li><li><a href="/tools/iris-1099-s-csv-template/">The IRIS 1099-S CSV template, column by column</a></li><li><a href="/tools/iris-1099-g-csv-template/">The IRIS 1099-G CSV template, column by column</a></li><li><a href="/tools/iris-1099-k-csv-template/">The IRIS 1099-K CSV template, column by column</a></li><li><a href="/tools/iris-w-2g-csv-template/">The IRIS W-2G CSV template, column by column</a></li><li><a href="/tools/will-scan-to-email-break-microsoft-365/">Will your copier's scan to email break?</a></li><li><a href="/tools/microsoft-365-scan-to-email-domain-checker/">Is this domain on Microsoft 365?</a></li><li><a href="/tools/scan-relay-resellers/">Scan Relay for copier dealers and IT providers</a></li><li><a href="/tools/ricoh-scan-to-email-microsoft-365/">Ricoh scan to email and Microsoft 365</a></li><li><a href="/tools/canon-scan-to-email-microsoft-365/">Canon scan to email and Microsoft 365</a></li><li><a href="/tools/sharp-scan-to-email-microsoft-365/">Sharp scan to email and Microsoft 365</a></li><li><a href="/tools/konica-minolta-scan-to-email-microsoft-365/">Konica Minolta scan to email and Microsoft 365</a></li><li><a href="/tools/kyocera-scan-to-email-microsoft-365/">Kyocera scan to email and Microsoft 365</a></li><li><a href="/tools/hp-scan-to-email-microsoft-365/">HP scan to email and Microsoft 365</a></li><li><a href="/tools/xerox-scan-to-email-microsoft-365/">Xerox scan to email and Microsoft 365</a></li><li><a href="/tools/brother-scan-to-email-microsoft-365/">Brother scan to email and Microsoft 365</a></li><li><a href="/tools/toshiba-scan-to-email-microsoft-365/">Toshiba scan to email and Microsoft 365</a></li><li><a href="/tools/lexmark-scan-to-email-microsoft-365/">Lexmark scan to email and Microsoft 365</a></li><li><a href="/tools/epson-scan-to-email-microsoft-365/">Epson scan to email and Microsoft 365</a></li><li><a href="/tools/smtp-5-7-139-basic-authentication-disabled/">5.7.139: basic authentication is disabled</a></li><li><a href="/tools/scan-to-email-smtp-office365-authentication/">Copier scan to email through smtp.office365.com</a></li><li><a href="/tools/microsoft-365-scan-to-email-options-compared/">Microsoft 365 scan to email: the options compared</a></li><li><a href="/tools/re-enable-smtp-auth-microsoft-365/">Turning SMTP AUTH back on for a copier</a></li><li><a href="/tools/microsoft-365-app-password-scan-to-email/">App passwords on copiers and Microsoft 365</a></li><li><a href="/tools/msp-scan-to-email-microsoft-365-rollout/">Scan to email across many client offices</a></li><li><a href="/tools/excel-to-iris-1099-nec-csv/">Spreadsheet to IRIS 1099-NEC CSV</a></li><li><a href="/tools/rent-1099-misc-iris-csv/">Rent 1099-MISC from a spreadsheet, for IRIS</a></li><li><a href="/tools/quickbooks-online-1099-nec-to-iris-csv/">QuickBooks Online to IRIS 1099-NEC CSV</a></li><li><a href="/tools/quickbooks-desktop-1099-nec-to-iris-csv/">QuickBooks Desktop to IRIS 1099-NEC CSV</a></li><li><a href="/tools/xero-1099-nec-to-iris-csv/">Xero to IRIS 1099-NEC CSV</a></li><li><a href="/tools/wave-1099-nec-to-iris-csv/">Wave to IRIS 1099-NEC CSV</a></li><li><a href="/tools/freshbooks-1099-nec-to-iris-csv/">FreshBooks to IRIS 1099-NEC CSV</a></li><li><a href="/tools/google-sheets-1099-nec-to-iris-csv/">Google Sheets to IRIS 1099-NEC CSV</a></li><li><a href="/tools/infopath-to-excel/">InfoPath forms to Excel</a></li><li><a href="/tools/export-infopath-forms-from-sharepoint/">Export InfoPath form data from SharePoint</a></li><li><a href="/tools/infopath-to-sharepoint-list/">Move InfoPath form data into a SharePoint list</a></li><li><a href="/tools/open-infopath-xml-without-infopath/">Open an InfoPath form without InfoPath</a></li><li><a href="/tools/open-mpp-file-without-microsoft-project/">How to open an MPP file without Microsoft Project</a></li><li><a href="/tools/mpp-viewer-mac/">Open MPP files on a Mac</a></li><li><a href="/tools/open-mpp-file-on-chromebook/">Open a Microsoft Project file on a Chromebook</a></li><li><a href="/tools/open-mpp-file-on-iphone/">Open a Microsoft Project file on an iPhone or iPad</a></li><li><a href="/tools/mpp-to-excel/">Convert a Microsoft Project file to Excel</a></li><li><a href="/tools/mpp-to-pdf/">Convert a Microsoft Project file to a PDF Gantt chart</a></li><li><a href="/tools/open-vsdx-file-without-visio/">How to open a VSDX file without Visio</a></li><li><a href="/tools/visio-viewer-mac/">Open Visio files on a Mac</a></li><li><a href="/tools/vsd-to-pdf/">Convert a Visio file to PDF without Visio</a></li><li><a href="/tools/open-vsdx-on-chromebook/">Open a Visio file on a Chromebook</a></li><li><a href="/tools/vsdx-to-png/">Convert a Visio drawing to PNG pictures</a></li><li><a href="/tools/open-vsd-file/">What is a VSD file, and how do you open one?</a></li><li><a href="/tools/open-vsdx-on-iphone/">Open a Visio file on iPhone or iPad</a></li><li><a href="/tools/fax-the-irs-from-your-phone/">How to fax the IRS from your phone</a></li><li><a href="/tools/fax-a-doctors-office-from-your-phone/">Fax a doctor's office from your phone</a></li><li><a href="/tools/send-a-fax-without-a-fax-machine/">Send a fax without a fax machine</a></li><li><a href="/tools/claude-connector/">Open Publisher, Visio, Project and InfoPath files in Claude</a></li><li><a href="/tools/claim-business-in-chatgpt/">How to claim your business in ChatGPT</a></li><li><a href="/tools/get-recommended-by-chatgpt/">How to get your business recommended by ChatGPT</a></li><li><a href="/tools/shopify-engraving-field-product-page/">How to add an engraving field to Shopify product pages</a></li><li><a href="/tools/shopify-gift-message-box-product/">How to add a gift message box to Shopify products</a></li><li><a href="/tools/shopify-required-option-before-add-to-cart/">How to make a Shopify product option required before Add to cart</a></li><li><a href="/tools/shopify-custom-text-field-no-code/">Shopify custom text field on the product page, without code</a></li></ul>
+  </nav>
+<p class="fine">Microsoft Publisher, Word and PowerPoint are trademarks of Microsoft; PageMaker and InDesign of Adobe; Canva and Affinity of Canva. I'm not affiliated with any of them.</p>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+        <p class="site-footer__blurb">Focused software built and sold by Tyler LeDuc in Phoenix, Arizona.</p>
+        <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+        <a class="site-footer__link site-footer__email" href="tel:+16233205633">(623) 320-5633</a>
+      </div>
+      <nav class="site-footer__col" aria-labelledby="footer-products">
+        <h2 class="site-footer__title" id="footer-products">Products</h2>
+        <a class="site-footer__link" href="/tools/scan-to-email-microsoft-365/">Scan Relay</a>
+        <a class="site-footer__link" href="/tools/tryon/demo/">Virtual try-on</a>
+        <a class="site-footer__link" href="/tools/publisher-converter/">Publisher converter</a>
+        <a class="site-footer__link" href="/tools/visio-viewer/">Visio Viewer</a>
+        <a class="site-footer__link" href="/tools/mpp-viewer/">MPP Viewer</a>
+        <a class="site-footer__link" href="/tools/infopath-to-excel/">InfoPath to Excel</a>
+        <a class="site-footer__link" href="/tools/fire-to-iris-1099-converter/">FIRE to IRIS converter</a>
+        <a class="site-footer__link" href="/saguaro-hours/">Saguaro Hours for Jira</a>
+        <a class="site-footer__link" href="/tools/">All products</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-company">
+        <h2 class="site-footer__title" id="footer-company">Company</h2>
+        <a class="site-footer__link" href="/about/">About</a>
+        <a class="site-footer__link" href="/games/">Games</a>
+        <a class="site-footer__link" href="/services/claude-workflow-setup/">Claude workflow setup</a>
+        <a class="site-footer__link" href="/tools/ai-visibility-check/">AI visibility check</a>
+        <a class="site-footer__link" href="/contact/">Contact</a>
+        <a class="site-footer__link" href="/site-map/">Site map</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-elsewhere">
+        <h2 class="site-footer__title" id="footer-elsewhere">Elsewhere</h2>
+        <a class="site-footer__link" href="https://github.com/Tyler-LeDuc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://raxeris.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-legal">
+        <h2 class="site-footer__title" id="footer-legal">Legal</h2>
+        <a class="site-footer__link" href="/privacy/">Privacy Policy</a>
+        <a class="site-footer__link" href="/terms/">Terms of Service</a>
+        <a class="site-footer__link" href="/refunds/">Refund Policy</a>
+        <button type="button" class="site-footer__link site-footer__button" data-cookie-settings>Cookie settings</button>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p>&copy; 2026 LeDuc Systems LLC, an Arizona limited liability company</p>
+      <p>Phoenix, Arizona</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

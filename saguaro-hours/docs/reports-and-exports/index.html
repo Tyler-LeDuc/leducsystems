@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reports and exports | Saguaro Hours for Jira</title>
+<meta name="description" content="Saguaro Hours for Jira documentation: Reports and exports.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/docs/reports-and-exports/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:title" content="Reports and exports"><meta property="og:description" content="Saguaro Hours for Jira documentation: Reports and exports.">
+<meta property="og:url" content="https://leducsystems.com/saguaro-hours/docs/reports-and-exports/"><meta property="og:image" content="https://leducsystems.com/saguaro-hours/img/01-weekly-grid.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav{display:flex;flex-wrap:wrap;gap:4px 16px}nav a{color:var(--muted);font-size:.95rem;white-space:nowrap}nav a:first-child{color:var(--ink);font-weight:600}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{overflow-x:auto}pre code{overflow-wrap:normal}
+.sg-app{margin:20px 0;padding:12px 16px;border-left:4px solid #1d6b4f;background:#fff;font-size:.95rem}.sg-app a{font-weight:600}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/">Saguaro Hours</a><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Reports and exports</h1>
+<p>Reports is a tab on the Saguaro Hours page, open to every user.</p>
+<h2>Run a report</h2>
+<ol>
+<li>Choose a range: this week, last week, this month, last month or custom.</li>
+<li>Optional filters: team, users, projects, projects to exclude, and a JQL filter.</li>
+<li>Group by one field, then optionally by a second: user, team, project, epic or parent, issue, issue type, label, billable, any attribute, or a Jira field (see below).</li>
+<li>Optional: add Jira fields as extra columns of the detail table and the Detail CSV and Excel exports.</li>
+<li>The screen shows totals per group, a grand total and a detail table.</li>
+</ol>
+<p>Regrouping after the report has loaded is instant, except to a Jira field the last run did not read: the screen then asks you to run the report again.</p>
+<p>On a short screen (a 1366 x 768 laptop, for example) the filters fold into one line after a run, so the results start near the top. The line says what the report holds (range, team, people, projects, JQL, grouping) and keeps Run report and the exports. Show filters opens them again; Hide filters folds them on any screen.</p>
+<h2>Filters</h2>
+<ul>
+<li>Projects: only these projects. Exclude projects: every project but these, so a site with 50 projects does not need 49 picked.</li>
+<li>JQL filter: only issues that match a JQL query you type, for example <code>component = Billing AND labels != internal</code> or the query of a saved Jira filter. Check asks Jira whether the query is valid and shows Jira's message if not. The report runs it the same way before it reads anything. An ORDER BY at the end is ignored. The query is added to the report's own conditions (the date range and the filters above), so it can narrow a report but never widen it. Brackets and quotes must be balanced.</li>
+<li>Only issues over estimate: keeps the issues whose time logged (by everyone, all time) is above their original estimate. It needs no new run and applies to the screen and every export.</li>
+<li>Every filter runs as you, so Jira's permissions decide what you see.</li>
+</ul>
+<h2>Jira fields</h2>
+<p>Group by and Extra detail columns list the Jira fields of your site that make sense as groups: select lists (single, multiple, radio, cascading), text, number, user pickers, labels-style fields, components, fix and affects versions, priority, status, resolution, sprint, assignee, reporter and creator, custom fields included. Dates, time tracking fields and rich text system fields are not listed.</p>
+<ul>
+<li>A field with several values (components, a multi-select, sprints) is grouped under one combined value, like labels, so totals never double count.</li>
+<li>Issues without a value are grouped under "Not set".</li>
+<li>The values are read in the same Jira search that finds the issues, so a field adds no extra calls.</li>
+<li>Up to 10 extra columns. They appear after the attribute columns and before Description. Reports without them export exactly the same columns as before.</li>
+</ul>
+<p>A long run shows how far it has got, an estimate of the time left once a few seconds have been timed, and a Cancel button. Cancel shows nothing from that run. The estimate is rough: a Jira rate limit wait or one very long issue moves it.</p>
+<h2>What counts</h2>
+<ul>
+<li>Hours are native Jira worklogs, read as you. You see worklogs on issues you can browse.</li>
+<li>Days are bucketed in your Jira time zone.</li>
+<li>A worklog with several labels, or a person in several teams, is placed under one combined label. Totals do not double count.</li>
+<li>The screen shows the first 500 detail rows. Exports include all rows, up to the 25,000 limit.</li>
+<li>A report holds up to 25,000 worklogs. Above that it stops and shows no totals, because partial totals would be wrong for billing. Narrow the date range, or filter by team, user, project or JQL, and run it again.</li>
+<li>If the billable and attribute data cannot be read, the screen warns you instead of showing everything as not billable.</li>
+</ul>
+<h2>Estimate versus logged</h2>
+<p>Grouped by issue, epic or parent, or project, the summary adds Jira's own time tracking figures:</p>
+<ul>
+<li>Estimate: the original estimate. Remaining: the remaining estimate. Logged all time: the time logged on the issue in Jira by everyone, at any date.</li>
+<li>Hours in range: what the report counted (your range and filters), next to Logged all time.</li>
+<li>% used: Logged all time on the issues that have an original estimate, as a share of that estimate. Over 100% is highlighted.</li>
+<li>An issue over its estimate is tagged "Over estimate"; a group says how many of its issues are. Detail rows carry the same tag.</li>
+<li>Each issue counts once in a group, however many people logged on it. An issue's own figures are used (Jira's, without its sub-tasks or, for an epic, its child issues), and a group adds up the issues in the report, that is the issues with worklogs in the range. An epic's own estimate counts only if work was logged on the epic itself.</li>
+<li>An issue without an estimate shows blanks, not zero, and is never over.</li>
+<li>Summary CSV and Excel gain Original estimate, Remaining estimate, Logged all time, % of estimate used and Issues over estimate columns for these groupings, and the Hours column is called "Hours in range". Other groupings export exactly as before.</li>
+<li>The figures are read in the same Jira search that finds the issues, so they add no calls.</li>
+</ul>
+<h2>Cost and revenue</h2>
+<p>Jira administrators set hourly rates on the admin page (Rates). Until any rate is set, reports show hours only, with a note saying where rates are added (no columns of $0.00). Once a rate is set, reports add money to the hours, for people allowed to see it:</p>
+<ul>
+<li>Cost: every hour at the person's cost rate on the worklog's day. A person's own cost rate comes first, then the default cost rate.</li>
+<li>Revenue: billable hours only, at the billing rate on the worklog's day. The rate of the worklog's value of the chosen attribute (for example Account = Client A) comes first, then its project's rate, then the default billing rate.</li>
+<li>Each rate starts on a day (or "from the start") and lasts until the next one. A rate change prices later work at the new rate and keeps earlier work at the old rate, so past months still add up the same.</li>
+<li>An hour with no rate on its day shows no amount, rather than a guess.</li>
+<li>The summary gains Cost and Revenue columns, grouped and sub-grouped like the hours, with totals. The detail table gains Cost and Revenue per worklog (the tooltip shows hours x rate). Summary CSV and Excel gain "Cost (USD)" and "Revenue (USD)" columns (in the site's currency); Detail CSV and Excel gain the cost rate, cost, billing rate and revenue of each worklog.</li>
+</ul>
+<p>Who sees money: Jira administrators, and the people an administrator lists under "Who can see money" on the admin page. Team leads are not added on their own, as approving time is a different job from seeing what it costs. Everyone else gets the same reports without any money column; the app never sends rates to them. A person who may see money still only sees it for worklogs Jira lets them see.</p>
+<h2>Billing summary</h2>
+<p>With money shown, Billing summary (next to the exports) turns the report into a one-page summary per project, or per value of an attribute such as Account: hours, billable hours, billing rate and amount (billable hours x rate), with a total. A rate change inside the range gives two lines for that project, one per rate, so each line can be checked by hand. You can change the title.</p>
+<ul>
+<li>Print opens your browser's print dialog with only the summary on the page, in dark text on white whatever your Jira theme. Choose "Save as PDF" there for a PDF.</li>
+<li>Download for printing (.html) saves the same summary as a file you can open and print from your browser.</li>
+<li>Billable hours with no billing rate are counted in the hours and named in a warning, and add nothing to the amount.</li>
+<li>The summary uses the report's range and filters: run the report for the client's period first. It is not an invoice: there is no invoice number, tax or accounting sync.</li>
+</ul>
+<h2>Saved reports</h2>
+<ul>
+<li>Save the current setup under a name. You can keep up to 50.</li>
+<li>Saved reports belong to you. Load, Update and Delete (with confirmation) are available.</li>
+<li>A preset range such as This week moves forward when you load it. A custom range stays fixed.</li>
+<li>The JQL filter, excluded projects, Jira field grouping, extra columns and the over-estimate filter are saved with the report. Reports saved before these options existed load as they were, with the new options empty.</li>
+</ul>
+<h2>Exports</h2>
+<ul>
+<li>Summary CSV.</li>
+<li>Detail CSV.</li>
+<li>Excel (.xlsx) with Summary and Detail sheets.</li>
+<li>Billing summary, printable (see above), for people allowed to see money.</li>
+</ul>
+<p>CSV files use UTF-8 with a byte order mark and CRLF line ends. Text that starts with =, +, - or @ gets a leading quote so a worklog description cannot run as a spreadsheet formula. The files are built in your browser and are not sent anywhere.</p>
+<h2>Limits</h2>
+<ul>
+<li>Up to 25,000 worklogs per report.</li>
+<li>If Jira keeps refusing with a rate limit after 90 seconds of waiting on one call, the report stops with a message and no table. It never shows part of the hours.</li>
+</ul>
+<p>Measured in our load test, on 300 issues with one person's worklogs and one viewer:</p>
+<ul>
+<li>A report of 4,644 worklogs took 15 to 18 seconds.</li>
+</ul>
+<p>Estimates, not measured. No report near 25,000 worklogs has been run. These figures are extrapolated from that load test of 5,970 worklogs, as about 4 ms per issue to search, 31 ms per issue to read and 1.1 ms per worklog for billable flags:</p>
+<table>
+<thead>
+<tr>
+<th>25,000 worklogs spread over</th>
+<th>Estimated time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1,600 issues</td>
+<td>1.5 minutes</td>
+</tr>
+<tr>
+<td>5,000 issues</td>
+<td>3.5 minutes</td>
+</tr>
+<tr>
+<td>25,000 issues</td>
+<td>15 minutes, and likely to meet Jira's rate limits</td>
+</tr>
+</tbody>
+</table>
+<p>Time depends mostly on the number of issues. Many people, several viewers at once and very large sites have not been measured.</p>
+<p>At 5 worklogs per person per working day, 25,000 is about 238 people for a month, 79 for a quarter and 19 for a year. These are arithmetic, not measurements. Larger ranges need a filter or a shorter range.</p>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> · <a href="/privacy#cookies" data-cookie-settings>Cookie settings</a></footer>
+<style>
+.sg-notify{margin:12px 0 20px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;max-width:560px}
+.sg-notify label{display:block;font-weight:600;margin-bottom:6px}.sg-notify .sg-row{display:flex;gap:8px;flex-wrap:wrap}
+.sg-notify input[type=email]{flex:1 1 220px;min-height:44px;font:inherit;padding:6px 10px;border:1px solid rgba(21,19,15,.4);border-radius:4px}
+.sg-notify button{min-height:44px;font:inherit;font-weight:600;padding:6px 16px;border:0;border-radius:4px;background:#1d6b4f;color:#fff;cursor:pointer}
+.sg-notify button[disabled]{opacity:.6;cursor:default}.sg-notify .sg-note{margin:8px 0 0;color:var(--muted);font-size:.9rem}
+.sg-notify .sg-status{margin:8px 0 0;font-weight:600}.sg-notify .sg-hp{position:absolute;left:-9999px}
+.sg-notify input:focus-visible,.sg-notify button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sg-notify [hidden]{display:none}
+</style>
+<script>
+(function () {
+  var DONE = 'sgLaunchList';
+  function track(name, params) { if (window.gtag) window.gtag('event', name, params); }
+  function done(form, msg) {
+    form.querySelector('.sg-row').hidden = true;
+    form.querySelector('.sg-note').hidden = true;
+    form.querySelector('label').hidden = true;
+    form.querySelector('.sg-status').textContent = msg;
+  }
+  function build(subject, n) {
+    var id = 'sg-email-' + n, f = document.createElement('form');
+    f.className = 'sg-notify';
+    f.noValidate = true;
+    f.innerHTML = '<label for="' + id + '">Your work email</label>'
+      + '<div class="sg-row"><input id="' + id + '" type="email" name="email" autocomplete="email" required placeholder="you@company.com">'
+      + '<button type="submit">Email me when it\'s live</button></div>'
+      + '<input class="sg-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
+      + '<p class="sg-note">One email on the day it is live on the Atlassian Marketplace. I use your address for nothing else and never share it.</p>'
+      + '<p class="sg-status" role="status" aria-live="polite"></p>';
+    var stored = null;
+    try { stored = window.localStorage.getItem(DONE + ':' + subject); } catch (e) {}
+    if (stored) { done(f, 'You are on the list (' + stored + '). I will email you the day it is live.'); return f; }
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = f.querySelector('input[type=email]'), btn = f.querySelector('button'), st = f.querySelector('.sg-status');
+      var email = input.value.trim();
+      if (f.querySelector('.sg-hp').value) return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { st.textContent = 'Enter a valid email address.'; input.focus(); return; }
+      btn.disabled = true;
+      st.textContent = 'Sending...';
+      fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: 'service_zeogjbm', template_id: 'template_mfizbds', user_id: 'HIVHympEPP7sMQ_Pl',
+          template_params: {
+            title: subject, name: email, email: email,
+            from_name: email, from_email: email, reply_to: email, to_email: 'tyler@leducsystems.com', subject: subject,
+            message: 'Launch list: please email me when it is live.\nEmail: ' + email + '\nPage: ' + location.pathname
+          }
+        })
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        try { window.localStorage.setItem(DONE + ':' + subject, email); } catch (e2) {}
+        track('generate_lead', { form: 'launch_list', list: subject, page_path: location.pathname });
+        done(f, 'Thanks. I will email ' + email + ' the day it is live.');
+      }).catch(function () {
+        btn.disabled = false;
+        st.innerHTML = 'That did not send. Please email <a href="mailto:tyler@leducsystems.com?subject=' + encodeURIComponent(subject) + '">tyler@leducsystems.com</a> with the subject "' + subject + '" instead.';
+      });
+    });
+    return f;
+  }
+  var n = 0;
+  [].slice.call(document.querySelectorAll('main a[href^="mailto:"]')).forEach(function (a) {
+    var m = /[?&]subject=([^&]*)/.exec(a.getAttribute('href'));
+    var subject = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+    if (!/ launch$/i.test(subject)) return;
+    a.addEventListener('click', function () { track('launch_list_mailto', { list: subject, page_path: location.pathname }); });
+    var block = a.closest('p, li') || a;
+    if (a.id === 'cta') a.style.display = 'none';
+    block.parentNode.insertBefore(build(subject, ++n), block.nextSibling);
+  });
+  // Approval day: every link to the Marketplace listing counts as a "get it" click.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com/apps/"]') : null;
+    if (a) track('marketplace_click', { link_url: a.href, page_path: location.pathname });
+  });
+})();
+</script>
+</body></html>

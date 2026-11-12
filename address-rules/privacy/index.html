@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy Policy: LeDuc Address Rules | LeDuc Systems</title>
+<meta name="description" content="How the LeDuc Address Rules Shopify app handles store and shopper data.">
+<link rel="canonical" href="https://leducsystems.com/address-rules/privacy/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px}header a img{height:28px}
+h1{font:600 2.2rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.35rem/1.3 Fraunces,Georgia,serif;margin:36px 0 8px}
+p,li{color:var(--ink)}.lede{font-size:1.15rem;color:var(--muted)}a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+footer{margin-top:56px;padding-bottom:40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a></header>
+<main>
+<h1>Privacy policy</h1>
+<p class="lede">LeDuc Address Rules ("the app") is a Shopify app made by LeDuc Systems LLC. This policy explains what data the app accesses and stores when a merchant installs it. Last updated November 5, 2026.</p>
+<h2>What the app accesses</h2>
+<ul>
+<li><strong>Checkout validations</strong> (write): to register the checkout rule that checks shipping addresses, and to store the merchant's rules on it.</li>
+<li><strong>Shop details</strong>: the store's domain, used to sign in to the app.</li>
+</ul>
+<p>The app does not access orders, customers, products, payments or analytics through Shopify's APIs.</p>
+<h2>Shopper data</h2>
+<p>During checkout, Shopify runs the app's checkout function inside Shopify's own infrastructure. Shopify gives the function the cart's shipping address (address lines, company, city, state, country and ZIP code), whether the delivery is shipping or pickup, and whether each product has the tag the merchant chose. The function compares the address with the merchant's rules and returns either nothing or a message to show next to a field. The shipping address is used only for this check.</p>
+<p>The function cannot make network requests, and it has no storage. Shipping addresses are never sent to the app's server, never stored by the app, and never shared. The app does not receive shopper names, emails, phone numbers or payment details. The admin page's "Test an address" box runs in the merchant's browser; what is typed there is not sent to the server.</p>
+<h2>What the app stores on its server</h2>
+<p>Only the Shopify session data needed to keep the merchant signed in to the app (shop domain, an access token issued by Shopify, and the granted permission scopes), plus a few setup flags for the store, such as whether the rules have been saved. The rules themselves are stored in the merchant's own Shopify store, on the checkout validation.</p>
+<h2>Sharing</h2>
+<p>Data is never sold or shared. The server is hosted by Hetzner Online in Germany and only runs the app.</p>
+<h2>Retention and deletion</h2>
+<p>When a merchant uninstalls the app, the session data is deleted right away. Shopify then sends a shop/redact request 48 hours later, and anything remaining for the store is deleted. Customer data requests and customer redaction requests are answered as having no data, because the app stores none.</p>
+<h2>Your rights and contact</h2>
+<p>To ask about or delete your data, email <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> or write to LeDuc Systems LLC, 17617 N 9th St #3031, Phoenix, AZ 85022, USA.</p>
+</main>
+<footer>LeDuc Systems LLC · <a href="/address-rules/">LeDuc Address Rules</a></footer>
+</body></html>

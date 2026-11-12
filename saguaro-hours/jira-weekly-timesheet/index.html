@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weekly timesheets in Jira, with a free Excel template</title>
+<meta name="description" content="Jira Cloud logs time per issue and has no weekly timesheet. Ways to see a person&#x27;s week, a free Excel template with totals, and a timesheet app.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/jira-weekly-timesheet/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:title" content="Weekly timesheets in Jira, with a free Excel template"><meta property="og:description" content="Jira Cloud logs time per issue and has no weekly timesheet. Ways to see a person&#x27;s week, a free Excel template with totals, and a timesheet app.">
+<meta property="og:url" content="https://leducsystems.com/saguaro-hours/jira-weekly-timesheet/"><meta property="og:image" content="https://leducsystems.com/saguaro-hours/img/01-weekly-grid.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav{display:flex;flex-wrap:wrap;gap:4px 16px}nav a{color:var(--muted);font-size:.95rem;white-space:nowrap}nav a:first-child{color:var(--ink);font-weight:600}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{overflow-x:auto}pre code{overflow-wrap:normal}
+.sg-app{margin:20px 0;padding:12px 16px;border-left:4px solid #1d6b4f;background:#fff;font-size:.95rem}.sg-app a{font-weight:600}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/">Saguaro Hours</a><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Weekly timesheets in Jira</h1>
+<p>A weekly timesheet is one person's week on one screen: a row per piece of work, a column per day, and totals. Jira Cloud logs time on each issue, one entry at a time, and does not show a person's week across issues. This page covers how to get that view without an app, a free Excel template, and how Saguaro Hours for Jira does it.</p>
+<aside class="sg-app"><strong>Saguaro Hours for Jira</strong>: weekly timesheets, team lead approval and billable reports on native Jira worklogs. Free for up to 10 users. <a href="/saguaro-hours/">See the app</a> or <a href="#launch">get one email when it is live</a>.</aside>
+<h2>What Jira gives you</h2>
+<p>You log time from an issue: open it, log work, enter the time spent, the date and a comment. Atlassian's time tracking pages describe that and the site settings (hours per day, days per week, display format), and say Marketplace apps can extend it. They describe no weekly view. Sources: "Log time on a work item" (<a href="https://support.atlassian.com/jira-software-cloud/docs/log-time-on-an-issue/">https://support.atlassian.com/jira-software-cloud/docs/log-time-on-an-issue/</a>, read 2026-11-03) and "Configure time tracking" (<a href="https://support.atlassian.com/jira-cloud-administration/docs/configure-time-tracking/">https://support.atlassian.com/jira-cloud-administration/docs/configure-time-tracking/</a>, read 2026-11-04).</p>
+<h2>Seeing your week without an app</h2>
+<ol>
+<li><strong>Find the issues.</strong> Search with JQL for the week, for example <code>worklogAuthor = currentUser() AND worklogDate &gt;= "2026-10-26" AND worklogDate &lt;= "2026-11-01"</code>, and save it as a filter.</li>
+<li><strong>Get the hours.</strong> The search lists issues, and its Time Spent column is each issue's total from everyone at any date. For your own hours per day, open each issue's Work log tab. More on this in <a href="/saguaro-hours/jira-worklog-report/">how to get a worklog report in Jira</a>.</li>
+<li><strong>Write them down.</strong> Many teams keep the week in a spreadsheet, then log it in Jira, or log in Jira and copy the totals into a spreadsheet for the manager.</li>
+</ol>
+<h2>Free Excel timesheet template</h2>
+<p><a href="/saguaro-hours/downloads/jira-weekly-timesheet-template.xlsx">Download the Jira weekly timesheet template (.xlsx)</a>. Free to use, copy and change. No sign-up.</p>
+<p>What is in it:</p>
+<ul>
+<li><strong>Timesheet sheet.</strong> Your name and the Monday of the week; the date of each day fills in. Columns: Issue key, Summary, Mon to Sun, Total, Billable. Twenty rows.</li>
+<li><strong>Totals.</strong> Each row's total, each day's total and the week's total, then billable hours (rows marked Yes), non-billable hours, your required hours (40 to start with; change it) and the hours still short.</li>
+<li><strong>Checks.</strong> Day cells take decimal hours from 0 to 24 (1.5 is 1 hour 30 minutes, 0.25 is 15 minutes). Billable is a Yes or No list.</li>
+<li><strong>Entries sheet.</strong> It turns the grid into one row per issue and day with hours: Issue key, Date, Hours, Billable, Description. Saved as CSV, that is the shape most time tracking imports read.</li>
+<li><strong>Instructions sheet.</strong> How to fill it in and how to save the entries as CSV.</li>
+</ul>
+<p>What a spreadsheet cannot do: the hours are not in Jira until someone logs them, and nothing stops a cell from changing after a manager signed the sheet off.</p>
+<h2>The weekly timesheet in Saguaro Hours</h2>
+<p>Saguaro Hours adds a My timesheet page to Jira. Rows are issues, columns are Monday to Sunday, with row, day and week totals.</p>
+<p><img alt="Log a week of work in one grid. Rows are issues, columns are days. Totals, a required-hours chip and a Submit button sit above." src="/saguaro-hours/img/01-weekly-grid.png" /></p>
+<ul>
+<li><strong>Type in a cell.</strong> 1.5, 1:30, 1h 30m and 90m all work. Enter saves. Each entry is a normal Jira worklog written as you, so Jira's Work log tab and <code>worklogAuthor</code> searches show it, and it stays in Jira if the app is removed.</li>
+<li><strong>Add rows.</strong> Type an issue key or words from the summary; the box suggests issues. Copy last week adds last week's rows without hours.</li>
+<li><strong>Billable.</strong> A small green $ marks a day with billable time. The Log work panel on each issue has the billable box and your own attributes.</li>
+<li><strong>Timer.</strong> Start a timer on an issue's Log work panel. My timesheet lists your timers with Pause, Resume and Stop and log, which opens a filled-in worklog.</li>
+<li><strong>Required hours.</strong> A chip shows, for example, "36.5h short of 40h". An administrator can set each person's hours per weekday (part-time) and enter holidays and days off, which lower the required hours.</li>
+<li><strong>Submit.</strong> When the week is done, Submit timesheet sends it to your team lead. A submitted week turns grey and read-only until it is approved or rejected. See <a href="/saguaro-hours/jira-timesheet-approval/">Jira timesheet approval</a>.</li>
+<li><strong>Reminder.</strong> A banner points to last week if it is short or not submitted. If an administrator turns them on, reminder emails go out through Jira's own mail.</li>
+</ul>
+<h3>Bring in the template, or another tracker's time</h3>
+<p>The Import tab of Saguaro Hours reads a CSV of your own time and writes each row as your Jira worklog. Save the template's Entries sheet as CSV and choose the file: the column names Issue key, Date, Hours, Billable and Description are recognised as they are (I checked this with the app's own parser on 2026-11-04). Before anything is written, a check skips rows already logged, days in a submitted or approved week, and issues you cannot see. The same tab reads CSV exports of other trackers and calendar files (.ics). Details: <a href="/saguaro-hours/docs/import-your-time/">Import your own time</a>.</p>
+<p>Full details of the grid: <a href="/saguaro-hours/docs/weekly-timesheet/">Weekly timesheet</a>.</p>
+<p><strong>Status:</strong> Saguaro Hours was submitted to the Atlassian Marketplace on 2026-11-03 and is waiting for approval. Everything above is built and tested on my development site as of 2026-11-04. The build under review has the grid, Copy last week, the billable mark, the required-hours chip with one figure for the site, Submit and the banner. It does not yet have the timer, per-person hours and holidays, reminder emails or the Import tab.</p>
+<h2>Related</h2>
+<ul>
+<li><a href="/saguaro-hours/jira-worklog-report/">How to get a worklog report in Jira Cloud</a></li>
+<li><a href="/saguaro-hours/jira-billable-hours/">Tracking billable hours in Jira</a></li>
+<li><a href="/saguaro-hours/jira-time-tracking-apps-compared/">Jira time tracking apps compared</a></li>
+<li><a href="/saguaro-hours/tempo-cost-calculator/">Tempo cost calculator</a></li>
+</ul>
+<h2 id="launch">Email me when it's live</h2>
+<p>Saguaro Hours is free for up to 10 users. <a href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch">Email me when it's live</a> and I will send one email on the day the listing is approved.</p>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> · <a href="/privacy#cookies" data-cookie-settings>Cookie settings</a></footer>
+<style>
+.sg-notify{margin:12px 0 20px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;max-width:560px}
+.sg-notify label{display:block;font-weight:600;margin-bottom:6px}.sg-notify .sg-row{display:flex;gap:8px;flex-wrap:wrap}
+.sg-notify input[type=email]{flex:1 1 220px;min-height:44px;font:inherit;padding:6px 10px;border:1px solid rgba(21,19,15,.4);border-radius:4px}
+.sg-notify button{min-height:44px;font:inherit;font-weight:600;padding:6px 16px;border:0;border-radius:4px;background:#1d6b4f;color:#fff;cursor:pointer}
+.sg-notify button[disabled]{opacity:.6;cursor:default}.sg-notify .sg-note{margin:8px 0 0;color:var(--muted);font-size:.9rem}
+.sg-notify .sg-status{margin:8px 0 0;font-weight:600}.sg-notify .sg-hp{position:absolute;left:-9999px}
+.sg-notify input:focus-visible,.sg-notify button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sg-notify [hidden]{display:none}
+</style>
+<script>
+(function () {
+  var DONE = 'sgLaunchList';
+  function track(name, params) { if (window.gtag) window.gtag('event', name, params); }
+  function done(form, msg) {
+    form.querySelector('.sg-row').hidden = true;
+    form.querySelector('.sg-note').hidden = true;
+    form.querySelector('label').hidden = true;
+    form.querySelector('.sg-status').textContent = msg;
+  }
+  function build(subject, n) {
+    var id = 'sg-email-' + n, f = document.createElement('form');
+    f.className = 'sg-notify';
+    f.noValidate = true;
+    f.innerHTML = '<label for="' + id + '">Your work email</label>'
+      + '<div class="sg-row"><input id="' + id + '" type="email" name="email" autocomplete="email" required placeholder="you@company.com">'
+      + '<button type="submit">Email me when it\'s live</button></div>'
+      + '<input class="sg-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
+      + '<p class="sg-note">One email on the day it is live on the Atlassian Marketplace. I use your address for nothing else and never share it.</p>'
+      + '<p class="sg-status" role="status" aria-live="polite"></p>';
+    var stored = null;
+    try { stored = window.localStorage.getItem(DONE + ':' + subject); } catch (e) {}
+    if (stored) { done(f, 'You are on the list (' + stored + '). I will email you the day it is live.'); return f; }
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = f.querySelector('input[type=email]'), btn = f.querySelector('button'), st = f.querySelector('.sg-status');
+      var email = input.value.trim();
+      if (f.querySelector('.sg-hp').value) return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { st.textContent = 'Enter a valid email address.'; input.focus(); return; }
+      btn.disabled = true;
+      st.textContent = 'Sending...';
+      fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: 'service_zeogjbm', template_id: 'template_mfizbds', user_id: 'HIVHympEPP7sMQ_Pl',
+          template_params: {
+            title: subject, name: email, email: email,
+            from_name: email, from_email: email, reply_to: email, to_email: 'tyler@leducsystems.com', subject: subject,
+            message: 'Launch list: please email me when it is live.\nEmail: ' + email + '\nPage: ' + location.pathname
+          }
+        })
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        try { window.localStorage.setItem(DONE + ':' + subject, email); } catch (e2) {}
+        track('generate_lead', { form: 'launch_list', list: subject, page_path: location.pathname });
+        done(f, 'Thanks. I will email ' + email + ' the day it is live.');
+      }).catch(function () {
+        btn.disabled = false;
+        st.innerHTML = 'That did not send. Please email <a href="mailto:tyler@leducsystems.com?subject=' + encodeURIComponent(subject) + '">tyler@leducsystems.com</a> with the subject "' + subject + '" instead.';
+      });
+    });
+    return f;
+  }
+  var n = 0;
+  [].slice.call(document.querySelectorAll('main a[href^="mailto:"]')).forEach(function (a) {
+    var m = /[?&]subject=([^&]*)/.exec(a.getAttribute('href'));
+    var subject = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+    if (!/ launch$/i.test(subject)) return;
+    a.addEventListener('click', function () { track('launch_list_mailto', { list: subject, page_path: location.pathname }); });
+    var block = a.closest('p, li') || a;
+    if (a.id === 'cta') a.style.display = 'none';
+    block.parentNode.insertBefore(build(subject, ++n), block.nextSibling);
+  });
+  // Approval day: every link to the Marketplace listing counts as a "get it" click.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com/apps/"]') : null;
+    if (a) track('marketplace_click', { link_url: a.href, page_path: location.pathname });
+  });
+})();
+</script>
+</body></html>

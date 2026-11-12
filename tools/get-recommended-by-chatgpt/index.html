@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Get Your Business Recommended by ChatGPT (Data From 119 Local Businesses)</title>
+<meta name="description" content="I asked ChatGPT 357 buyer questions about 119 local businesses. 73% were never named, and their own websites were cited in 2% of answers. What it reads instead, and what to fix.">
+<link rel="canonical" href="https://leducsystems.com/tools/get-recommended-by-chatgpt/">
+<meta property="og:title" content="How to Get Your Business Recommended by ChatGPT (Data From 119 Local Businesses)">
+<meta property="og:description" content="I asked ChatGPT 357 buyer questions about 119 local businesses. 73% were never named, and their own websites were cited in 2% of answers. What it reads instead, and what to fix.">
+<meta property="og:url" content="https://leducsystems.com/tools/get-recommended-by-chatgpt/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:image" content="https://leducsystems.com/images/og-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/fonts/plex.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Get Your Business Recommended by ChatGPT (Data From 119 Local Businesses)","description":"I asked ChatGPT 357 buyer questions about 119 local businesses. 73% were never named, and their own websites were cited in 2% of answers. What it reads instead, and what to fix.","url":"https://leducsystems.com/tools/get-recommended-by-chatgpt/","author":{"@type":"Person","name":"Tyler LeDuc"},"publisher":{"@type":"Organization","name":"LeDuc Systems"}}</script>
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-Cq7fBZ0f.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+    <nav class="nav" aria-label="Primary">
+      <ul><li><a class="nav__link nav__link--active" href="/tools/">Products</a></li><li><a class="nav__link" href="/about/">About</a></li><li><a class="nav__link" href="/contact/">Contact</a></li></ul>
+    </nav>
+    <div class="nav__actions">
+      <a class="site-btn site-btn--primary site-btn--sm site-header__cta" href="/contact/">Get in touch</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
+  <ul><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:60ms">Products</a></li><li><a class="mobile-menu__link" href="/about/" style="--menu-delay:105ms">About</a></li><li><a class="mobile-menu__link" href="/contact/" style="--menu-delay:150ms">Contact</a></li></ul>
+  <div class="mobile-menu__actions" style="--menu-delay:195ms">
+    <a class="site-btn site-btn--primary site-btn--lg" href="/contact/">Get in touch</a>
+    <a class="site-btn site-btn--ghost site-btn--lg" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+  </div>
+</nav>
+<script>
+(() => {
+  const b = document.querySelector('.menu-toggle'), m = document.getElementById('site-mobile-menu');
+  const set = (open) => {
+    b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    m.classList.toggle('mobile-menu--open', open); document.body.style.overflow = open ? 'hidden' : '';
+  };
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  matchMedia('(min-width: 861px)').addEventListener('change', (e) => { if (e.matches) set(false); });
+})();
+</script>
+<main id="main" tabindex="-1">
+  <section class="hero">
+    <h1>How to get your business recommended by ChatGPT</h1>
+    
+    <p class="lede">I asked ChatGPT &quot;best [business] in [city]&quot; style questions about 119 owner-run local businesses across 32 US cities. Most were never named. Here is what the answers were built from, and the fixes that follow from it.</p>
+  </section>
+  <p class="cta"><a class="btn" href="/tools/ai-visibility-check/">Check your business free</a> <span>Asks ChatGPT real buyer questions for your city. Results in a few minutes.</span></p>
+  <article class="guide">
+<h2>What I tested</h2>
+<p>In November 2026 I picked 119 owner-run local businesses in 11 categories (med spas, dentists, orthodontists, vets, roofers, plumbers, HVAC, chiropractors, wedding venues, personal injury and family law firms) across 32 US cities. For each one I asked ChatGPT three buyer questions such as "best med spa in Tempe" and "who is the most recommended dentist in Gilbert?", using OpenAI's API with web search turned on. That is 357 answers. I then checked whether each business was named and which websites each answer cited.</p>
+<p>It's a snapshot, not a census. The businesses were ones I chose to contact, so they lean small and independent, and AI answers change from one run to the next.</p>
+
+<h2>What I found</h2>
+<ul>
+  <li><b>87 of 119 businesses (73%) were not named in any of their three answers.</b> Only 6 (5%) were named every time.</li>
+  <li><b>Each answer named about 5 businesses.</b> The same few names came back across different wordings of the question.</li>
+  <li><b>The business's own website was cited in 8 of 357 answers (2%).</b> The answers leaned on other sites instead.</li>
+  <li><b>Review and "best of" directories did most of the work.</b> Birdeye review pages were cited in 92 answers (26%). Next came "ranked" and "best pros" directory sites, Reddit, Ratings Near Me, and category sites like Avvo, WeddingWire, Angi, Healthgrades and Zocdoc.</li>
+</ul>
+<table>
+  <thead><tr><th>Category</th><th>Businesses</th><th>Never named</th></tr></thead>
+  <tbody>
+    <tr><td>Family law attorney</td><td>8</td><td>88%</td></tr>
+    <tr><td>Chiropractor</td><td>7</td><td>86%</td></tr>
+    <tr><td>Roofer</td><td>12</td><td>83%</td></tr>
+    <tr><td>Med spa</td><td>14</td><td>79%</td></tr>
+    <tr><td>Plumber</td><td>9</td><td>78%</td></tr>
+    <tr><td>Dentist</td><td>13</td><td>77%</td></tr>
+    <tr><td>Orthodontist</td><td>12</td><td>75%</td></tr>
+    <tr><td>Personal injury lawyer</td><td>10</td><td>70%</td></tr>
+    <tr><td>Veterinarian</td><td>13</td><td>69%</td></tr>
+    <tr><td>HVAC company</td><td>9</td><td>56%</td></tr>
+    <tr><td>Wedding venue</td><td>12</td><td>50%</td></tr>
+  </tbody>
+</table>
+
+<h2>The sites ChatGPT cited, by category</h2>
+<p>These are the sites linked most often in the answers for each category, with the number of answers (out of the category's total) that cited each one. If your category is here, these are the first places to check that you're listed, reviewed and accurate.</p>
+<table>
+  <thead><tr><th>Category</th><th>Most-cited sites (answers citing them)</th></tr></thead>
+  <tbody>
+    <tr><td>Med spa (42 answers)</td><td>nobsmedspareviews.com (24), medicalspalocator.com (13), Birdeye reviews (13), thecliniccompass.com (13), medspascout.com (12)</td></tr>
+    <tr><td>Dentist (39)</td><td>dentistsranked.com (12), Birdeye reviews (11), localdentalclinics.net (10), Zocdoc (6), Opencare (5)</td></tr>
+    <tr><td>Orthodontist (36)</td><td>dentistsranked.com (16), localdentalclinics.net (12), nationalorthodonticregistry.com (12), Healthgrades (10), Birdeye reviews (9)</td></tr>
+    <tr><td>Veterinarian (39)</td><td>Birdeye reviews (11), Ratings Near Me (11), waghelp.com (10), animalfriendsos.com (6), vetreceipt.com (5)</td></tr>
+    <tr><td>Chiropractor (21)</td><td>Birdeye reviews (10), healthhives.com (6), bestprosintown.com (6), Zocdoc (5), medximity.com (4)</td></tr>
+    <tr><td>Roofer (36)</td><td>contractorsranked.com (19), theroofingbrief.com (11), Birdeye reviews (10), Angi (8), bestprosintown.com (7)</td></tr>
+    <tr><td>Plumber (27)</td><td>contractorsranked.com (10), 5starhomeservicepros.com (7), bestprosintown.com (7), Reddit (6), Angi (6)</td></tr>
+    <tr><td>HVAC company (27)</td><td>contractorsranked.com (15), Angi (7), Birdeye reviews (7), Reddit (7), cityvetted.com (6)</td></tr>
+    <tr><td>Family law attorney (24)</td><td>Super Lawyers (17), Avvo (13), Birdeye reviews (7), Best Lawyers (5), Expertise.com (4)</td></tr>
+    <tr><td>Personal injury lawyer (30)</td><td>Avvo (10), Ratings Near Me (9), Birdeye reviews (9), bestinhood.com (9), lawleaderboard.com (8)</td></tr>
+    <tr><td>Wedding venue (36)</td><td>WeddingWire (22), mikla.ai (11), The Knot (11), Zola (10), Green Bow Tie (5)</td></tr>
+  </tbody>
+</table>
+<p>Two patterns stand out. Home services lean on "ranked" contractor directories more than on Google reviews, and lawyers lean on Super Lawyers and Avvo profiles. Birdeye review pages are among the most-cited sites in 9 of the 11 categories.</p>
+
+<h2>Why a good business still gets left out</h2>
+<p>ChatGPT with web search doesn't know your business the way a regular customer does. It runs a few searches, reads the pages that come back, and names whoever those pages agree on. Those pages are mostly lists and review hubs: "top 10 dentists in Gilbert", a Birdeye or Yelp profile, a Reddit thread, a state bar or Healthgrades listing. If you aren't on the lists it finds, or your profiles there are thin, you don't get named, however good your work is.</p>
+
+<h2>What to fix, in order</h2>
+<ol>
+  <li><b>Find out which questions you're missing from.</b> Ask the questions your customers would ask, in your city, several times. One answer proves little; a pattern across questions does. My <a href="../ai-visibility-check/">free check</a> does this and shows who gets named instead.</li>
+  <li><b>Look at the sources the answers cite for your category, and get onto them.</b> If the answers for your city keep citing the same two directories and a Reddit thread, those are the places to be listed, reviewed and accurate. Claim the free profiles, fill them in completely, and ask happy customers for reviews there.</li>
+  <li><b>Claim your business in ChatGPT.</b> Since November 10, 2026 OpenAI lets businesses claim their details and see their mentions. It won't make ChatGPT name you more often, but it keeps your details right and shows you the numbers. <a href="../claim-business-in-chatgpt/">How it works</a>.</li>
+  <li><b>Keep your name, address and phone identical everywhere.</b> When your listings disagree, it's harder for anything, AI included, to be sure they're the same business.</li>
+  <li><b>Say what you do and where, in plain words, on your home page.</b> "Family law attorney in Mesa, Arizona" beats a slogan. Add a short FAQ that answers the questions buyers actually ask.</li>
+  <li><b>Add LocalBusiness schema</b> (the specific type, such as Dentist or Plumber) with your name, address, phone, hours and service area.</li>
+  <li><b>Don't block AI crawlers by accident.</b> Check your robots.txt for rules that block GPTBot, OAI-SearchBot or similar bots, unless you meant to.</li>
+  <li><b>Re-check after a few weeks.</b> Directories and reviews take time to be picked up. Measure again before deciding anything worked.</li>
+</ol>
+
+<h2>What nobody can promise</h2>
+<p>No one controls what an AI says, and anyone who guarantees you'll be named is guessing. What you can control is whether the sources it reads have accurate, well-reviewed information about you. That's the job.</p>
+
+<h2>Want it done for you?</h2>
+<p>The <a href="../ai-visibility-check/">free check</a> asks a few questions and shows the pattern. The <a href="../ai-visibility-check/#audit">full audit ($149)</a> asks 50 buyer questions, lists every business named in your market and the sources behind them, checks your website and listings, and gives you the fix list in order, by email with no call.</p>
+  </article>
+  <p class="cta"><a class="btn" href="/tools/ai-visibility-check/">Check your business free</a> <span>Asks ChatGPT real buyer questions for your city. Results in a few minutes.</span></p>
+  <nav class="more" aria-label="More guides">
+    <h2>More guides</h2>
+    <ul class="guides"><li><a href="/tools/publisher-files-after-retirement/">Publisher is gone. What do you do with your .pub files?</a></li><li><a href="/tools/publisher-to-word/">Converting a Publisher file to Word</a></li><li><a href="/tools/make-a-newsletter-in-word-like-publisher/">Making a newsletter in Word when you used to use Publisher</a></li><li><a href="/tools/move-church-bulletin-from-publisher-to-canva/">Moving a bulletin or newsletter from Publisher to Canva</a></li><li><a href="/tools/publisher-to-google-docs/">Getting a Publisher file into Google Docs</a></li><li><a href="/tools/publisher-alternatives/">What to use now that Publisher is gone</a></li><li><a href="/tools/convert-publisher-files-in-bulk/">Converting a whole folder of Publisher files</a></li><li><a href="/tools/open-old-pagemaker-files/">Opening old PageMaker files today</a></li><li><a href="/tools/wrap-text-around-picture-in-powerpoint/">Wrapping text around a picture in PowerPoint</a></li><li><a href="/tools/microsoft-365-scan-to-email-basic-auth-2026/">Scan to email and Microsoft 365 after December 2026</a></li><li><a href="/tools/correct-fire-1099-after-november-19-iris/">Correcting 1099s filed through FIRE after November 19, 2026</a></li><li><a href="/tools/irs-fire-system-retirement-iris/">The IRS FIRE system is closing: how to file 1099s through IRIS</a></li><li><a href="/tools/iris-1098-csv-template/">The IRIS 1098 CSV template, column by column</a></li><li><a href="/tools/iris-1099-nec-csv-template/">The IRIS 1099-NEC CSV template, column by column</a></li><li><a href="/tools/iris-1099-misc-csv-template/">The IRIS 1099-MISC CSV template, column by column</a></li><li><a href="/tools/iris-1099-int-csv-template/">The IRIS 1099-INT CSV template, column by column</a></li><li><a href="/tools/iris-1099-div-csv-template/">The IRIS 1099-DIV CSV template, column by column</a></li><li><a href="/tools/iris-1099-r-csv-template/">The IRIS 1099-R CSV template, column by column</a></li><li><a href="/tools/iris-1098-t-csv-template/">The IRIS 1098-T CSV template, column by column</a></li><li><a href="/tools/iris-1099-s-csv-template/">The IRIS 1099-S CSV template, column by column</a></li><li><a href="/tools/iris-1099-g-csv-template/">The IRIS 1099-G CSV template, column by column</a></li><li><a href="/tools/iris-1099-k-csv-template/">The IRIS 1099-K CSV template, column by column</a></li><li><a href="/tools/iris-w-2g-csv-template/">The IRIS W-2G CSV template, column by column</a></li><li><a href="/tools/will-scan-to-email-break-microsoft-365/">Will your copier's scan to email break?</a></li><li><a href="/tools/microsoft-365-scan-to-email-domain-checker/">Is this domain on Microsoft 365?</a></li><li><a href="/tools/scan-relay-resellers/">Scan Relay for copier dealers and IT providers</a></li><li><a href="/tools/ricoh-scan-to-email-microsoft-365/">Ricoh scan to email and Microsoft 365</a></li><li><a href="/tools/canon-scan-to-email-microsoft-365/">Canon scan to email and Microsoft 365</a></li><li><a href="/tools/sharp-scan-to-email-microsoft-365/">Sharp scan to email and Microsoft 365</a></li><li><a href="/tools/konica-minolta-scan-to-email-microsoft-365/">Konica Minolta scan to email and Microsoft 365</a></li><li><a href="/tools/kyocera-scan-to-email-microsoft-365/">Kyocera scan to email and Microsoft 365</a></li><li><a href="/tools/hp-scan-to-email-microsoft-365/">HP scan to email and Microsoft 365</a></li><li><a href="/tools/xerox-scan-to-email-microsoft-365/">Xerox scan to email and Microsoft 365</a></li><li><a href="/tools/brother-scan-to-email-microsoft-365/">Brother scan to email and Microsoft 365</a></li><li><a href="/tools/toshiba-scan-to-email-microsoft-365/">Toshiba scan to email and Microsoft 365</a></li><li><a href="/tools/lexmark-scan-to-email-microsoft-365/">Lexmark scan to email and Microsoft 365</a></li><li><a href="/tools/epson-scan-to-email-microsoft-365/">Epson scan to email and Microsoft 365</a></li><li><a href="/tools/smtp-5-7-139-basic-authentication-disabled/">5.7.139: basic authentication is disabled</a></li><li><a href="/tools/scan-to-email-smtp-office365-authentication/">Copier scan to email through smtp.office365.com</a></li><li><a href="/tools/microsoft-365-scan-to-email-options-compared/">Microsoft 365 scan to email: the options compared</a></li><li><a href="/tools/re-enable-smtp-auth-microsoft-365/">Turning SMTP AUTH back on for a copier</a></li><li><a href="/tools/microsoft-365-app-password-scan-to-email/">App passwords on copiers and Microsoft 365</a></li><li><a href="/tools/msp-scan-to-email-microsoft-365-rollout/">Scan to email across many client offices</a></li><li><a href="/tools/scan-relay-security/">How Scan Relay handles your mail</a></li><li><a href="/tools/excel-to-iris-1099-nec-csv/">Spreadsheet to IRIS 1099-NEC CSV</a></li><li><a href="/tools/rent-1099-misc-iris-csv/">Rent 1099-MISC from a spreadsheet, for IRIS</a></li><li><a href="/tools/quickbooks-online-1099-nec-to-iris-csv/">QuickBooks Online to IRIS 1099-NEC CSV</a></li><li><a href="/tools/quickbooks-desktop-1099-nec-to-iris-csv/">QuickBooks Desktop to IRIS 1099-NEC CSV</a></li><li><a href="/tools/xero-1099-nec-to-iris-csv/">Xero to IRIS 1099-NEC CSV</a></li><li><a href="/tools/wave-1099-nec-to-iris-csv/">Wave to IRIS 1099-NEC CSV</a></li><li><a href="/tools/freshbooks-1099-nec-to-iris-csv/">FreshBooks to IRIS 1099-NEC CSV</a></li><li><a href="/tools/google-sheets-1099-nec-to-iris-csv/">Google Sheets to IRIS 1099-NEC CSV</a></li><li><a href="/tools/infopath-to-excel/">InfoPath forms to Excel</a></li><li><a href="/tools/export-infopath-forms-from-sharepoint/">Export InfoPath form data from SharePoint</a></li><li><a href="/tools/infopath-to-sharepoint-list/">Move InfoPath form data into a SharePoint list</a></li><li><a href="/tools/open-infopath-xml-without-infopath/">Open an InfoPath form without InfoPath</a></li><li><a href="/tools/open-mpp-file-without-microsoft-project/">How to open an MPP file without Microsoft Project</a></li><li><a href="/tools/mpp-viewer-mac/">Open MPP files on a Mac</a></li><li><a href="/tools/open-mpp-file-on-chromebook/">Open a Microsoft Project file on a Chromebook</a></li><li><a href="/tools/open-mpp-file-on-iphone/">Open a Microsoft Project file on an iPhone or iPad</a></li><li><a href="/tools/mpp-to-excel/">Convert a Microsoft Project file to Excel</a></li><li><a href="/tools/mpp-to-pdf/">Convert a Microsoft Project file to a PDF Gantt chart</a></li><li><a href="/tools/open-vsdx-file-without-visio/">How to open a VSDX file without Visio</a></li><li><a href="/tools/visio-viewer-mac/">Open Visio files on a Mac</a></li><li><a href="/tools/vsd-to-pdf/">Convert a Visio file to PDF without Visio</a></li><li><a href="/tools/open-vsdx-on-chromebook/">Open a Visio file on a Chromebook</a></li><li><a href="/tools/vsdx-to-png/">Convert a Visio drawing to PNG pictures</a></li><li><a href="/tools/open-vsd-file/">What is a VSD file, and how do you open one?</a></li><li><a href="/tools/open-vsdx-on-iphone/">Open a Visio file on iPhone or iPad</a></li><li><a href="/tools/fax-the-irs-from-your-phone/">How to fax the IRS from your phone</a></li><li><a href="/tools/fax-a-doctors-office-from-your-phone/">Fax a doctor's office from your phone</a></li><li><a href="/tools/send-a-fax-without-a-fax-machine/">Send a fax without a fax machine</a></li><li><a href="/tools/claude-connector/">Open Publisher, Visio, Project and InfoPath files in Claude</a></li><li><a href="/tools/claim-business-in-chatgpt/">How to claim your business in ChatGPT</a></li><li><a href="/tools/shopify-engraving-field-product-page/">How to add an engraving field to Shopify product pages</a></li><li><a href="/tools/shopify-gift-message-box-product/">How to add a gift message box to Shopify products</a></li><li><a href="/tools/shopify-required-option-before-add-to-cart/">How to make a Shopify product option required before Add to cart</a></li><li><a href="/tools/shopify-custom-text-field-no-code/">Shopify custom text field on the product page, without code</a></li></ul>
+  </nav>
+<p class="fine">ChatGPT is a trademark of OpenAI. I am not affiliated with OpenAI or any site named here.</p>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+        <p class="site-footer__blurb">Focused software built and sold by Tyler LeDuc in Phoenix, Arizona.</p>
+        <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+        <a class="site-footer__link site-footer__email" href="tel:+16233205633">(623) 320-5633</a>
+      </div>
+      <nav class="site-footer__col" aria-labelledby="footer-products">
+        <h2 class="site-footer__title" id="footer-products">Products</h2>
+        <a class="site-footer__link" href="/tools/scan-to-email-microsoft-365/">Scan Relay</a>
+        <a class="site-footer__link" href="/tools/tryon/demo/">Virtual try-on</a>
+        <a class="site-footer__link" href="/tools/publisher-converter/">Publisher converter</a>
+        <a class="site-footer__link" href="/tools/visio-viewer/">Visio Viewer</a>
+        <a class="site-footer__link" href="/tools/mpp-viewer/">MPP Viewer</a>
+        <a class="site-footer__link" href="/tools/infopath-to-excel/">InfoPath to Excel</a>
+        <a class="site-footer__link" href="/tools/fire-to-iris-1099-converter/">FIRE to IRIS converter</a>
+        <a class="site-footer__link" href="/saguaro-hours/">Saguaro Hours for Jira</a>
+        <a class="site-footer__link" href="/tools/">All products</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-company">
+        <h2 class="site-footer__title" id="footer-company">Company</h2>
+        <a class="site-footer__link" href="/about/">About</a>
+        <a class="site-footer__link" href="/games/">Games</a>
+        <a class="site-footer__link" href="/services/claude-workflow-setup/">Claude workflow setup</a>
+        <a class="site-footer__link" href="/tools/ai-visibility-check/">AI visibility check</a>
+        <a class="site-footer__link" href="/contact/">Contact</a>
+        <a class="site-footer__link" href="/site-map/">Site map</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-elsewhere">
+        <h2 class="site-footer__title" id="footer-elsewhere">Elsewhere</h2>
+        <a class="site-footer__link" href="https://github.com/Tyler-LeDuc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://raxeris.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-legal">
+        <h2 class="site-footer__title" id="footer-legal">Legal</h2>
+        <a class="site-footer__link" href="/privacy/">Privacy Policy</a>
+        <a class="site-footer__link" href="/terms/">Terms of Service</a>
+        <a class="site-footer__link" href="/refunds/">Refund Policy</a>
+        <button type="button" class="site-footer__link site-footer__button" data-cookie-settings>Cookie settings</button>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p>&copy; 2026 LeDuc Systems LLC, an Arizona limited liability company</p>
+      <p>Phoenix, Arizona</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

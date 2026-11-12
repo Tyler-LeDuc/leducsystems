@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Send Delay commands</title>
+  <!-- Browser runtime for Outlook on the web, new Outlook on Windows and Mac: event handlers and function commands. -->
+  <script>
+    // Diagnostics: report load steps and errors to the console and the host page (no data leaves the browser).
+    (function () {
+      function post(line) {
+        try { console.log("[SendDelay] " + line); } catch (e) {}
+        try { if (window.parent !== window) window.parent.postMessage({ source: "send-delay", line: line }, "*"); } catch (e) {}
+      }
+      window.SendDelayPost = post;
+      window.addEventListener("error", function (e) { post("page error: " + (e.message || e.type) + " " + (e.filename || "") + ":" + (e.lineno || "")); });
+      window.addEventListener("unhandledrejection", function (e) { post("unhandled rejection: " + ((e.reason && e.reason.message) || e.reason)); });
+      post("commands.html 1.0.0+mw44ehh4 loaded");
+    })();
+  </script>
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <script src="launchevent.js?v=mw44ehh4"></script>
+  <script>
+    if (typeof Office !== "undefined" && Office.onReady) {
+      Office.onReady(function (info) { window.SendDelayPost("Office.onReady host=" + (info && info.host)); });
+    } else {
+      window.SendDelayPost("office.js missing");
+    }
+  </script>
+</head>
+<body></body>
+</html>

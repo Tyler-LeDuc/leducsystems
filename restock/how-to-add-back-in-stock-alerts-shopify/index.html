@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to add back in stock notifications to Shopify | LeDuc Systems</title>
+<meta name="description" content="How to add a back in stock notification and a Notify me button to your Shopify store, by hand or with LeDuc Restock Alerts.">
+<link rel="canonical" href="https://leducsystems.com/restock/how-to-add-back-in-stock-alerts-shopify/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px}header a img{height:28px}
+h1{font:600 2.2rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.35rem/1.3 Fraunces,Georgia,serif;margin:36px 0 8px}
+p,li{color:var(--ink)}.lede{font-size:1.15rem;color:var(--muted)}a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{border:1px solid var(--line);border-radius:6px;padding:18px 20px;background:#fff;margin:16px 0}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}footer{margin-top:56px;padding-bottom:40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+thead th{background:#EFEDE7;font-weight:600}tbody th{font-weight:500}
+.note{color:var(--muted);font-size:.9rem}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How much does it cost?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Free for 50 alerts a month, with every feature. Pro is $9.99/month with a 14-day free trial, for unlimited alerts. Plans are billed through Shopify."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Do I need to edit my theme code?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. It's a theme app extension, so you turn it on from the app and save your theme, and it removes cleanly."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How fast do the emails go out?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Within seconds of a restock, since Shopify notifies the app when inventory changes. Every waiting item is also re-checked every 10 minutes."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Who is the email from?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Your store name. Replies go to your inbox."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a></header>
+<main>
+<h1>How to add back in stock notifications to Shopify</h1>
+<p class="lede">I'm Tyler, and I make LeDuc Restock Alerts. To add a back in stock notification on Shopify, you need a Notify me button on sold-out variants, a place to keep the emails people leave, and something that emails them when stock returns. Shopify themes don't do that on their own, so this page covers the manual way and the app way.</p>
+
+<h2>The built-in way</h2>
+<p>Out of the box, a Shopify theme shows a sold-out variant as "Sold out" and disables the Add to cart button. It doesn't ask the shopper for an email address, and it doesn't send anything when you restock.</p>
+<p>You can do it by hand: add a contact form or a sign-up form to the product page, collect the emails, and when you add inventory, write to those people yourself. That works for a handful of products. It stops working when you have many sold-out variants, because you have to keep track of which shopper wanted which size or colour and email each of them every time.</p>
+<p>The other route is an app that adds the button and sends the emails. That's what I built.</p>
+
+<h2>With LeDuc Restock Alerts</h2>
+<ol>
+<li>Install the app from the Shopify App Store.</li>
+<li>On the app's home page, click <strong>Turn it on</strong>, then save your theme. A "Notify me when available" button now appears under Add to cart when the chosen variant is sold out. There are no theme code edits.</li>
+<li>A shopper picks the sold-out variant, clicks <strong>Notify me when available</strong> and leaves their email.</li>
+<li>When the variant is back in stock, the app emails them with the product photo and a link straight to the item. Shopify's inventory updates trigger alerts within seconds, and every waiting item is re-checked every 10 minutes as a safety net, so a missed update delays an alert instead of losing it.</li>
+<li>Optional: in <strong>Email settings</strong>, set the sender name, reply-to address and subject line. Emails show your store name as the sender, and replies go to your inbox.</li>
+<li>Check the app's home page. It shows when stock was last checked, every alert sent, and a <strong>Most wanted</strong> list of the sold-out items shoppers are waiting for.</li>
+</ol>
+
+<h2>FAQ</h2>
+<div class="card"><strong>How much does it cost?</strong><br>Free for 50 alerts a month, with every feature. Pro is $9.99/month with a 14-day free trial, for unlimited alerts. Plans are billed through Shopify.</div>
+<div class="card"><strong>Do I need to edit my theme code?</strong><br>No. It's a theme app extension, so you turn it on from the app and save your theme, and it removes cleanly.</div>
+<div class="card"><strong>How fast do the emails go out?</strong><br>Within seconds of a restock, since Shopify notifies the app when inventory changes. Every waiting item is also re-checked every 10 minutes.</div>
+<div class="card"><strong>Who is the email from?</strong><br>Your store name. Replies go to your inbox.</div>
+
+<h2>Get it</h2>
+<p>LeDuc Restock Alerts is coming to the Shopify App Store; the app's page will link to its listing once it is approved.</p>
+<p>More on setup and pricing is on the <a href="/restock/">LeDuc Restock Alerts page</a>. If you already use another back in stock app, see how I compare with <a href="/restock/vs-back-in-stock-appikon/">Back in Stock (Appikon)</a> and <a href="/restock/vs-notify-me/">Notify Me!</a>.</p>
+<p>Questions? Email me at <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
+</main>
+<footer>LeDuc Systems LLC · <a href="/tools/">Tools</a></footer>
+</body></html>

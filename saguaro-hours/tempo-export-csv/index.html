@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to export Tempo worklogs to CSV | Saguaro Hours</title>
+<meta name="description" content="Export Tempo Timesheets worklogs to CSV: the menu path, the View Worklogs permission that keeps everyone in the file, and what each column means.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/tempo-export-csv/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:title" content="How to export Tempo worklogs to CSV | Saguaro Hours"><meta property="og:description" content="Export Tempo Timesheets worklogs to CSV: the menu path, the View Worklogs permission that keeps everyone in the file, and what each column means.">
+<meta property="og:url" content="https://leducsystems.com/saguaro-hours/tempo-export-csv/"><meta property="og:image" content="https://leducsystems.com/saguaro-hours/img/01-weekly-grid.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav{display:flex;flex-wrap:wrap;gap:4px 16px}nav a{color:var(--muted);font-size:.95rem;white-space:nowrap}nav a:first-child{color:var(--ink);font-weight:600}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{overflow-x:auto}pre code{overflow-wrap:normal}
+.sg-app{margin:20px 0;padding:12px 16px;border-left:4px solid #1d6b4f;background:#fff;font-size:.95rem}.sg-app a{font-weight:600}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/">Saguaro Hours</a><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>How to export Tempo worklogs to CSV</h1>
+<p>You may want Tempo's worklogs in a file for a backup, for billing in a spreadsheet, or to move to another app. Tempo's Logged Time report has a raw data export that gives one row per worklog. This page gives the steps, the permission that decides whose time is in the file, and what the columns mean.</p>
+<p>I checked these steps on 2026-11-03 with "Timesheets by Tempo - Jira Time Tracking" on a Jira Cloud test site. Tempo changes its screens often, so a menu name may have moved since.</p>
+<aside class="sg-app"><strong>Saguaro Hours for Jira</strong>: weekly timesheets, team lead approval and billable reports on native Jira worklogs. Free for up to 10 users. <a href="/saguaro-hours/">See the app</a> or <a href="#launch">get one email when it is live</a>.</aside>
+<h2>Before you export: make sure everyone is in the file</h2>
+<p>Tempo exports only the worklogs you are allowed to view in Tempo. Being a Jira administrator does not give you that, and the export does not warn about the rows it leaves out.</p>
+<ol>
+<li>Open Tempo, then Settings, then Permission Roles.</li>
+<li>Choose Add permission role and tick View Worklogs.</li>
+<li>Add yourself under Add users, keep Role access on All resources, and save.</li>
+</ol>
+<p>After exporting, compare the people in the file with the people you expect.</p>
+<h2>Export the raw data</h2>
+<ol>
+<li>In Jira, open Tempo from the Apps menu, then Reports.</li>
+<li>Under Logged Time, choose Create Report, then Create. The grouping does not matter for the export.</li>
+<li>Set the date range at the top left to cover the history you want, and press Apply.</li>
+<li>Press Export at the top right and choose Download Raw Data.</li>
+<li>In "Select export option", press the CSV icon (the third icon). "Include Approval Status" can be on or off.</li>
+</ol>
+<p>Tempo saves a file named like <code>Report_01_Oct_26_30_Nov_26_Raw_Data_Logged_Time.csv</code>. The file is UTF-8 with commas. The XLS and XLSX icons give Excel files instead.</p>
+<p>Tip: keep the original CSV. If you open it in Excel and save it again, Excel may rewrite the dates and number formats.</p>
+<h2>What the columns mean</h2>
+<p>Column names below are from the export I took on 2026-11-03. Tempo renames columns from time to time and by Jira language (Tempo, <a href="https://www.tempo.io/product-news/changes-to-logged-time-report-raw-data-export">https://www.tempo.io/product-news/changes-to-logged-time-report-raw-data-export</a>), so yours may differ. Atlassian now calls issues "work items" and projects "spaces", and the export follows that.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Work Item Key, Work Item summary</td>
+<td>The Jira issue the time was logged on</td>
+</tr>
+<tr>
+<td>Logged Hours, Logged Seconds</td>
+<td>The time spent. Seconds is exact; hours is rounded</td>
+</tr>
+<tr>
+<td>Work date</td>
+<td>The date and the start time, for example <code>2026-10-20 10:00</code></td>
+</tr>
+<tr>
+<td>User Account ID, Full name</td>
+<td>The person who logged the time in Tempo</td>
+</tr>
+<tr>
+<td>Work Description</td>
+<td>The worklog's description. A worklog without one is exported as "Working on work item KEY-1"</td>
+</tr>
+<tr>
+<td>Billable Hours, Billable Seconds</td>
+<td>The billable part of the time</td>
+</tr>
+<tr>
+<td>Account Key, Account Name, and other Account columns</td>
+<td>The Tempo account the time was logged against</td>
+</tr>
+<tr>
+<td>Tempo Team, Team Lead ID</td>
+<td>The person's Tempo team</td>
+</tr>
+<tr>
+<td>Space Key, Space Name</td>
+<td>The Jira project</td>
+</tr>
+<tr>
+<td>Work Item Type, Work Item Status, Epic, Parent Key, Component, Version Name</td>
+<td>Fields of the issue at export time</td>
+</tr>
+<tr>
+<td>Work Item Original Estimate, Work Item Remaining Estimate (hours and seconds)</td>
+<td>The issue's estimates at export time</td>
+</tr>
+<tr>
+<td>One column per work attribute, named after it (for example "Work type")</td>
+<td>The value of each Tempo work attribute</td>
+</tr>
+<tr>
+<td>Approval status</td>
+<td>Only when "Include Approval Status" is on</td>
+</tr>
+<tr>
+<td>Date created, Date updated</td>
+<td>When the worklog was created and last changed</td>
+</tr>
+<tr>
+<td>Tempo Worklog ID</td>
+<td>Tempo's own ID for the worklog</td>
+</tr>
+</tbody>
+</table>
+<h2>What is in Jira and what is only in this file</h2>
+<p>Tempo writes each worklog into Jira as well, with the same issue, date, start time and duration. In Jira, though, the author is the Tempo app ("Timesheets by Tempo - Jira Time Tracking") and the comment is "time-tracking". The real author, the description, the account and the work attributes stay in Tempo. Source: Tempo, <a href="https://help.tempo.io/kb/latest/why-do-we-see-timesheets-as-the-worklog-author">https://help.tempo.io/kb/latest/why-do-we-see-timesheets-as-the-worklog-author</a> . What that breaks, and the options: <a href="/saguaro-hours/tempo-worklog-author/">why Jira shows "Timesheets by Tempo" as the worklog author</a>.</p>
+<p>So the hours survive in Jira without Tempo, but who logged them, whether they were billable and for which account are only in Tempo and in this export.</p>
+<h2>See your export as weekly timesheets</h2>
+<p>The <a href="/saguaro-hours/tempo-preview/">Tempo data preview</a> reads the CSV in your browser and shows it the way Saguaro Hours for Jira shows timesheets: one week per screen, a row per issue, a column per day, per person. The file is not uploaded.</p>
+<h2>Import it into Saguaro Hours</h2>
+<p>The admin page of Saguaro Hours imports this exact CSV. It matches each row to its Jira worklog by issue, date, duration and start time, and stores next to it the billable flag, the account name, up to five work attributes and the real author. Reports, approvals, the dashboard gadget and the weekly totals then count those hours for the person who logged them, marked "from Tempo". In Jira itself the Tempo app stays the author, because the app never edits Jira worklogs. A check against Jira runs first and writes nothing, and running the same file twice changes nothing new.</p>
+<p>On my test site, a report grouped by person for 20 October to 3 November gave 16.83 h and 4 h, 20.83 h in total, the same as Tempo's own Logged Time report for that range. Step by step: <a href="/saguaro-hours/docs/moving-from-tempo/">Moving from Tempo</a>.</p>
+<p><strong>Status:</strong> Saguaro Hours was submitted to the Atlassian Marketplace on 2026-11-03 and is waiting for approval. The import is built and was tested on my development site with a real Tempo export. Counting migrated hours under the real author everywhere was added on 2026-11-03, after the build under review.</p>
+<h2>Compare the cost</h2>
+<p>At 100 Jira users, Tempo Timesheets lists at $599.00 a month and Saguaro Hours at $200.00 (Tempo's Marketplace price list, read 2026-11-04; Saguaro's prices as entered in its listing). Work out your own figure with the <a href="/saguaro-hours/tempo-cost-calculator/">Tempo cost calculator</a>, and see what each app does in <a href="/saguaro-hours/jira-time-tracking-apps-compared/">Jira time tracking apps compared</a> and <a href="/saguaro-hours/tempo-alternative/">Saguaro Hours as a Tempo alternative</a>.</p>
+<h2>Leaving Jira for Azure DevOps?</h2>
+<p>The same Tempo CSV export imports into Azure Boards work items with Saguaro Hours for Azure DevOps, which is live on the Visual Studio Marketplace. See <a href="/saguaro-hours/tempo-to-azure-devops/">moving from Jira and Tempo to Azure DevOps</a>.</p>
+<h2 id="launch">Email me when it's live</h2>
+<p><a href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch">Email me when it's live</a> and I will send one email on the day the listing is approved.</p>
+<p>Tempo and Timesheets by Tempo belong to Tempo Software. Saguaro Hours and LeDuc Systems LLC are not affiliated with Tempo.</p>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> · <a href="/privacy#cookies" data-cookie-settings>Cookie settings</a></footer>
+<style>
+.sg-notify{margin:12px 0 20px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;max-width:560px}
+.sg-notify label{display:block;font-weight:600;margin-bottom:6px}.sg-notify .sg-row{display:flex;gap:8px;flex-wrap:wrap}
+.sg-notify input[type=email]{flex:1 1 220px;min-height:44px;font:inherit;padding:6px 10px;border:1px solid rgba(21,19,15,.4);border-radius:4px}
+.sg-notify button{min-height:44px;font:inherit;font-weight:600;padding:6px 16px;border:0;border-radius:4px;background:#1d6b4f;color:#fff;cursor:pointer}
+.sg-notify button[disabled]{opacity:.6;cursor:default}.sg-notify .sg-note{margin:8px 0 0;color:var(--muted);font-size:.9rem}
+.sg-notify .sg-status{margin:8px 0 0;font-weight:600}.sg-notify .sg-hp{position:absolute;left:-9999px}
+.sg-notify input:focus-visible,.sg-notify button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sg-notify [hidden]{display:none}
+</style>
+<script>
+(function () {
+  var DONE = 'sgLaunchList';
+  function track(name, params) { if (window.gtag) window.gtag('event', name, params); }
+  function done(form, msg) {
+    form.querySelector('.sg-row').hidden = true;
+    form.querySelector('.sg-note').hidden = true;
+    form.querySelector('label').hidden = true;
+    form.querySelector('.sg-status').textContent = msg;
+  }
+  function build(subject, n) {
+    var id = 'sg-email-' + n, f = document.createElement('form');
+    f.className = 'sg-notify';
+    f.noValidate = true;
+    f.innerHTML = '<label for="' + id + '">Your work email</label>'
+      + '<div class="sg-row"><input id="' + id + '" type="email" name="email" autocomplete="email" required placeholder="you@company.com">'
+      + '<button type="submit">Email me when it\'s live</button></div>'
+      + '<input class="sg-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
+      + '<p class="sg-note">One email on the day it is live on the Atlassian Marketplace. I use your address for nothing else and never share it.</p>'
+      + '<p class="sg-status" role="status" aria-live="polite"></p>';
+    var stored = null;
+    try { stored = window.localStorage.getItem(DONE + ':' + subject); } catch (e) {}
+    if (stored) { done(f, 'You are on the list (' + stored + '). I will email you the day it is live.'); return f; }
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = f.querySelector('input[type=email]'), btn = f.querySelector('button'), st = f.querySelector('.sg-status');
+      var email = input.value.trim();
+      if (f.querySelector('.sg-hp').value) return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { st.textContent = 'Enter a valid email address.'; input.focus(); return; }
+      btn.disabled = true;
+      st.textContent = 'Sending...';
+      fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: 'service_zeogjbm', template_id: 'template_mfizbds', user_id: 'HIVHympEPP7sMQ_Pl',
+          template_params: {
+            title: subject, name: email, email: email,
+            from_name: email, from_email: email, reply_to: email, to_email: 'tyler@leducsystems.com', subject: subject,
+            message: 'Launch list: please email me when it is live.\nEmail: ' + email + '\nPage: ' + location.pathname
+          }
+        })
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        try { window.localStorage.setItem(DONE + ':' + subject, email); } catch (e2) {}
+        track('generate_lead', { form: 'launch_list', list: subject, page_path: location.pathname });
+        done(f, 'Thanks. I will email ' + email + ' the day it is live.');
+      }).catch(function () {
+        btn.disabled = false;
+        st.innerHTML = 'That did not send. Please email <a href="mailto:tyler@leducsystems.com?subject=' + encodeURIComponent(subject) + '">tyler@leducsystems.com</a> with the subject "' + subject + '" instead.';
+      });
+    });
+    return f;
+  }
+  var n = 0;
+  [].slice.call(document.querySelectorAll('main a[href^="mailto:"]')).forEach(function (a) {
+    var m = /[?&]subject=([^&]*)/.exec(a.getAttribute('href'));
+    var subject = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+    if (!/ launch$/i.test(subject)) return;
+    a.addEventListener('click', function () { track('launch_list_mailto', { list: subject, page_path: location.pathname }); });
+    var block = a.closest('p, li') || a;
+    if (a.id === 'cta') a.style.display = 'none';
+    block.parentNode.insertBefore(build(subject, ++n), block.nextSibling);
+  });
+  // Approval day: every link to the Marketplace listing counts as a "get it" click.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com/apps/"]') : null;
+    if (a) track('marketplace_click', { link_url: a.href, page_path: location.pathname });
+  });
+})();
+</script>
+</body></html>

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Time tracking in Azure DevOps: log hours on work items and fill weekly timesheets</title>
+<meta name="description" content="Azure Boards has Original Estimate, Remaining Work and Completed Work fields but no timesheet. How to track time per person and per day in Azure DevOps, with approvals and CSV reports.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/azure-devops-time-tracking/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:title" content="Time tracking in Azure DevOps: log hours on work items and fill weekly timesheets"><meta property="og:description" content="Azure Boards has Original Estimate, Remaining Work and Completed Work fields but no timesheet. How to track time per person and per day in Azure DevOps, with approvals and CSV reports.">
+<meta property="og:url" content="https://leducsystems.com/saguaro-hours/azure-devops-time-tracking/"><meta property="og:image" content="https://leducsystems.com/saguaro-hours/img/01-weekly-grid.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav{display:flex;flex-wrap:wrap;gap:4px 16px}nav a{color:var(--muted);font-size:.95rem;white-space:nowrap}nav a:first-child{color:var(--ink);font-weight:600}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{overflow-x:auto}pre code{overflow-wrap:normal}
+.sg-app{margin:20px 0;padding:12px 16px;border-left:4px solid #1d6b4f;background:#fff;font-size:.95rem}.sg-app a{font-weight:600}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/azure-devops/">Saguaro Hours for Azure DevOps</a><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Time tracking in Azure DevOps</h1>
+<p>Azure Boards has three number fields for effort on Tasks: Original Estimate, Remaining Work and Completed Work. They hold one total per work item. They do not record who did the work, on which day, or whether anyone approved it, so they cannot produce a timesheet or a billable-hours report.</p>
+<h2>What teams usually need</h2>
+<ul>
+<li>Hours per person, per work item, per day.</li>
+<li>A weekly timesheet each person can fill in and submit.</li>
+<li>A lead who approves the week, and locked weeks after approval.</li>
+<li>Reports by person, area path, iteration and tag, exported to CSV for payroll or invoicing.</li>
+</ul>
+<h2>Doing it with Saguaro Hours</h2>
+<ol>
+<li>An organization administrator installs Saguaro Hours from the Marketplace.</li>
+<li>Each person logs time from the <strong>Log time</strong> group on the work item form, or fills in the weekly grid under Boards, Timesheet.</li>
+<li>At the end of the week they submit; the approver approves or rejects with a reason.</li>
+<li>Reports filter by dates, person, area path and iteration path, group by person, work item or tag, and export to CSV.</li>
+</ol>
+<p>Time entries are stored in your own Azure DevOps organization, in the extension data storage Microsoft provides. I do not run a server that holds them.</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=leducsystems.saguaro-hours">Get Saguaro Hours on the Visual Studio Marketplace</a>. Free for up to 5 people; $4 per user per month above that.</p>
+<h2>More guides</h2>
+<ul>
+<li><a href="/saguaro-hours/azure-devops-time-tracking/">Time tracking in Azure DevOps</a></li>
+<li><a href="/saguaro-hours/azure-devops-timesheet-approval/">Weekly timesheet approval in Azure DevOps</a></li>
+<li><a href="/saguaro-hours/7pace-alternative/">A 7pace Timetracker alternative</a></li>
+<li><a href="/saguaro-hours/tempo-to-azure-devops/">Moving from Jira and Tempo to Azure DevOps</a></li>
+<li><a href="/saguaro-hours/azure-devops/">Saguaro Hours for Azure DevOps</a></li>
+</ul>
+<p>Also for Azure DevOps: <a href="/excel-roundtrip/azure-devops/">Excel Round-Trip</a>, edit Azure Boards work items in Excel on Windows, Mac or the web, with a diff before saving.</p>
+</main>
+<footer>Saguaro Hours for Azure DevOps · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> · <a href="/privacy#cookies" data-cookie-settings>Cookie settings</a></footer>
+<style>
+.sg-notify{margin:12px 0 20px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;max-width:560px}
+.sg-notify label{display:block;font-weight:600;margin-bottom:6px}.sg-notify .sg-row{display:flex;gap:8px;flex-wrap:wrap}
+.sg-notify input[type=email]{flex:1 1 220px;min-height:44px;font:inherit;padding:6px 10px;border:1px solid rgba(21,19,15,.4);border-radius:4px}
+.sg-notify button{min-height:44px;font:inherit;font-weight:600;padding:6px 16px;border:0;border-radius:4px;background:#1d6b4f;color:#fff;cursor:pointer}
+.sg-notify button[disabled]{opacity:.6;cursor:default}.sg-notify .sg-note{margin:8px 0 0;color:var(--muted);font-size:.9rem}
+.sg-notify .sg-status{margin:8px 0 0;font-weight:600}.sg-notify .sg-hp{position:absolute;left:-9999px}
+.sg-notify input:focus-visible,.sg-notify button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sg-notify [hidden]{display:none}
+</style>
+<script>
+(function () {
+  var DONE = 'sgLaunchList';
+  function track(name, params) { if (window.gtag) window.gtag('event', name, params); }
+  function done(form, msg) {
+    form.querySelector('.sg-row').hidden = true;
+    form.querySelector('.sg-note').hidden = true;
+    form.querySelector('label').hidden = true;
+    form.querySelector('.sg-status').textContent = msg;
+  }
+  function build(subject, n) {
+    var id = 'sg-email-' + n, f = document.createElement('form');
+    f.className = 'sg-notify';
+    f.noValidate = true;
+    f.innerHTML = '<label for="' + id + '">Your work email</label>'
+      + '<div class="sg-row"><input id="' + id + '" type="email" name="email" autocomplete="email" required placeholder="you@company.com">'
+      + '<button type="submit">Email me when it\'s live</button></div>'
+      + '<input class="sg-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
+      + '<p class="sg-note">One email on the day it is live on the Atlassian Marketplace. I use your address for nothing else and never share it.</p>'
+      + '<p class="sg-status" role="status" aria-live="polite"></p>';
+    var stored = null;
+    try { stored = window.localStorage.getItem(DONE + ':' + subject); } catch (e) {}
+    if (stored) { done(f, 'You are on the list (' + stored + '). I will email you the day it is live.'); return f; }
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = f.querySelector('input[type=email]'), btn = f.querySelector('button'), st = f.querySelector('.sg-status');
+      var email = input.value.trim();
+      if (f.querySelector('.sg-hp').value) return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { st.textContent = 'Enter a valid email address.'; input.focus(); return; }
+      btn.disabled = true;
+      st.textContent = 'Sending...';
+      fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: 'service_zeogjbm', template_id: 'template_mfizbds', user_id: 'HIVHympEPP7sMQ_Pl',
+          template_params: {
+            title: subject, name: email, email: email,
+            from_name: email, from_email: email, reply_to: email, to_email: 'tyler@leducsystems.com', subject: subject,
+            message: 'Launch list: please email me when it is live.\nEmail: ' + email + '\nPage: ' + location.pathname
+          }
+        })
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        try { window.localStorage.setItem(DONE + ':' + subject, email); } catch (e2) {}
+        track('generate_lead', { form: 'launch_list', list: subject, page_path: location.pathname });
+        done(f, 'Thanks. I will email ' + email + ' the day it is live.');
+      }).catch(function () {
+        btn.disabled = false;
+        st.innerHTML = 'That did not send. Please email <a href="mailto:tyler@leducsystems.com?subject=' + encodeURIComponent(subject) + '">tyler@leducsystems.com</a> with the subject "' + subject + '" instead.';
+      });
+    });
+    return f;
+  }
+  var n = 0;
+  [].slice.call(document.querySelectorAll('main a[href^="mailto:"]')).forEach(function (a) {
+    var m = /[?&]subject=([^&]*)/.exec(a.getAttribute('href'));
+    var subject = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+    if (!/ launch$/i.test(subject)) return;
+    a.addEventListener('click', function () { track('launch_list_mailto', { list: subject, page_path: location.pathname }); });
+    var block = a.closest('p, li') || a;
+    if (a.id === 'cta') a.style.display = 'none';
+    block.parentNode.insertBefore(build(subject, ++n), block.nextSibling);
+  });
+  // Approval day: every link to the Marketplace listing counts as a "get it" click.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com/apps/"]') : null;
+    if (a) track('marketplace_click', { link_url: a.href, page_path: location.pathname });
+  });
+})();
+</script>
+</body></html>

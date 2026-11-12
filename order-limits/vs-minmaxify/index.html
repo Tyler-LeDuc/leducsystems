@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LeDuc Order Limits vs MinMaxify: an honest comparison | LeDuc Systems</title>
+<meta name="description" content="LeDuc Order Limits vs MinMaxify for Shopify: plans, prices and features side by side, what each does, and how to switch limit apps.">
+<link rel="canonical" href="https://leducsystems.com/order-limits/vs-minmaxify/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px}header a img{height:28px}
+h1{font:600 2.2rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.35rem/1.3 Fraunces,Georgia,serif;margin:36px 0 8px}
+p,li{color:var(--ink)}.lede{font-size:1.15rem;color:var(--muted)}a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{border:1px solid var(--line);border-radius:6px;padding:18px 20px;background:#fff;margin:16px 0}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}footer{margin-top:56px;padding-bottom:40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+thead th{background:#EFEDE7;font-weight:600}tbody th{font-weight:500}
+.note{color:var(--muted);font-size:.9rem}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a></header>
+<main>
+<h1>LeDuc Order Limits vs MinMaxify</h1>
+<p class="lede">I'm Tyler, and I make LeDuc Order Limits. If you're looking at MinMaxify and wondering whether there's a cheaper or simpler option, here is how the two compare. I've kept it to what my app actually does and what MinMaxify says on its own App Store listing.</p>
+<p>Both apps set minimum and maximum quantities and use Shopify's checkout validation to enforce them. The differences are mostly in price, in which features sit on which plan, and in a few things MinMaxify does that mine doesn't.</p>
+
+<h2>Side by side</h2>
+<div class="tablewrap">
+<table>
+<thead><tr><th scope="col"></th><th scope="col">LeDuc Order Limits</th><th scope="col">MinMaxify Order Limits</th></tr></thead>
+<tbody>
+<tr><th scope="row">Price per plan</th><td>Free: $0<br>Pro: $7.99/month</td><td>Standard: $10/month<br>Premium: $20/month<br>Plus: $50/month</td></tr>
+<tr><th scope="row">Free plan</th><td>✓ (2 rules plus whole-order limits)</td><td>—</td></tr>
+<tr><th scope="row">Rule limits</th><td>Free: 2 rules<br>Pro: unlimited</td><td>Standard: general per-cart limits<br>Premium: "Rules/Groups"<br>(no rule count stated)</td></tr>
+<tr><th scope="row">Free trial</th><td>14 days on Pro</td><td>7 days on each plan</td></tr>
+<tr><th scope="row">Enforced by checkout validation</th><td>✓</td><td>✓ (all plans)</td></tr>
+<tr><th scope="row">Buy it now / express checkout covered</th><td>✓ (all plans)</td><td>Premium plan ("Support for Buy Now Buttons")</td></tr>
+<tr><th scope="row">Whole-cart min/max items</th><td>✓ (Free)</td><td>✓ ("General per-cart limits", Standard)</td></tr>
+<tr><th scope="row">Min/max subtotal and weight</th><td>✓ (Free)</td><td>✓ (price- and weight-based rules listed)</td></tr>
+<tr><th scope="row">Product, collection, tag or vendor rules</th><td>✓ (Free: 2 rules; Pro: unlimited)</td><td>✓ ("Product-specific" and "Collection-specific" are listed; their listing doesn't say which plan includes them. Premium lists "Rules/Groups".)</td></tr>
+<tr><th scope="row">Customer-tag rules</th><td>✓</td><td>✓ listed*</td></tr>
+<tr><th scope="row">Per-variant limits</th><td>✓</td><td>✓ ("Variant-specific")</td></tr>
+<tr><th scope="row">Multilingual messages</th><td>—</td><td>Premium plan</td></tr>
+<tr><th scope="row">Checkout UI extensions</th><td>—</td><td>Plus plan</td></tr>
+</tbody>
+</table>
+</div>
+<p class="note">Prices checked 2026-11-04 from the <a href="https://apps.shopify.com/order-limits-minmaxify">App Store listing</a>. Plans change; check their listing for current prices.</p>
+<p class="note">* MinMaxify's listing advertises "Customer Tag-Based Limits" and lists "Customer tags" under limit rules, but another line on the same listing says "Does Not Support Discounts or Customer Tags Such as Wholesale". If customer tags matter to you, ask them how that applies to your store.</p>
+
+<h2>What MinMaxify does that mine doesn't</h2>
+<ul>
+<li><strong>Multilingual messages</strong> on their Premium plan. My messages are editable, but in one language.</li>
+<li><strong>Checkout UI extensions</strong> on their Plus plan. My app doesn't add anything to the checkout page beyond the validation messages Shopify shows.</li>
+<li><strong>More places to show alerts.</strong> Their listing names cart alerts, checkout alerts, product page alerts, pop-ups and custom messages. Mine shows the checkout messages plus an optional note on product pages; there are no pop-ups.</li>
+</ul>
+<p>Mine also doesn't do per-customer limits over time (my limits apply per order), country or market limits, or limits that switch on and off by date. If you need any of those, my app isn't the right one.</p>
+
+<h2>When mine is the better fit</h2>
+<ul>
+<li><strong>You want a flat, low price.</strong> One paid plan at $7.99/month gives unlimited rules and every feature I have. Whole-order limits and two rules are free, with no time limit.</li>
+<li><strong>You want customer-tag rules and collection totals on one plan.</strong> Each rule can apply to everyone, only customers with certain tags, or everyone except those tags. Collection totals cap or require a total number of items across the collections you pick. Both are on the same plan as everything else.</li>
+<li><strong>You need Buy it now and express checkout covered without a higher tier.</strong> My limits are enforced by Shopify's Cart and Checkout Validation on every plan, so Buy it now, express checkout buttons and edited carts can't skip them.</li>
+<li><strong>You sell in packs or cases.</strong> "Sold in multiples of" works per product, collection, tag, vendor or all products, alongside the minimum and maximum.</li>
+</ul>
+<p>Other things it does: whole-order minimum or maximum items, subtotal and weight; messages you can reword; an optional product-page note that also sets the quantity box limits; and a switch on the home page to pause enforcement.</p>
+
+<h2>How to switch</h2>
+<p>There's usually no way to export limits from one app and import them into another, so switching is done by hand. It goes quickly:</p>
+<ol>
+<li><strong>List your current limits.</strong> Open MinMaxify and write down each limit: what it applies to, the minimum, maximum or multiple, and any customer tags or collections it uses.</li>
+<li><strong>Recreate them as rules in my app.</strong> Each one takes a minute or two. Customer-tag targeting and collection totals map straight across (up to 3 collection-total rules; one rule can cover several collections), and whole-order limits (items, subtotal, weight) go in the <strong>Order limits</strong> page.</li>
+<li><strong>Test a cart.</strong> Add a quantity that should be blocked and go to checkout. You should see your message and be unable to continue. Then fix the quantity and check that checkout goes through.</li>
+<li><strong>Turn off or uninstall MinMaxify.</strong> Do this once you're happy, so two apps aren't blocking checkout at the same time with different messages.</li>
+</ol>
+
+<h2>Try it</h2>
+<p>LeDuc Order Limits is coming to the Shopify App Store; this page will link to its listing once it is approved.</p>
+<p>Setup steps, the FAQ and support are on the <a href="/order-limits/">LeDuc Order Limits page</a>. If you're not sure whether my app covers your limits, email me at <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> and I'll tell you straight.</p>
+</main>
+<footer>LeDuc Systems LLC · <a href="/tools/">Tools</a></footer>
+</body></html>

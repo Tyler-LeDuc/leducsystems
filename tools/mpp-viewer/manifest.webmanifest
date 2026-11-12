@@ -1,0 +1,63 @@
+{
+  "id": "/tools/mpp-viewer/",
+  "name": "MPP Viewer: Open Microsoft Project Files",
+  "short_name": "MPP Viewer",
+  "description": "Open Microsoft Project .mpp files without Project. Free Gantt chart, task table and resources, then export to Excel, CSV and PDF.",
+  "start_url": "/tools/mpp-viewer/?source=pwa",
+  "scope": "/tools/",
+  "display": "standalone",
+  "background_color": "#FFFBF3",
+  "theme_color": "#163A34",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": [
+    "productivity",
+    "business",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "/tools/mpp-viewer/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/tools/mpp-viewer/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/tools/mpp-viewer/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/tools/mpp-viewer/?source=file",
+      "name": "Microsoft Project file",
+      "icons": [
+        {
+          "src": "/tools/mpp-viewer/icons/file-256.png",
+          "sizes": "256x256",
+          "type": "image/png"
+        }
+      ],
+      "accept": {
+        "application/vnd.ms-project": [
+          ".mpp"
+        ]
+      },
+      "launch_type": "multiple-clients"
+    }
+  ],
+  "launch_handler": {
+    "client_mode": [
+      "navigate-new",
+      "auto"
+    ]
+  }
+}

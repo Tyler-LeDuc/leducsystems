@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Getting started | Saguaro Hours for Jira</title>
+<meta name="description" content="Saguaro Hours for Jira documentation: Getting started.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/docs/getting-started/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:title" content="Getting started"><meta property="og:description" content="Saguaro Hours for Jira documentation: Getting started.">
+<meta property="og:url" content="https://leducsystems.com/saguaro-hours/docs/getting-started/"><meta property="og:image" content="https://leducsystems.com/saguaro-hours/img/01-weekly-grid.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav{display:flex;flex-wrap:wrap;gap:4px 16px}nav a{color:var(--muted);font-size:.95rem;white-space:nowrap}nav a:first-child{color:var(--ink);font-weight:600}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{overflow-x:auto}pre code{overflow-wrap:normal}
+.sg-app{margin:20px 0;padding:12px 16px;border-left:4px solid #1d6b4f;background:#fff;font-size:.95rem}.sg-app a{font-weight:600}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/">Saguaro Hours</a><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Getting started</h1>
+<p>Saguaro Hours for Jira adds time tracking to Jira Cloud. You log work in a weekly grid or from an issue. Every entry is a normal Jira worklog written as you. Teams, billable flags, approvals and reports sit on top.</p>
+<h2>What you get</h2>
+<ul>
+<li>A Saguaro Hours page with a weekly grid, a Reports tab, an Import tab and, for team leads, backup approvers and Jira administrators, an Approvals tab. See <a href="/saguaro-hours/docs/weekly-timesheet/">weekly timesheet</a>, <a href="/saguaro-hours/docs/reports-and-exports/">reports and exports</a> and <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</li>
+<li>An Import tab to bring in your own time from another tracker's CSV or a calendar file. See <a href="/saguaro-hours/docs/import-your-time/">import your time</a>.</li>
+<li>A Log work panel on issues. See <a href="/saguaro-hours/docs/log-work-panel/">log work panel</a>.</li>
+<li>An admin page under Jira settings, Apps. See <a href="/saguaro-hours/docs/billable-and-attributes/">billable and attributes</a>, <a href="/saguaro-hours/docs/teams/">teams</a> and <a href="/saguaro-hours/docs/periods-and-approvals/">periods and approvals</a>.</li>
+<li>A dashboard gadget. See <a href="/saguaro-hours/docs/dashboard-gadget/">dashboard gadget</a>.</li>
+<li>Optional email reminders, sent through Jira's own mail: one email to people whose timesheet is not submitted when a period closes, and a weekly list for team leads of timesheets waiting for them. See <a href="/saguaro-hours/docs/email-reminders/">email reminders</a>.</li>
+</ul>
+<h2>Where to find it</h2>
+<ul>
+<li>The timesheet: in the Jira sidebar, select Apps, then Saguaro Hours under Your apps. Everyone who logs time uses this page.</li>
+<li>The settings (Jira administrators): select the gear (Settings) at the top right of Jira, then Marketplace apps (under Jira admin settings). Saguaro Hours is listed in the left sidebar under Apps. The settings page has an Open the timesheet button, and the timesheet shows administrators an Open settings button while the site is not set up.</li>
+<li>The first load of either page can take several seconds.</li>
+</ul>
+<h2>Install and first steps (Jira administrator)</h2>
+<ol>
+<li>Install the app from the Marketplace. Accept the permissions listed in <a href="/saguaro-hours/docs/permissions/">permissions</a>.</li>
+<li>Open the settings page (above). Its sections are tabs: General, Working hours, Teams, Rates, Email reminders, Import from Tempo and Data export. On a new site a Get started card at the top lists the three steps below, each with a button that opens the right tab, and ticks each one off as it is done. Hide puts the card away in this browser.</li>
+<li>Set the required hours: the period type (weekly or monthly) and the required hours per week. The default is weekly and 40. These are on the General tab. Press Save settings at its foot (it saves everything on the General tab, and says "Settings saved." next to the button). Optional: add holidays, and working hours for part-time people (periods-and-approvals.md).</li>
+<li>Create a team: Create a team (or New team on the Teams tab), enter a name, pick the lead who approves, and add the members, including yourself if you want to try a timesheet. Press Create team. If you add members after that, press Save team; the card says "Unsaved changes" until you do. See <a href="/saguaro-hours/docs/teams/">teams</a>.</li>
+<li>Log time: open the timesheet (Open the timesheet) and follow "First steps (everyone)" below.</li>
+<li>Optional: turn on the billable default and add attributes (billable-and-attributes.md), set rates (reports show Cost and Revenue once a rate is set), and turn on email reminders (email-reminders.md).</li>
+<li>Tell your users to open Saguaro Hours from Apps in the Jira sidebar, and add them to a team: a person in no team can log time but cannot submit a timesheet, because nobody could approve it.</li>
+</ol>
+<h2>First steps (everyone)</h2>
+<ol>
+<li>Open Saguaro Hours. The page shows this week in your Jira time zone.</li>
+<li>In the box below the grid, type an issue key (KAN-12), a project key (KAN) or words from the issue's summary, pick the issue from the list (or press Enter on a key), then type hours in a day cell (for example 1.5, 1:30, 1h 30m or 90m) and press Enter or Tab. If nothing matches, the box says so.</li>
+<li>Open the Work log tab on that issue. Your entry is there, under your name.</li>
+<li>When the week is done, press Submit timesheet (periods-and-approvals.md). Submit needs you to be in a team; until then the page says so and the button is off.</li>
+</ol>
+<h2>Add the Log work panel to an issue</h2>
+<p>Jira does not show an app's issue panel on its own in the new issue view. Open an issue, select the Apps button under the issue title, and choose Log work. Jira shows that button only to people who can edit the issue. Jira administrators also get an option to show an app's panel on all work items.</p>
+<h2>Projects and themes</h2>
+<ul>
+<li>Saguaro Hours reads and writes Jira's own worklogs, which team-managed and company-managed projects both have, so logging, reports and approvals work in either kind of project and across projects in one timesheet. Your Jira permissions still apply: you need Browse and Work on issues in a project to log time there.</li>
+<li>The app follows your Jira theme. In Jira's dark theme (your profile, Theme), the grid, reports, approvals, the Log work panel, the admin page and the gadget are dark too.</li>
+</ul>
+<h2>Limits to know</h2>
+<ul>
+<li>The app reads worklogs from issues you can browse. Hours on issues you cannot browse are not counted in your views.</li>
+<li>Dates are grouped by day in the time zone of the person looking at the page.</li>
+<li>Invoices (numbering, tax, accounting sync), and capacity planning are not part of this release; the billing summary is a printable summary, not an invoice. Timers do not start by themselves on a status change.</li>
+<li>When the subscription is not active, the app's pages show a message instead of data. Jira administrators can still download all app data (data-export.md).</li>
+</ul>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> · <a href="/privacy#cookies" data-cookie-settings>Cookie settings</a></footer>
+<style>
+.sg-notify{margin:12px 0 20px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;max-width:560px}
+.sg-notify label{display:block;font-weight:600;margin-bottom:6px}.sg-notify .sg-row{display:flex;gap:8px;flex-wrap:wrap}
+.sg-notify input[type=email]{flex:1 1 220px;min-height:44px;font:inherit;padding:6px 10px;border:1px solid rgba(21,19,15,.4);border-radius:4px}
+.sg-notify button{min-height:44px;font:inherit;font-weight:600;padding:6px 16px;border:0;border-radius:4px;background:#1d6b4f;color:#fff;cursor:pointer}
+.sg-notify button[disabled]{opacity:.6;cursor:default}.sg-notify .sg-note{margin:8px 0 0;color:var(--muted);font-size:.9rem}
+.sg-notify .sg-status{margin:8px 0 0;font-weight:600}.sg-notify .sg-hp{position:absolute;left:-9999px}
+.sg-notify input:focus-visible,.sg-notify button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sg-notify [hidden]{display:none}
+</style>
+<script>
+(function () {
+  var DONE = 'sgLaunchList';
+  function track(name, params) { if (window.gtag) window.gtag('event', name, params); }
+  function done(form, msg) {
+    form.querySelector('.sg-row').hidden = true;
+    form.querySelector('.sg-note').hidden = true;
+    form.querySelector('label').hidden = true;
+    form.querySelector('.sg-status').textContent = msg;
+  }
+  function build(subject, n) {
+    var id = 'sg-email-' + n, f = document.createElement('form');
+    f.className = 'sg-notify';
+    f.noValidate = true;
+    f.innerHTML = '<label for="' + id + '">Your work email</label>'
+      + '<div class="sg-row"><input id="' + id + '" type="email" name="email" autocomplete="email" required placeholder="you@company.com">'
+      + '<button type="submit">Email me when it\'s live</button></div>'
+      + '<input class="sg-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
+      + '<p class="sg-note">One email on the day it is live on the Atlassian Marketplace. I use your address for nothing else and never share it.</p>'
+      + '<p class="sg-status" role="status" aria-live="polite"></p>';
+    var stored = null;
+    try { stored = window.localStorage.getItem(DONE + ':' + subject); } catch (e) {}
+    if (stored) { done(f, 'You are on the list (' + stored + '). I will email you the day it is live.'); return f; }
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = f.querySelector('input[type=email]'), btn = f.querySelector('button'), st = f.querySelector('.sg-status');
+      var email = input.value.trim();
+      if (f.querySelector('.sg-hp').value) return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { st.textContent = 'Enter a valid email address.'; input.focus(); return; }
+      btn.disabled = true;
+      st.textContent = 'Sending...';
+      fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: 'service_zeogjbm', template_id: 'template_mfizbds', user_id: 'HIVHympEPP7sMQ_Pl',
+          template_params: {
+            title: subject, name: email, email: email,
+            from_name: email, from_email: email, reply_to: email, to_email: 'tyler@leducsystems.com', subject: subject,
+            message: 'Launch list: please email me when it is live.\nEmail: ' + email + '\nPage: ' + location.pathname
+          }
+        })
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        try { window.localStorage.setItem(DONE + ':' + subject, email); } catch (e2) {}
+        track('generate_lead', { form: 'launch_list', list: subject, page_path: location.pathname });
+        done(f, 'Thanks. I will email ' + email + ' the day it is live.');
+      }).catch(function () {
+        btn.disabled = false;
+        st.innerHTML = 'That did not send. Please email <a href="mailto:tyler@leducsystems.com?subject=' + encodeURIComponent(subject) + '">tyler@leducsystems.com</a> with the subject "' + subject + '" instead.';
+      });
+    });
+    return f;
+  }
+  var n = 0;
+  [].slice.call(document.querySelectorAll('main a[href^="mailto:"]')).forEach(function (a) {
+    var m = /[?&]subject=([^&]*)/.exec(a.getAttribute('href'));
+    var subject = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+    if (!/ launch$/i.test(subject)) return;
+    a.addEventListener('click', function () { track('launch_list_mailto', { list: subject, page_path: location.pathname }); });
+    var block = a.closest('p, li') || a;
+    if (a.id === 'cta') a.style.display = 'none';
+    block.parentNode.insertBefore(build(subject, ++n), block.nextSibling);
+  });
+  // Approval day: every link to the Marketplace listing counts as a "get it" click.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com/apps/"]') : null;
+    if (a) track('marketplace_click', { link_url: a.href, page_path: location.pathname });
+  });
+})();
+</script>
+</body></html>

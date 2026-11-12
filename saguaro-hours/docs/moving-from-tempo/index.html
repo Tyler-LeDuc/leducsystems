@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moving from Tempo | Saguaro Hours for Jira</title>
+<meta name="description" content="Saguaro Hours for Jira documentation: Moving from Tempo.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/docs/moving-from-tempo/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:title" content="Moving from Tempo"><meta property="og:description" content="Saguaro Hours for Jira documentation: Moving from Tempo.">
+<meta property="og:url" content="https://leducsystems.com/saguaro-hours/docs/moving-from-tempo/"><meta property="og:image" content="https://leducsystems.com/saguaro-hours/img/01-weekly-grid.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav{display:flex;flex-wrap:wrap;gap:4px 16px}nav a{color:var(--muted);font-size:.95rem;white-space:nowrap}nav a:first-child{color:var(--ink);font-weight:600}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{overflow-x:auto}pre code{overflow-wrap:normal}
+.sg-app{margin:20px 0;padding:12px 16px;border-left:4px solid #1d6b4f;background:#fff;font-size:.95rem}.sg-app a{font-weight:600}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/">Saguaro Hours</a><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Moving from Tempo</h1>
+<p>Checked end to end on 3 November 2026 with "Timesheets by Tempo - Jira Time Tracking" (Tempo on Forge, Cloud) on a test site: real worklogs logged in Tempo by two people, exported from Tempo, imported here. Every row matched its own Jira worklog. Tempo changes its screens often, so the menu names below may move.</p>
+<h2>What stays in Jira</h2>
+<p>If you used Tempo, your worklogs are already in Jira. Tempo writes each one as a Jira worklog with the same work item, date, start time and duration. In Jira the author is the Tempo app ("Timesheets by Tempo - Jira Time Tracking") and the comment is "time-tracking". The real author, the description, the account and the work attributes stay in Tempo. Source: <a href="https://help.tempo.io/kb/latest/why-do-we-see-timesheets-as-the-worklog-author">https://help.tempo.io/kb/latest/why-do-we-see-timesheets-as-the-worklog-author</a>.</p>
+<h2>What the import does</h2>
+<p>The import reads Tempo's raw data CSV, matches each row to a Jira worklog by work item, date, duration, author and start time, and stores the rest next to the matched worklog:</p>
+<ul>
+<li>the billable flag (any billable time counts as billable),</li>
+<li>the account name, in a text attribute you choose or one the import creates,</li>
+<li>work attributes such as "Work type", each in a text attribute you choose or one the import creates (up to five),</li>
+<li>the real author, the description, the raw billable figure and the Tempo worklog ID, kept in the app's storage.</li>
+</ul>
+<p>The import never changes anything in Jira. No worklog is created, edited or deleted. No timesheet record is written.</p>
+<h2>Migrated hours count for the person who logged them</h2>
+<p>In Jira, Tempo's worklogs keep the Tempo app as their author. Saguaro Hours uses the real author the import stored instead, everywhere it adds hours up per person:</p>
+<ul>
+<li>Reports: grouping and filtering by user and by team, the totals, and the Summary CSV, Detail CSV and Excel exports.</li>
+<li>Approvals: each member's hours, and the hours recorded when a timesheet is approved.</li>
+<li>The dashboard gadget: each member's hours and the team total.</li>
+<li>My timesheet: the week's totals, the hours recorded when you submit, and the reminder about an earlier period.</li>
+</ul>
+<p>Hours that include migrated worklogs carry a small "from Tempo" marker, so it is clear where they came from. The exports add a "Source" column to the detail ("from Tempo" on migrated rows) and an "Hours from Tempo" column to the summary, only when the report has migrated worklogs.</p>
+<p>Checked on 3 November 2026 on the test site: a report grouped by user for 20 October to 3 November gave 16.83 h for the first person and 4 h for the second, 20.83 h in total, the same as Tempo's Logged Time report for that range.</p>
+<p>A worklog counts for its imported author only while Jira shows an app account as its author (the Tempo app). A worklog a person wrote in Jira always counts for that person.</p>
+<h2>What still shows the Tempo app</h2>
+<ul>
+<li>Jira itself. The Work log tab, worklogAuthor searches, Jira's own reports and other apps still show the Tempo app, because the app never edits Jira worklogs. Re-authoring them as the real person is not built, and it needs a riskier permission that this app does not request.</li>
+<li>Editing. In My timesheet, migrated worklogs are read-only rows marked "from Tempo"; they count in your totals but cannot be typed over. The issue panel lists only worklogs you authored in Jira, so it does not show them.</li>
+<li>Worklogs not in your export. Anything logged in Tempo after the export, or left out of it, stays under the Tempo app until you import a newer export.</li>
+<li>Changes after a timesheet is locked. When a submitted or approved timesheet changes in Jira, the app flags it for the approver. A change to a migrated worklog is not flagged on the real person's timesheet.</li>
+<li>Speed. A report filtered to some people, and the approvals and gadget hours, also read every Tempo worklog in the imported days they cover and keep the ones of the people asked for. Over long migrated history this takes longer than the same view over newer weeks. Views of weeks after the imported days read nothing extra.</li>
+</ul>
+<h2>Try it before you move</h2>
+<p>See your own Tempo export as Saguaro Hours timesheets, in your browser and without uploading it: <a href="/saguaro-hours/tempo-preview/">Tempo data preview</a>. Compare what you pay: <a href="/saguaro-hours/tempo-cost-calculator/">Tempo cost calculator</a>. To get one email the day it is live, <a href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch">email tyler@leducsystems.com</a>.</p>
+<h2>Steps</h2>
+<h3>1. Make sure your export includes everyone</h3>
+<p>Tempo only exports the worklogs you may view in Tempo. A Jira administrator is not automatically allowed to see other people's worklogs, and the export does not warn about rows it leaves out. Before exporting, open Tempo, Settings, Permission Roles, Add permission role, tick View Worklogs, add yourself under Add users, keep Role access on All resources, and save. Then compare the report's people with the people you expect.</p>
+<h3>2. Export the raw data from Tempo</h3>
+<ol>
+<li>In Jira, open Tempo from the Apps menu, then Reports.</li>
+<li>Under Logged Time, choose Create Report and then Create. The grouping does not matter for the export.</li>
+<li>Set the date range at the top left to cover all the history you want to move, and press Apply.</li>
+<li>Press Export at the top right and choose Download Raw Data.</li>
+<li>In "Select export option", press the CSV icon (the third icon). "Include Approval Status" can be on or off. Tempo saves a file named like <code>Report_01_Oct_26_30_Nov_26_Raw_Data_Logged_Time.csv</code>.</li>
+</ol>
+<p>The XLS and XLSX icons give Excel files. This app does not read those; it says so if you pick one.</p>
+<p>The CSV Tempo gives is UTF-8 with commas. "Work date" holds the date and the start time ("2026-10-20 10:00"). Each Tempo work attribute is its own column, named after the attribute. A worklog logged without a description is exported with Tempo's text "Working on work item KEY-1".</p>
+<h3>3. Import it here</h3>
+<ol>
+<li>In Jira, open Settings, Apps, Saguaro Hours, and find "Import from Tempo".</li>
+<li>Choose the CSV file. The page says how many rows and columns it found.</li>
+<li>Check the column mapping. The page fills it in from Tempo's column names and shows the first value of each. On an English Tempo export no change was needed. Tempo renames columns over time and by Jira language (<a href="https://www.tempo.io/product-news/changes-to-logged-time-report-raw-data-export">https://www.tempo.io/product-news/changes-to-logged-time-report-raw-data-export</a>), so check it anyway. Set the date order if the page asks.</li>
+<li>Look at the five-row preview.</li>
+<li>Press "Check against Jira". This is a dry run and writes nothing. It shows matched, ambiguous, unmatched and unreadable rows, and how many matched worklogs already have data. "Download the full result (CSV)" lists every row with the Jira worklog it matched.</li>
+<li>Choose where Account goes ("Store Account in"). Under "Work attributes", the page suggests the columns that are not standard Tempo columns, such as "Work type". For each, choose an existing text attribute or "Create a new text attribute". "Add a column" adds one the page did not suggest; "Remove" drops one.</li>
+<li>Press "Import N worklogs". Progress is shown. Pause, Resume and Discard are available. If you close the tab the run stops. Resume continues from where it was, in any browser, without the file.</li>
+</ol>
+<p>When it finishes, the page says how many worklogs were written, where Account and each work attribute went, and lists any worklog it left alone and why.</p>
+<h2>How rows are matched</h2>
+<ul>
+<li>Matching uses work item, date and duration, then author. The Tempo app as author fits any row. A real person who is not the Tempo app never does.</li>
+<li>When two worklogs on the same work item, day and duration are left (for example two people logging the same hours), the start time separates them, because Tempo exports it and keeps it in Jira. If the times do not line up one to one, nothing is guessed.</li>
+<li>Hours are compared with a tolerance based on the column's decimals. Logged Seconds is used when present, and it is exact.</li>
+<li>Rows that still fit several worklogs are ambiguous and are not imported. The result CSV lists the candidate worklog IDs. There is no way to resolve them by hand in the app yet.</li>
+<li>Days inside a submitted or approved period are left alone, even with overwrite on. Reopen the period and run again.</li>
+<li>Running the same file twice changes nothing new: the second run reports every row as already having data. With "Overwrite worklogs that already have data" on, it stores the same values again and keeps other attributes.</li>
+</ul>
+<h2>Who can see imported data</h2>
+<p>The real author's name shows wherever hours are counted per person (reports, approvals, the gadget, My timesheet), to anyone who can see that worklog in Jira. That is the same as for a worklog written in Jira, whose author anyone who can see it already sees. In Tempo, who logged what may have been limited by Tempo's permissions; after the import it is not.</p>
+<p>The imported description, the raw billable figure and the Tempo worklog ID are hidden from the normal screens. Only the admin data export includes them. Account and work attribute values are ordinary attribute values and show wherever attributes show.</p>
+<p>When a person's Atlassian account is closed, the stored author on their migrated worklogs is replaced by "Former user", as for everything else the app stores about them. The hours stay.</p>
+<h2>Limits</h2>
+<ul>
+<li>Only a Jira administrator can import. 100 MB file cap. CSV only.</li>
+<li>Account and work attributes go to text attributes, not list attributes.</li>
+<li>At most five work attribute columns per import.</li>
+<li>A stopped upload cannot continue after a reload. Discard and check again.</li>
+<li>Not yet checked: exports in other Jira languages, people in different time zones from each other, very large exports, and whether Jira worklogs stay unchanged after Tempo is uninstalled.</li>
+</ul>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> · <a href="/privacy#cookies" data-cookie-settings>Cookie settings</a></footer>
+<style>
+.sg-notify{margin:12px 0 20px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;max-width:560px}
+.sg-notify label{display:block;font-weight:600;margin-bottom:6px}.sg-notify .sg-row{display:flex;gap:8px;flex-wrap:wrap}
+.sg-notify input[type=email]{flex:1 1 220px;min-height:44px;font:inherit;padding:6px 10px;border:1px solid rgba(21,19,15,.4);border-radius:4px}
+.sg-notify button{min-height:44px;font:inherit;font-weight:600;padding:6px 16px;border:0;border-radius:4px;background:#1d6b4f;color:#fff;cursor:pointer}
+.sg-notify button[disabled]{opacity:.6;cursor:default}.sg-notify .sg-note{margin:8px 0 0;color:var(--muted);font-size:.9rem}
+.sg-notify .sg-status{margin:8px 0 0;font-weight:600}.sg-notify .sg-hp{position:absolute;left:-9999px}
+.sg-notify input:focus-visible,.sg-notify button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sg-notify [hidden]{display:none}
+</style>
+<script>
+(function () {
+  var DONE = 'sgLaunchList';
+  function track(name, params) { if (window.gtag) window.gtag('event', name, params); }
+  function done(form, msg) {
+    form.querySelector('.sg-row').hidden = true;
+    form.querySelector('.sg-note').hidden = true;
+    form.querySelector('label').hidden = true;
+    form.querySelector('.sg-status').textContent = msg;
+  }
+  function build(subject, n) {
+    var id = 'sg-email-' + n, f = document.createElement('form');
+    f.className = 'sg-notify';
+    f.noValidate = true;
+    f.innerHTML = '<label for="' + id + '">Your work email</label>'
+      + '<div class="sg-row"><input id="' + id + '" type="email" name="email" autocomplete="email" required placeholder="you@company.com">'
+      + '<button type="submit">Email me when it\'s live</button></div>'
+      + '<input class="sg-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
+      + '<p class="sg-note">One email on the day it is live on the Atlassian Marketplace. I use your address for nothing else and never share it.</p>'
+      + '<p class="sg-status" role="status" aria-live="polite"></p>';
+    var stored = null;
+    try { stored = window.localStorage.getItem(DONE + ':' + subject); } catch (e) {}
+    if (stored) { done(f, 'You are on the list (' + stored + '). I will email you the day it is live.'); return f; }
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = f.querySelector('input[type=email]'), btn = f.querySelector('button'), st = f.querySelector('.sg-status');
+      var email = input.value.trim();
+      if (f.querySelector('.sg-hp').value) return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { st.textContent = 'Enter a valid email address.'; input.focus(); return; }
+      btn.disabled = true;
+      st.textContent = 'Sending...';
+      fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: 'service_zeogjbm', template_id: 'template_mfizbds', user_id: 'HIVHympEPP7sMQ_Pl',
+          template_params: {
+            title: subject, name: email, email: email,
+            from_name: email, from_email: email, reply_to: email, to_email: 'tyler@leducsystems.com', subject: subject,
+            message: 'Launch list: please email me when it is live.\nEmail: ' + email + '\nPage: ' + location.pathname
+          }
+        })
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        try { window.localStorage.setItem(DONE + ':' + subject, email); } catch (e2) {}
+        track('generate_lead', { form: 'launch_list', list: subject, page_path: location.pathname });
+        done(f, 'Thanks. I will email ' + email + ' the day it is live.');
+      }).catch(function () {
+        btn.disabled = false;
+        st.innerHTML = 'That did not send. Please email <a href="mailto:tyler@leducsystems.com?subject=' + encodeURIComponent(subject) + '">tyler@leducsystems.com</a> with the subject "' + subject + '" instead.';
+      });
+    });
+    return f;
+  }
+  var n = 0;
+  [].slice.call(document.querySelectorAll('main a[href^="mailto:"]')).forEach(function (a) {
+    var m = /[?&]subject=([^&]*)/.exec(a.getAttribute('href'));
+    var subject = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+    if (!/ launch$/i.test(subject)) return;
+    a.addEventListener('click', function () { track('launch_list_mailto', { list: subject, page_path: location.pathname }); });
+    var block = a.closest('p, li') || a;
+    if (a.id === 'cta') a.style.display = 'none';
+    block.parentNode.insertBefore(build(subject, ++n), block.nextSibling);
+  });
+  // Approval day: every link to the Marketplace listing counts as a "get it" click.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com/apps/"]') : null;
+    if (a) track('marketplace_click', { link_url: a.href, page_path: location.pathname });
+  });
+})();
+</script>
+</body></html>

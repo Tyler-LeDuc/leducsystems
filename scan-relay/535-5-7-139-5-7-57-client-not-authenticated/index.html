@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>535 5.7.139 and 530 5.7.57 Client Not Authenticated to Send Mail: Copier and Microsoft 365 | LeDuc Systems</title>
+<meta name="description" content="Two Microsoft 365 SMTP errors copiers hit: 535 5.7.139 Authentication unsuccessful and 5.7.57 Client not authenticated to send mail. What each one means, how to tell them apart, and the options for scan to email.">
+<link rel="canonical" href="https://leducsystems.com/scan-relay/535-5-7-139-5-7-57-client-not-authenticated/">
+<link rel="icon" href="/favicon.ico">
+<meta property="og:type" content="article">
+<meta property="og:title" content="535 5.7.139 and 530 5.7.57 Client Not Authenticated to Send Mail: Copier and Microsoft 365">
+<meta property="og:description" content="Two Microsoft 365 SMTP errors copiers hit: 535 5.7.139 Authentication unsuccessful and 5.7.57 Client not authenticated to send mail. What each one means, how to tell them apart, and the options for scan to email.">
+<meta property="og:url" content="https://leducsystems.com/scan-relay/535-5-7-139-5-7-57-client-not-authenticated/">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px}header a img{height:28px}
+nav.crumbs{font-size:.9rem;color:var(--muted);margin-top:28px}nav.crumbs a{color:var(--muted)}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:16px 0 12px}h2{font:600 1.35rem/1.3 Fraunces,Georgia,serif;margin:36px 0 8px}h3{font-size:1.05rem;margin:20px 0 4px}
+.lede{font-size:1.15rem;color:var(--muted)}a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{border:1px solid var(--line);border-radius:6px;padding:18px 20px;background:#fff;margin:16px 0}
+.note{border-left:3px solid var(--accent);padding:10px 16px;background:#fff;margin:16px 0}
+.cta{display:inline-block;background:var(--ink);color:#fff;text-decoration:none;padding:11px 18px;border-radius:4px;font-weight:600;margin:6px 8px 6px 0}
+.cta.alt{background:#fff;color:var(--ink);border:1px solid var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:12px 0;display:block;overflow-x:auto}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px;overflow-wrap:anywhere}
+footer{margin-top:56px;padding-bottom:40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
+@media (max-width:480px){h1{font-size:1.7rem}}
+.top-cta{border:1px solid var(--line);border-radius:6px;padding:12px 16px 6px;background:#fff;margin:16px 0}.top-cta p{margin:0 0 8px}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "535 5.7.139 and 5.7.57 Client not authenticated to send mail", "description": "Two Microsoft 365 SMTP errors copiers hit: 535 5.7.139 Authentication unsuccessful and 5.7.57 Client not authenticated to send mail. What each one means, how to tell them apart, and the options for scan to email.", "dateModified": "2026-11-07", "author": {"@type": "Person", "name": "Tyler LeDuc"}, "publisher": {"@type": "Organization", "name": "LeDuc Systems"}, "mainEntityOfPage": "https://leducsystems.com/scan-relay/535-5-7-139-5-7-57-client-not-authenticated/"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does 5.7.57 Client not authenticated to send mail mean?", "acceptedAnswer": {"@type": "Answer", "text": "The device started sending through smtp.office365.com without a successful sign-in. Either authentication is off on the copier, TLS is off so it skipped sign-in, or the sign-in failed and it carried on."}}, {"@type": "Question", "name": "Does 5.7.139 mean SMTP AUTH is gone for good?", "acceptedAnswer": {"@type": "Answer", "text": "Not yet. Microsoft disables basic authentication by default at the end of December 2026 and admins can turn it back on for a while. The final removal date will be announced in the second half of 2027."}}, {"@type": "Question", "name": "Is direct send a free fix for scan to email?", "acceptedAnswer": {"@type": "Answer", "text": "It's free, but it only delivers to mailboxes in your own Microsoft 365 organization, needs outbound port 25, and Microsoft recommends a static IP for SPF. Scans to outside addresses are rejected."}}, {"@type": "Question", "name": "Can a copier use High Volume Email?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, Microsoft lists printers and scanners as an HVE use case. It sends to internal recipients only, up to 10 MB per message, and is billed pay as you go through an Azure subscription."}}, {"@type": "Question", "name": "What does Scan Relay cost?", "acceptedAnswer": {"@type": "Answer", "text": "$99 once per office after a free 14-day trial, covering one PC and any number of copiers. Full refund within 30 days if it does not work with your copier."}}]}</script>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a></header>
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/scan-relay/">Scan to email after SMTP AUTH</a> / 535 5.7.139 and 5.7.57</nav>
+<h1>535 5.7.139 and 5.7.57 Client not authenticated to send mail</h1>
+<p class="lede">These two errors look alike and often show up together in a copier log. One says the sign-in was refused; the other says the device tried to send without being signed in at all.</p>
+<div class="top-cta"><p><b>Scan Relay</b> is the small Windows program I make that keeps a copier's scan to email working after Microsoft 365 turns off SMTP AUTH, with no firmware update, static IP or DNS change. Free for 14 days, no card, then $99 once per office (one PC, any number of copiers). Full refund within 30 days if it doesn't work with your copier.</p><p><a class="cta" href="/tools/scan-to-email-microsoft-365/">Get the free trial</a></p></div>
+<h2>535 5.7.139 Authentication unsuccessful</h2>
+<p>The device tried to sign in to smtp.office365.com with a username and password and Microsoft 365 said no, because basic authentication or SMTP AUTH is off for the organization or the mailbox, or security defaults block it. The ending of the message says which. <a href="/scan-relay/550-5-7-139-basic-authentication-disabled/">The 5.7.139 variants explained</a>.</p>
+<h2>530 5.7.57 Client not authenticated to send mail</h2>
+<p>This one usually appears at the MAIL FROM step: the device started sending without a successful sign-in. Common causes:</p>
+<ul>
+<li>SMTP authentication is switched off on the copier, so it never tries to sign in. smtp.office365.com doesn't take anonymous mail.</li>
+<li>The sign-in failed (for example with 5.7.139) and the copier carried on sending anyway, so the log shows 5.7.57 as the last error.</li>
+<li>The copier is set to an auth method Microsoft 365 doesn't offer, or STARTTLS is off, so it skips sign-in. smtp.office365.com needs STARTTLS on port 587 with TLS 1.2 or 1.3.</li>
+</ul>
+<p>If you only see 5.7.57, first check the copier's SMTP authentication and TLS settings. If you see 5.7.139 too, the root cause is the sign-in method, and fixing the copier's settings won't bring it back once basic authentication is off.</p>
+<h2>Other codes in the same log</h2>
+<ul>
+<li><b>5.7.60 Client doesn't have permissions to send as this sender</b>: the copier's From address isn't the mailbox it signs in with, and that mailbox lacks Send As. Microsoft lists this in its device setup page.</li>
+<li><b>5.7.3 or 5.7.8 Authentication unsuccessful</b>: often a changed password, or a mailbox that requires MFA.</li>
+</ul>
+<div class="note"><b>Microsoft's dates.</b> In <a href="https://techcommunity.microsoft.com/blog/Exchange/updated-exchange-online-smtp-auth-basic-authentication-deprecation-timeline/4489835">its January 27, 2026 timeline update</a> (revised January 29), the Exchange team says SMTP AUTH with basic authentication keeps working unchanged until the end of December 2026. Then it is disabled by default for existing Microsoft 365 organizations, and admins can still turn it back on. Organizations created after December 2026 don't get it by default. Microsoft says it will announce the final removal date in the second half of 2027.</div>
+<h2>The free options, honestly</h2>
+<p>Microsoft documents these in <a href="https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/how-to-set-up-a-multifunction-device-or-application-to-send-email-using-microsoft-365-or-office-365">how to set up a multifunction device or application to send email</a>. Each one is free from Microsoft's side, and each has a catch.</p>
+<h3>1. OAuth on the copier</h3>
+<p>If the copier's firmware can sign in to Microsoft 365 with OAuth (modern authentication), use it. It's what Microsoft wants and needs nothing extra. The catch: many older models never get it, some need a dealer visit for the firmware, and an admin usually has to approve the copier maker's app in the tenant.</p>
+<h3>2. Direct send</h3>
+<p>The copier sends straight to your domain's MX endpoint (like <code>contoso-com.mail.protection.outlook.com</code>) on port 25, with no sign-in. Microsoft's catches: it only delivers to mailboxes in your own organization (scans to a customer or your accountant are rejected), port 25 must be open outbound, it's treated like anonymous internet mail, and Microsoft recommends a static IP for the SPF record. Microsoft also says it is "working on an option to disable Direct Send by default".</p>
+<h3>3. An SMTP relay connector</h3>
+<p>An admin creates an inbound connector in Exchange Online that trusts your office's public IP address or a TLS certificate, and the copier sends to the MX endpoint on port 25. It can send to outside addresses. The catches: Microsoft says dynamic IP addresses aren't supported, so you need a static IP that isn't shared with anyone else (or a certificate the copier can present), port 25 must be open, the IP goes in your SPF record, and someone has to keep it right if the IP changes.</p>
+<h3>4. High Volume Email (HVE)</h3>
+<p>Microsoft's <a href="https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/high-volume-mails-m365">High Volume Email</a> lists printers and scanners as a use case. The copier signs in to <code>smtp.hve.mx.microsoft</code> on port 587 with an HVE account, using a password or OAuth, and it still works when SMTP AUTH is turned off for the tenant. The catches: internal recipients only, messages up to 10 MB, TLS required, and it's billed pay as you go through an Azure subscription ($42 per million recipients at the time of writing). The cost for a copier is tiny; the Azure billing setup is the work. If security defaults are on, it only accepts OAuth.</p>
+<h3>5. Turn basic authentication back on</h3>
+<p>After the December change an admin can switch SMTP AUTH back on for the scanner mailbox. Nothing changes on the copier, but it's temporary (Microsoft will set a final date) and leaves a password-only sign-in open. <a href="/tools/re-enable-smtp-auth-microsoft-365/">How, and the trade-offs</a>.</p>
+<p>Microsoft's page also points devices that must reach outside recipients at Azure Communication Services Email, which is a paid Azure service with its own setup.</p>
+<h2>Where Scan Relay fits</h2>
+<p><a href="/tools/scan-to-email-microsoft-365/">Scan Relay</a> is a small Windows program I make for the copiers the free options don't suit: no OAuth firmware, no static IP, scans that go to outside addresses, or nobody available to own a connector and SPF. It runs as a service on an always-on office PC. The copier sends to that PC on the local network (port 25, any username and password), and Scan Relay sends each scan on to Microsoft 365 through Microsoft Graph with OAuth, as the mailbox you signed in with.</p>
+<ul>
+<li>Works with any copier or scanner that can scan to email over SMTP, without a firmware update, static IP, connector or DNS change.</li>
+<li>Delivers to outside addresses as well as your own staff.</li>
+<li>Saves each scan on the PC first and retries if the internet drops.</li>
+<li>Limits, so you can decide: it needs a Windows PC that stays on; it sends up to about 3 MB per email (set the copier to split scans at 3 MB); a Microsoft 365 admin approves it once per organization; and the program isn't code-signed yet, so Windows SmartScreen shows a warning the first time. <a href="/tools/scan-relay-security/">How it handles your mail</a>.</li>
+</ul>
+<p>Free for 14 days, then $99 once per office (one PC, any number of copiers). Full refund within 30 days if it doesn't work with your copier.</p>
+<p><a class="cta" href="/tools/scan-to-email-microsoft-365/">Scan Relay: free 14-day trial</a><a class="cta alt" href="/tools/will-scan-to-email-break-microsoft-365/">Check if your copier is affected</a></p>
+<h2>Questions</h2>
+<div class="card"><strong>What does 5.7.57 Client not authenticated to send mail mean?</strong><br>The device started sending through smtp.office365.com without a successful sign-in. Either authentication is off on the copier, TLS is off so it skipped sign-in, or the sign-in failed and it carried on.</div>
+<div class="card"><strong>Does 5.7.139 mean SMTP AUTH is gone for good?</strong><br>Not yet. Microsoft disables basic authentication by default at the end of December 2026 and admins can turn it back on for a while. The final removal date will be announced in the second half of 2027.</div>
+<div class="card"><strong>Is direct send a free fix for scan to email?</strong><br>It&#x27;s free, but it only delivers to mailboxes in your own Microsoft 365 organization, needs outbound port 25, and Microsoft recommends a static IP for SPF. Scans to outside addresses are rejected.</div>
+<div class="card"><strong>Can a copier use High Volume Email?</strong><br>Yes, Microsoft lists printers and scanners as an HVE use case. It sends to internal recipients only, up to 10 MB per message, and is billed pay as you go through an Azure subscription.</div>
+<div class="card"><strong>What does Scan Relay cost?</strong><br>$99 once per office after a free 14-day trial, covering one PC and any number of copiers. Full refund within 30 days if it does not work with your copier.</div>
+<h2>Related</h2>
+<ul>
+<li><a href="/scan-relay/550-5-7-139-basic-authentication-disabled/">550 5.7.139: basic authentication is disabled</a></li>
+<li><a href="/scan-relay/535-5-7-139-5-7-57-client-not-authenticated/">535 5.7.139 and 5.7.57 Client not authenticated</a></li>
+<li><a href="/scan-relay/scan-to-email-stopped-working-office-365/">Scan to email stopped working with Office 365</a></li>
+<li><a href="/scan-relay/smtp-auth-deprecation-december-2026-copier-mfp/">SMTP AUTH deprecation in December 2026 for copiers and MFPs</a></li>
+<li>Brands: <a href="/scan-relay/ricoh-scan-to-email-microsoft-365-smtp-auth/">Ricoh</a>, <a href="/scan-relay/canon-scan-to-email-microsoft-365-smtp-auth/">Canon</a>, <a href="/scan-relay/xerox-scan-to-email-microsoft-365-smtp-auth/">Xerox</a>, <a href="/scan-relay/konica-minolta-scan-to-email-microsoft-365-smtp-auth/">Konica Minolta</a>, <a href="/scan-relay/sharp-scan-to-email-microsoft-365-smtp-auth/">Sharp</a>, <a href="/scan-relay/kyocera-scan-to-email-microsoft-365-smtp-auth/">Kyocera</a></li>
+<li><a href="/scan-relay/msp-scan-to-email-microsoft-365/">For IT providers managing many offices</a></li>
+<li><a href="/tools/microsoft-365-scan-to-email-options-compared/">All the options compared</a> · <a href="/tools/will-scan-to-email-break-microsoft-365/">Will my copier break? (free check)</a></li>
+</ul>
+</main>
+<footer>LeDuc Systems LLC · <a href="/tools/">Tools</a> · <a href="/scan-relay/">Scan to email after SMTP AUTH</a> · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a></footer>
+</body></html>

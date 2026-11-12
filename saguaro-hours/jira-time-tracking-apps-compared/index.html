@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jira time tracking apps compared: prices and features</title>
+<meta name="description" content="Tempo, Clockwork Pro and Lite, Timetracker, SolDevelo Worklogs and Saguaro Hours: prices at 10 to 250 users, approvals, billable, timers, data storage.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/jira-time-tracking-apps-compared/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:title" content="Jira time tracking apps compared: prices and features"><meta property="og:description" content="Tempo, Clockwork Pro and Lite, Timetracker, SolDevelo Worklogs and Saguaro Hours: prices at 10 to 250 users, approvals, billable, timers, data storage.">
+<meta property="og:url" content="https://leducsystems.com/saguaro-hours/jira-time-tracking-apps-compared/"><meta property="og:image" content="https://leducsystems.com/saguaro-hours/img/01-weekly-grid.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav{display:flex;flex-wrap:wrap;gap:4px 16px}nav a{color:var(--muted);font-size:.95rem;white-space:nowrap}nav a:first-child{color:var(--ink);font-weight:600}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{overflow-x:auto}pre code{overflow-wrap:normal}
+.sg-app{margin:20px 0;padding:12px 16px;border-left:4px solid #1d6b4f;background:#fff;font-size:.95rem}.sg-app a{font-weight:600}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/">Saguaro Hours</a><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>Jira time tracking apps compared</h1>
+<p>Five Jira Cloud time tracking apps from the Atlassian Marketplace, plus mine, Saguaro Hours for Jira. Prices come from each app's public Marketplace price list. Features come from each listing, the vendor's own pages, or my notes where marked. This is not a review of how well any app works; I have not used them on a real team.</p>
+<p>Saguaro Hours is not the cheapest app here. It costs less than Tempo and more than the other four. The table shows by how much.</p>
+<aside class="sg-app"><strong>Saguaro Hours for Jira</strong>: weekly timesheets, team lead approval and billable reports on native Jira worklogs. Free for up to 10 users. <a href="/saguaro-hours/">See the app</a> or <a href="#launch">get one email when it is live</a>.</aside>
+<h2>Monthly list price for a whole Jira site</h2>
+<p>US dollars per month. All six are paid via Atlassian, so the bill covers every user on the Jira license, not only the people who log time. Above 10 users, each band of users is charged at its own rate, the first band covering users 1 to 100 (<a href="/saguaro-hours/jira-time-tracking-pricing/">how Jira app pricing works</a>).</p>
+<table>
+<thead>
+<tr>
+<th>Jira users</th>
+<th>Tempo Timesheets</th>
+<th>Clockwork Pro</th>
+<th>Clockwork Lite</th>
+<th>Timetracker</th>
+<th>SolDevelo Worklogs</th>
+<th>Saguaro Hours</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>$10.00</td>
+<td>Free</td>
+<td>Free</td>
+<td>Free</td>
+<td>Free</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>50</td>
+<td>$299.50</td>
+<td>$65.00</td>
+<td>$20.00</td>
+<td>$50.00</td>
+<td>$20.00</td>
+<td>$100.00</td>
+</tr>
+<tr>
+<td>100</td>
+<td>$599.00</td>
+<td>$130.00</td>
+<td>$40.00</td>
+<td>$100.00</td>
+<td>$40.00</td>
+<td>$200.00</td>
+</tr>
+<tr>
+<td>250</td>
+<td>$1,230.50</td>
+<td>$295.00</td>
+<td>$85.00</td>
+<td>$227.50</td>
+<td>$85.00</td>
+<td>$425.00</td>
+</tr>
+</tbody>
+</table>
+<p>The rates per user per month behind the table:</p>
+<table>
+<thead>
+<tr>
+<th>Users</th>
+<th>Tempo</th>
+<th>Clockwork Pro</th>
+<th>Clockwork Lite</th>
+<th>Timetracker</th>
+<th>SolDevelo</th>
+<th>Saguaro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 to 10</td>
+<td>$10.00 flat</td>
+<td>free</td>
+<td>free</td>
+<td>free</td>
+<td>free</td>
+<td>free</td>
+</tr>
+<tr>
+<td>11 to 100</td>
+<td>$5.99</td>
+<td>$1.30</td>
+<td>$0.40</td>
+<td>$1.00</td>
+<td>$0.40</td>
+<td>$2.00</td>
+</tr>
+<tr>
+<td>101 to 250</td>
+<td>$4.21</td>
+<td>$1.10</td>
+<td>$0.30</td>
+<td>$0.85</td>
+<td>$0.30</td>
+<td>$1.50</td>
+</tr>
+<tr>
+<td>251 to 1,000</td>
+<td>$1.99</td>
+<td>$0.42</td>
+<td>$0.20</td>
+<td>$0.42</td>
+<td>$0.20</td>
+<td>$1.00</td>
+</tr>
+</tbody>
+</table>
+<p>Example, 250 users on Clockwork Pro: 100 x $1.30 + 150 x $1.10 = $295.00. An annual subscription costs 10 times the monthly price for its user tier; the published annual prices for 500 users ($17,280 Tempo, $4,000 Clockwork Pro, $3,325 Timetracker, $1,350 SolDevelo and Clockwork Lite) match 10 times the same graduated sum.</p>
+<p>Sources, all read on 2026-11-04: the public Marketplace price lists at <a href="https://marketplace.atlassian.com/rest/2/addons/is.origo.jira.tempo-plugin/pricing/cloud/live">https://marketplace.atlassian.com/rest/2/addons/is.origo.jira.tempo-plugin/pricing/cloud/live</a> (Tempo, last changed 2026-10-13), <a href="https://marketplace.atlassian.com/rest/2/addons/clockwork-cloud/pricing/cloud/live">https://marketplace.atlassian.com/rest/2/addons/clockwork-cloud/pricing/cloud/live</a> (Clockwork Pro, 2026-10-13), <a href="https://marketplace.atlassian.com/rest/2/addons/clockwork-free-cloud/pricing/cloud/live">https://marketplace.atlassian.com/rest/2/addons/clockwork-free-cloud/pricing/cloud/live</a> (Clockwork Lite, 2026-10-13), <a href="https://marketplace.atlassian.com/rest/2/addons/org.everit.jira.timetracker.plugin/pricing/cloud/live">https://marketplace.atlassian.com/rest/2/addons/org.everit.jira.timetracker.plugin/pricing/cloud/live</a> (Timetracker, 2026-11-03) and <a href="https://marketplace.atlassian.com/rest/2/addons/com.soldevelo.apps.worklogs/pricing/cloud/live">https://marketplace.atlassian.com/rest/2/addons/com.soldevelo.apps.worklogs/pricing/cloud/live</a> (SolDevelo Worklogs, 2026-10-13). Tempo's figures also match <a href="https://www.tempo.io/pricing/jira-time-tracking">https://www.tempo.io/pricing/jira-time-tracking</a> . Saguaro's prices are as entered in its Marketplace listing, which is waiting for approval. Prices change; check the sources before you buy.</p>
+<h2>Features</h2>
+<p>Yes means the listing or the vendor's pages name the feature. "Not listed" means I did not find it there, which is not proof the app lacks it.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Tempo Timesheets</th>
+<th>Clockwork Pro</th>
+<th>Clockwork Lite</th>
+<th>Timetracker</th>
+<th>SolDevelo Worklogs</th>
+<th>Saguaro Hours</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Timesheet approvals</td>
+<td>Yes, team-level; project-level with Financial Manager [1]</td>
+<td>Yes, with locked billing periods [2]</td>
+<td>Not listed [2]</td>
+<td>No [3]</td>
+<td>Not listed [2]</td>
+<td>Yes, per team, with a backup approver</td>
+</tr>
+<tr>
+<td>Billable hours</td>
+<td>Yes [1]</td>
+<td>Yes [2]</td>
+<td>Not listed [2]</td>
+<td>Yes, billable status [2]</td>
+<td>As a custom attribute [2]</td>
+<td>Yes, a flag per worklog</td>
+</tr>
+<tr>
+<td>Rates, cost, revenue</td>
+<td>Revenue reports; cost in the separate Financial Manager app [1]</td>
+<td>Yes [2]</td>
+<td>Not listed [2]</td>
+<td>Not listed [2]</td>
+<td>Not listed [2]</td>
+<td>Yes, rates with start dates</td>
+</tr>
+<tr>
+<td>Start and stop timer</td>
+<td>Chrome extension and mobile app [1]</td>
+<td>Yes [2]</td>
+<td>Yes, 300 timers a month [2]</td>
+<td>Yes [2]</td>
+<td>Not listed [2]</td>
+<td>Yes, on the issue</td>
+</tr>
+<tr>
+<td>Calendar import</td>
+<td>Google Calendar, Outlook [2]</td>
+<td>Google, Outlook meeting sync [2]</td>
+<td>Not listed [2]</td>
+<td>Google Calendar [2]</td>
+<td>Not listed [2]</td>
+<td>A calendar file (.ics), no live sync</td>
+</tr>
+<tr>
+<td>REST API</td>
+<td>Yes [4]</td>
+<td>Yes [2]</td>
+<td>Not listed [2]</td>
+<td>Yes [2]</td>
+<td>Not listed [2]</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Import from Tempo</td>
+<td>Not applicable</td>
+<td>Not found [5]</td>
+<td>Not found [5]</td>
+<td>Not checked</td>
+<td>Not checked</td>
+<td>Yes, Tempo's CSV export</td>
+</tr>
+<tr>
+<td>Data stored outside Atlassian</td>
+<td>Yes, in Germany and the US [6]</td>
+<td>Yes [6]</td>
+<td>Yes [6]</td>
+<td>Yes [6]</td>
+<td>No [6]</td>
+<td>No [7]</td>
+</tr>
+<tr>
+<td>Certifications listed</td>
+<td>SOC 2, ISO 27001, ISO 27701 and others [6]</td>
+<td>SOC 2 [6]</td>
+<td>SOC 2 [6]</td>
+<td>None listed [6]</td>
+<td>ISO 27001 [6]</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p>Notes:</p>
+<ol>
+<li><a href="https://www.tempo.io/pricing/jira-time-tracking">https://www.tempo.io/pricing/jira-time-tracking</a> , read 2026-11-04.</li>
+<li>The app's Marketplace listing text ("More details"), read 2026-11-04 through the public listing API (<code>marketplace.atlassian.com/rest/2/addons/KEY/versions/latest?hosting=cloud</code>, where KEY is the app key in the price list links above).</li>
+<li>Timetracker's documentation says approval is not built in and points to Confluence approval apps (my research notes of 2026-11-03, <a href="https://stagil.atlassian.net/wiki/spaces/TCDS/overview">https://stagil.atlassian.net/wiki/spaces/TCDS/overview</a>).</li>
+<li>Tempo's product and pricing pages, read 2026-11-03 for <a href="/saguaro-hours/tempo-alternative/">Saguaro Hours as a Tempo alternative</a>, name an API and webhooks.</li>
+<li>A web search on 2026-11-04 found no Clockwork page describing an import of Tempo worklogs.</li>
+<li>Each app's Privacy &amp; Security tab on the Marketplace, read 2026-11-04 (<code>marketplace.atlassian.com/rest/2/addons/KEY/privacy-and-security</code>). Tempo's tab says its data is stored outside Atlassian, in Germany and the US. Clockwork Pro, Clockwork Lite and Timetracker answer that they store data outside Atlassian and do not support data residency. SolDevelo answers that it neither stores nor processes data outside Atlassian.</li>
+<li>Saguaro Hours is built on Atlassian Forge, keeps its data in Atlassian-hosted storage and declares no outside network access. Its Privacy &amp; Security answers are entered in the listing that is waiting for approval.</li>
+</ol>
+<h2>Who should pick another app</h2>
+<ul>
+<li><strong>You want the lowest price and mainly need reports.</strong> SolDevelo Worklogs and Clockwork Lite list at $40.00 a month for 100 users, a fifth of Saguaro's $200.00. SolDevelo also keeps its data inside Atlassian.</li>
+<li><strong>You want approvals, billing and timers for less than Saguaro.</strong> Clockwork Pro lists approvals with locked billing periods, rates and costs, automatic timers, calendar sync and an API, at $130.00 a month for 100 users.</li>
+<li><strong>You want timers, accounts and an API, and do not need approvals.</strong> Timetracker lists all three at $100.00 a month for 100 users.</li>
+<li><strong>You need planning, accounts, many integrations, an API or certifications.</strong> Tempo and its companion apps cover them. Saguaro Hours has no API, no Slack or mobile app, no planning and no certifications.</li>
+<li><strong>You want an app with a track record.</strong> Saguaro Hours is new. It has no installs or reviews yet, and one person (me) builds and supports it.</li>
+</ul>
+<h2>Who Saguaro Hours is for</h2>
+<p>Teams that need a lead to sign off time, and want the data to stay in Atlassian:</p>
+<ul>
+<li>Weekly or monthly periods per team; submit, approve, reject with a comment, approve all; a backup approver; an option that nobody approves their own timesheet.</li>
+<li>Approved days lock in the app, and a later edit made in Jira itself is flagged on the sheet with the hours before and after.</li>
+<li>Required hours per person, holidays and days off, so part-timers are not shown as short.</li>
+<li>A billable flag per worklog, rates with start dates and a printable billing summary.</li>
+<li>Reports by any Jira field, with a JQL filter and estimate vs logged; CSV and Excel export.</li>
+<li>Worklogs are normal Jira worklogs written as the signed-in user; if you uninstall, they stay in Jira.</li>
+<li>Moving from Tempo: the import keeps billable flags, accounts, work attributes and who logged each worklog.</li>
+</ul>
+<p><strong>Status:</strong> Saguaro Hours was submitted to the Atlassian Marketplace on 2026-11-03 and is waiting for approval. The features above are built and tested on my development site as of 2026-11-04. The build under review is older: it has the weekly grid, the Log work panel, billable flags and attributes, teams with a lead, one period type for the site, submit and approve, locks with after-lock flags, reports, exports, the gadget and the Tempo import. It does not yet have the timer, rates and the billing summary, backup approvers, per-team periods, per-person hours, reports by Jira field or JQL, email reminders or the CSV and calendar import.</p>
+<h2>Related</h2>
+<ul>
+<li><a href="/saguaro-hours/tempo-cost-calculator/">Tempo cost calculator</a></li>
+<li><a href="/saguaro-hours/tempo-alternative/">Saguaro Hours as a Tempo alternative</a></li>
+<li><a href="/saguaro-hours/tempo-preview/">Preview your Tempo data</a> and <a href="/saguaro-hours/tempo-export-csv/">how to export Tempo worklogs to CSV</a></li>
+<li><a href="/saguaro-hours/jira-timesheet-approval/">Jira timesheet approval</a></li>
+</ul>
+<h2 id="launch">Email me when it's live</h2>
+<p><a href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch">Email me when it's live</a> and I will send one email on the day the listing is approved.</p>
+<p>Tempo, Clockwork, Timetracker and Worklogs belong to their vendors (Tempo Software, HeroCoders, STAGIL by catworkx and SolDevelo). Saguaro Hours and LeDuc Systems LLC are not affiliated with any of them.</p>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> · <a href="/privacy#cookies" data-cookie-settings>Cookie settings</a></footer>
+<style>
+.sg-notify{margin:12px 0 20px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;max-width:560px}
+.sg-notify label{display:block;font-weight:600;margin-bottom:6px}.sg-notify .sg-row{display:flex;gap:8px;flex-wrap:wrap}
+.sg-notify input[type=email]{flex:1 1 220px;min-height:44px;font:inherit;padding:6px 10px;border:1px solid rgba(21,19,15,.4);border-radius:4px}
+.sg-notify button{min-height:44px;font:inherit;font-weight:600;padding:6px 16px;border:0;border-radius:4px;background:#1d6b4f;color:#fff;cursor:pointer}
+.sg-notify button[disabled]{opacity:.6;cursor:default}.sg-notify .sg-note{margin:8px 0 0;color:var(--muted);font-size:.9rem}
+.sg-notify .sg-status{margin:8px 0 0;font-weight:600}.sg-notify .sg-hp{position:absolute;left:-9999px}
+.sg-notify input:focus-visible,.sg-notify button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sg-notify [hidden]{display:none}
+</style>
+<script>
+(function () {
+  var DONE = 'sgLaunchList';
+  function track(name, params) { if (window.gtag) window.gtag('event', name, params); }
+  function done(form, msg) {
+    form.querySelector('.sg-row').hidden = true;
+    form.querySelector('.sg-note').hidden = true;
+    form.querySelector('label').hidden = true;
+    form.querySelector('.sg-status').textContent = msg;
+  }
+  function build(subject, n) {
+    var id = 'sg-email-' + n, f = document.createElement('form');
+    f.className = 'sg-notify';
+    f.noValidate = true;
+    f.innerHTML = '<label for="' + id + '">Your work email</label>'
+      + '<div class="sg-row"><input id="' + id + '" type="email" name="email" autocomplete="email" required placeholder="you@company.com">'
+      + '<button type="submit">Email me when it\'s live</button></div>'
+      + '<input class="sg-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
+      + '<p class="sg-note">One email on the day it is live on the Atlassian Marketplace. I use your address for nothing else and never share it.</p>'
+      + '<p class="sg-status" role="status" aria-live="polite"></p>';
+    var stored = null;
+    try { stored = window.localStorage.getItem(DONE + ':' + subject); } catch (e) {}
+    if (stored) { done(f, 'You are on the list (' + stored + '). I will email you the day it is live.'); return f; }
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = f.querySelector('input[type=email]'), btn = f.querySelector('button'), st = f.querySelector('.sg-status');
+      var email = input.value.trim();
+      if (f.querySelector('.sg-hp').value) return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { st.textContent = 'Enter a valid email address.'; input.focus(); return; }
+      btn.disabled = true;
+      st.textContent = 'Sending...';
+      fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: 'service_zeogjbm', template_id: 'template_mfizbds', user_id: 'HIVHympEPP7sMQ_Pl',
+          template_params: {
+            title: subject, name: email, email: email,
+            from_name: email, from_email: email, reply_to: email, to_email: 'tyler@leducsystems.com', subject: subject,
+            message: 'Launch list: please email me when it is live.\nEmail: ' + email + '\nPage: ' + location.pathname
+          }
+        })
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        try { window.localStorage.setItem(DONE + ':' + subject, email); } catch (e2) {}
+        track('generate_lead', { form: 'launch_list', list: subject, page_path: location.pathname });
+        done(f, 'Thanks. I will email ' + email + ' the day it is live.');
+      }).catch(function () {
+        btn.disabled = false;
+        st.innerHTML = 'That did not send. Please email <a href="mailto:tyler@leducsystems.com?subject=' + encodeURIComponent(subject) + '">tyler@leducsystems.com</a> with the subject "' + subject + '" instead.';
+      });
+    });
+    return f;
+  }
+  var n = 0;
+  [].slice.call(document.querySelectorAll('main a[href^="mailto:"]')).forEach(function (a) {
+    var m = /[?&]subject=([^&]*)/.exec(a.getAttribute('href'));
+    var subject = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+    if (!/ launch$/i.test(subject)) return;
+    a.addEventListener('click', function () { track('launch_list_mailto', { list: subject, page_path: location.pathname }); });
+    var block = a.closest('p, li') || a;
+    if (a.id === 'cta') a.style.display = 'none';
+    block.parentNode.insertBefore(build(subject, ++n), block.nextSibling);
+  });
+  // Approval day: every link to the Marketplace listing counts as a "get it" click.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com/apps/"]') : null;
+    if (a) track('marketplace_click', { link_url: a.href, page_path: location.pathname });
+  });
+})();
+</script>
+</body></html>

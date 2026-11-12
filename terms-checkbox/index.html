@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LeDuc Terms Checkbox: terms and consent checkbox for Shopify | LeDuc Systems</title>
+<meta name="description" content="A terms and conditions checkbox for the Shopify cart, with proof of consent saved on every order. Setup, FAQ and support.">
+<link rel="canonical" href="https://leducsystems.com/terms-checkbox/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px}header a img{height:28px}
+h1{font:600 2.2rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.35rem/1.3 Fraunces,Georgia,serif;margin:36px 0 8px}
+p,li{color:var(--ink)}.lede{font-size:1.15rem;color:var(--muted)}a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{border:1px solid var(--line);border-radius:6px;padding:18px 20px;background:#fff;margin:16px 0}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}footer{margin-top:56px;padding-bottom:40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+thead th{background:#EFEDE7;font-weight:600}tbody th{font-weight:500}
+.note{color:var(--muted);font-size:.9rem}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a></header>
+<main>
+<h1>LeDuc Terms Checkbox</h1>
+<p class="lede">A terms checkbox for your Shopify cart that saves proof of consent on every order, and can make checkout itself refuse an order without it.</p>
+<p>LeDuc Terms Checkbox is coming to the Shopify App Store; this page will link to its listing once it is approved.</p>
+<h2>Set up in two minutes</h2>
+<ol>
+<li>Install the app. Open it and check the text shoppers see. Make links with <code>[terms of service](/policies/terms-of-service)</code>.</li>
+<li>Click <strong>Turn on in theme editor</strong> to switch on the <strong>Terms checkbox</strong> app embed, then Save in the theme editor. It works with any Online Store 2.0 theme.</li>
+<li>Open your cart. The checkbox sits above the checkout buttons, and they stay off until it's ticked.</li>
+<li>Optional: choose <strong>Block checkout without consent</strong> so Shopify's checkout itself refuses an order if the box wasn't ticked.</li>
+</ol>
+<h2>What it does</h2>
+<ul>
+<li>Shows a checkbox in the cart page and the cart drawer, with links to your policies.</li>
+<li>Saves the consent on every order. Additional details shows, for example, <code>Terms accepted: Yes, version 2, 2026-11-04 14:22 UTC</code>.</li>
+<li>Up to 3 checkboxes, such as terms, age 18+ and a custom-made items notice. Each can be required or optional, and has its own name on the order.</li>
+<li>Optional checkbox above Add to cart on product pages.</li>
+</ul>
+<h2>FAQ</h2>
+<div class="card"><strong>Can shoppers skip the checkbox?</strong><br>In "Ask in the cart" mode the checkout buttons in the cart stay off until the box is ticked, but Buy it now and express checkout buttons on product pages aren't stopped. In "Block checkout without consent" mode, Shopify's checkout itself refuses the order if the box wasn't ticked in the cart, so Buy it now, express buttons and edited carts can't skip it. Shoppers who try are told to go back to the cart.</div>
+<div class="card"><strong>Can I hide Buy it now and express buttons?</strong><br>Yes. In Block mode there is an option to hide them. They skip the cart, so with Block on they always lead to the go-back message. You can also turn them off in your theme with "Show dynamic checkout buttons" on the product page.</div>
+<div class="card"><strong>What does "version" mean?</strong><br>Each checkbox has a version. When you change its text, the version goes up and shoppers have to agree again to the new text. The order records which version they agreed to and when, in UTC.</div>
+<div class="card"><strong>Where do I see the proof?</strong><br>On each order, under Additional details. The name shown there (for example "Terms accepted") is yours to choose per checkbox.</div>
+<div class="card"><strong>How many checkboxes can I have?</strong><br>Up to 3 per store, each required or optional. The free plan includes 1 checkbox in the cart; showing a checkbox above Add to cart on product pages and using more than one checkbox are on the paid plan.</div>
+<div class="card"><strong>Does it store customer data?</strong><br>No. The app keeps no customer data on its servers. The consent is saved on the merchant's own order. See the <a href="/terms-checkbox/privacy/">privacy policy</a>.</div>
+<div class="card"><strong>What does it need access to?</strong><br>One permission: write checkout validations, to register the checkout rule. Your settings are stored in an app metafield in your own store.</div>
+<div class="card"><strong>Is this legal advice?</strong><br>No. The app records that a shopper ticked a box, which version of your text they saw and when. What your terms must say, and whether you need a checkbox at all, depends on where you sell.</div>
+<h2>Switching?</h2>
+<p>Switching from another app? See how I compare with <a href="/terms-checkbox/vs-checkmate/">CheckMate</a>.</p>
+<h2>Support</h2>
+<p>Email <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>. We reply within one business day. See the <a href="/terms-checkbox/privacy/">privacy policy</a>.</p>
+</main>
+<footer>LeDuc Systems LLC · <a href="/tools/">Tools</a></footer>
+</body></html>

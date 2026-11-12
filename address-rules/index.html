@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LeDuc Address Rules: block PO boxes and restricted addresses in Shopify checkout | LeDuc Systems</title>
+<meta name="description" content="A Shopify app that blocks PO boxes, APO/FPO, package forwarders, ZIP codes, states and countries in checkout. Setup, FAQ and support.">
+<link rel="canonical" href="https://leducsystems.com/address-rules/">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px}header a img{height:28px}
+h1{font:600 2.2rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.35rem/1.3 Fraunces,Georgia,serif;margin:36px 0 8px}
+p,li{color:var(--ink)}.lede{font-size:1.15rem;color:var(--muted)}a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{border:1px solid var(--line);border-radius:6px;padding:18px 20px;background:#fff;margin:16px 0}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}footer{margin-top:56px;padding-bottom:40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
+video{width:100%;height:auto;border:1px solid var(--line);border-radius:6px;background:#15130F}
+</style>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a></header>
+<main>
+<h1>LeDuc Address Rules</h1>
+<p class="lede">Stop orders to shipping addresses you can't ship to. Shopify's checkout shows your message next to the field and won't take the order until the address is fixed.</p>
+<p>LeDuc Address Rules is coming to the Shopify App Store; this page will link to its listing once it is approved.</p>
+<video src="/address-rules/demo.mp4" controls preload="metadata" playsinline></video>
+<h2>Set up in two minutes</h2>
+<ol>
+<li>Install the app and open it. PO boxes are blocked from the first visit.</li>
+<li>Turn on the other rules you need, edit the messages shoppers see, and click <strong>Save</strong>.</li>
+<li>Type an address under <strong>Test an address</strong> to see what checkout would say.</li>
+<li>Go to your checkout and enter a blocked address, such as <code>PO Box 123</code>. The message shows at the Address field.</li>
+</ol>
+<h2>What it can block</h2>
+<ul>
+<li><strong>PO boxes</strong>: PO Box, P.O. Box, Post Office Box, POB, Box 123 at the start of a line, PO Drawer, Locked Bag, and Postfach, Boîte Postale, Apartado, Casilla and Caixa Postal. Checked in both address lines and the company.</li>
+<li><strong>APO, FPO and DPO</strong>: military city names, the AA, AE and AP armed forces states, and PSC or CMR numbers.</li>
+<li><strong>Package forwarders</strong>: addresses that name well-known forwarding services, such as MyUS, Shipito, Planet Express and Stackry, plus any warehouse addresses you add.</li>
+<li><strong>Countries</strong>: ship only to a list, or block a list.</li>
+<li><strong>States and provinces</strong>: for example Hawaii and Alaska, or Canada's territories.</li>
+<li><strong>ZIP and postal codes</strong>: single codes, prefixes like <code>100*</code> and ranges like <code>96700-96899</code>. Block them, or allow only them for local delivery.</li>
+<li><strong>Your own words</strong>: any word or address you never want to ship to.</li>
+<li><strong>Tagged products only</strong>: apply the rules only when the cart has a product with a tag (for example hazmat), or skip them when every product has a tag.</li>
+</ul>
+<h2>FAQ</h2>
+<div class="card"><strong>Does it work on my theme and plan?</strong><br>Yes. The rules run inside Shopify's checkout as a checkout validation, not in the theme, so the theme doesn't matter. Express checkout buttons and edited carts go through the same checkout and get the same check.</div>
+<div class="card"><strong>Where does the shopper see the message?</strong><br>Next to the field that broke the rule: the Address field for a PO box, the ZIP field for a blocked code, the State field for a blocked state, the City field for APO and FPO. The order can't be placed until the address is fixed.</div>
+<div class="card"><strong>What about local pickup?</strong><br>Local pickup and pickup points are never blocked, because nothing ships to the shopper's address. The cart page is never blocked either; the check happens in checkout, where the address is entered.</div>
+<div class="card"><strong>Will it block streets like "Box Canyon Road"?</strong><br>No. "Box" only counts at the start of a line followed by a number, like <code>Box 450</code>. Words must match whole, so "Boxwood Lane" and "Po Valley Drive" pass. Try any address in the app's tester before you save.</div>
+<div class="card"><strong>Can it catch every package forwarder?</strong><br>No app can. Many forwarder addresses look like ordinary street addresses. The app catches addresses that name a known forwarder, and you can add the warehouse street addresses you see on your own orders.</div>
+<div class="card"><strong>Which features are on the free plan?</strong><br>Blocking PO boxes, with your own message. The other rules are on the paid plan.</div>
+<div class="card"><strong>Didn't Shopify have an address blocker?</strong><br>Shopify's Checkout Blocks app had one; Shopify deprecated it and set it to <a href="https://changelog.shopify.com/posts/checkout-blocks-block-non-compliant-shipping-addresses-at-checkout">sunset on August 31, 2026</a>.</div>
+<div class="card"><strong>Does it store customer data?</strong><br>No. Shopify passes the shipping address to the app's checkout function inside Shopify, which answers allowed or blocked. Addresses are never sent to or kept on the app's server. See the <a href="/address-rules/privacy/">privacy policy</a>.</div>
+<div class="card"><strong>What does it need access to?</strong><br>One permission: write checkout validations, to register the rule. Your rules are stored on that validation in your own store.</div>
+<h2>Support</h2>
+<p>Email <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>. Replies within one business day. See the <a href="/address-rules/privacy/">privacy policy</a>.</p>
+</main>
+<footer>LeDuc Systems LLC · <a href="/tools/">Tools</a></footer>
+</body></html>

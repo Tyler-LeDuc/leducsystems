@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Preview your Tempo data in Saguaro Hours | Saguaro Hours</title>
+<meta name="description" content="Drop in a Tempo Logged Time CSV export and see it as Saguaro Hours weekly timesheets. Runs in your browser; the file is never uploaded.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/tempo-preview/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:title" content="Preview your Tempo data in Saguaro Hours | Saguaro Hours"><meta property="og:description" content="Drop in a Tempo Logged Time CSV export and see it as Saguaro Hours weekly timesheets. Runs in your browser; the file is never uploaded.">
+<meta property="og:url" content="https://leducsystems.com/saguaro-hours/tempo-preview/"><meta property="og:image" content="https://leducsystems.com/saguaro-hours/img/01-weekly-grid.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav{display:flex;flex-wrap:wrap;gap:4px 16px}nav a{color:var(--muted);font-size:.95rem;white-space:nowrap}nav a:first-child{color:var(--ink);font-weight:600}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{overflow-x:auto}pre code{overflow-wrap:normal}
+.sg-app{margin:20px 0;padding:12px 16px;border-left:4px solid #1d6b4f;background:#fff;font-size:.95rem}.sg-app a{font-weight:600}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/">Saguaro Hours</a><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>See your Tempo data in Saguaro Hours</h1>
+<p>Choose a Tempo export and this page shows it the way Saguaro Hours shows timesheets: one week per screen, a row per Jira issue, a column per day. The file is read by your browser and never uploaded. Close the page and it is gone.</p>
+<p><strong>Get the file from Tempo:</strong> Tempo, then Reports, then Logged Time. Pick the dates, then Export, then Download Raw Data, then the <strong>CSV</strong> icon (not XLS or XLSX). If you are a Jira admin and want everyone's time, first give yourself the Tempo permission "View Worklogs" on all resources; without it Tempo leaves other people's worklogs out of the export.</p>
+<p>No Tempo file to hand? Use the sample, which is made up.</p>
+<div id="tp" style="margin:1.5em 0;padding:1em 1.25em;border:1px solid #ccc;border-radius:8px">
+<p style="margin:0 0 .6em"><label for="tp-file" style="font-weight:600">Tempo CSV export</label><br>
+<input id="tp-file" type="file" accept=".csv,text/csv"> <button id="tp-sample" type="button">Use the sample file</button></p>
+<p id="tp-order" style="display:none;margin:.4em 0">Dates like 05/06/2026 could be day first or month first. <label><input type="radio" name="tp-ord" value="mdy" checked> Month first</label> <label><input type="radio" name="tp-ord" value="dmy"> Day first</label></p>
+<p id="tp-status" aria-live="polite" style="margin:.4em 0"></p>
+<div id="tp-view" style="display:none">
+<p style="margin:.6em 0"><label for="tp-person">Person</label> <select id="tp-person"></select> <label for="tp-week" style="margin-left:1em">Week starting</label> <select id="tp-week"></select> <button id="tp-prev" type="button" aria-label="Previous week">&#8592;</button> <button id="tp-next" type="button" aria-label="Next week">&#8594;</button></p>
+<div style="overflow-x:auto"><table id="tp-grid" style="border-collapse:collapse;min-width:640px"></table></div>
+<p id="tp-note" style="font-size:.9em;color:#555"></p>
+<p style="margin:1em 0 0"><a href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch&amp;body=I%20tried%20the%20Tempo%20preview.%20Please%20email%20me%20when%20Saguaro%20Hours%20is%20live." style="display:inline-block;padding:.5em 1em;background:#1d6b4f;color:#fff;border-radius:6px;text-decoration:none;font-weight:600">Email me when it's live</a> <span style="color:#555;font-size:.9em">Your file stays here; the email only asks to hear at launch.</span></p>
+</div>
+</div>
+<script>
+(function () {
+/** Bytes -> text, honouring a byte order mark (Excel's "Unicode text" is UTF-16). */
+function decodeBytes(bytes) {
+  const b = bytes;
+  if (b[0] === 0xff && b[1] === 0xfe) return new TextDecoder('utf-16le').decode(b.subarray(2));
+  if (b[0] === 0xfe && b[1] === 0xff) return new TextDecoder('utf-16be').decode(b.subarray(2));
+  return new TextDecoder('utf-8').decode(b);
+}
+/**
+ * Is this an Excel workbook rather than text? Tempo's Download Raw Data offers XLS and
+ * XLSX next to CSV, and either one read as text gives nonsense columns.
+ * XLSX is a zip ("PK"), XLS an OLE2 compound file (D0 CF 11 E0).
+ */
+function isSpreadsheetFile(bytes, name = '') {
+  const b = bytes;
+  if (b.length >= 2 && b[0] === 0x50 && b[1] === 0x4b) return true;
+  if (b.length >= 4 && b[0] === 0xd0 && b[1] === 0xcf && b[2] === 0x11 && b[3] === 0xe0) return true;
+  return /\.xlsx?$/i.test(String(name));
+}
+/** The delimiter of a header line: whichever of , ; tab occurs most outside quotes. */
+function detectDelimiter(text) {
+  const counts = { ',': 0, ';': 0, '\t': 0 };
+  let quoted = false;
+  for (let i = 0; i < text.length; i += 1) {
+    const c = text[i];
+    if (c === '"') quoted = !quoted;
+    else if (!quoted && (c === '\n' || c === '\r')) break;
+    else if (!quoted && c in counts) counts[c] += 1;
+  }
+  return Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0];
+}
+/**
+ * Parses CSV text into { headers, rows, delimiter, warnings }. Handles a BOM, an
+ * Excel "sep=;" line, quoted fields with delimiters, doubled quotes and line breaks,
+ * and CRLF, LF or CR. Rows of blanks are dropped; short rows are padded to the header.
+ */
+function parseCsv(input, delimiterOverride) {
+  let text = String(input ?? '').replace(/^﻿/, '');
+  let delimiter = delimiterOverride;
+  const sep = /^sep=(.)\r?\n/i.exec(text);
+  if (sep) {
+    delimiter = delimiter || sep[1];
+    text = text.slice(sep[0].length);
+  }
+  delimiter = delimiter || detectDelimiter(text);
+  const table = [];
+  let row = [];
+  let cell = '';
+  let quoted = false;
+  const endRow = () => {
+    row.push(cell);
+    cell = '';
+    if (row.some((c) => c.trim() !== '')) table.push(row);
+    row = [];
+  };
+  for (let i = 0; i < text.length; i += 1) {
+    const c = text[i];
+    if (quoted) {
+      if (c !== '"') cell += c;
+      else if (text[i + 1] === '"') { cell += '"'; i += 1; } else quoted = false;
+    } else if (c === '"' && cell === '') quoted = true;
+    else if (c === delimiter) { row.push(cell); cell = ''; } else if (c === '\n') endRow();
+    else if (c === '\r') { if (text[i + 1] === '\n') i += 1; endRow(); } else cell += c;
+  }
+  const warnings = quoted ? ['The file ends inside a quoted field, so its last row may be cut short.'] : [];
+  if (cell !== '' || row.length) endRow();
+  const headers = (table.shift() || []).map((h) => h.trim());
+  const rows = table.map((r) => headers.map((_, i) => r[i] ?? ''));
+  return { headers, rows, delimiter, warnings };
+}
+/**
+ * The fields the import understands, in the order the mapping step shows them.
+ * Aliases are exact header names, best first. The first alias of each field is a
+ * name Tempo's Cloud documentation lists (with "previously" names where it gives
+ * them); the rest are guesses, harmless because the admin sees the result.
+ */
+const FIELDS = [
+  { id: 'issueKey', label: 'Issue key (Work Item Key)', required: true, aliases: ['work item key', 'issue key', 'issue', 'key'] },
+  { id: 'date', label: 'Work date', required: true, aliases: ['work date', 'date', 'date started', 'started', 'worked date'] },
+  { id: 'seconds', label: 'Logged seconds', aliases: ['logged seconds', 'time spent seconds', 'worked seconds', 'seconds'] },
+  { id: 'hours', label: 'Logged hours', aliases: ['logged hours', 'hours', 'time spent', 'time spent hours', 'worked hours'] },
+  { id: 'billable', label: 'Billable', aliases: ['billable seconds', 'billable hours', 'billed hours', 'billed seconds', 'billable'] },
+  { id: 'account', label: 'Account', aliases: ['account name', 'account key', 'account'] },
+  { id: 'authorId', label: 'Author account id', aliases: ['user account id', 'author account id', 'account id', 'worker id'] },
+  { id: 'authorName', label: 'Author name', aliases: ['full name', 'author', 'author name', 'worker', 'worker name', 'user', 'username', 'display name'] },
+  { id: 'description', label: 'Description', aliases: ['work description', 'description', 'comment'] },
+  { id: 'tempoId', label: 'Tempo worklog id', aliases: ['tempo worklog id', 'worklog id'] },
+];
+function normHeader(h) {
+  return String(h).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+/** { [fieldId]: column index or -1 } from header names alone. */
+function autoMap(headers) {
+  const norm = headers.map(normHeader);
+  const mapping = {};
+  for (const f of FIELDS) {
+    const hit = f.aliases.map((a) => norm.indexOf(a)).find((i) => i >= 0);
+    mapping[f.id] = hit === undefined ? -1 : hit;
+  }
+  return mapping;
+}
+/** What the mapping still lacks; empty when the rows can be read. */
+function mappingProblems(mapping) {
+  const out = [];
+  if (!(mapping.issueKey >= 0)) out.push('Choose the column with the issue key.');
+  if (!(mapping.date >= 0)) out.push('Choose the column with the work date.');
+  if (!(mapping.seconds >= 0) && !(mapping.hours >= 0)) out.push('Choose a column with logged seconds or logged hours.');
+  return out;
+}
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+const NUMERIC_DATE = /^(\d{1,2})[-/.](\d{1,2})[-/.](\d{2,4})\b/;
+function dayKey(y, m, d) {
+  const year = y < 100 ? 2000 + y : y;
+  const date = new Date(Date.UTC(year, m - 1, d));
+  if (date.getUTCMonth() !== m - 1 || date.getUTCDate() !== d) return null;
+  return `${year}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+}
+function monthNumber(name) {
+  const i = MONTHS.indexOf(name.slice(0, 3).toLowerCase());
+  return i < 0 ? null : i + 1;
+}
+/**
+ * Reads the numeric day/month dates in a column. Tempo exports the work date as
+ * text and we could not confirm its format, so a date that fits both orders is never
+ * guessed: 'unknown' makes the admin choose. 'ymd' means no order is needed.
+ */
+function detectDateOrder(values) {
+  let dmy = false;
+  let mdy = false;
+  let numeric = false;
+  for (const v of values) {
+    const m = NUMERIC_DATE.exec(String(v).trim());
+    if (!m) continue;
+    numeric = true;
+    if (Number(m[1]) > 12) dmy = true;
+    if (Number(m[2]) > 12) mdy = true;
+  }
+  if (!numeric) return 'ymd';
+  if (dmy === mdy) return 'unknown'; // neither, or a file that contradicts itself
+  return dmy ? 'dmy' : 'mdy';
+}
+/** A work date as "YYYY-MM-DD", or null. `order` settles 05/06/2026 ('dmy' or 'mdy'). */
+function parseDay(value, order) {
+  const s = String(value ?? '').trim();
+  let m = /^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})(?!\d)/.exec(s);
+  if (m) return dayKey(Number(m[1]), Number(m[2]), Number(m[3]));
+  m = /^(\d{1,2})[-/. ]([A-Za-z]{3,9})\.?[-/. ,]+(\d{2,4})\b/.exec(s); // 05/Oct/26, 5 Oct 2026
+  if (m) return monthNumber(m[2]) ? dayKey(Number(m[3]), monthNumber(m[2]), Number(m[1])) : null;
+  m = /^([A-Za-z]{3,9})\.? (\d{1,2}),? (\d{4})\b/.exec(s); // Oct 5, 2026
+  if (m) return monthNumber(m[1]) ? dayKey(Number(m[3]), monthNumber(m[1]), Number(m[2])) : null;
+  m = NUMERIC_DATE.exec(s);
+  if (!m) return null;
+  if (order === 'dmy') return dayKey(Number(m[3]), Number(m[2]), Number(m[1]));
+  if (order === 'mdy') return dayKey(Number(m[3]), Number(m[1]), Number(m[2]));
+  return null;
+}
+/**
+ * The start time a work date carries, as "HH:MM", or ''. Tempo's raw export writes
+ * "2026-10-20 10:00"; the same clock time is in the Jira worklog's `started`, which
+ * separates two worklogs of one issue, day and duration.
+ */
+function parseTime(value) {
+  const m = /(?:^|[\sT])(\d{1,2}):([0-5]\d)(?::[0-5]\d(?:\.\d+)?)?\s*([ap]\.?m\.?)?\s*$/i.exec(String(value ?? '').trim());
+  if (!m) return '';
+  let h = Number(m[1]);
+  const pm = m[3] && /^p/i.test(m[3]);
+  if (m[3]) {
+    if (h < 1 || h > 12) return '';
+    h = (h % 12) + (pm ? 12 : 0);
+  }
+  if (h > 23) return '';
+  return `${String(h).padStart(2, '0')}:${m[2]}`;
+}
+/** "7.5", "7,5", "1,234.5" -> number, or NaN. A lone comma is decimal unless `whole`. */
+function parseNumber(value, whole = false) {
+  let s = String(value ?? '').replace(/[\s ]/g, '');
+  if (!/^-?[\d.,]*\d[\d.,]*$/.test(s)) return NaN;
+  const dot = s.lastIndexOf('.');
+  const comma = s.lastIndexOf(',');
+  if (dot >= 0 && comma >= 0) {
+    s = dot > comma ? s.replace(/,/g, '') : s.replace(/\./g, '').replace(',', '.');
+  } else if (comma >= 0) {
+    s = whole && /^-?\d{1,3}(,\d{3})+$/.test(s) ? s.replace(/,/g, '') : s.replace(',', '.');
+  }
+  return Number(s);
+}
+/** Decimal places in an hours value; 0 for "2h 30m" and "1:30", which are exact. */
+function hoursDecimals(value) {
+  const m = /^\d*[.,](\d+)$/.exec(String(value ?? '').trim());
+  return m ? m[1].length : 0;
+}
+/** Hours as seconds: decimal, "2h 30m" or "1:30". Null when unreadable or not positive. */
+function parseHours(value) {
+  const s = String(value ?? '').trim().toLowerCase();
+  let seconds;
+  const clock = /^(\d+):([0-5]\d)$/.exec(s);
+  const words = /^(?:(\d+(?:[.,]\d+)?)\s*h)?\s*(?:(\d+)\s*m)?$/.exec(s);
+  if (clock) seconds = Number(clock[1]) * 3600 + Number(clock[2]) * 60;
+  else if (s && words && (words[1] || words[2])) seconds = parseNumber(words[1] || 0) * 3600 + Number(words[2] || 0) * 60;
+  else seconds = parseNumber(s) * 3600;
+  return Number.isFinite(seconds) && seconds > 0 ? Math.round(seconds) : null;
+}
+function parseSeconds(value) {
+  const n = Math.round(parseNumber(value, true));
+  return Number.isFinite(n) && n > 0 ? n : null;
+}
+/**
+ * How far a duration may be from the worklog's. Rounded hours lose precision: 20
+ * minutes is 0.33h, or 1188 seconds. Half of the last decimal place, plus a second.
+ */
+function hoursTolerance(decimals) {
+  if (decimals <= 0) return 1;
+  return Math.ceil(1800 / 10 ** Math.min(decimals, 3)) + 1;
+}
+/** Billable column -> true, false, or null when blank. Any time above zero is billable. */
+function parseBillable(value) {
+  const s = String(value ?? '').trim().toLowerCase();
+  if (!s) return null;
+  if (['yes', 'y', 'true', 'billable'].includes(s)) return true;
+  if (['no', 'n', 'false', 'non-billable', 'nonbillable', 'not billable'].includes(s)) return false;
+  const n = parseNumber(s);
+  return Number.isNaN(n) ? null : n > 0;
+}
+const ISSUE_KEY = /^[A-Z][A-Z0-9_]*-\d+$/;
+/**
+ * Applies the mapping. Returns { good, bad }: `good` rows are typed, `bad` ones carry
+ * a `problem` for the report. `row` is the row number in the file (the header is 1).
+ * A repeated Tempo worklog id is one worklog listed twice, so the repeat is bad.
+ * `extras` are more column indexes whose values go in `extra`, in that order.
+ */
+function readRows(rows, mapping, { dateOrder, extras = [] } = {}) {
+  const cell = (r, id) => (mapping[id] >= 0 ? String(r[mapping[id]] ?? '').trim() : '');
+  const useSeconds = mapping.seconds >= 0;
+  const decimals = useSeconds ? 0 : rows.reduce((max, r) => Math.max(max, hoursDecimals(cell(r, 'hours'))), 0);
+  const tolerance = useSeconds ? 0 : hoursTolerance(decimals);
+  const seen = new Set();
+  const good = [];
+  const bad = [];
+  rows.forEach((r, i) => {
+    const row = i + 2;
+    const issueKey = cell(r, 'issueKey').toUpperCase();
+    const rawDate = cell(r, 'date');
+    const rawDuration = cell(r, useSeconds ? 'seconds' : 'hours');
+    const day = parseDay(rawDate, dateOrder);
+    const seconds = useSeconds ? parseSeconds(rawDuration) : parseHours(rawDuration);
+    const tempoId = cell(r, 'tempoId');
+    const reject = (problem) => { bad.push({ row, issueKey, day: day || rawDate, seconds, problem }); };
+    if (!ISSUE_KEY.test(issueKey)) { reject('Not an issue key'); return; }
+    if (!day) { reject(`Date not understood: "${rawDate}"`); return; }
+    if (!seconds) { reject(`Duration not understood: "${rawDuration}"`); return; }
+    if (tempoId && seen.has(tempoId)) { reject(`Repeats Tempo worklog id ${tempoId}`); return; }
+    if (tempoId) seen.add(tempoId);
+    const billableRaw = cell(r, 'billable');
+    good.push({
+      row,
+      issueKey,
+      day,
+      time: parseTime(rawDate),
+      seconds,
+      tolerance,
+      billable: parseBillable(billableRaw),
+      billableRaw,
+      account: cell(r, 'account'),
+      authorId: cell(r, 'authorId'),
+      authorName: cell(r, 'authorName'),
+      description: cell(r, 'description'),
+      tempoId,
+      extra: extras.map((i) => String(r[i] ?? '').trim()),
+    });
+  });
+  return { good, bad };
+}
+const BUILT_IN = [
+  'work item key', 'work item summary', 'logged hours', 'logged seconds', 'work date', 'user account id', 'full name',
+  'tempo team', 'team lead id', 'program', 'program manager id', 'period', 'account key', 'account name',
+  'account status', 'account lead id', 'account category', 'account category type', 'account customer',
+  'account contact id', 'account contact external', 'activity name', 'component', 'all components', 'version name',
+  'work item type', 'work item status', 'priority', 'space key', 'space name', 'epic', 'epic link', 'work description',
+  'parent key', 'reporter id', 'assignee id', 'external hours', 'billable hours', 'billable seconds',
+  'work item original estimate hours', 'work item original estimate seconds', 'work item remaining estimate hours',
+  'work item remaining estimate seconds', 'approval status', 'date created', 'date updated', 'tempo worklog id',
+  'issue key', 'issue summary', 'hours', 'billed hours', 'issue type', 'issue status', 'project key', 'project name',
+  'issue original estimate hours', 'issue original estimate seconds', 'issue remaining estimate hours',
+  'issue remaining estimate seconds', 'account',
+];
+const BUILT_IN_SET = new Set(BUILT_IN);
+const MAX_EXTRA_COLUMNS = 5;
+/**
+ * Columns that look like Tempo work attributes: not a known Tempo column, not mapped
+ * to a field, and with a value in some row. Only a suggestion; the admin chooses.
+ */
+function suggestExtraColumns(headers, rows, mapping) {
+  const mapped = new Set(Object.values(mapping).filter((i) => i >= 0));
+  const out = [];
+  headers.forEach((h, i) => {
+    if (mapped.has(i) || BUILT_IN_SET.has(normHeader(h)) || !normHeader(h)) return;
+    if (rows.some((r) => String(r[i] ?? '').trim())) out.push(i);
+  });
+  return out.slice(0, MAX_EXTRA_COLUMNS);
+}
+const DAY_MS = 86400000;
+/** "YYYY-MM-DD" -> the Monday of its week, as "YYYY-MM-DD". */
+function mondayOfDay(day) {
+  const t = Date.parse(`${day}T00:00:00Z`);
+  const dow = (new Date(t).getUTCDay() + 6) % 7; // Monday 0 ... Sunday 6
+  return new Date(t - dow * DAY_MS).toISOString().slice(0, 10);
+}
+/** The seven days of the week starting at `monday`. */
+function weekDaysOf(monday) {
+  const t = Date.parse(`${monday}T00:00:00Z`);
+  return Array.from({ length: 7 }, (_, i) => new Date(t + i * DAY_MS).toISOString().slice(0, 10));
+}
+/** Who logged a row: the account id when Tempo gave one, else the name. */
+function personKeyOf(row) {
+  return row.authorId || row.authorName || '(no author in the file)';
+}
+/** Totals and choices for the preview: people, weeks, hours, billable hours, range. */
+function summarize(good) {
+  const people = new Map();
+  const weeks = new Set();
+  let seconds = 0;
+  let billable = 0;
+  let first = null;
+  let last = null;
+  const accounts = new Set();
+  for (const r of good) {
+    const key = personKeyOf(r);
+    const p = people.get(key) || { key, name: r.authorName || r.authorId || key, seconds: 0, rows: 0 };
+    p.seconds += r.seconds;
+    p.rows += 1;
+    people.set(key, p);
+    weeks.add(mondayOfDay(r.day));
+    seconds += r.seconds;
+    if (r.billable) billable += r.seconds;
+    if (r.account) accounts.add(r.account);
+    if (!first || r.day < first) first = r.day;
+    if (!last || r.day > last) last = r.day;
+  }
+  return {
+    rows: good.length,
+    seconds,
+    billableSeconds: billable,
+    first,
+    last,
+    accounts: [...accounts].sort(),
+    people: [...people.values()].sort((a, b) => b.seconds - a.seconds || a.name.localeCompare(b.name)),
+    weeks: [...weeks].sort(),
+  };
+}
+/**
+ * One person's week as the Saguaro Hours grid shows it: a row per issue, a column
+ * per day, with day and row totals. `personKey` null means everyone.
+ */
+function weekGrid(good, personKey, monday) {
+  const days = weekDaysOf(monday);
+  const index = new Map(days.map((d, i) => [d, i]));
+  const byIssue = new Map();
+  for (const r of good) {
+    if (personKey && personKeyOf(r) !== personKey) continue;
+    const i = index.get(r.day);
+    if (i === undefined) continue;
+    const row = byIssue.get(r.issueKey) || { issueKey: r.issueKey, cells: Array(7).fill(0), billable: Array(7).fill(false), entries: Array(7).fill(0), total: 0 };
+    row.cells[i] += r.seconds;
+    row.entries[i] += 1;
+    if (r.billable) row.billable[i] = true;
+    row.total += r.seconds;
+    byIssue.set(r.issueKey, row);
+  }
+  const rows = [...byIssue.values()].sort((a, b) => a.issueKey.localeCompare(b.issueKey, 'en', { numeric: true }));
+  const dayTotals = days.map((_, i) => rows.reduce((n, r) => n + r.cells[i], 0));
+  return { days, rows, dayTotals, total: dayTotals.reduce((a, b) => a + b, 0) };
+}
+/** Seconds as the grid prints hours: 5400 -> "1.5", 1200 -> "0.33", 0 -> "". */
+function hoursText(seconds) {
+  if (!seconds) return '';
+  return String(Math.round((seconds / 3600) * 100) / 100);
+}
+  var SAMPLE = 'Work Item Key,Work Item summary,Logged Seconds,Work date,User Account ID,Full name,Account Name,Work Description,Billable Seconds,Tempo Worklog Id\n' +
+    'WEB-12,Checkout page,7200,2026-10-26 09:00,sample-alex,Alex Rivera,Northwind,"Layout, review",7200,101\n' +
+    'WEB-12,Checkout page,5400,2026-10-27 09:00,sample-alex,Alex Rivera,Northwind,Build,5400,102\n' +
+    'WEB-15,Payment errors,3600,2026-10-27 13:00,sample-alex,Alex Rivera,Northwind,Fix,0,103\n' +
+    'OPS-3,Weekly planning,1800,2026-10-28 10:00,sample-alex,Alex Rivera,,Meeting,0,104\n' +
+    'WEB-15,Payment errors,14400,2026-10-29 09:00,sample-alex,Alex Rivera,Northwind,Fix and test,14400,105\n' +
+    'WEB-20,Release notes,2700,2026-10-30 15:00,sample-alex,Alex Rivera,Northwind,Docs,2700,106\n' +
+    'WEB-12,Checkout page,10800,2026-10-26 10:00,sample-sam,Sam Lee,Northwind,Design QA,10800,107\n' +
+    'OPS-3,Weekly planning,1800,2026-10-28 10:00,sample-sam,Sam Lee,,Meeting,0,108\n' +
+    'WEB-20,Release notes,9000,2026-10-30 09:00,sample-sam,Sam Lee,Northwind,Write up,9000,109\n' +
+    'WEB-12,Checkout page,3600,2026-11-02 09:00,sample-alex,Alex Rivera,Northwind,Follow-up,3600,110\n';
+  var el = function (id) { return document.getElementById(id); };
+  var state = null;
+  var DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  function status(text) { el('tp-status').textContent = text; }
+  function option(select, value, text) { var o = document.createElement('option'); o.value = value; o.textContent = text; select.appendChild(o); }
+  function cell(tr, tag, text, bold) { var c = document.createElement(tag); c.textContent = text; if (bold) c.style.fontWeight = '600'; c.style.padding = '.3em .6em'; c.style.borderBottom = '1px solid #ddd'; c.style.textAlign = tr.children.length ? 'right' : 'left'; tr.appendChild(c); return c; }
+  function load(bytes, name) {
+    el('tp-view').style.display = 'none';
+    if (isSpreadsheetFile(bytes, name)) { status('That is an Excel file. In Tempo, choose the CSV icon under Download Raw Data, then try again.'); return; }
+    var file = parseCsv(decodeBytes(bytes));
+    var mapping = autoMap(file.headers);
+    var problems = mappingProblems(mapping);
+    if (problems.length) { status('This does not look like a Tempo Logged Time export: ' + problems.join(' ') + ' The CSV from Download Raw Data has these columns.'); return; }
+    var order = detectDateOrder(file.rows.map(function (r) { return r[mapping.date]; }));
+    el('tp-order').style.display = order === 'unknown' ? '' : 'none';
+    state = { file: file, mapping: mapping, order: order };
+    read();
+  }
+  function read() {
+    var order = state.order === 'unknown' ? document.querySelector('input[name="tp-ord"]:checked').value : state.order;
+    var res = readRows(state.file.rows, state.mapping, { dateOrder: order });
+    state.good = res.good; state.bad = res.bad;
+    if (!res.good.length) { status('No rows could be read. ' + (res.bad[0] ? 'Row ' + res.bad[0].row + ': ' + res.bad[0].problem + '.' : '')); return; }
+    var s = summarize(res.good);
+    state.summary = s;
+    status(s.rows + ' worklogs, ' + hoursText(s.seconds) + ' hours (' + hoursText(s.billableSeconds) + ' billable) by ' + s.people.length + (s.people.length === 1 ? ' person' : ' people') + ', ' + s.first + ' to ' + s.last + '.' + (res.bad.length ? ' ' + res.bad.length + ' rows could not be read.' : ''));
+    var person = el('tp-person'); person.innerHTML = '';
+    option(person, '', 'Everyone');
+    s.people.forEach(function (p) { option(person, p.key, p.name + ' (' + hoursText(p.seconds) + ' h)'); });
+    var week = el('tp-week'); week.innerHTML = '';
+    s.weeks.forEach(function (w) { option(week, w, w); });
+    var busiest = s.weeks[0], most = -1;
+    s.weeks.forEach(function (w) { var n = weekGrid(res.good, null, w).total; if (n > most) { most = n; busiest = w; } });
+    week.value = busiest;
+    el('tp-view').style.display = '';
+    draw();
+  }
+  function draw() {
+    var g = weekGrid(state.good, el('tp-person').value || null, el('tp-week').value);
+    var t = el('tp-grid'); t.innerHTML = '';
+    var head = document.createElement('tr');
+    cell(head, 'th', 'Issue');
+    g.days.forEach(function (d, i) { cell(head, 'th', DAYS[i] + ' ' + d.slice(8) + '/' + d.slice(5, 7)); });
+    cell(head, 'th', 'Total');
+    t.appendChild(head);
+    if (!g.rows.length) { var e = document.createElement('tr'); var c = cell(e, 'td', 'No time logged this week.'); c.colSpan = 9; t.appendChild(e); }
+    g.rows.forEach(function (r) {
+      var tr = document.createElement('tr');
+      cell(tr, 'td', r.issueKey, true);
+      r.cells.forEach(function (sec, i) {
+        var c = cell(tr, 'td', hoursText(sec) + (r.billable[i] ? ' $' : ''));
+        if (r.entries[i] > 1) c.title = r.entries[i] + ' worklogs';
+      });
+      cell(tr, 'td', hoursText(r.total), true);
+      t.appendChild(tr);
+    });
+    var foot = document.createElement('tr');
+    cell(foot, 'td', 'Day total', true);
+    g.dayTotals.forEach(function (sec) { cell(foot, 'td', hoursText(sec), true); });
+    cell(foot, 'td', hoursText(g.total), true);
+    t.appendChild(foot);
+    var idx = state.summary.weeks.indexOf(el('tp-week').value);
+    el('tp-prev').disabled = idx <= 0;
+    el('tp-next').disabled = idx >= state.summary.weeks.length - 1;
+    el('tp-note').textContent = 'Hours are decimal. $ marks billable time. In Saguaro Hours these worklogs stay in Jira as they are; the import adds the real author, billable flags, account names and work attributes next to them.';
+  }
+  el('tp-file').addEventListener('change', function (ev) {
+    var f = ev.target.files && ev.target.files[0];
+    if (!f) return;
+    f.arrayBuffer().then(function (buf) { load(new Uint8Array(buf), f.name); }, function () { status('The file could not be read.'); });
+  });
+  el('tp-sample').addEventListener('click', function () { load(new TextEncoder().encode(SAMPLE), 'sample.csv'); });
+  el('tp-person').addEventListener('change', draw);
+  el('tp-week').addEventListener('change', draw);
+  el('tp-prev').addEventListener('click', function () { var w = el('tp-week'); w.selectedIndex = Math.max(0, w.selectedIndex - 1); draw(); });
+  el('tp-next').addEventListener('click', function () { var w = el('tp-week'); w.selectedIndex = Math.min(w.options.length - 1, w.selectedIndex + 1); draw(); });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="tp-ord"]'), function (r) { r.addEventListener('change', function () { if (state) read(); }); });
+})();
+</script>
+
+<h2>What this shows, and what it does not</h2>
+<p>This is a preview of how your hours look as Saguaro Hours timesheets. It does not connect to Jira, so it cannot check that each row matches a Jira worklog; the real import does that, and refuses rows it cannot match exactly. Columns the preview does not use (work attributes, approval status and the rest) are ignored here and handled by the import.</p>
+<p>Next steps: what moving involves, step by step, in the <a href="/saguaro-hours/docs/moving-from-tempo/">move from Tempo guide</a>. What it would cost: <a href="/saguaro-hours/tempo-cost-calculator/">Tempo cost calculator</a>.</p>
+<p>Saguaro Hours is waiting for Atlassian Marketplace approval. To get one email the day it is live, <a href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch">email tyler@leducsystems.com</a> with the subject "Saguaro launch".</p>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> · <a href="/privacy#cookies" data-cookie-settings>Cookie settings</a></footer>
+<style>
+.sg-notify{margin:12px 0 20px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;max-width:560px}
+.sg-notify label{display:block;font-weight:600;margin-bottom:6px}.sg-notify .sg-row{display:flex;gap:8px;flex-wrap:wrap}
+.sg-notify input[type=email]{flex:1 1 220px;min-height:44px;font:inherit;padding:6px 10px;border:1px solid rgba(21,19,15,.4);border-radius:4px}
+.sg-notify button{min-height:44px;font:inherit;font-weight:600;padding:6px 16px;border:0;border-radius:4px;background:#1d6b4f;color:#fff;cursor:pointer}
+.sg-notify button[disabled]{opacity:.6;cursor:default}.sg-notify .sg-note{margin:8px 0 0;color:var(--muted);font-size:.9rem}
+.sg-notify .sg-status{margin:8px 0 0;font-weight:600}.sg-notify .sg-hp{position:absolute;left:-9999px}
+.sg-notify input:focus-visible,.sg-notify button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sg-notify [hidden]{display:none}
+</style>
+<script>
+(function () {
+  var DONE = 'sgLaunchList';
+  function track(name, params) { if (window.gtag) window.gtag('event', name, params); }
+  function done(form, msg) {
+    form.querySelector('.sg-row').hidden = true;
+    form.querySelector('.sg-note').hidden = true;
+    form.querySelector('label').hidden = true;
+    form.querySelector('.sg-status').textContent = msg;
+  }
+  function build(subject, n) {
+    var id = 'sg-email-' + n, f = document.createElement('form');
+    f.className = 'sg-notify';
+    f.noValidate = true;
+    f.innerHTML = '<label for="' + id + '">Your work email</label>'
+      + '<div class="sg-row"><input id="' + id + '" type="email" name="email" autocomplete="email" required placeholder="you@company.com">'
+      + '<button type="submit">Email me when it\'s live</button></div>'
+      + '<input class="sg-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
+      + '<p class="sg-note">One email on the day it is live on the Atlassian Marketplace. I use your address for nothing else and never share it.</p>'
+      + '<p class="sg-status" role="status" aria-live="polite"></p>';
+    var stored = null;
+    try { stored = window.localStorage.getItem(DONE + ':' + subject); } catch (e) {}
+    if (stored) { done(f, 'You are on the list (' + stored + '). I will email you the day it is live.'); return f; }
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = f.querySelector('input[type=email]'), btn = f.querySelector('button'), st = f.querySelector('.sg-status');
+      var email = input.value.trim();
+      if (f.querySelector('.sg-hp').value) return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { st.textContent = 'Enter a valid email address.'; input.focus(); return; }
+      btn.disabled = true;
+      st.textContent = 'Sending...';
+      fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: 'service_zeogjbm', template_id: 'template_mfizbds', user_id: 'HIVHympEPP7sMQ_Pl',
+          template_params: {
+            title: subject, name: email, email: email,
+            from_name: email, from_email: email, reply_to: email, to_email: 'tyler@leducsystems.com', subject: subject,
+            message: 'Launch list: please email me when it is live.\nEmail: ' + email + '\nPage: ' + location.pathname
+          }
+        })
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        try { window.localStorage.setItem(DONE + ':' + subject, email); } catch (e2) {}
+        track('generate_lead', { form: 'launch_list', list: subject, page_path: location.pathname });
+        done(f, 'Thanks. I will email ' + email + ' the day it is live.');
+      }).catch(function () {
+        btn.disabled = false;
+        st.innerHTML = 'That did not send. Please email <a href="mailto:tyler@leducsystems.com?subject=' + encodeURIComponent(subject) + '">tyler@leducsystems.com</a> with the subject "' + subject + '" instead.';
+      });
+    });
+    return f;
+  }
+  var n = 0;
+  [].slice.call(document.querySelectorAll('main a[href^="mailto:"]')).forEach(function (a) {
+    var m = /[?&]subject=([^&]*)/.exec(a.getAttribute('href'));
+    var subject = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+    if (!/ launch$/i.test(subject)) return;
+    a.addEventListener('click', function () { track('launch_list_mailto', { list: subject, page_path: location.pathname }); });
+    var block = a.closest('p, li') || a;
+    if (a.id === 'cta') a.style.display = 'none';
+    block.parentNode.insertBefore(build(subject, ++n), block.nextSibling);
+  });
+  // Approval day: every link to the Marketplace listing counts as a "get it" click.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com/apps/"]') : null;
+    if (a) track('marketplace_click', { link_url: a.href, page_path: location.pathname });
+  });
+})();
+</script>
+</body></html>

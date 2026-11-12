@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tempo Timesheets alternative for Jira Cloud (2026) | Saguaro Hours</title>
+<meta name="description" content="A Tempo Timesheets alternative for Jira Cloud after the September 2026 price increase: sourced prices by user count, features side by side, and what Saguaro Hours does not do yet.">
+<link rel="canonical" href="https://leducsystems.com/saguaro-hours/tempo-alternative/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:title" content="Tempo Timesheets alternative for Jira Cloud (2026) | Saguaro Hours"><meta property="og:description" content="A Tempo Timesheets alternative for Jira Cloud after the September 2026 price increase: sourced prices by user count, features side by side, and what Saguaro Hours does not do yet.">
+<meta property="og:url" content="https://leducsystems.com/saguaro-hours/tempo-alternative/"><meta property="og:image" content="https://leducsystems.com/saguaro-hours/img/01-weekly-grid.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#15130F;--paper:#FAF8F3;--muted:#5C574E;--line:rgba(21,19,15,.14);--accent:#E8365F}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}header img{height:28px;display:block}
+nav{display:flex;flex-wrap:wrap;gap:4px 16px}nav a{color:var(--muted);font-size:.95rem;white-space:nowrap}nav a:first-child{color:var(--ink);font-weight:600}
+h1{font:600 2.1rem/1.15 Fraunces,Georgia,serif;margin:40px 0 12px}h2{font:600 1.3rem/1.3 Fraunces,Georgia,serif;margin:32px 0 8px}
+a{color:var(--ink)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#EFEDE7}
+code{background:#EFEDE7;padding:1px 5px;border-radius:3px}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+main img{max-width:100%;height:auto}main a,main code{overflow-wrap:anywhere}pre{overflow-x:auto}pre code{overflow-wrap:normal}
+.sg-app{margin:20px 0;padding:12px 16px;border-left:4px solid #1d6b4f;background:#fff;font-size:.95rem}.sg-app a{font-weight:600}.docs-list li{margin:6px 0}footer{margin-top:56px;padding:16px 20px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:480px){h1{font-size:1.7rem}table{display:block;overflow-x:auto}}
+</style>
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+</head><body>
+<header><a href="/"><img src="/leduc-logo.svg" alt="LeDuc Systems"></a>
+<nav><a href="/saguaro-hours/">Saguaro Hours</a><a href="/saguaro-hours/docs/">Docs</a><a href="/saguaro-hours/support/">Support</a><a href="/saguaro-hours/security/">Security</a><a href="/saguaro-hours/privacy/">Privacy</a></nav></header>
+<main>
+<h1>A Tempo Timesheets alternative for Jira Cloud</h1>
+<p>If Tempo Timesheets costs more than your team wants to pay, Saguaro Hours for Jira is one option. It does weekly timesheets, team approvals and billable reports at a lower list price. It also does fewer things than Tempo. This page shows the prices, with sources, and the features Saguaro does not have.</p>
+<p>Saguaro Hours was submitted to the Atlassian Marketplace on 2026-11-03 and is waiting for approval. To get one email the day it is live, <a href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch">email tyler@leducsystems.com with the subject "Saguaro launch"</a>.</p>
+<h2>Tempo's September 2026 price increase</h2>
+<p>Tempo raised Timesheets prices on Jira Cloud on September 15, 2026: 15% for the first 250 users and 9 to 12% for the bands above that. A 50-user site went from $260.50 to $299.50 a month. Existing Tempo customers can renew at the old price until November 14, 2026, at the same user tier. Old and new rates, sources and a calculator: <a href="/saguaro-hours/tempo-price-increase-2026/">Tempo Timesheets price increase 2026</a>.</p>
+<p>If your renewal is before Saguaro Hours is listed, renewing Tempo at the old price is the cheaper way to buy time while you compare.</p>
+<h2>Price by number of Jira users</h2>
+<p>Work out your own numbers: <a href="/saguaro-hours/tempo-cost-calculator/">Tempo cost calculator</a>. Every Tempo rate band, and what Tempo's other apps add: <a href="/saguaro-hours/tempo-pricing/">Tempo pricing in 2026</a>.</p>
+<p>Monthly list prices in US dollars. Both apps are billed for every user on the Jira license, not only the people who log time. Both charge each band of users at that band's rate.</p>
+<table>
+<thead>
+<tr>
+<th>Jira users</th>
+<th>Tempo Timesheets per month</th>
+<th>Saguaro Hours per month</th>
+<th>Difference per month</th>
+<th>Difference per year (x 12)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>$10.00</td>
+<td>$0.00</td>
+<td>$10.00</td>
+<td>$120.00</td>
+</tr>
+<tr>
+<td>11</td>
+<td>$65.89</td>
+<td>$22.00</td>
+<td>$43.89</td>
+<td>$526.68</td>
+</tr>
+<tr>
+<td>50</td>
+<td>$299.50</td>
+<td>$100.00</td>
+<td>$199.50</td>
+<td>$2,394.00</td>
+</tr>
+<tr>
+<td>100</td>
+<td>$599.00</td>
+<td>$200.00</td>
+<td>$399.00</td>
+<td>$4,788.00</td>
+</tr>
+<tr>
+<td>250</td>
+<td>$1,230.50</td>
+<td>$425.00</td>
+<td>$805.50</td>
+<td>$9,666.00</td>
+</tr>
+<tr>
+<td>500</td>
+<td>$1,728.00</td>
+<td>$675.00</td>
+<td>$1,053.00</td>
+<td>$12,636.00</td>
+</tr>
+<tr>
+<td>1,000</td>
+<td>$2,723.00</td>
+<td>$1,175.00</td>
+<td>$1,548.00</td>
+<td>$18,576.00</td>
+</tr>
+</tbody>
+</table>
+<p>The per-user rates behind the table:</p>
+<table>
+<thead>
+<tr>
+<th>Users</th>
+<th>Tempo per user per month</th>
+<th>Saguaro per user per month</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 to 10</td>
+<td>$10.00 flat for the site</td>
+<td>free</td>
+</tr>
+<tr>
+<td>11 to 100</td>
+<td>$5.99</td>
+<td>$2.00</td>
+</tr>
+<tr>
+<td>101 to 250</td>
+<td>$4.21</td>
+<td>$1.50</td>
+</tr>
+<tr>
+<td>251 to 1,000</td>
+<td>$1.99</td>
+<td>$1.00</td>
+</tr>
+</tbody>
+</table>
+<p>Example, 250 users. Tempo: 100 x $5.99 + 150 x $4.21 = $1,230.50. Saguaro: 100 x $2.00 + 150 x $1.50 = $425.00. Above 10 users, the first band covers users 1 to 100.</p>
+<p>Annual subscriptions cost 10 times the monthly price for the user tier you buy. Tempo's published annual totals: 50 users $2,995, 100 users $5,990, 500 users $17,280, 1,000 users $27,230. The same rule gives Saguaro $1,000, $2,000, $6,750 and $11,750. These are computed as 10 x the monthly figures above; the live listing will show Atlassian's figures. See <a href="/saguaro-hours/jira-time-tracking-pricing/">how Jira app pricing works</a>.</p>
+<p>Sources: Tempo's public price list on the Atlassian Marketplace (<a href="https://marketplace.atlassian.com/rest/2/addons/is.origo.jira.tempo-plugin/pricing/cloud/live">https://marketplace.atlassian.com/rest/2/addons/is.origo.jira.tempo-plugin/pricing/cloud/live</a> , last changed 2026-10-13) and <a href="https://www.tempo.io/pricing/jira-time-tracking">https://www.tempo.io/pricing/jira-time-tracking</a> , both read on 2026-11-03. Tempo's pricing page says "Your Tempo license size must match your Jira license size" and "A user is anyone who can log into Jira." Saguaro's prices are as entered in its Marketplace listing, which is waiting for approval. Prices change. Check the sources before you decide.</p>
+<h3>Cost per person who logs time</h3>
+<p>Many sites have more Jira users than people who log time. The bill does not change, but the cost per person who logs time does. This is the monthly price divided by the people who log time.</p>
+<table>
+<thead>
+<tr>
+<th>Jira users</th>
+<th>People who log time</th>
+<th>Tempo per person</th>
+<th>Saguaro per person</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>20</td>
+<td>$29.95 ($599.00 / 20)</td>
+<td>$10.00 ($200.00 / 20)</td>
+</tr>
+<tr>
+<td>250</td>
+<td>50</td>
+<td>$24.61 ($1,230.50 / 50)</td>
+<td>$8.50 ($425.00 / 50)</td>
+</tr>
+</tbody>
+</table>
+<h2>Features side by side</h2>
+<p>Tempo's column uses the feature names on Tempo's pricing page (<a href="https://www.tempo.io/pricing/jira-time-tracking">https://www.tempo.io/pricing/jira-time-tracking</a>) and its product page (<a href="https://www.tempo.io/products/jira-time-tracking">https://www.tempo.io/products/jira-time-tracking</a>), read on 2026-11-03. It is not a review of how well those features work. Saguaro's column describes the build tested on my development site as of 2026-11-04. Items marked "newer build" are not in the older build under Marketplace review; I plan to release them to the live app on the day the listing is approved.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Tempo Timesheets</th>
+<th>Saguaro Hours</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Weekly timesheet view</td>
+<td>Yes ("Timesheet view")</td>
+<td>Yes, a grid of issues by day</td>
+</tr>
+<tr>
+<td>Calendar view and list view</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Log time from the issue</td>
+<td>Not checked</td>
+<td>Yes, a Log work panel</td>
+</tr>
+<tr>
+<td>Team-level approvals</td>
+<td>Yes</td>
+<td>Yes: submit, approve, reject with a comment, approve all</td>
+</tr>
+<tr>
+<td>Project-level approvals</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Weekly or monthly periods</td>
+<td>Not checked</td>
+<td>Yes, set per team (newer build; the build under review has one period type per site)</td>
+</tr>
+<tr>
+<td>Locked periods after submit</td>
+<td>Not checked</td>
+<td>Yes in the app; later edits made in Jira are flagged</td>
+</tr>
+<tr>
+<td>Billable hours</td>
+<td>Yes</td>
+<td>Yes, a billable flag per worklog</td>
+</tr>
+<tr>
+<td>Custom attributes on worklogs</td>
+<td>Yes ("Tempo work attributes")</td>
+<td>Yes, list and text attributes</td>
+</tr>
+<tr>
+<td>Accounts and customers</td>
+<td>Yes ("Tempo accounts")</td>
+<td>No. A list attribute such as Account can stand in, and can set the billing rate (newer build)</td>
+</tr>
+<tr>
+<td>CapEx and OpEx split</td>
+<td>Yes ("CapEx/OpEx Split" through Tempo accounts, <a href="https://help.tempo.io/timesheets/latest/capex-opex-split">https://help.tempo.io/timesheets/latest/capex-opex-split</a> , read on 2026-11-04)</td>
+<td>A list attribute such as CapEx / OpEx on each worklog, with reports and cost by it (cost: newer build). See <a href="/saguaro-hours/jira-capex-time-tracking/">CapEx and OpEx time tracking in Jira</a></td>
+</tr>
+<tr>
+<td>Holiday and workload schemes</td>
+<td>Yes</td>
+<td>Site holidays, days off, and hours per weekday for each person (newer build)</td>
+</tr>
+<tr>
+<td>Custom reports</td>
+<td>Yes, plus shared reports</td>
+<td>Yes; saved reports are private to each user</td>
+</tr>
+<tr>
+<td>Planned vs. actual, revenue reports</td>
+<td>Yes</td>
+<td>Estimate vs. logged per issue, and cost and revenue from hourly rates (newer build)</td>
+</tr>
+<tr>
+<td>Report export</td>
+<td>Yes ("Raw data export options")</td>
+<td>Summary CSV, Detail CSV, Excel (.xlsx)</td>
+</tr>
+<tr>
+<td>Dashboard gadget</td>
+<td>Yes</td>
+<td>Yes, one team per gadget</td>
+</tr>
+<tr>
+<td>Reminders</td>
+<td>Slack and email</td>
+<td>Email through Jira's own notifications (newer build), plus in-app banners and a pending count</td>
+</tr>
+<tr>
+<td>Calendar and IDE integrations, AI suggestions</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>API and webhooks</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Chrome extension, mobile app, Slack app</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Capacity planning</td>
+<td>Through Tempo's separate Capacity Planner app</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Start and stop timer</td>
+<td>Not checked</td>
+<td>Yes, on the issue (newer build)</td>
+</tr>
+<tr>
+<td>Rates, cost and invoicing</td>
+<td>Revenue reports; Financial Manager is a separate Tempo app</td>
+<td>Cost and billing rates, cost and revenue in reports, and a printable billing summary per project or account (newer build). No invoices</td>
+</tr>
+</tbody>
+</table>
+<p>"Not checked" means the Tempo pages above did not name the feature. It does not mean Tempo lacks it.</p>
+<p>If you rely on Tempo accounts, capacity planning, integrations, its API, or its mobile and Slack apps, Saguaro Hours is not a replacement today.</p>
+<h2>What Saguaro Hours does differently</h2>
+<ul>
+<li>Worklogs are normal Jira worklogs, written as the signed-in user. Jira's Work log tab and worklogAuthor searches show them. If you uninstall Saguaro, the worklogs stay in Jira.</li>
+<li>It is built on Atlassian Forge. Its data is kept in Atlassian-hosted storage, and the app declares no outside network access.</li>
+<li>It is free for up to 10 users, with no flat fee.</li>
+</ul>
+<h2>Moving from Tempo</h2>
+<p>See your own Tempo export as Saguaro Hours timesheets, in your browser: <a href="/saguaro-hours/tempo-preview/">Tempo data preview</a>.</p>
+<p>Your worklogs are already in Jira, because Tempo writes them as Jira worklogs. Saguaro Hours adds what Tempo kept on top: export Tempo's Logged Time report as CSV (Tempo &gt; Reports &gt; Logged Time &gt; Export &gt; Download Raw Data &gt; CSV) and import it on the admin page. It matches each row to its Jira worklog and keeps billable flags, accounts and up to five work attributes. It also keeps who logged each worklog in Tempo, so reports, approvals and timesheets count migrated hours for that person, marked "from Tempo" (in Jira itself the Tempo app stays the author). It was tested on a real Tempo export, and running it twice changes nothing. Step by step: <a href="/saguaro-hours/docs/moving-from-tempo/">move from Tempo guide</a>.</p>
+<h2>Frequently asked questions</h2>
+<p><strong>What is a cheaper alternative to Tempo Timesheets?</strong> Several Jira Cloud apps list below Tempo, including Clockwork Pro, Timetracker and Saguaro Hours. At 100 Jira users, Tempo Timesheets lists at $599.00 a month and Saguaro Hours at $200.00. See <a href="/saguaro-hours/jira-time-tracking-apps-compared/">Jira time tracking apps compared</a>.</p>
+<p><strong>Do I lose my worklogs if I leave Tempo?</strong> No. Tempo writes each worklog into Jira, so the hours stay in Jira. Tempo-only data such as accounts and work attributes needs an export, covered in <a href="/saguaro-hours/tempo-export-csv/">how to export Tempo worklogs to CSV</a>.</p>
+<p><strong>Is Saguaro Hours for Jira available now?</strong> Not yet. It is in Atlassian Marketplace review. The Azure DevOps version is live on the Visual Studio Marketplace: <a href="https://marketplace.visualstudio.com/items?itemName=leducsystems.saguaro-hours">https://marketplace.visualstudio.com/items?itemName=leducsystems.saguaro-hours</a> .</p>
+<p><strong>Does Saguaro Hours replace every Tempo feature?</strong> No. It has no capacity planning, public API, Tempo accounts, or mobile and Slack apps. The table above lists the gaps.</p>
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What is a cheaper alternative to Tempo Timesheets?","acceptedAnswer":{"@type":"Answer","text":"Several Jira Cloud apps list below Tempo, including Clockwork Pro, Timetracker and Saguaro Hours. At 100 Jira users, Tempo Timesheets lists at $599.00 a month and Saguaro Hours at $200.00."}},
+{"@type":"Question","name":"Do I lose my worklogs if I leave Tempo?","acceptedAnswer":{"@type":"Answer","text":"No. Tempo writes each worklog into Jira, so the hours stay in Jira. Tempo-only data such as accounts and work attributes needs an export."}},
+{"@type":"Question","name":"Is Saguaro Hours for Jira available now?","acceptedAnswer":{"@type":"Answer","text":"Not yet. It is in Atlassian Marketplace review. The Azure DevOps version is live on the Visual Studio Marketplace."}},
+{"@type":"Question","name":"Does Saguaro Hours replace every Tempo feature?","acceptedAnswer":{"@type":"Answer","text":"No. It has no capacity planning, public API, Tempo accounts, or mobile and Slack apps."}}
+]}
+</script>
+
+<h2>Try it</h2>
+<p><a href="mailto:tyler@leducsystems.com?subject=Saguaro%20launch">Email tyler@leducsystems.com with the subject "Saguaro launch"</a> to get one email the day the listing is live. See the <a href="/saguaro-hours/">product page</a> and the <a href="/saguaro-hours/docs/">documentation</a>.</p>
+<p>Tempo and Timesheets by Tempo belong to Tempo Software. Saguaro Hours and LeDuc Systems LLC are not affiliated with Tempo.</p>
+</main>
+<footer>Saguaro Hours for Jira · LeDuc Systems LLC · <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a> · <a href="/privacy#cookies" data-cookie-settings>Cookie settings</a></footer>
+<style>
+.sg-notify{margin:12px 0 20px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;max-width:560px}
+.sg-notify label{display:block;font-weight:600;margin-bottom:6px}.sg-notify .sg-row{display:flex;gap:8px;flex-wrap:wrap}
+.sg-notify input[type=email]{flex:1 1 220px;min-height:44px;font:inherit;padding:6px 10px;border:1px solid rgba(21,19,15,.4);border-radius:4px}
+.sg-notify button{min-height:44px;font:inherit;font-weight:600;padding:6px 16px;border:0;border-radius:4px;background:#1d6b4f;color:#fff;cursor:pointer}
+.sg-notify button[disabled]{opacity:.6;cursor:default}.sg-notify .sg-note{margin:8px 0 0;color:var(--muted);font-size:.9rem}
+.sg-notify .sg-status{margin:8px 0 0;font-weight:600}.sg-notify .sg-hp{position:absolute;left:-9999px}
+.sg-notify input:focus-visible,.sg-notify button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sg-notify [hidden]{display:none}
+</style>
+<script>
+(function () {
+  var DONE = 'sgLaunchList';
+  function track(name, params) { if (window.gtag) window.gtag('event', name, params); }
+  function done(form, msg) {
+    form.querySelector('.sg-row').hidden = true;
+    form.querySelector('.sg-note').hidden = true;
+    form.querySelector('label').hidden = true;
+    form.querySelector('.sg-status').textContent = msg;
+  }
+  function build(subject, n) {
+    var id = 'sg-email-' + n, f = document.createElement('form');
+    f.className = 'sg-notify';
+    f.noValidate = true;
+    f.innerHTML = '<label for="' + id + '">Your work email</label>'
+      + '<div class="sg-row"><input id="' + id + '" type="email" name="email" autocomplete="email" required placeholder="you@company.com">'
+      + '<button type="submit">Email me when it\'s live</button></div>'
+      + '<input class="sg-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
+      + '<p class="sg-note">One email on the day it is live on the Atlassian Marketplace. I use your address for nothing else and never share it.</p>'
+      + '<p class="sg-status" role="status" aria-live="polite"></p>';
+    var stored = null;
+    try { stored = window.localStorage.getItem(DONE + ':' + subject); } catch (e) {}
+    if (stored) { done(f, 'You are on the list (' + stored + '). I will email you the day it is live.'); return f; }
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = f.querySelector('input[type=email]'), btn = f.querySelector('button'), st = f.querySelector('.sg-status');
+      var email = input.value.trim();
+      if (f.querySelector('.sg-hp').value) return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { st.textContent = 'Enter a valid email address.'; input.focus(); return; }
+      btn.disabled = true;
+      st.textContent = 'Sending...';
+      fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: 'service_zeogjbm', template_id: 'template_mfizbds', user_id: 'HIVHympEPP7sMQ_Pl',
+          template_params: {
+            title: subject, name: email, email: email,
+            from_name: email, from_email: email, reply_to: email, to_email: 'tyler@leducsystems.com', subject: subject,
+            message: 'Launch list: please email me when it is live.\nEmail: ' + email + '\nPage: ' + location.pathname
+          }
+        })
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        try { window.localStorage.setItem(DONE + ':' + subject, email); } catch (e2) {}
+        track('generate_lead', { form: 'launch_list', list: subject, page_path: location.pathname });
+        done(f, 'Thanks. I will email ' + email + ' the day it is live.');
+      }).catch(function () {
+        btn.disabled = false;
+        st.innerHTML = 'That did not send. Please email <a href="mailto:tyler@leducsystems.com?subject=' + encodeURIComponent(subject) + '">tyler@leducsystems.com</a> with the subject "' + subject + '" instead.';
+      });
+    });
+    return f;
+  }
+  var n = 0;
+  [].slice.call(document.querySelectorAll('main a[href^="mailto:"]')).forEach(function (a) {
+    var m = /[?&]subject=([^&]*)/.exec(a.getAttribute('href'));
+    var subject = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+    if (!/ launch$/i.test(subject)) return;
+    a.addEventListener('click', function () { track('launch_list_mailto', { list: subject, page_path: location.pathname }); });
+    var block = a.closest('p, li') || a;
+    if (a.id === 'cta') a.style.display = 'none';
+    block.parentNode.insertBefore(build(subject, ++n), block.nextSibling);
+  });
+  // Approval day: every link to the Marketplace listing counts as a "get it" click.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href*="marketplace.atlassian.com/apps/"]') : null;
+    if (a) track('marketplace_click', { link_url: a.href, page_path: location.pathname });
+  });
+})();
+</script>
+</body></html>
