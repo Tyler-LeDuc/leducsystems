@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import LegalDocument from '../components/LegalDocument';
 import { SITE } from '../data/site';
 
-const LAST_UPDATED = 'November 10, 2026';
+const LAST_UPDATED = 'November 11, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
 const DELETE_MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent('Privacy request')}`;
@@ -30,8 +30,9 @@ const SECTIONS = [
           under <span className="hi">leducsystems.com/tools/</span>, the conversion and licensing
           server at <span className="hi">convert.leducsystems.com</span>, Scan Relay, the virtual
           try-on, the LeDuc File Opener browser extension, the LeDuc Systems connector for Claude,
-          and email you exchange with me. It does not cover the games on itch.io, which
-          itch.io runs under its own policy.
+          the games I publish as raxeris (including the 99% app on Google Play), and email you
+          exchange with me. The itch.io and Google Play stores themselves are run by those
+          companies under their own policies.
         </p>
       </>
     ),
@@ -312,6 +313,77 @@ const SECTIONS = [
     ),
   },
   {
+    id: 'games',
+    title: 'The games (raxeris) and the 99% app',
+    content: (
+      <>
+        <p>
+          I make games under the name <span className="hi">raxeris</span>: browser games on
+          itch.io and <strong>99%: It&rsquo;s Almost Loaded</strong>, an app on Google Play
+          (package <span className="hi">com.raxeris.ninetynine</span>). This section covers what
+          those games collect. It does not cover itch.io or Google Play themselves, which have
+          their own policies.
+        </p>
+        <p>
+          <strong>Anonymous play stats.</strong> The games send a few anonymous events so I can see
+          what works and fix what breaks:
+        </p>
+        <ul className="list">
+          <li>that the game loaded, and the screen size</li>
+          <li>
+            how long it was open and played, how many inputs, and whether you used touch or a mouse
+          </li>
+          <li>how far you got (levels, endings, modes) and which in-game buttons you used</li>
+          <li>script errors and crashes inside the game (the error message, shortened)</li>
+          <li>
+            a random ID created on your device and a visit number, so return visits can be counted
+          </li>
+        </ul>
+        <p>
+          There are no names, email addresses, accounts, contacts, location or photos in the stats,
+          and the random ID is not linked to who you are. In the browser version of 99%, the name
+          you give the pet can be sent so the shared &ldquo;everyone&rdquo; counters can show
+          popular names (filtered before anything is shown); the app never sends it. The stats are
+          stored in a Google Sheet that I run (Google hosts it). Detailed rows are kept for 21 days;
+          older rows are kept in an archive that is deleted after 13 months. Stats are not sold,
+          shared with anyone, or used for advertising.
+        </p>
+        <p>
+          <strong>Turning stats off.</strong> In the 99% app, open the &#9733; panel and set
+          &ldquo;Anonymous stats&rdquo; to Off. In the browser games, stats are off when your
+          browser sends Do Not Track or Global Privacy Control, or when you open the game with{' '}
+          <span className="hi">?stats=off</span> at the end of its address. Turning stats off
+          deletes the random ID from your device and nothing more is sent.
+        </p>
+        <p>
+          <strong>Saves.</strong> Your progress and settings are stored on your device only (in the
+          browser&rsquo;s local storage, and in the app&rsquo;s own storage so a save is not lost if the
+          app&rsquo;s web storage is cleared). They are not uploaded. Uninstalling the app or clearing site data deletes
+          them.
+        </p>
+        <p>
+          <strong>Purchases in the app.</strong> 99% Deluxe is a one-time in-app purchase handled
+          entirely by Google Play Billing. Google collects the payment details under its own
+          privacy policy; I never see your card, name or email. The app only asks Google Play
+          whether Deluxe is owned, and remembers the answer on your device.
+        </p>
+        <p>
+          <strong>No ads, no tracking.</strong> The games and the app show no ads, contain no
+          advertising SDKs, do not use the Android advertising ID, and need no account or sign-in.
+        </p>
+        <p>
+          <strong>Questions or deletion.</strong> Because the stats are anonymous I can&rsquo;t find
+          your rows by your name or email, but if you send me the random ID (or ask how to find it),
+          I&rsquo;ll delete every row with it. Email{' '}
+          <a className="link-underline" href={DELETE_MAILTO}>
+            {SITE.email}
+          </a>
+          .
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'cookies',
     title: 'Cookies and similar storage',
     content: (
@@ -379,7 +451,9 @@ const SECTIONS = [
             <strong>OpenAI</strong> (answers the questions in the free AI visibility check).
           </li>
           <li>
-            <strong>Google</strong>: Google Workspace for my email, and Google Analytics if you
+            <strong>Google</strong>: Google Workspace for my email, a Google Sheet (through Google
+            Apps Script) that stores the games&rsquo; anonymous play stats, Google Play for the 99%
+            app and its in-app purchase, and Google Analytics if you
             accept cookies.
           </li>
           <li>
