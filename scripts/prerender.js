@@ -25,6 +25,27 @@ const BUILD = path.join(__dirname, '..', 'build');
 const SITE_NAME = 'LeDuc Systems';
 const ORIGIN = 'https://leducsystems.com';
 
+/* src/data/site.js is an ES module with no imports; this script is CommonJS and runs
+   under plain node. Evaluate the source with the `export` keywords stripped so the
+   static content is generated from the very same data the React pages render. */
+function loadSiteData() {
+  const source = fs.readFileSync(path.join(__dirname, '..', 'src', 'data', 'site.js'), 'utf8');
+  const names = [];
+  const body = source.replace(/^export const (\w+)/gm, (m, name) => {
+    names.push(name);
+    return `const ${name}`;
+  });
+  // eslint-disable-next-line no-new-func
+  return new Function(`${body}\nreturn { ${names.join(', ')} };`)();
+}
+
+/* Routes that also get real page content (not just meta) inside <div id="root">. */
+const CONTENT_ROUTES = {
+  '/services/scan-to-email-migration': 'SCAN_MIGRATION',
+  '/services/claude-workflow-setup': 'CLAUDE_WORKFLOW',
+  '/services/forge-migration': 'FORGE_MIGRATION',
+};
+
 /* path -> { title, description, canonical?, fullTitle?, imageAlt? }. Title is rendered as
    "<title> — LeDuc Systems", matching what src/components/SEO.js does at
    runtime. An optional `canonical` points the canonical link and og:url at a
@@ -113,7 +134,135 @@ function setMeta(html, attrName, key, value) {
   return multiline.test(html) ? html.replace(multiline, (m, a, b) => `${a}${attr(value)}${b}`) : html;
 }
 
-function render(template, routePath, meta) {
+const esc = (value) => attr(value).replace(/'/g, '&#39;');
+
+function ul(items) {
+  return `<ul>${items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`;
+}
+
+function priceBlocks(list) {
+  return list
+    .map(
+      (plan) =>
+        `<article class="card card--feature"><h3>${esc(plan.name)}</h3>` +
+        `<p class="cw-price"><span class="cw-price__amount">${esc(plan.price)}</span> ` +
+        `<span class="cw-price__unit">${esc(plan.unit)}</span></p>${ul(plan.points)}</article>`
+    )
+    .join('');
+}
+
+/* Plain semantic HTML for a service page, built from its data object. React replaces
+   it on load (createRoot, not hydrate), so it only has to be readable without JS. */
+function contentHtml(d, site, promise) {
+  const out = [];
+  out.push('<main class="container">');
+  out.push(`<p class="eyebrow">${esc(d.eyebrow)}</p><h1>${esc(d.title)}</h1><p class="lede">${esc(d.lede)}</p>`);
+  out.push(`<p><a class="btn btn--primary" href="${esc(d.mailto)}">${esc(d.ctaLabel)}</a></p>`);
+  out.push(
+    '<h2>The terms in brief</h2><dl>' +
+      d.facts.map((f) => `<dt>${esc(f.label)}</dt><dd>${esc(f.value)}</dd>`).join('') +
+      '</dl>'
+  );
+  if (d.intro) {
+    out.push(d.intro.map((p) => `<p>${esc(p)}</p>`).join(''));
+    out.push(
+      '<p>Sources: ' +
+        d.sources.map((s) => `<a href="${esc(s.href)}" rel="noopener noreferrer">${esc(s.label)}</a>`).join(', ') +
+        '.</p>'
+    );
+  }
+  if (d.why) {
+    out.push(`<h2>${esc(d.whyTitle)}</h2>${d.why.map((p) => `<p>${esc(p)}</p>`).join('')}`);
+    out.push(`<p><a href="${esc(d.whyLink.href)}">${esc(d.whyLink.label)}</a></p>`);
+  }
+  if (d.included) {
+    out.push(`<h2>What is included</h2><div class="grid">${priceBlocks(d.included)}</div>`);
+    if (d.paymentNote) out.push(`<p>${esc(d.paymentNote)}</p>`);
+  }
+  if (d.prices) {
+    out.push(
+      `<h2>${esc(d.priceTitle)}</h2>${d.priceIntro ? `<p>${esc(d.priceIntro)}</p>` : ''}` +
+        `<div class="grid">${priceBlocks(d.prices)}</div>`
+    );
+    if (d.priceNote) out.push(`<p>${esc(d.priceNote)}</p>`);
+  }
+  if (d.plans) {
+    out.push(`<h2>Pricing</h2><div class="grid">${priceBlocks(d.plans)}</div>`);
+    if (d.planNote) out.push(`<p>${esc(d.planNote)}</p>`);
+  }
+  if (d.limitNote) out.push(`<p>${esc(d.limitNote)}</p>`);
+  if (d.goodFits) {
+    out.push(`<h2>Good fits</h2>${ul(d.goodFits)}<h2>Not a fit</h2>${ul(d.notFits)}`);
+  }
+  out.push(
+    '<h2>How it works</h2><ol>' +
+      d.steps.map((s) => `<li><h3>${esc(s.title)}</h3><p>${esc(s.body)}</p></li>`).join('') +
+      '</ol>'
+  );
+  out.push(
+    '<h2>Common questions</h2>' +
+      d.faq.map((q) => `<h3>${esc(q.question)}</h3><p>${esc(q.answer)}</p>`).join('')
+  );
+  if (d.closeTitle) out.push(`<h2>${esc(d.closeTitle)}</h2><p>${esc(`${d.closeBody} ${promise}`)}</p>`);
+  out.push(`<p><a href="${esc(d.mailto)}">${esc(site.email)}</a></p>`);
+  out.push('</main>');
+  return out.join('');
+}
+
+/* Escape "<" so a JSON-LD string can never close its script tag. */
+function jsonLd(obj) {
+  return `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, '\\u003c')}</script>`;
+}
+
+function faqLd(d) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: d.faq.map((q) => ({
+      '@type': 'Question',
+      name: q.question,
+      acceptedAnswer: { '@type': 'Answer', text: q.answer },
+    })),
+  };
+}
+
+/* Offers come from the per-office price cards (the license-only card is sold on
+   the Scan Relay pages, not by this service). */
+function serviceLd(d, site) {
+  const offers = d.prices
+    .filter((p) => /^\$\d+$/.test(p.price) && p.name !== 'Just the license')
+    .map((p) => ({
+      '@type': 'Offer',
+      name: `${p.name} (${p.unit})`,
+      price: p.price.slice(1),
+      priceCurrency: 'USD',
+    }));
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: d.title,
+    description: d.seoDescription,
+    url: `${ORIGIN}${d.path}/`,
+    provider: { '@type': 'Organization', name: site.legalName, url: site.url, email: site.email },
+    offers,
+  };
+}
+
+/* Put the content inside <div id="root">, after the static nav, and the JSON-LD
+   before </head>. Replacer functions keep "$" in prices literal. */
+function injectContent(html, routePath, data) {
+  const key = CONTENT_ROUTES[routePath];
+  const d = key && data[key];
+  const rootRe = /(<div id="root">[\s\S]*?)(<\/div>)/i;
+  if (!d || !rootRe.test(html)) return html;
+  const content = contentHtml(d, data.SITE, data.RESPONSE_PROMISE);
+  let out = html.replace(rootRe, (m, a, b) => `${a}${content}${b}`);
+  const ld = [jsonLd(faqLd(d))];
+  if (key === 'SCAN_MIGRATION') ld.push(jsonLd(serviceLd(d, data.SITE)));
+  return out.replace(/<\/head>/i, () => `${ld.join('')}</head>`);
+}
+
+function render(template, routePath, meta, data) {
   const fullTitle = meta.fullTitle || `${meta.title} — ${SITE_NAME}`;
   /* A route may declare a different canonical path when it exists only to
      redirect. Everything that points search engines at a page uses it. */
@@ -137,7 +286,7 @@ function render(template, routePath, meta) {
   html = setMeta(html, 'name', 'twitter:description', meta.description);
   if (meta.imageAlt) html = setMeta(html, 'property', 'og:image:alt', meta.imageAlt);
 
-  return html;
+  return data ? injectContent(html, routePath, data) : html;
 }
 
 function main() {
@@ -148,12 +297,13 @@ function main() {
   }
 
   const template = fs.readFileSync(indexPath, 'utf8');
+  const data = loadSiteData();
   const written = [];
 
   Object.entries(ROUTES).forEach(([routePath, meta]) => {
     const dir = path.join(BUILD, ...routePath.split('/').filter(Boolean));
     fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, 'index.html'), render(template, routePath, meta), 'utf8');
+    fs.writeFileSync(path.join(dir, 'index.html'), render(template, routePath, meta, data), 'utf8');
     written.push(routePath);
   });
 
@@ -166,4 +316,4 @@ function main() {
    there is no build to write into. */
 if (require.main === module) main();
 
-module.exports = { ROUTES, render, setMeta, main };
+module.exports = { ROUTES, render, setMeta, main, loadSiteData };

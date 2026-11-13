@@ -8,7 +8,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const { ROUTES, render: toHtml, setMeta } = require('../scripts/prerender');
+const { ROUTES, render: toHtml, setMeta, loadSiteData } = require('../scripts/prerender');
 
 const appSource = fs.readFileSync(path.join(__dirname, 'App.js'), 'utf8');
 
@@ -80,5 +80,42 @@ describe('prerender output', () => {
 
   it('leaves html untouched when a tag is absent', () => {
     expect(setMeta('<html></html>', 'name', 'description', 'x')).toBe('<html></html>');
+  });
+});
+
+describe('prerendered service content', () => {
+  const data = loadSiteData();
+  const template =
+    '<html><head><title>x</title></head><body><div id="root"><nav aria-label="Site"><a href="/">Home</a></nav></div></body></html>';
+  const route = '/services/scan-to-email-migration';
+  const html = toHtml(template, route, ROUTES[route], data);
+
+  it('puts the h1, price and CTA address in the static HTML', () => {
+    expect(html).toContain(`<h1>${data.SCAN_MIGRATION.title}</h1>`);
+    expect(html).toContain('$149');
+    expect(html).toContain('>tyler@leducsystems.com</a>');
+    expect(html).toContain('<a href="/">Home</a>');
+  });
+
+  it('includes FAQ text and FAQPage and Service JSON-LD with a USD price', () => {
+    expect(html).toContain(`<h3>${data.SCAN_MIGRATION.faq[0].question}</h3>`);
+    expect(html).toContain('"@type":"FAQPage"');
+    expect(html).toContain('"@type":"Service"');
+    expect(html).toContain('"price":"149","priceCurrency":"USD"');
+  });
+
+  it('has no replace artifacts from "$" in prices', () => {
+    expect(html).not.toMatch(/\$[&`'$]|\$\d(?!\d)/);
+    expect(html).toContain('$149 per office');
+    expect(html).not.toContain('$&');
+    expect(html).not.toContain('$`');
+    expect(html.match(/<div id="root">/g)).toHaveLength(1);
+  });
+
+  it('adds content to every content route and leaves others alone', () => {
+    ['/services/claude-workflow-setup', '/services/forge-migration'].forEach((r) => {
+      expect(toHtml(template, r, ROUTES[r], data)).toContain('<h1>');
+    });
+    expect(toHtml(template, '/about', ROUTES['/about'], data)).not.toContain('<h1>');
   });
 });
