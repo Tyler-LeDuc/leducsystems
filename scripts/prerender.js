@@ -103,14 +103,14 @@ function setMeta(html, attrName, key, value) {
     `(<meta[^>]*\\s${attrName}=["']${key}["'][^>]*\\scontent=["'])[^"']*(["'])`,
     'i'
   );
-  if (pattern.test(html)) return html.replace(pattern, `$1${attr(value)}$2`);
+  if (pattern.test(html)) return html.replace(pattern, (m, a, b) => `${a}${attr(value)}${b}`);
 
   /* CRA's template splits some meta tags across lines with content second. */
   const multiline = new RegExp(
     `(<meta\\s+${attrName}=["']${key}["'][\\s\\S]{0,40}?content=["'])[^"']*(["'])`,
     'i'
   );
-  return multiline.test(html) ? html.replace(multiline, `$1${attr(value)}$2`) : html;
+  return multiline.test(html) ? html.replace(multiline, (m, a, b) => `${a}${attr(value)}${b}`) : html;
 }
 
 function render(template, routePath, meta) {
@@ -123,10 +123,10 @@ function render(template, routePath, meta) {
   const url = `${ORIGIN}${canonicalPath.endsWith('/') ? canonicalPath : `${canonicalPath}/`}`;
 
   let html = template;
-  html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${attr(fullTitle)}</title>`);
+  html = html.replace(/<title>[\s\S]*?<\/title>/i, () => `<title>${attr(fullTitle)}</title>`);
   html = html.replace(
     /(<link\s+rel=["']canonical["']\s+href=["'])[^"']*(["'])/i,
-    `$1${attr(url)}$2`
+    (m, a, b) => `${a}${attr(url)}${b}`
   );
 
   html = setMeta(html, 'name', 'description', meta.description);

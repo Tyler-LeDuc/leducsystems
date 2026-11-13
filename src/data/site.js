@@ -954,6 +954,12 @@ export const SCAN_MIGRATION = {
         'Scan Relay needs a Windows PC that is on whenever people scan. If there isn’t one, tell me and I’ll say plainly whether another route, like an SMTP relay connector in Microsoft 365, suits that office better.',
     },
     {
+      id: 'prompts',
+      question: 'Will anything look scary during setup?',
+      answer:
+        'Two prompts, both expected. Windows may show a SmartScreen notice for the installer, and a Microsoft 365 admin approves Scan Relay once when it first signs in. My setup steps show both, so nobody is surprised.',
+    },
+    {
       id: 'reenable',
       question: 'Can’t we just turn SMTP AUTH back on?',
       answer:
