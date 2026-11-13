@@ -120,9 +120,9 @@ export const MORE_PRODUCTS = [
     slug: 'product-options',
     name: 'Product Options for Shopify',
     category: 'Shopify app',
-    line: 'Extra fields on product pages, like engraving text, shown only when they apply. In Shopify App Store review.',
+    line: 'Engraving text, gift messages and required custom fields on product pages. Live on the Shopify App Store.',
     price: 'Free plan, Pro $9.99 a month',
-    href: '/product-options/',
+    href: '/shopify/product-options/',
   },
   {
     slug: 'restock',
@@ -1159,3 +1159,388 @@ export const FORGE_MIGRATION = {
   closeBody:
     'Email me your app’s Marketplace link and I will tell you whether the audit makes sense for it.',
 };
+
+/* =========================================================================
+   LeDuc Product Options for Shopify: landing page and how-to guides.
+   Facts come from the live App Store listing and the app repo
+   (apps/le-duc-product-options: app/lib/plan.ts, templates.ts, engraving.ts,
+   extensions/product-options/assets/ldpo.js). No ratings, reviews or install
+   counts: the listing has none yet. Price add-ons and file upload are not
+   live, so they are not claimed.
+   ========================================================================= */
+const PO_APP_URL = 'https://apps.shopify.com/leduc-product-options';
+const poAppLink = (from) => `${PO_APP_URL}?utm_source=leducsystems&utm_medium=site&utm_campaign=${from}`;
+
+/* A Dawn-style Custom Liquid snippet. Dawn names the product form
+   "product-form-" plus the section id. */
+const poField = (lines) =>
+  ["{%- assign form_id = 'product-form-' | append: section.id -%}", ...lines].join('\n');
+
+export const SHOPIFY_OPTIONS = {
+  path: '/shopify/product-options',
+  appUrl: poAppLink('landing'),
+  seoTitle: 'LeDuc Product Options: Custom Fields for Shopify Product Pages | LeDuc Systems',
+  seoDescription:
+    'Add engraving text, gift messages and required custom fields to Shopify product pages. Engraving limits with a live preview, one-click templates, no theme code. Free plan, Pro $9.99 a month.',
+  eyebrow: 'Shopify app · Free plan · Pro $9.99 a month',
+  title: 'Custom fields for Shopify product pages',
+  lede:
+    'LeDuc Product Options adds engraving text, gift messages, names, dates and choices to your product pages, and every answer lands on the order.',
+  ctaLabel: 'Get it on the Shopify App Store',
+  facts: [
+    { label: 'Free plan', value: '3 option sets, 10 fields each' },
+    { label: 'Pro', value: '$9.99 a month, 14-day trial' },
+    { label: 'Setup', value: 'About two minutes' },
+    { label: 'Theme code', value: 'None' },
+    { label: 'Answers', value: 'Cart, checkout and order' },
+  ],
+  features: [
+    {
+      title: 'Engraving rules with a live preview',
+      body: 'Set the lines, characters per line, allowed characters and UPPERCASE. Shoppers see exactly what will be engraved, with a count on each line. Free.',
+    },
+    {
+      title: 'Required fields on the Free plan',
+      body: 'Add to cart waits until the shopper answers. On products with a required field, Buy it now is hidden and quick add buttons send the shopper to the product page.',
+    },
+    {
+      title: 'One-click templates',
+      body: 'Engraving text, Gift message, Name + font and Delivery date. A template goes on one product first, so you can preview it before choosing which products get it.',
+    },
+    {
+      title: 'Every common field type',
+      body: 'Text, multi-line text, number, date, dropdown, radio buttons, checkbox and checkbox group. Color swatches are on Pro.',
+    },
+    {
+      title: 'Show-when rules (Pro)',
+      body: 'Show a field only when another answer matches, like the engraving box only after the shopper ticks "Add engraving".',
+    },
+    {
+      title: 'No theme code edits',
+      body: 'Fields come from a theme app embed or block, and the storefront script is about 4 KB. Uninstall and your theme is exactly as it was.',
+    },
+  ],
+  plans: [
+    {
+      name: 'Free',
+      price: '$0',
+      unit: 'no time limit',
+      points: [
+        '3 option sets, up to 10 fields each',
+        'All field types except color swatches',
+        'Required fields and character limits',
+        'Engraving rules with a live preview',
+        'Assign by product, collection, tag or all products',
+        'Email support from the developer',
+      ],
+    },
+    {
+      name: 'Pro',
+      price: '$9.99',
+      unit: 'a month, 14-day free trial',
+      points: ['Everything in Free', 'Unlimited option sets and fields', 'Show-when conditional rules', 'Color swatch fields'],
+    },
+  ],
+  planNote: 'Plans are billed through Shopify in USD. Options cannot change the price yet.',
+  steps: [
+    { title: 'Install', body: 'Add LeDuc Product Options from the Shopify App Store.' },
+    {
+      title: 'Switch it on in your theme',
+      body: 'On the app’s home page, click Turn on automatic embed and save your theme. Fields appear above Add to cart. For exact placement, use Add block to product page instead.',
+    },
+    {
+      title: 'Pick a template or build a set',
+      body: 'Start from a template, or click Create option set and add your own fields. Then choose the products, collections or tags that get it.',
+    },
+    {
+      title: 'Place a test order',
+      body: 'Each answer shows under the line item in the cart, at checkout and on the order in your Shopify admin.',
+    },
+  ],
+  faq: [
+    {
+      id: 'where',
+      question: 'Where do I see what the shopper typed?',
+      answer:
+        'On the order in your Shopify admin, under each line item. Answers are saved as line item properties, so they also show in the cart and at checkout.',
+    },
+    {
+      id: 'theme',
+      question: 'Does it work with my theme?',
+      answer:
+        'It works with Online Store 2.0 themes, including Dawn and the other free Shopify themes. If the fields do not appear on your theme, email me and I will fix it.',
+    },
+    {
+      id: 'price',
+      question: 'Can an option add to the price, like $10 for engraving?',
+      answer:
+        'Not yet. Until it can, the usual way is a variant for it, for example an "Engraving: Yes" variant priced $10 higher.',
+    },
+    {
+      id: 'buynow',
+      question: 'What about the Buy it now button?',
+      answer:
+        'Buy it now skips the cart, so the app hides it on products with a required field. You can hide it on other products too, and if it stays visible the app stops it while an answer is invalid.',
+    },
+    {
+      id: 'uninstall',
+      question: 'What happens if I uninstall?',
+      answer: 'The fields disappear from your store and no theme code is left behind. Past orders keep their answers.',
+    },
+    {
+      id: 'who',
+      question: 'Who supports it?',
+      answer: 'I do. I built the app, and support emails come straight to me.',
+    },
+  ],
+  closeTitle: 'Try it on the Free plan',
+  closeBody: 'Install it, pick the Engraving text template and check the preview on one product. No card needed.',
+};
+
+/* Each guide gives the theme-code route first (free, and honest about its
+   gaps), then the app as the no-code route. Sections render in order;
+   `code` is shown as a block, `after` as paragraphs below it. */
+export const SHOPIFY_OPTIONS_GUIDES = [
+  {
+    slug: 'engraving',
+    path: '/shopify/product-options/how-to-add-engraving-field-shopify',
+    appUrl: poAppLink('guide-engraving'),
+    seoTitle: 'How to Add an Engraving Field to a Shopify Product | LeDuc Systems',
+    seoDescription:
+      'Add an engraving text box to a Shopify product page so the text lands on the order: a free theme code method with a character limit, and a no-code app with a live preview.',
+    title: 'How to add an engraving field to a Shopify product',
+    lede:
+      'Shopify products have no engraving box out of the box. Here is how to add one with a few lines of theme code, and how I do it with my app if you would rather not touch code.',
+    sections: [
+      {
+        heading: 'What an engraving field needs',
+        paragraphs: [
+          'An engraving field is a text input inside the product form whose name starts with properties[. Shopify saves its value as a line item property and carries it to the cart, checkout and the order, so you see the text when you fulfill.',
+          'It also needs a limit, so a shopper cannot order more text than fits on the item.',
+        ],
+      },
+      {
+        heading: 'Method 1: theme code (free)',
+        steps: [
+          'In your Shopify admin, go to Online Store, then Themes, and click Customize. Open a product page.',
+          'In the Product information section, click Add block and choose Custom Liquid. Drag it above the Buy buttons. Custom Liquid is built into Dawn and most Online Store 2.0 themes, so you do not edit any theme files.',
+          'Paste the code below and save. The form attribute ties the input to the product form, so its value goes with Add to cart. maxlength stops typing after 20 characters.',
+          'Add the product to your cart. The cart line should show "Engraving:" with the text. Place a test order and check it under the line item.',
+        ],
+        code: poField([
+          '<p class="engraving-field">',
+          '  <label for="engraving-{{ section.id }}">Engraving text</label>',
+          '  <input id="engraving-{{ section.id }}" type="text" name="properties[Engraving]"',
+          '    form="{{ form_id }}" maxlength="20" autocomplete="off">',
+          '</p>',
+        ]),
+        after: [
+          'Dawn names the product form "product-form-" plus the section id. If your theme uses another name, find the form that posts to /cart/add on the product page and use its id.',
+          'What this does not cover: the field shows on every product that uses the template, maxlength counts the whole field rather than each line, nothing stops emoji or characters your engraver cannot cut, the shopper gets no preview, and the Buy it now button can send them to checkout without the field. Untick "Show dynamic checkout buttons" in the Buy buttons block if you rely on the field.',
+        ],
+      },
+      {
+        heading: 'Method 2: LeDuc Product Options (no code)',
+        steps: [
+          'Install LeDuc Product Options from the Shopify App Store. The Free plan covers 3 option sets.',
+          'On the app’s home page, click Turn on automatic embed and save your theme.',
+          'Under Start from a template, pick Engraving text. It creates a required field of 2 lines with 20 characters each and a live preview, on one product so you can check it first.',
+          'Open the field’s Engraving rules to change the lines (1 to 4), characters per line, allowed characters or UPPERCASE. Then choose which products get it: specific products, collections, tags or all products.',
+          'Place a test order. The order shows the engraving text exactly as the preview showed it, with curly quotes straightened and extra spaces trimmed.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        id: 'where',
+        question: 'Where does the engraving text show up?',
+        answer: 'Under the line item in the cart, at checkout and on the order in your Shopify admin.',
+      },
+      {
+        id: 'price',
+        question: 'Can I charge extra for engraving?',
+        answer:
+          'Line item properties do not change the price. The usual way is a product option such as "Engraving: Yes / No" with a higher price on the Yes variant. My app cannot add a price yet.',
+      },
+      {
+        id: 'code',
+        question: 'Does the app change my theme code?',
+        answer: 'No. It uses a theme app embed or block, and removing the app leaves your theme as it was.',
+      },
+    ],
+  },
+  {
+    slug: 'gift-message',
+    path: '/shopify/product-options/how-to-add-gift-message-shopify',
+    appUrl: poAppLink('guide-gift-message'),
+    seoTitle: 'How to Add a Gift Message Box in Shopify | LeDuc Systems',
+    seoDescription:
+      'Three ways to collect a gift message in Shopify: the built-in cart note, a gift message box on the product page with theme code, or a no-code app with a ready-made template.',
+    title: 'How to add a gift message box in Shopify',
+    lede:
+      'Shopify gives you one free spot for a message, the cart note. For a message on the product page, or one message per item, you need a line item property. Here are all three ways.',
+    sections: [
+      {
+        heading: 'Method 1: the cart note (built in)',
+        paragraphs: [
+          'Most themes can show a note box in the cart. In Dawn, open Customize, go to Theme settings, then Cart, and tick Enable cart note. Other themes put the setting in the cart page or cart drawer section.',
+          'The note appears on the order under Notes. It is one note for the whole order, it sits in the cart where shoppers often miss it, and Dawn labels it "Order special instructions". You can rename that label under Edit default theme content.',
+        ],
+      },
+      {
+        heading: 'Method 2: a gift message on the product page (theme code)',
+        steps: [
+          'In Customize, open a product page and add a Custom Liquid block to the Product information section, above the Buy buttons.',
+          'Paste the code below and save. The message is saved with that item as a line item property, so two gifts in one order can carry two messages.',
+          'Add the product to your cart with a message and check the cart line.',
+        ],
+        code: poField([
+          '<p class="gift-message">',
+          '  <label for="gift-{{ section.id }}">Gift message (optional)</label>',
+          '  <textarea id="gift-{{ section.id }}" name="properties[Gift message]"',
+          '    form="{{ form_id }}" maxlength="250" rows="3"></textarea>',
+          '</p>',
+        ]),
+        after: [
+          'If your theme does not name its product form "product-form-" plus the section id like Dawn does, use the id of the form that posts to /cart/add.',
+        ],
+      },
+      {
+        heading: 'Method 3: LeDuc Product Options (no code)',
+        steps: [
+          'Install LeDuc Product Options from the Shopify App Store and click Turn on automatic embed on the app’s home page.',
+          'Under Start from a template, pick Gift message. It adds an optional multi-line message of up to 250 characters, on one product so you can preview it.',
+          'Choose which products get it, for example a Gifts collection or a gift tag.',
+          'On Pro, add a "This is a gift" checkbox and a show-when rule so the message box only appears once it is ticked.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        id: 'where',
+        question: 'Where do I see the gift message?',
+        answer:
+          'A cart note shows under Notes on the order. A product page message shows under its line item, in the cart, at checkout and on the order.',
+      },
+      {
+        id: 'free',
+        question: 'Is the gift message template free?',
+        answer: 'Yes. It fits the Free plan, which covers 3 option sets of up to 10 fields each.',
+      },
+    ],
+  },
+  {
+    slug: 'required',
+    path: '/shopify/product-options/how-to-make-custom-field-required-shopify',
+    appUrl: poAppLink('guide-required'),
+    seoTitle: 'How to Make a Custom Field Required in Shopify | LeDuc Systems',
+    seoDescription:
+      'Make a Shopify product page field required so Add to cart waits for an answer: the HTML required attribute, the gaps it leaves (Buy it now, quick add), and a free no-code option.',
+    title: 'How to make a custom field required in Shopify',
+    lede:
+      'A required field stops Add to cart until the shopper fills it in, so you never get an engraving order with no text. Here is the theme code way, where it leaks, and how my app closes the gaps.',
+    sections: [
+      {
+        heading: 'Method 1: the required attribute (theme code)',
+        steps: [
+          'Add your field in a Custom Liquid block on the product page, inside the Product information section.',
+          'Add the required attribute to the input, as below. When the shopper clicks Add to cart with the field empty, the browser shows its own "Please fill out this field" message and does not submit.',
+          'Test it in your theme. Some themes add to cart with JavaScript in a way that skips the browser’s check, so try an empty field before you rely on it.',
+        ],
+        code: poField([
+          '<label for="name-{{ section.id }}">Name to print</label>',
+          '<input id="name-{{ section.id }}" type="text" name="properties[Name]"',
+          '  form="{{ form_id }}" maxlength="20" required>',
+        ]),
+      },
+      {
+        heading: 'Where the required attribute leaks',
+        paragraphs: [
+          'The Buy it now button goes straight to checkout and does not wait for your field. Untick "Show dynamic checkout buttons" in the Buy buttons block on products that need an answer.',
+          'Quick add buttons on collection and home pages add the product without opening the product page, so the shopper never sees the field. Turn quick add off in the product grid settings, or accept that those orders arrive without an answer.',
+        ],
+      },
+      {
+        heading: 'Method 2: LeDuc Product Options (no code, free)',
+        steps: [
+          'Install LeDuc Product Options from the Shopify App Store and click Turn on automatic embed.',
+          'Click Create option set, add a field, and tick Required. Required fields are on the Free plan.',
+          'Choose which products get the set. On those products, Add to cart waits for an answer and shows a message next to the field.',
+          'The app also hides Buy it now on products with a required field, and quick add buttons on collection pages send the shopper to the product page instead of adding the item without an answer.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        id: 'message',
+        question: 'Can I change the "required" message?',
+        answer:
+          'With the HTML attribute, the message comes from the browser and is hard to change. The app shows its own message next to the field.',
+      },
+      {
+        id: 'some',
+        question: 'Can a field be required only sometimes?',
+        answer:
+          'Yes, on Pro. A field with a show-when rule is only required while it is showing, for example engraving text only after "Add engraving" is ticked.',
+      },
+    ],
+  },
+  {
+    slug: 'character-limit',
+    path: '/shopify/product-options/how-to-limit-characters-shopify-personalization',
+    appUrl: poAppLink('guide-character-limit'),
+    seoTitle: 'How to Limit Characters in a Shopify Personalization Field | LeDuc Systems',
+    seoDescription:
+      'Limit characters in a Shopify personalization field: maxlength, allowed characters with pattern, per-line limits and uppercase, by theme code or with a free no-code app.',
+    title: 'How to limit characters in a Shopify personalization field',
+    lede:
+      'A personalization field needs limits that match what you can make: total characters, characters per line, which characters, and sometimes uppercase only. Here is what plain HTML can do and where it stops.',
+    sections: [
+      {
+        heading: 'Method 1: maxlength and pattern (theme code)',
+        steps: [
+          'Add the field in a Custom Liquid block on the product page, in the Product information section.',
+          'maxlength stops typing at a number of characters. pattern lists the characters you accept, and the browser blocks Add to cart if the text has anything else. title is the hint the browser shows.',
+          'Test with an emoji and a curly apostrophe from a phone keyboard. This pattern rejects both, which is usually what an engraver wants, so say so next to the field.',
+        ],
+        code: poField([
+          '<label for="text-{{ section.id }}">Personalization (20 characters)</label>',
+          '<input id="text-{{ section.id }}" type="text" name="properties[Personalization]"',
+          '  form="{{ form_id }}" maxlength="20" pattern="[A-Za-z0-9 .,\'!?]*"',
+          '  title="Letters, numbers, spaces and . , \' ! ? only">',
+        ]),
+      },
+      {
+        heading: 'Where plain HTML stops',
+        paragraphs: [
+          'A textarea has maxlength but no pattern, and its maxlength counts the whole box, line breaks included. "2 lines of 15 characters" needs JavaScript.',
+          'CSS text-transform: uppercase only changes how the text looks. The order still gets what the shopper typed, in lowercase if that is how they typed it.',
+          'Shoppers cannot see how their text will lay out, so a long line that fits the limit can still surprise them.',
+        ],
+      },
+      {
+        heading: 'Method 2: LeDuc Product Options (no code, free)',
+        steps: [
+          'Install LeDuc Product Options from the Shopify App Store and click Turn on automatic embed.',
+          'For a simple limit, add a text field and set Maximum characters.',
+          'For engraving-style limits, tick Engraving rules on the field. Choose 1 to 4 lines, characters per line, and allowed characters: letters only, letters and numbers, letters, numbers and basic punctuation, or only the characters you list.',
+          'Tick Engrave in UPPERCASE if you need it. The order gets the uppercase text, not just an uppercase look.',
+          'Shoppers see a live preview of exactly what will be saved, one row per line with a character count, and Add to cart waits until every line fits.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        id: 'free',
+        question: 'Are engraving rules on the Free plan?',
+        answer: 'Yes. Line limits, allowed characters, UPPERCASE and the live preview are all free.',
+      },
+      {
+        id: 'emoji',
+        question: 'How are emoji counted?',
+        answer:
+          'The browser’s maxlength can count one emoji as two characters. With the app, an allowed characters rule rejects emoji entirely, so the count never surprises anyone.',
+      },
+    ],
+  },
+];

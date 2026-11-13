@@ -105,6 +105,26 @@ const ROUTES = {
   },
 };
 
+/* LeDuc Product Options landing page and guides: meta comes straight from
+   SHOPIFY_OPTIONS / SHOPIFY_OPTIONS_GUIDES so it cannot drift from the page. */
+const SHOPIFY_DATA = loadSiteData();
+const PO = SHOPIFY_DATA.SHOPIFY_OPTIONS;
+const PO_GUIDES = SHOPIFY_DATA.SHOPIFY_OPTIONS_GUIDES;
+ROUTES[PO.path] = {
+  title: 'Product Options for Shopify',
+  fullTitle: PO.seoTitle,
+  description: PO.seoDescription,
+  imageAlt: 'LeDuc Systems: Product Options for Shopify',
+};
+PO_GUIDES.forEach((g) => {
+  ROUTES[g.path] = {
+    title: g.title,
+    fullTitle: g.seoTitle,
+    description: g.seoDescription,
+    imageAlt: `LeDuc Systems: ${g.title}`,
+  };
+});
+
 /** Escape the few characters that would break out of an HTML attribute. */
 function attr(value) {
   return String(value)
@@ -248,12 +268,135 @@ function serviceLd(d, site) {
   };
 }
 
+/* ---- LeDuc Product Options: static landing and guide content ---- */
+const paras = (list) => (list || []).map((p) => `<p>${esc(p)}</p>`).join('');
+const abs = (p) => `${ORIGIN}${p}/`;
+
+function poLandingHtml(d, guides) {
+  const out = ['<main class="container">'];
+  out.push(`<p class="eyebrow">${esc(d.eyebrow)}</p><h1>${esc(d.title)}</h1><p class="lede">${esc(d.lede)}</p>`);
+  out.push(`<p><a class="btn btn--primary" href="${esc(d.appUrl)}">${esc(d.ctaLabel)}</a></p>`);
+  out.push(
+    '<h2>The app in brief</h2><dl>' +
+      d.facts.map((f) => `<dt>${esc(f.label)}</dt><dd>${esc(f.value)}</dd>`).join('') +
+      '</dl>'
+  );
+  out.push(
+    '<h2>What it does</h2>' + d.features.map((f) => `<h3>${esc(f.title)}</h3><p>${esc(f.body)}</p>`).join('')
+  );
+  out.push(`<h2>Pricing</h2><div class="grid">${priceBlocks(d.plans)}</div><p>${esc(d.planNote)}</p>`);
+  out.push(
+    '<h2>Setup</h2><ol>' +
+      d.steps.map((st) => `<li><h3>${esc(st.title)}</h3><p>${esc(st.body)}</p></li>`).join('') +
+      '</ol>'
+  );
+  out.push(
+    '<h2>How-to guides</h2><ul>' +
+      guides.map((g) => `<li><a href="${esc(g.path)}/">${esc(g.title)}</a></li>`).join('') +
+      '</ul>'
+  );
+  out.push('<h2>Common questions</h2>' + d.faq.map((q) => `<h3>${esc(q.question)}</h3><p>${esc(q.answer)}</p>`).join(''));
+  out.push(`<h2>${esc(d.closeTitle)}</h2><p>${esc(d.closeBody)}</p>`);
+  out.push(`<p><a class="btn btn--primary" href="${esc(d.appUrl)}">${esc(d.ctaLabel)}</a></p>`);
+  out.push('</main>');
+  return out.join('');
+}
+
+function poGuideHtml(g, d, guides) {
+  const out = ['<main class="container">'];
+  out.push(
+    `<p class="eyebrow"><a href="${esc(d.path)}/">LeDuc Product Options</a> · Shopify how-to</p>` +
+      `<h1>${esc(g.title)}</h1><p class="lede">${esc(g.lede)}</p>`
+  );
+  g.sections.forEach((sec) => {
+    out.push(`<h2>${esc(sec.heading)}</h2>${paras(sec.paragraphs)}`);
+    if (sec.steps) out.push(`<ol>${sec.steps.map((st) => `<li>${esc(st)}</li>`).join('')}</ol>`);
+    if (sec.code) out.push(`<pre><code>${esc(sec.code)}</code></pre>`);
+    out.push(paras(sec.after));
+  });
+  out.push(
+    '<p>LeDuc Product Options is my Shopify app for this. The Free plan covers 3 option sets with up to 10 fields each.</p>' +
+      `<p><a class="btn btn--primary" href="${esc(g.appUrl)}">${esc(d.ctaLabel)}</a> <a href="${esc(d.path)}/">About the app</a></p>`
+  );
+  out.push('<h2>Questions</h2>' + g.faq.map((q) => `<h3>${esc(q.question)}</h3><p>${esc(q.answer)}</p>`).join(''));
+  out.push(
+    '<h2>More guides</h2><ul>' +
+      guides
+        .filter((o) => o.slug !== g.slug)
+        .map((o) => `<li><a href="${esc(o.path)}/">${esc(o.title)}</a></li>`)
+        .join('') +
+      '</ul>'
+  );
+  out.push('</main>');
+  return out.join('');
+}
+
+function poAppLd(d, site) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'LeDuc Product Options',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Shopify',
+    description: d.seoDescription,
+    url: abs(d.path),
+    installUrl: 'https://apps.shopify.com/leduc-product-options',
+    publisher: { '@type': 'Organization', name: site.legalName, url: site.url, email: site.email },
+    offers: d.plans.map((p) => ({
+      '@type': 'Offer',
+      name: p.name,
+      price: p.price.replace(/^\$/, ''),
+      priceCurrency: 'USD',
+    })),
+  };
+}
+
+function poGuideLd(g, d, site) {
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'TechArticle',
+      headline: g.title,
+      description: g.seoDescription,
+      url: abs(g.path),
+      author: { '@type': 'Person', name: site.founder },
+      publisher: { '@type': 'Organization', name: site.legalName, url: site.url },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'LeDuc Product Options', item: abs(d.path) },
+        { '@type': 'ListItem', position: 2, name: g.title, item: abs(g.path) },
+      ],
+    },
+  ];
+}
+
+/* Static content and JSON-LD for a Product Options route, or null. */
+function shopifyContent(routePath, data) {
+  const d = data.SHOPIFY_OPTIONS;
+  const guides = data.SHOPIFY_OPTIONS_GUIDES;
+  if (!d) return null;
+  if (routePath === d.path) {
+    return { content: poLandingHtml(d, guides), ld: [poAppLd(d, data.SITE), faqLd(d)] };
+  }
+  const g = guides.find((x) => x.path === routePath);
+  if (!g) return null;
+  return { content: poGuideHtml(g, d, guides), ld: [...poGuideLd(g, d, data.SITE), faqLd(g)] };
+}
+
 /* Put the content inside <div id="root">, after the static nav, and the JSON-LD
    before </head>. Replacer functions keep "$" in prices literal. */
 function injectContent(html, routePath, data) {
   const key = CONTENT_ROUTES[routePath];
   const d = key && data[key];
   const rootRe = /(<div id="root">[\s\S]*?)(<\/div>)/i;
+  const shop = !d && shopifyContent(routePath, data);
+  if (shop && rootRe.test(html)) {
+    const withContent = html.replace(rootRe, (m, a, b) => `${a}${shop.content}${b}`);
+    return withContent.replace(/<\/head>/i, () => `${shop.ld.map(jsonLd).join('')}</head>`);
+  }
   if (!d || !rootRe.test(html)) return html;
   const content = contentHtml(d, data.SITE, data.RESPONSE_PROMISE);
   let out = html.replace(rootRe, (m, a, b) => `${a}${content}${b}`);

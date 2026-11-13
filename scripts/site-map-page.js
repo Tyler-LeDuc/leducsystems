@@ -51,7 +51,7 @@ function titleOf(urlPath) {
     .trim();
 }
 
-const SHOPIFY = ['product-options', 'restock', 'size-charts', 'order-limits', 'sold-out-sorter', 'terms-checkbox', 'address-rules', 'shopify-scripts-replacement'];
+const SHOPIFY = ['shopify', 'product-options', 'restock', 'size-charts', 'order-limits', 'sold-out-sorter', 'terms-checkbox', 'address-rules', 'shopify-scripts-replacement'];
 
 /* Each URL goes in the first group whose test matches. */
 const GROUPS = [

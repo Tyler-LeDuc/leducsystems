@@ -1,0 +1,58 @@
+/* LeDuc Product Options landing page and how-to guides: page-specific styles. */
+.po-guides {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.po-article {
+  max-width: 760px;
+}
+.po-article__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-8);
+}
+.po-article__steps {
+  margin: 0;
+  padding-left: 1.4em;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  color: var(--text);
+  line-height: var(--lh-base);
+}
+.po-article__q {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  margin: var(--sp-3) 0 var(--sp-1);
+  color: var(--text-hi);
+}
+.po-article__cta {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  padding: var(--sp-5);
+  margin-bottom: var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.po-code {
+  margin: 0;
+  padding: var(--sp-4);
+  overflow-x: auto;
+  max-width: 100%;
+  min-width: 0;
+  background: var(--surface-wash);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: var(--lh-code);
+  color: var(--text-hi);
+}

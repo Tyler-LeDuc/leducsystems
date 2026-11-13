@@ -13,6 +13,8 @@ import RefundPolicyPage from './pages/RefundPolicyPage';
 import ClaudeWorkflowPage from './pages/ClaudeWorkflowPage';
 import ScanMigrationPage from './pages/ScanMigrationPage';
 import ForgeMigrationPage from './pages/ForgeMigrationPage';
+import ShopifyOptionsPage from './pages/ShopifyOptionsPage';
+import ShopifyGuidePage from './pages/ShopifyGuidePage';
 import NotFoundPage from './pages/NotFoundPage';
 
 const EMAILJS_PUBLIC_KEY = 'HIVHympEPP7sMQ_Pl';
@@ -62,6 +64,23 @@ export function AppShell() {
           <Route path="/services/claude-workflow-setup" element={<ClaudeWorkflowPage />} />
           <Route path="/services/scan-to-email-migration" element={<ScanMigrationPage />} />
           <Route path="/services/forge-migration" element={<ForgeMigrationPage />} />
+          <Route path="/shopify/product-options" element={<ShopifyOptionsPage />} />
+          <Route
+            path="/shopify/product-options/how-to-add-engraving-field-shopify"
+            element={<ShopifyGuidePage slug="engraving" />}
+          />
+          <Route
+            path="/shopify/product-options/how-to-add-gift-message-shopify"
+            element={<ShopifyGuidePage slug="gift-message" />}
+          />
+          <Route
+            path="/shopify/product-options/how-to-make-custom-field-required-shopify"
+            element={<ShopifyGuidePage slug="required" />}
+          />
+          <Route
+            path="/shopify/product-options/how-to-limit-characters-shopify-personalization"
+            element={<ShopifyGuidePage slug="character-limit" />}
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

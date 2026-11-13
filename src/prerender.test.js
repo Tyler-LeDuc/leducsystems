@@ -119,3 +119,39 @@ describe('prerendered service content', () => {
     expect(toHtml(template, '/about', ROUTES['/about'], data)).not.toContain('<h1>');
   });
 });
+
+describe('prerendered Product Options pages', () => {
+  const data = loadSiteData();
+  const template =
+    '<html><head><title>x</title></head><body><div id="root"><nav aria-label="Site"><a href="/">Home</a></nav></div></body></html>';
+  const landing = data.SHOPIFY_OPTIONS.path;
+
+  it('renders the landing page with the App Store CTA and app JSON-LD', () => {
+    const html = toHtml(template, landing, ROUTES[landing], data);
+    expect(html).toContain(`<h1>${data.SHOPIFY_OPTIONS.title}</h1>`);
+    expect(html).toContain('https://apps.shopify.com/leduc-product-options');
+    expect(html).toContain('"@type":"SoftwareApplication"');
+    expect(html).toContain('"price":"9.99","priceCurrency":"USD"');
+    expect(html).toContain('"@type":"FAQPage"');
+    expect(html).toContain('$9.99');
+    expect(html).not.toMatch(/\$[&`'$]|\$[1-9](?![\d.])/);
+    expect(html.match(/<div id="root">/g)).toHaveLength(1);
+  });
+
+  it('renders every guide with its steps, CTA and article JSON-LD', () => {
+    data.SHOPIFY_OPTIONS_GUIDES.forEach((g) => {
+      const html = toHtml(template, g.path, ROUTES[g.path], data);
+      expect(html).toContain(`<title>${g.seoTitle}</title>`);
+      expect(html).toContain('"@type":"TechArticle"');
+      expect(html).toContain('"@type":"BreadcrumbList"');
+      expect(html).toContain('apps.shopify.com/leduc-product-options');
+      expect(html).toContain('<ol>');
+      expect(html).not.toMatch(/\$[&`'$]|\$[1-9](?![\d.])/);
+    });
+  });
+
+  it('uses no em dashes in the Product Options copy', () => {
+    const text = JSON.stringify([data.SHOPIFY_OPTIONS, data.SHOPIFY_OPTIONS_GUIDES]);
+    expect(text).not.toContain('—');
+  });
+});
