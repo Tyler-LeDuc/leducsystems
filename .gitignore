@@ -26,3 +26,4 @@ Thumbs.db
 
 # macOS trash
 *.log
+.claude/worktrees/
