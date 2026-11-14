@@ -945,7 +945,7 @@ export const SCAN_MIGRATION = {
       id: 'which',
       question: 'Which copiers does this work with?',
       answer:
-        'Any copier or MFP that can scan to email through an SMTP server address you give it, which covers nearly all office models. Send me the model and I’ll confirm before any work starts.',
+        'Any copier or MFP that can scan to email through an SMTP server address you give it, which covers nearly all office models from Ricoh, Canon, Xerox, Konica Minolta, Sharp, Kyocera, HP, Brother, Toshiba, Lexmark and Epson. Send me the model and I’ll confirm before any work starts.',
     },
     {
       id: 'pc',
