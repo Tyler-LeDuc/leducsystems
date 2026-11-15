@@ -139,7 +139,7 @@
   <article class="guide">
 <h2>Where the template comes from</h2>
 <p>Sign in to the IRIS Taxpayer Portal, choose to upload a CSV with form data, and download the blank 1098-T template. IRIS checks the header row of your upload against that template, so keep the header exactly as it is: same columns, same order, same wording. The column names below are the ones in the IRS's published formatting guidelines for IRIS CSV files.</p>
-<p>Use one file per form type and tax year (a file can hold several payers if your TCC's role is Transmitter). IRS Publication 5717 (Rev. 9-2026) allows up to 250 forms per file. If yours has more, the free <a href="../split-iris-csv-file/">IRIS CSV splitter</a> cuts it into files that fit.</p>
+<p>Use one file per form type and tax year (a file can hold several payers if your TCC's role is Transmitter). IRS Publication 5717 (Rev. 9-2026) allows up to 250 forms per file. If yours has more, the free <a href="../split-iris-csv-file/">IRIS CSV splitter</a> cuts it into files that fit. Before uploading, the free <a href="../check-iris-csv-file/">IRIS CSV checker</a> lists any cells IRIS is likely to reject, by row and column.</p>
 
 <h2>Publication 1220 amount codes to 1098-T boxes</h2>
 <p>In a FIRE file, each payee (B) record holds up to 18 payment amounts, numbered 1–9 and A–J. Which box each one belongs to depends on the form, and the codes don't always line up with box numbers.</p>

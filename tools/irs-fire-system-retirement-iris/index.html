@@ -169,7 +169,7 @@
 </ol>
 
 <h2>Uploading a CSV in the portal</h2>
-<p>From the portal's Dashboard, choose Upload CSV with Form Data and download the template for the form type and tax year. Publication 5717's rules: one tax year and one form type per file, up to 250 forms per file (a bigger file can be cut down with the free <a href="../split-iris-csv-file/">IRIS CSV splitter</a>), only the IRS's own templates, and a file can hold several payers if your TCC's role is Transmitter.</p>
+<p>From the portal's Dashboard, choose Upload CSV with Form Data and download the template for the form type and tax year. Publication 5717's rules: one tax year and one form type per file, up to 250 forms per file (a bigger file can be cut down with the free <a href="../split-iris-csv-file/">IRIS CSV splitter</a>), only the IRS's own templates, and a file can hold several payers if your TCC's role is Transmitter. To catch formatting errors first (tax IDs that lost a leading zero, dollar signs in amounts, characters IRIS doesn't allow), run the file through the free <a href="../check-iris-csv-file/">IRIS CSV checker</a>.</p>
 <p>If your software exports a Publication 1220 file for FIRE, that file won't go into IRIS as it is. <a href="../fire-to-iris-1099-converter/">My FIRE to IRIS converter</a> turns it into those CSV files and checks it against its own totals, in your browser, so the SSNs and TINs never leave your computer. If your records are in a spreadsheet instead, the <a href="../excel-to-iris-1099-nec-csv/">spreadsheet to IRIS 1099-NEC converter</a> turns a spreadsheet of contractor payments into the IRIS 1099-NEC CSV, also in your browser.</p>
 
 <h2>Corrections after FIRE</h2>
