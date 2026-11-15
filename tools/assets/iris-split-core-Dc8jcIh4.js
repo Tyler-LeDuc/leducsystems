@@ -1,0 +1,5 @@
+function g(c){const t=c.replace(/^﻿/,""),r=[];let s=0,o=!1;for(let e=0;e<t.length;e++){const n=t[e];n==='"'?o=!o:!o&&(n===`
+`||n==="\r")&&(r.push(t.slice(s,e)),n==="\r"&&t[e+1]===`
+`&&e++,s=e+1)}return s<t.length&&r.push(t.slice(s)),{rows:r.filter(e=>e.replace(/[,\s"]/g,"")!==""),unbalanced:o,bom:t.length!==c.length}}function d(c,t="IRIS.csv",r=100){const{rows:s,unbalanced:o,bom:e}=g(c);if(o)return{error:"This file has a quote mark that never closes, so I can't tell where the rows end. Open it in Excel, save it as CSV again, and try once more."};if(s.length<2)return{error:"I found a header row but no forms under it."};const[n,...i]=s,h=t.replace(/\.csv$/i,"").replace(/[\\/:*?"<>|]+/g,"_").slice(0,80)||"IRIS",a=Math.ceil(i.length/r),u=[];for(let l=0;l<a;l++){const f=i.slice(l*r,(l+1)*r);u.push({name:a===1?`${h}.csv`:`${h}_part${String(l+1).padStart(String(a).length,"0")}_of_${a}.csv`,data:(e?"\uFEFF":"")+[n,...f].join(`\r
+`)+`\r
+`,forms:f.length})}return{header:n,count:i.length,columns:n.split(",").length,parts:u}}export{g as r,d as s};
