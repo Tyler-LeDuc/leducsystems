@@ -1,0 +1,29 @@
+{
+  "id": "/tools/xer-viewer/",
+  "name": "XER Viewer: Open Primavera P6 XER Files",
+  "short_name": "XER Viewer",
+  "description": "Open Primavera P6 .xer schedules without P6. See the WBS, Gantt and float free, then export to Excel, CSV and PDF.",
+  "start_url": "/tools/xer-viewer/?source=pwa",
+  "scope": "/tools/",
+  "display": "standalone",
+  "background_color": "#FFFBF3",
+  "theme_color": "#7A3B12",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["productivity", "business", "utilities"],
+  "icons": [
+    { "src": "/tools/xer-viewer/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/tools/xer-viewer/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/tools/xer-viewer/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "file_handlers": [
+    {
+      "action": "/tools/xer-viewer/?source=file",
+      "name": "Primavera P6 schedule",
+      "icons": [{ "src": "/tools/xer-viewer/icons/file-256.png", "sizes": "256x256", "type": "image/png" }],
+      "accept": { "application/x-primavera-xer": [".xer"] },
+      "launch_type": "multiple-clients"
+    }
+  ],
+  "launch_handler": { "client_mode": ["navigate-new", "auto"] }
+}
