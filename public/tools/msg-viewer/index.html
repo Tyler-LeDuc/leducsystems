@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:0;right:0;bottom:0;max-width:none;border-radius:0;border-width:1px 0 0;padding:8px 12px;font-size:13px;line-height:1.4;display:flex;gap:10px;align-items:center}.lds-consent p{margin:0;flex:1}.lds-consent__row{flex-direction:column;gap:6px}.lds-consent button{flex:none;min-height:36px;padding:4px 14px}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MSG Viewer Online: Open Outlook .msg Files Free, No Outlook Needed</title>
+<meta name="description" content="Open Outlook .msg emails in your browser on Mac, Windows, iPhone or Chromebook. Free: sender, recipients, date, the message and every attachment. Save as PDF for $19 once.">
+<link rel="canonical" href="https://leducsystems.com/tools/msg-viewer/">
+<meta property="og:title" content="MSG Viewer Online: Open Outlook .msg Files Free, No Outlook Needed">
+<meta property="og:description" content="Open Outlook .msg emails in your browser on Mac, Windows, iPhone or Chromebook. Free: sender, recipients, date, the message and every attachment. Save as PDF for $19 once.">
+<meta property="og:url" content="https://leducsystems.com/tools/msg-viewer/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:image" content="https://leducsystems.com/images/og-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/fonts/plex.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"MSG Viewer","url":"https://leducsystems.com/tools/msg-viewer/","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","offers":[{"@type":"Offer","name":"Reading emails and attachments","price":"0","priceCurrency":"USD"},{"@type":"Offer","name":"Save as PDF, attachments as .zip, batch PDF","price":"19","priceCurrency":"USD"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which files open?","acceptedAnswer":{"@type":"Answer","text":"Emails saved from Outlook as .msg files (dragged from Outlook to a folder, or saved with File, Save As). That includes old and new Outlook versions, emails in any language, meeting requests, and emails forwarded as attachments inside another email. It does not open .pst or .ost mailbox files, or .eml files (any mail app opens those)."}},{"@type":"Question","name":"Is my email uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. The .msg file is read by the page in your browser and never sent to my server or anyone else. The only thing that goes to my server is the license check when you save, which sends your license key and nothing about your email."}},{"@type":"Question","name":"What is free?","acceptedAnswer":{"@type":"Answer","text":"Reading is free for any number of emails: the sender, recipients, date and subject, the whole message, and every attachment, which you can download one at a time. Forwarded emails inside an email open too. Only saving costs money: $19 once unlocks saving as PDF, all attachments as one .zip, and many emails to PDF at once, or $7 for 24 hours."}},{"@type":"Question","name":"Is it safe to open an email here?","acceptedAnswer":{"@type":"Answer","text":"The message is shown in a sandboxed frame with scripts turned off, so nothing in the email can run. Links open in a new tab. Pictures the email loads from the internet are blocked until you click \"Show them\", so the sender can't tell you opened it. Attachments are saved as they are: if you don't trust the sender, scan them before you open them."}},{"@type":"Question","name":"What does the PDF look like?","acceptedAnswer":{"@type":"Answer","text":"Letter pages with a header block (subject, from, to, cc, date and the names of the attachments) and then the message as it looks on screen, with the pictures that are inside the email. Each page is a picture of the email at print quality, so the text in the PDF can't be selected or searched. Pictures that the email loads from the internet are left out. Before paying you can download page 1 free, marked as a sample."}},{"@type":"Question","name":"Can I convert many .msg files at once?","acceptedAnswer":{"@type":"Answer","text":"Yes. Select or drop up to 500 .msg files together. They open in a list, and you can read each one free. With the $19 license, one click saves every email as its own PDF, all in one .zip."}},{"@type":"Question","name":"What about forwarded emails inside an email?","acceptedAnswer":{"@type":"Answer","text":"They show in the attachment list. Click Open to read one in the viewer, with its own attachments, and Back to return. Download saves it as its own .msg file."}},{"@type":"Question","name":"Does it work on a Mac, iPhone or Chromebook?","acceptedAnswer":{"@type":"Answer","text":"Yes. It runs in Safari, Chrome, Edge and Firefox on Mac, Windows, Linux, ChromeOS, iPhone, iPad and Android. On an iPhone, save the .msg attachment to Files first, then choose it here."}},{"@type":"Question","name":"Can I make .msg files open here with a double-click?","acceptedAnswer":{"@type":"Answer","text":"On Windows and ChromeOS, yes: install the viewer from Chrome or Edge (the install icon in the address bar, or the prompt after your first email opens), and .msg files open in it with a double-click."}},{"@type":"Question","name":"Do you have a license for a business or team?","acceptedAnswer":{"@type":"Answer","text":"Yes. The Business license is $99 for one year for up to 5 people at one business, and one key unlocks saving in all five viewers: the MSG Viewer (Outlook), the MPP Viewer (Microsoft Project), the XER Viewer (Primavera P6), the Visio Viewer and the Access Viewer. It is a one-time payment that does not renew, and checkout gives you an invoice for your records. If it doesn't work for your files within 30 days, I refund you in full."}},{"@type":"Question","name":"Is this made by Microsoft?","acceptedAnswer":{"@type":"Answer","text":"No. I'm an independent developer and this viewer isn't affiliated with Microsoft. Outlook is a trademark of Microsoft."}}]}]}</script>
+<link rel="manifest" href="/tools/msg-viewer/manifest.webmanifest">
+<meta name="theme-color" content="#22517A">
+<link rel="apple-touch-icon" href="/tools/msg-viewer/icons/icon-192.png">
+<style>@media (display-mode: standalone) { body .site-header, body nav.more, body .store-link { display: none; } body .hero { padding-top: 28px; } }</style>
+<script>if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('/tools/msg-viewer/sw.js').catch(() => {}));</script>
+  <script type="module" crossorigin src="/tools/assets/msg-viewer-CqCYppPK.js"></script>
+  <link rel="modulepreload" crossorigin href="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js">
+  <link rel="modulepreload" crossorigin href="/tools/assets/zip-CEMz-pNR.js">
+  <link rel="modulepreload" crossorigin href="/tools/assets/viewer-business-L-iXIrT_.js">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-BJ8W3nMV.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+    <nav class="nav" aria-label="Primary">
+      <ul><li><a class="nav__link nav__link--active" href="/tools/">Products</a></li><li><a class="nav__link" href="/about/">About</a></li><li><a class="nav__link" href="/contact/">Contact</a></li></ul>
+    </nav>
+    <div class="nav__actions">
+      <a class="site-btn site-btn--primary site-btn--sm site-header__cta" href="/contact/">Get in touch</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
+  <ul><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:60ms">Products</a></li><li><a class="mobile-menu__link" href="/about/" style="--menu-delay:105ms">About</a></li><li><a class="mobile-menu__link" href="/contact/" style="--menu-delay:150ms">Contact</a></li></ul>
+  <div class="mobile-menu__actions" style="--menu-delay:195ms">
+    <a class="site-btn site-btn--primary site-btn--lg" href="/contact/">Get in touch</a>
+    <a class="site-btn site-btn--ghost site-btn--lg" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+  </div>
+</nav>
+<script>
+(() => {
+  const b = document.querySelector('.menu-toggle'), m = document.getElementById('site-mobile-menu');
+  const set = (open) => {
+    b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    m.classList.toggle('mobile-menu--open', open); document.body.style.overflow = open ? 'hidden' : '';
+  };
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  matchMedia('(min-width: 861px)').addEventListener('change', (e) => { if (e.matches) set(false); });
+})();
+</script>
+<main id="main" tabindex="-1">
+  <section class="hero">
+    <h1>Open an Outlook .msg file without Outlook</h1>
+    <p class="lede">Drop a .msg file and read the email: who sent it, who it went to, the date, the full message with its pictures, and every attachment, which you can download one by one. Reading is free. No Outlook, no sign-up, and the file never leaves your computer.</p>
+  </section>
+
+  <section class="tool mv-tool" id="msg" data-api="https://convert.leducsystems.com" data-price="$19" data-contact="tyler@leducsystems.com" data-sample="/tools/msg-viewer/sample-email.msg" aria-label="MSG Viewer">
+    <label class="drop" id="mg-drop">
+      <input type="file" id="mg-file" accept=".msg,application/vnd.ms-outlook" multiple class="sr-only">
+      <span class="drop-title">Drop an Outlook .msg file here</span>
+      <span class="drop-sub">or click to choose · several at once is fine · read in your browser, never uploaded · the message and attachments free · $19 once to save as PDF · full refund within 30 days</span>
+    </label>
+    <p class="fi-sample">No file handy? <button class="link" type="button" id="mg-sample">Try a sample email</button> (a construction project email with 3 attachments and a forwarded email).</p>
+    <p class="status" id="mg-status" role="status"></p>
+    <div class="result" id="mg-result" hidden></div>
+    <p class="fine">Your .msg file is read on your own device and never sent anywhere. Payments go to LeDuc Systems LLC in Phoenix, Arizona, through Stripe. Questions: <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
+  </section>
+
+  <section class="steps">
+    <div><b>1</b><p>Drop the .msg file someone sent you, or a folder's worth.</p></div>
+    <div><b>2</b><p>Read the email and download any attachment, free, on any computer or phone.</p></div>
+    <div><b>3</b><p>Need a PDF or every attachment at once? Unlock saving once for $19.</p></div>
+  </section>
+
+  <section class="faq">
+    <h2>Questions</h2>
+    <details><summary>Which files open?</summary><p>Emails saved from Outlook as .msg files (dragged from Outlook to a folder, or saved with File, Save As). That includes old and new Outlook versions, emails in any language, meeting requests, and emails forwarded as attachments inside another email. It does not open .pst or .ost mailbox files, or .eml files (any mail app opens those).</p></details>
+    <details><summary>Is my email uploaded?</summary><p>No. The .msg file is read by the page in your browser and never sent to my server or anyone else. The only thing that goes to my server is the license check when you save, which sends your license key and nothing about your email.</p></details>
+    <details><summary>What is free?</summary><p>Reading is free for any number of emails: the sender, recipients, date and subject, the whole message, and every attachment, which you can download one at a time. Forwarded emails inside an email open too. Only saving costs money: $19 once unlocks saving as PDF, all attachments as one .zip, and many emails to PDF at once, or $7 for 24 hours.</p></details>
+    <details><summary>Is it safe to open an email here?</summary><p>The message is shown in a sandboxed frame with scripts turned off, so nothing in the email can run. Links open in a new tab. Pictures the email loads from the internet are blocked until you click &quot;Show them&quot;, so the sender can't tell you opened it. Attachments are saved as they are: if you don't trust the sender, scan them before you open them.</p></details>
+    <details><summary>What does the PDF look like?</summary><p>Letter pages with a header block (subject, from, to, cc, date and the names of the attachments) and then the message as it looks on screen, with the pictures that are inside the email. Each page is a picture of the email at print quality, so the text in the PDF can't be selected or searched. Pictures that the email loads from the internet are left out. Before paying you can download page 1 free, marked as a sample.</p></details>
+    <details><summary>Can I convert many .msg files at once?</summary><p>Yes. Select or drop up to 500 .msg files together. They open in a list, and you can read each one free. With the $19 license, one click saves every email as its own PDF, all in one .zip.</p></details>
+    <details><summary>What about forwarded emails inside an email?</summary><p>They show in the attachment list. Click Open to read one in the viewer, with its own attachments, and Back to return. Download saves it as its own .msg file.</p></details>
+    <details><summary>Does it work on a Mac, iPhone or Chromebook?</summary><p>Yes. It runs in Safari, Chrome, Edge and Firefox on Mac, Windows, Linux, ChromeOS, iPhone, iPad and Android. On an iPhone, save the .msg attachment to Files first, then choose it here.</p></details>
+    <details><summary>Can I make .msg files open here with a double-click?</summary><p>On Windows and ChromeOS, yes: install the viewer from Chrome or Edge (the install icon in the address bar, or the prompt after your first email opens), and .msg files open in it with a double-click.</p></details>
+    <details><summary>Do you have a license for a business or team?</summary><p>Yes. The Business license is $99 for one year for up to 5 people at one business, and one key unlocks saving in all five viewers: the MSG Viewer (Outlook), the MPP Viewer (Microsoft Project), the XER Viewer (Primavera P6), the Visio Viewer and the Access Viewer. It is a one-time payment that does not renew, and checkout gives you an invoice for your records. If it doesn't work for your files within 30 days, I refund you in full.</p></details>
+    <details><summary>Is this made by Microsoft?</summary><p>No. I'm an independent developer and this viewer isn't affiliated with Microsoft. Outlook is a trademark of Microsoft.</p></details>
+  </section>
+
+  <nav class="more" aria-label="Guides">
+    <h2>Guides</h2>
+    <ul class="guides"><li><a href="/tools/open-msg-file-without-outlook/">Open a .msg file without Outlook</a></li><li><a href="/tools/open-msg-file-on-mac/">Open a .msg file on a Mac</a></li><li><a href="/tools/open-msg-file-on-iphone/">Open a .msg file on iPhone or iPad</a></li><li><a href="/tools/open-msg-file-on-chromebook/">Open a .msg file on a Chromebook</a></li><li><a href="/tools/msg-to-pdf/">Convert a .msg file to PDF</a></li><li><a href="/tools/visio-viewer/">Visio drawings: the Visio Viewer</a></li></ul>
+  </nav>
+<p class="fine">Not affiliated with Microsoft. Outlook is a trademark of Microsoft. Payments are handled by Stripe.</p>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+        <p class="site-footer__blurb">Focused software built and sold by Tyler LeDuc in Phoenix, Arizona.</p>
+        <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+        <a class="site-footer__link site-footer__email" href="tel:+16233205633">(623) 320-5633</a>
+      </div>
+      <nav class="site-footer__col" aria-labelledby="footer-products">
+        <h2 class="site-footer__title" id="footer-products">Products</h2>
+        <a class="site-footer__link" href="/tools/scan-to-email-microsoft-365/">Scan Relay</a>
+        <a class="site-footer__link" href="/tools/publisher-converter/">Publisher converter</a>
+        <a class="site-footer__link" href="/tools/visio-viewer/">Visio Viewer</a>
+        <a class="site-footer__link" href="/tools/mpp-viewer/">MPP Viewer</a>
+        <a class="site-footer__link" href="/tools/infopath-to-excel/">InfoPath to Excel</a>
+        <a class="site-footer__link" href="/tools/fire-to-iris-1099-converter/">FIRE to IRIS converter</a>
+        <a class="site-footer__link" href="/shopify/product-options/">Product Options for Shopify</a>
+        <a class="site-footer__link" href="/saguaro-hours/">Saguaro Hours for Jira</a>
+        <a class="site-footer__link" href="/tools/">All products</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-company">
+        <h2 class="site-footer__title" id="footer-company">Company</h2>
+        <a class="site-footer__link" href="/about/">About</a>
+        <a class="site-footer__link" href="/games/">Games</a>
+        <a class="site-footer__link" href="/services/claude-workflow-setup/">Claude workflow setup</a>
+        <a class="site-footer__link" href="/tools/ai-visibility-check/">AI visibility check</a>
+        <a class="site-footer__link" href="/contact/">Contact</a>
+        <a class="site-footer__link" href="/site-map/">Site map</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-elsewhere">
+        <h2 class="site-footer__title" id="footer-elsewhere">Elsewhere</h2>
+        <a class="site-footer__link" href="https://github.com/Tyler-LeDuc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://raxeris.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-legal">
+        <h2 class="site-footer__title" id="footer-legal">Legal</h2>
+        <a class="site-footer__link" href="/privacy/">Privacy Policy</a>
+        <a class="site-footer__link" href="/terms/">Terms of Service</a>
+        <a class="site-footer__link" href="/refunds/">Refund Policy</a>
+        <button type="button" class="site-footer__link site-footer__button" data-cookie-settings>Cookie settings</button>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p>&copy; 2026 LeDuc Systems LLC, an Arizona limited liability company</p>
+      <p>Phoenix, Arizona</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
