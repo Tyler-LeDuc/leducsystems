@@ -94,9 +94,58 @@ function ConvertDiagram() {
   );
 }
 
+function ViewerDiagram() {
+  const inputs = [
+    { ext: '.mpp', name: 'Gantt chart and tasks' },
+    { ext: '.vsdx', name: 'Every page of the drawing' },
+    { ext: '.accdb', name: 'Every table' },
+  ];
+  const outputs = [
+    { ext: '.xlsx', app: 'Excel' },
+    { ext: '.csv', app: 'Any spreadsheet' },
+    { ext: '.pdf', app: 'Print or forward' },
+  ];
+
+  return (
+    <figure className="viz viz--convert">
+      <div className="viz__bar">
+        <span className="mono">View free</span>
+        <span className="mono">Export when you need it</span>
+      </div>
+
+      <div className="viz__body convert">
+        <ul className="convert__out">
+          {inputs.map((item) => (
+            <li key={item.ext} className="file-chip file-chip--in">
+              <span className="file-chip__ext">{item.ext}</span>
+              <span className="file-chip__name">{item.name}</span>
+            </li>
+          ))}
+        </ul>
+
+        <span className="convert__arrow" aria-hidden="true" />
+
+        <ul className="convert__out">
+          {outputs.map((item) => (
+            <li key={item.ext} className="file-chip">
+              <span className="file-chip__ext">{item.ext}</span>
+              <span className="file-chip__name">{item.app}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <figcaption className="viz__caption">
+        No Microsoft Project, Visio or Access needed, on a Mac, PC or Chromebook.
+      </figcaption>
+    </figure>
+  );
+}
+
 const VISUALS = {
   relay: RelayDiagram,
   convert: ConvertDiagram,
+  viewer: ViewerDiagram,
 };
 
 export default function ProductVisual({ kind }) {

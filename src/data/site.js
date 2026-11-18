@@ -53,12 +53,30 @@ export const HOME = {
   eyebrow: 'LeDuc Systems LLC · Phoenix, Arizona',
   title: 'Small software that does one job properly.',
   lede:
-    'I build and sell focused software for problems with a deadline or a cost attached: copiers that stop scanning when Microsoft 365 drops basic auth, and files stranded when Publisher was retired. I also make browser games.',
+    'I build and sell focused software for problems with a deadline or a cost attached: Project, Visio and Access files you can’t open without the Microsoft app, copiers that stop scanning when Microsoft 365 drops basic auth, and files stranded when Publisher was retired. I also make browser games.',
 };
 
-/* The two products I'm actively selling, shown large on the home page.
+/* The products I'm actively selling, shown large on the home page.
    `facts` are short label/value pairs, each one stated on the product page. */
 export const FEATURED_PRODUCTS = [
+  {
+    slug: 'file-viewers',
+    visual: 'viewer',
+    name: 'Project, Visio and Access viewers',
+    category: 'Documents · Browser',
+    line: 'Opens Microsoft Project, Visio and Access files without the Microsoft apps, on a Mac, PC or Chromebook.',
+    body: [
+      'Drop an .mpp plan, a .vsdx drawing or an .accdb database and you see it in the browser for free: the Gantt chart and tasks, every page of the drawing, or every table.',
+      'Exports to Excel, CSV and PDF are $19 once, or $7 for 24 hours. Files are read on my server and deleted as soon as they are read.',
+    ],
+    facts: [
+      ['Price', 'Free to view; exports $19 once or $7 for 24 hours'],
+      ['Works on', 'Mac, Windows and Chromebook, nothing to install'],
+      ['Refund', 'Full refund within 30 days if it doesn’t work for your file'],
+    ],
+    primary: { label: 'Open an .mpp file', href: '/tools/mpp-viewer/' },
+    secondary: { label: 'All file tools', href: '/tools/' },
+  },
   {
     slug: 'scan-relay',
     visual: 'relay',
@@ -195,6 +213,14 @@ export const MORE_PRODUCTS = [
     line: 'Opens Visio .vsdx and .vsd drawings without Visio, on Mac, Windows or a Chromebook. Every page shows in the browser.',
     price: 'Free to view, $19 once for PDF and PNG downloads',
     href: '/tools/visio-viewer/',
+  },
+  {
+    slug: 'access-viewer',
+    name: 'Access Viewer',
+    category: 'Microsoft Access',
+    line: 'Opens Access .mdb and .accdb databases without Access, on a Mac, PC or Chromebook. Every table shows in the browser.',
+    price: 'Free to view, $19 once for Excel and CSV export',
+    href: '/tools/access-viewer/',
   },
   {
     slug: 'fax',
