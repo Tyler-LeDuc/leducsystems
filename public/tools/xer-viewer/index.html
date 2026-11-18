@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XER Viewer Online: Open Primavera P6 XER Files Free, No P6 Needed</title>
+<meta name="description" content="Open Primavera P6 .xer files in your browser on Windows, Mac or Chromebook. Free WBS, Gantt chart, activities, float and critical path. Export to Excel, CSV and PDF for $19 once.">
+<link rel="canonical" href="https://leducsystems.com/tools/xer-viewer/">
+<meta property="og:title" content="XER Viewer Online: Open Primavera P6 XER Files Free, No P6 Needed">
+<meta property="og:description" content="Open Primavera P6 .xer files in your browser on Windows, Mac or Chromebook. Free WBS, Gantt chart, activities, float and critical path. Export to Excel, CSV and PDF for $19 once.">
+<meta property="og:url" content="https://leducsystems.com/tools/xer-viewer/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:image" content="https://leducsystems.com/images/og-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/fonts/plex.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"XER Viewer","url":"https://leducsystems.com/tools/xer-viewer/","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","offers":[{"@type":"Offer","name":"Viewing","price":"0","priceCurrency":"USD"},{"@type":"Offer","name":"Excel, CSV and PDF export","price":"19","priceCurrency":"USD"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which files open?","acceptedAnswer":{"@type":"Answer","text":"XER files exported from Primavera P6 (File, Export, then the XER format). One file can hold several projects; the viewer lists them and you pick which one to look at. If your file does not open, email tyler@leducsystems.com with the error and I will look at it."}},{"@type":"Question","name":"Is my file uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. The .xer file is read by the page in your browser and never sent to my server or anyone else. The only thing that goes to my server is the license check when you export, which sends your license key and nothing about your schedule."}},{"@type":"Question","name":"Is it really free to view?","acceptedAnswer":{"@type":"Answer","text":"Yes. The WBS, the Gantt chart, the activity table and the resource list are free for any number of files. Only the exports cost money: $19 once unlocks Excel, CSV and PDF downloads for every schedule you open, or $7 for 24 hours."}},{"@type":"Question","name":"What does the viewer show?","acceptedAnswer":{"@type":"Answer","text":"The project's name, data date, start and finish; the WBS as a tree you can expand and collapse; and for each activity its ID, name, original and remaining duration, start and finish, early and late dates, total float, percent complete, status, predecessors (type and lag) and resources. Durations, lags and float are shown in days, using the hours per day of each activity's calendar."}},{"@type":"Question","name":"How is the critical path shown?","acceptedAnswer":{"@type":"Answer","text":"Activities with total float of zero or less are marked critical and drawn in red. That is P6's default definition. If your project defines critical activities by longest path instead, P6 can mark a slightly different set; the float values themselves are exactly what the file holds."}},{"@type":"Question","name":"What is in the Excel export?","acceptedAnswer":{"@type":"Answer","text":"Four sheets. Activities has the WBS bands and every activity, indented with outline grouping you can collapse, with type, status, durations, all the dates (as real Excel dates), total float, percent complete, critical flag, predecessors and resources. Relationships lists every link with its type and lag. Resources and Assignments list who is on what, with budgeted, actual and remaining units. Before paying, you can download the first 20 activities as a free sample."}},{"@type":"Question","name":"Does it recalculate the schedule?","acceptedAnswer":{"@type":"Answer","text":"No. It shows the dates and float as P6 last calculated them, as of the data date in the file. If someone changed the logic after the last schedule run in P6, the dates will not reflect it until they schedule (F9) and export again."}},{"@type":"Question","name":"What is not shown?","acceptedAnswer":{"@type":"Answer","text":"Costs, activity codes, user-defined fields, notebooks, steps, baselines stored in other projects, and resource curves. If you need one of those in the export, email me."}},{"@type":"Question","name":"How big a file can it open?","acceptedAnswer":{"@type":"Answer","text":"It has been built for large schedules: the file is read in the background, and the table draws 400 rows at a time with a button for more, so a schedule with tens of thousands of activities stays usable (I test it with 20,000). The limit is your computer's memory."}},{"@type":"Question","name":"Does it work on a Mac?","acceptedAnswer":{"@type":"Answer","text":"Yes. Primavera P6 Professional runs only on Windows, which is why many people end up here. The viewer works in Safari, Chrome, Edge and Firefox on Mac, Windows, Linux and Chromebook."}},{"@type":"Question","name":"Do you have a license for a business or team?","acceptedAnswer":{"@type":"Answer","text":"Yes. The Business license is $99 for one year for up to 5 people at one business, and one key unlocks the exports in all four viewers: the XER Viewer (Primavera P6), the MPP Viewer (Microsoft Project), the Visio Viewer and the Access Viewer. It is a one-time payment that does not renew, and checkout gives you an invoice for your records. Need a quote, W-9 or to pay by purchase order? Email tyler@leducsystems.com. If it doesn't work for your files within 30 days, I refund you in full."}},{"@type":"Question","name":"Is this made by Oracle?","acceptedAnswer":{"@type":"Answer","text":"No. I'm an independent developer and this viewer isn't affiliated with Oracle. Primavera P6 is a trademark of Oracle."}}]}]}</script>
+  <script type="module" crossorigin src="/tools/assets/xer-viewer-DBJJ6IH6.js"></script>
+  <link rel="modulepreload" crossorigin href="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js">
+  <link rel="modulepreload" crossorigin href="/tools/assets/zip-CEMz-pNR.js">
+  <link rel="modulepreload" crossorigin href="/tools/assets/mpp-core-BD_xXje0.js">
+  <link rel="modulepreload" crossorigin href="/tools/assets/viewer-business-IDXVh1Aj.js">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-DwkBKU80.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+    <nav class="nav" aria-label="Primary">
+      <ul><li><a class="nav__link nav__link--active" href="/tools/">Products</a></li><li><a class="nav__link" href="/about/">About</a></li><li><a class="nav__link" href="/contact/">Contact</a></li></ul>
+    </nav>
+    <div class="nav__actions">
+      <a class="site-btn site-btn--primary site-btn--sm site-header__cta" href="/contact/">Get in touch</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
+  <ul><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:60ms">Products</a></li><li><a class="mobile-menu__link" href="/about/" style="--menu-delay:105ms">About</a></li><li><a class="mobile-menu__link" href="/contact/" style="--menu-delay:150ms">Contact</a></li></ul>
+  <div class="mobile-menu__actions" style="--menu-delay:195ms">
+    <a class="site-btn site-btn--primary site-btn--lg" href="/contact/">Get in touch</a>
+    <a class="site-btn site-btn--ghost site-btn--lg" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+  </div>
+</nav>
+<script>
+(() => {
+  const b = document.querySelector('.menu-toggle'), m = document.getElementById('site-mobile-menu');
+  const set = (open) => {
+    b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    m.classList.toggle('mobile-menu--open', open); document.body.style.overflow = open ? 'hidden' : '';
+  };
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  matchMedia('(min-width: 861px)').addEventListener('change', (e) => { if (e.matches) set(false); });
+})();
+</script>
+<main id="main" tabindex="-1">
+  <section class="hero">
+    <h1>Open a Primavera P6 .xer file without P6</h1>
+    <p class="lede">Drop an .xer file and see the schedule: the WBS, every activity with its durations, dates, total float and status, the predecessors with their lags, a Gantt chart with the critical activities in red, and the resources. Viewing is free. No P6 license, no sign-up, and the file never leaves your computer.</p>
+  </section>
+
+  <section class="tool mv-tool" id="xer" data-api="https://convert.leducsystems.com" data-price="$19" data-sample="/tools/xer-viewer/sample-schedule.xer" aria-label="XER Viewer">
+    <label class="drop" id="xv-drop">
+      <input type="file" id="xv-file" accept=".xer" class="sr-only">
+      <span class="drop-title">Drop a Primavera P6 .xer file here</span>
+      <span class="drop-sub">or click to choose · read in your browser, never uploaded · WBS, Gantt chart and float free · $19 once for Excel, CSV and PDF exports · full refund within 30 days</span>
+    </label>
+    <p class="fi-sample">No file handy? <button class="link" type="button" id="xv-sample">Try a sample schedule</button> (a medical office building, 44 activities).</p>
+    <p class="status" id="xv-status" role="status"></p>
+    <div class="result" id="xv-result" hidden></div>
+    <p class="fine">Your .xer file is read on your own computer and never sent anywhere. Payments go to LeDuc Systems LLC in Phoenix, Arizona, through Stripe. Questions: <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
+  </section>
+
+  <section class="steps">
+    <div><b>1</b><p>Drop the .xer file the scheduler sent you.</p></div>
+    <div><b>2</b><p>Read the WBS, Gantt chart, float and critical path, free, on Mac or Windows.</p></div>
+    <div><b>3</b><p>Need it in Excel or as a PDF? Unlock exports once for $19.</p></div>
+  </section>
+
+  <section class="faq">
+    <h2>Questions</h2>
+    <details><summary>Which files open?</summary><p>XER files exported from Primavera P6 (File, Export, then the XER format). One file can hold several projects; the viewer lists them and you pick which one to look at. If your file does not open, email tyler@leducsystems.com with the error and I will look at it.</p></details>
+    <details><summary>Is my file uploaded?</summary><p>No. The .xer file is read by the page in your browser and never sent to my server or anyone else. The only thing that goes to my server is the license check when you export, which sends your license key and nothing about your schedule.</p></details>
+    <details><summary>Is it really free to view?</summary><p>Yes. The WBS, the Gantt chart, the activity table and the resource list are free for any number of files. Only the exports cost money: $19 once unlocks Excel, CSV and PDF downloads for every schedule you open, or $7 for 24 hours.</p></details>
+    <details><summary>What does the viewer show?</summary><p>The project's name, data date, start and finish; the WBS as a tree you can expand and collapse; and for each activity its ID, name, original and remaining duration, start and finish, early and late dates, total float, percent complete, status, predecessors (type and lag) and resources. Durations, lags and float are shown in days, using the hours per day of each activity's calendar.</p></details>
+    <details><summary>How is the critical path shown?</summary><p>Activities with total float of zero or less are marked critical and drawn in red. That is P6's default definition. If your project defines critical activities by longest path instead, P6 can mark a slightly different set; the float values themselves are exactly what the file holds.</p></details>
+    <details><summary>What is in the Excel export?</summary><p>Four sheets. Activities has the WBS bands and every activity, indented with outline grouping you can collapse, with type, status, durations, all the dates (as real Excel dates), total float, percent complete, critical flag, predecessors and resources. Relationships lists every link with its type and lag. Resources and Assignments list who is on what, with budgeted, actual and remaining units. Before paying, you can download the first 20 activities as a free sample.</p></details>
+    <details><summary>Does it recalculate the schedule?</summary><p>No. It shows the dates and float as P6 last calculated them, as of the data date in the file. If someone changed the logic after the last schedule run in P6, the dates will not reflect it until they schedule (F9) and export again.</p></details>
+    <details><summary>What is not shown?</summary><p>Costs, activity codes, user-defined fields, notebooks, steps, baselines stored in other projects, and resource curves. If you need one of those in the export, email me.</p></details>
+    <details><summary>How big a file can it open?</summary><p>It has been built for large schedules: the file is read in the background, and the table draws 400 rows at a time with a button for more, so a schedule with tens of thousands of activities stays usable (I test it with 20,000). The limit is your computer's memory.</p></details>
+    <details><summary>Does it work on a Mac?</summary><p>Yes. Primavera P6 Professional runs only on Windows, which is why many people end up here. The viewer works in Safari, Chrome, Edge and Firefox on Mac, Windows, Linux and Chromebook.</p></details>
+    <details><summary>Do you have a license for a business or team?</summary><p>Yes. The Business license is $99 for one year for up to 5 people at one business, and one key unlocks the exports in all four viewers: the XER Viewer (Primavera P6), the MPP Viewer (Microsoft Project), the Visio Viewer and the Access Viewer. It is a one-time payment that does not renew, and checkout gives you an invoice for your records. Need a quote, W-9 or to pay by purchase order? Email tyler@leducsystems.com. If it doesn't work for your files within 30 days, I refund you in full.</p></details>
+    <details><summary>Is this made by Oracle?</summary><p>No. I'm an independent developer and this viewer isn't affiliated with Oracle. Primavera P6 is a trademark of Oracle.</p></details>
+  </section>
+
+  <nav class="more" aria-label="Guides">
+    <h2>Guides</h2>
+    <ul class="guides"><li><a href="/tools/open-xer-file-without-primavera/">Open an .xer file without Primavera P6</a></li><li><a href="/tools/convert-xer-to-excel/">Convert an .xer file to Excel</a></li><li><a href="/tools/open-xer-file-on-mac/">Open an .xer file on a Mac</a></li><li><a href="/tools/mpp-viewer/">Microsoft Project files: the MPP Viewer</a></li></ul>
+  </nav>
+<p class="fine">Not affiliated with Oracle. Primavera P6 is a trademark of Oracle. Payments are handled by Stripe.</p>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+        <p class="site-footer__blurb">Focused software built and sold by Tyler LeDuc in Phoenix, Arizona.</p>
+        <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+        <a class="site-footer__link site-footer__email" href="tel:+16233205633">(623) 320-5633</a>
+      </div>
+      <nav class="site-footer__col" aria-labelledby="footer-products">
+        <h2 class="site-footer__title" id="footer-products">Products</h2>
+        <a class="site-footer__link" href="/tools/scan-to-email-microsoft-365/">Scan Relay</a>
+        <a class="site-footer__link" href="/tools/publisher-converter/">Publisher converter</a>
+        <a class="site-footer__link" href="/tools/visio-viewer/">Visio Viewer</a>
+        <a class="site-footer__link" href="/tools/mpp-viewer/">MPP Viewer</a>
+        <a class="site-footer__link" href="/tools/infopath-to-excel/">InfoPath to Excel</a>
+        <a class="site-footer__link" href="/tools/fire-to-iris-1099-converter/">FIRE to IRIS converter</a>
+        <a class="site-footer__link" href="/shopify/product-options/">Product Options for Shopify</a>
+        <a class="site-footer__link" href="/saguaro-hours/">Saguaro Hours for Jira</a>
+        <a class="site-footer__link" href="/tools/">All products</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-company">
+        <h2 class="site-footer__title" id="footer-company">Company</h2>
+        <a class="site-footer__link" href="/about/">About</a>
+        <a class="site-footer__link" href="/games/">Games</a>
+        <a class="site-footer__link" href="/services/claude-workflow-setup/">Claude workflow setup</a>
+        <a class="site-footer__link" href="/tools/ai-visibility-check/">AI visibility check</a>
+        <a class="site-footer__link" href="/contact/">Contact</a>
+        <a class="site-footer__link" href="/site-map/">Site map</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-elsewhere">
+        <h2 class="site-footer__title" id="footer-elsewhere">Elsewhere</h2>
+        <a class="site-footer__link" href="https://github.com/Tyler-LeDuc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://raxeris.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-legal">
+        <h2 class="site-footer__title" id="footer-legal">Legal</h2>
+        <a class="site-footer__link" href="/privacy/">Privacy Policy</a>
+        <a class="site-footer__link" href="/terms/">Terms of Service</a>
+        <a class="site-footer__link" href="/refunds/">Refund Policy</a>
+        <button type="button" class="site-footer__link site-footer__button" data-cookie-settings>Cookie settings</button>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p>&copy; 2026 LeDuc Systems LLC, an Arizona limited liability company</p>
+      <p>Phoenix, Arizona</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
