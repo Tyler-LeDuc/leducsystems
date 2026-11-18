@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:8px;right:8px;bottom:8px;max-width:none}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Access Database Viewer Online: Open MDB and ACCDB Files Free, No Access Needed</title>
+<meta name="description" content="Open Microsoft Access .mdb and .accdb databases in your browser on Mac, Windows or Chromebook. See every table free, search the rows, export to Excel or CSV for $19 once.">
+<link rel="canonical" href="https://leducsystems.com/tools/access-viewer/">
+<meta property="og:title" content="Access Database Viewer Online: Open MDB and ACCDB Files Free, No Access Needed">
+<meta property="og:description" content="Open Microsoft Access .mdb and .accdb databases in your browser on Mac, Windows or Chromebook. See every table free, search the rows, export to Excel or CSV for $19 once.">
+<meta property="og:url" content="https://leducsystems.com/tools/access-viewer/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:image" content="https://leducsystems.com/images/og-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/fonts/plex.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Access Viewer","url":"https://leducsystems.com/tools/access-viewer/","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","offers":[{"@type":"Offer","name":"Viewing","price":"0","priceCurrency":"USD"},{"@type":"Offer","name":"Excel and CSV export","price":"19","priceCurrency":"USD"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which files open?","acceptedAnswer":{"@type":"Answer","text":"Access databases saved as .mdb (Access 97, 2000, 2002 and 2003) and as .accdb (Access 2007 and later, including Microsoft 365). If yours does not open, email me and I will look at it."}},{"@type":"Question","name":"What does the viewer show?","acceptedAnswer":{"@type":"Answer","text":"Every table in the database: its rows, its column names and types, and the row count, with a search box that filters the rows. It does not show queries, forms, reports, macros or VBA code, and picture, attachment and OLE Object fields show up blank."}},{"@type":"Question","name":"Is it really free to view?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every table is free to view for any number of files. Only the exports cost money: $19 once unlocks Excel and CSV downloads for every database you open, or $7 for 24 hours."}},{"@type":"Question","name":"What is in the Excel export?","acceptedAnswer":{"@type":"Answer","text":"One sheet per table, named after the table, with the column names as a frozen header row and filters turned on. Numbers stay numbers, dates are real Excel dates and Yes/No fields become TRUE and FALSE. You can also export just the table you are looking at, as Excel or CSV. Before paying, you can download the first 20 rows of a table as a free sample."}},{"@type":"Question","name":"What happens to my file?","acceptedAnswer":{"@type":"Answer","text":"It is sent over an encrypted connection to my server, read there by a program, and deleted as soon as it has been read, before the tables are shown to you. Nothing is stored and I do not open it. The license key is the only thing kept, in your own browser."}},{"@type":"Question","name":"Does it work on a Mac?","acceptedAnswer":{"@type":"Answer","text":"Yes. Microsoft Access has never had a Mac version, which is why most people end up here. It works in Safari, Chrome, Edge and Firefox on Mac, Windows, Linux, Chromebook and iPad."}},{"@type":"Question","name":"How big a database can it open?","acceptedAnswer":{"@type":"Answer","text":"Files up to 40 MB. For a very large table, the viewer loads up to 50,000 rows (fewer when the whole database holds a lot of data) and tells you when it has done that; search and exports then cover the rows loaded. If you need every row of a bigger table, email tyler@leducsystems.com."}},{"@type":"Question","name":"Can I edit the data?","acceptedAnswer":{"@type":"Answer","text":"No. This is a viewer: it shows the tables as they were saved and exports them. To keep working with the data, open the Excel export, or import it into a database you can edit."}},{"@type":"Question","name":"What if my file does not open?","acceptedAnswer":{"@type":"Answer","text":"Databases with a password can't be read; remove the password in Access and save a copy first. If a file without a password fails, email tyler@leducsystems.com and I'll look at it. If an export doesn't work for your file within 30 days of buying, I refund you in full."}},{"@type":"Question","name":"Is this made by Microsoft?","acceptedAnswer":{"@type":"Answer","text":"No. I'm an independent developer. Microsoft Access is a trademark of Microsoft, and this viewer isn't affiliated with Microsoft."}}]}]}</script>
+<link rel="manifest" href="/tools/access-viewer/manifest.webmanifest">
+<meta name="theme-color" content="#5B1F2E">
+<link rel="apple-touch-icon" href="/tools/access-viewer/icons/icon-192.png">
+<style>@media (display-mode: standalone) { body .site-header, body nav.more, body .store-link { display: none; } body .hero { padding-top: 28px; } }</style>
+<script>if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('/tools/access-viewer/sw.js').catch(() => {}));</script>
+  <script type="module" crossorigin src="/tools/assets/access-viewer-DBXP3ZDG.js"></script>
+  <link rel="modulepreload" crossorigin href="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js">
+  <link rel="modulepreload" crossorigin href="/tools/assets/zip-CEMz-pNR.js">
+  <link rel="modulepreload" crossorigin href="/tools/assets/ext-intake-PEEjjlas.js">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-C9atGtJX.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+    <nav class="nav" aria-label="Primary">
+      <ul><li><a class="nav__link nav__link--active" href="/tools/">Products</a></li><li><a class="nav__link" href="/about/">About</a></li><li><a class="nav__link" href="/contact/">Contact</a></li></ul>
+    </nav>
+    <div class="nav__actions">
+      <a class="site-btn site-btn--primary site-btn--sm site-header__cta" href="/contact/">Get in touch</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
+  <ul><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:60ms">Products</a></li><li><a class="mobile-menu__link" href="/about/" style="--menu-delay:105ms">About</a></li><li><a class="mobile-menu__link" href="/contact/" style="--menu-delay:150ms">Contact</a></li></ul>
+  <div class="mobile-menu__actions" style="--menu-delay:195ms">
+    <a class="site-btn site-btn--primary site-btn--lg" href="/contact/">Get in touch</a>
+    <a class="site-btn site-btn--ghost site-btn--lg" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+  </div>
+</nav>
+<script>
+(() => {
+  const b = document.querySelector('.menu-toggle'), m = document.getElementById('site-mobile-menu');
+  const set = (open) => {
+    b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    m.classList.toggle('mobile-menu--open', open); document.body.style.overflow = open ? 'hidden' : '';
+  };
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  matchMedia('(min-width: 861px)').addEventListener('change', (e) => { if (e.matches) set(false); });
+})();
+</script>
+<main id="main" tabindex="-1">
+  <section class="hero">
+    <h1>Open a Microsoft Access database without Access</h1>
+    <p class="lede">Drop an .mdb or .accdb file and see every table in it: the rows, the columns and how many records each one holds, with a search box. Viewing is free. No Microsoft Access, no sign-up, works on a Mac or a Chromebook.</p>
+  </section>
+
+  <section class="tool mv-tool" id="access" data-api="https://convert.leducsystems.com" data-price="$19" data-sample="/tools/access-viewer/sample-database.mdb" aria-label="Access Viewer">
+    <label class="drop" id="ac-drop">
+      <input type="file" id="ac-file" accept=".mdb,.accdb" class="sr-only">
+      <span class="drop-title">Drop an Access database here (.mdb or .accdb)</span>
+      <span class="drop-sub">or click to choose · every table free · $19 once for Excel and CSV exports · full refund within 30 days</span>
+    </label>
+    <p class="fi-sample">No file handy? <button class="link" type="button" id="ac-sample">Open a sample database</button> (a hardware store: 5 tables, 271 rows).</p>
+    <p class="status" id="ac-status" role="status"></p>
+    <div class="result" id="ac-result" hidden></div>
+    <p class="fine">Your file is read on my server and deleted as soon as it has been read; nothing is kept. Payments go to LeDuc Systems LLC in Phoenix, Arizona, through Stripe. Questions: <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
+  </section>
+
+  <section class="steps">
+    <div><b>1</b><p>Drop the .mdb or .accdb file you inherited.</p></div>
+    <div><b>2</b><p>Browse and search every table, free, on Mac, Windows or Chromebook.</p></div>
+    <div><b>3</b><p>Need it in Excel? Unlock exports once for $19.</p></div>
+  </section>
+
+  <section class="faq">
+    <h2>Questions</h2>
+    <details><summary>Which files open?</summary><p>Access databases saved as .mdb (Access 97, 2000, 2002 and 2003) and as .accdb (Access 2007 and later, including Microsoft 365). If yours does not open, email me and I will look at it.</p></details>
+    <details><summary>What does the viewer show?</summary><p>Every table in the database: its rows, its column names and types, and the row count, with a search box that filters the rows. It does not show queries, forms, reports, macros or VBA code, and picture, attachment and OLE Object fields show up blank.</p></details>
+    <details><summary>Is it really free to view?</summary><p>Yes. Every table is free to view for any number of files. Only the exports cost money: $19 once unlocks Excel and CSV downloads for every database you open, or $7 for 24 hours.</p></details>
+    <details><summary>What is in the Excel export?</summary><p>One sheet per table, named after the table, with the column names as a frozen header row and filters turned on. Numbers stay numbers, dates are real Excel dates and Yes/No fields become TRUE and FALSE. You can also export just the table you are looking at, as Excel or CSV. Before paying, you can download the first 20 rows of a table as a free sample.</p></details>
+    <details><summary>What happens to my file?</summary><p>It is sent over an encrypted connection to my server, read there by a program, and deleted as soon as it has been read, before the tables are shown to you. Nothing is stored and I do not open it. The license key is the only thing kept, in your own browser.</p></details>
+    <details><summary>Does it work on a Mac?</summary><p>Yes. Microsoft Access has never had a Mac version, which is why most people end up here. It works in Safari, Chrome, Edge and Firefox on Mac, Windows, Linux, Chromebook and iPad.</p></details>
+    <details><summary>How big a database can it open?</summary><p>Files up to 40 MB. For a very large table, the viewer loads up to 50,000 rows (fewer when the whole database holds a lot of data) and tells you when it has done that; search and exports then cover the rows loaded. If you need every row of a bigger table, email tyler@leducsystems.com.</p></details>
+    <details><summary>Can I edit the data?</summary><p>No. This is a viewer: it shows the tables as they were saved and exports them. To keep working with the data, open the Excel export, or import it into a database you can edit.</p></details>
+    <details><summary>What if my file does not open?</summary><p>Databases with a password can't be read; remove the password in Access and save a copy first. If a file without a password fails, email tyler@leducsystems.com and I'll look at it. If an export doesn't work for your file within 30 days of buying, I refund you in full.</p></details>
+    <details><summary>Is this made by Microsoft?</summary><p>No. I'm an independent developer. Microsoft Access is a trademark of Microsoft, and this viewer isn't affiliated with Microsoft.</p></details>
+  </section>
+
+  <nav class="more" aria-label="Guides">
+    <h2>Guides</h2>
+    <ul class="guides"><li><a href="/tools/open-accdb-file-on-mac/">Open an .accdb file on a Mac</a></li><li><a href="/tools/convert-access-to-excel/">Convert an Access database to Excel</a></li><li><a href="/tools/open-mdb-file-without-access/">Open an .mdb file without Microsoft Access</a></li></ul>
+  </nav>
+<p class="fine">Microsoft Access is a trademark of Microsoft. I am not affiliated with Microsoft. Tables are read with mdbtools (GPL). Payments are handled by Stripe.</p>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+        <p class="site-footer__blurb">Focused software built and sold by Tyler LeDuc in Phoenix, Arizona.</p>
+        <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+        <a class="site-footer__link site-footer__email" href="tel:+16233205633">(623) 320-5633</a>
+      </div>
+      <nav class="site-footer__col" aria-labelledby="footer-products">
+        <h2 class="site-footer__title" id="footer-products">Products</h2>
+        <a class="site-footer__link" href="/tools/scan-to-email-microsoft-365/">Scan Relay</a>
+        <a class="site-footer__link" href="/tools/publisher-converter/">Publisher converter</a>
+        <a class="site-footer__link" href="/tools/visio-viewer/">Visio Viewer</a>
+        <a class="site-footer__link" href="/tools/mpp-viewer/">MPP Viewer</a>
+        <a class="site-footer__link" href="/tools/infopath-to-excel/">InfoPath to Excel</a>
+        <a class="site-footer__link" href="/tools/fire-to-iris-1099-converter/">FIRE to IRIS converter</a>
+        <a class="site-footer__link" href="/shopify/product-options/">Product Options for Shopify</a>
+        <a class="site-footer__link" href="/saguaro-hours/">Saguaro Hours for Jira</a>
+        <a class="site-footer__link" href="/tools/">All products</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-company">
+        <h2 class="site-footer__title" id="footer-company">Company</h2>
+        <a class="site-footer__link" href="/about/">About</a>
+        <a class="site-footer__link" href="/games/">Games</a>
+        <a class="site-footer__link" href="/services/claude-workflow-setup/">Claude workflow setup</a>
+        <a class="site-footer__link" href="/tools/ai-visibility-check/">AI visibility check</a>
+        <a class="site-footer__link" href="/contact/">Contact</a>
+        <a class="site-footer__link" href="/site-map/">Site map</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-elsewhere">
+        <h2 class="site-footer__title" id="footer-elsewhere">Elsewhere</h2>
+        <a class="site-footer__link" href="https://github.com/Tyler-LeDuc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://raxeris.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-legal">
+        <h2 class="site-footer__title" id="footer-legal">Legal</h2>
+        <a class="site-footer__link" href="/privacy/">Privacy Policy</a>
+        <a class="site-footer__link" href="/terms/">Terms of Service</a>
+        <a class="site-footer__link" href="/refunds/">Refund Policy</a>
+        <button type="button" class="site-footer__link site-footer__button" data-cookie-settings>Cookie settings</button>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p>&copy; 2026 LeDuc Systems LLC, an Arizona limited liability company</p>
+      <p>Phoenix, Arizona</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
