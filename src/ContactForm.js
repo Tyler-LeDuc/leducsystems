@@ -59,7 +59,7 @@ const validateAll = (values) => {
 };
 
 const buildSubject = (values) =>
-  values.game.trim() ? `${values.game.trim()} — message from ${values.name.trim()}` : `Message from ${values.name.trim()}`;
+  values.game.trim() ? `${values.game.trim()}: message from ${values.name.trim()}` : `Message from ${values.name.trim()}`;
 
 const buildMessage = (values) => {
   const lines = [`Name: ${values.name.trim()}`, `Email: ${values.email.trim()}`];
@@ -409,7 +409,7 @@ const ContactForm = ({ embedded = false, isOpen = false, onClose }) => {
       <span className="form-success__mark" aria-hidden="true" />
       <h3 className="h3 hi">Message sent</h3>
       <p className="body muted">
-        Thanks — it landed. You will get a reply within one business day. If something changes in the meantime, email{' '}
+        Thanks, it landed. You will get a reply within one business day. If something changes in the meantime, email{' '}
         <a className="link-underline" href={`mailto:${CONTACT_EMAIL}`}>
           {CONTACT_EMAIL}
         </a>{' '}

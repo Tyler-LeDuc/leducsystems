@@ -35,7 +35,7 @@ function upsertCanonical(href) {
    rule out the default em-dash format. */
 export default function SEO({ title, fullTitle: fullTitleProp, description, path = '/', imageAlt }) {
   useEffect(() => {
-    const fullTitle = fullTitleProp || (title ? `${title} — ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`);
+    const fullTitle = fullTitleProp || (title ? `${title} | ${SITE.name}` : `${SITE.name}: ${SITE.tagline}`);
     const desc = description || SITE.description;
     // Trailing slash: GitHub Pages serves /about as /about/ (see scripts/prerender.js).
     const url = `${SITE.url}${path.endsWith('/') ? path : `${path}/`}`;
@@ -54,7 +54,7 @@ export default function SEO({ title, fullTitle: fullTitleProp, description, path
     upsertMeta('property', 'og:image', image);
     upsertMeta('property', 'og:image:width', '1200');
     upsertMeta('property', 'og:image:height', '630');
-    upsertMeta('property', 'og:image:alt', imageAlt || `${SITE.name} — ${SITE.tagline}`);
+    upsertMeta('property', 'og:image:alt', imageAlt || `${SITE.name}: ${SITE.tagline}`);
 
     upsertMeta('name', 'twitter:card', 'summary_large_image');
     upsertMeta('name', 'twitter:title', fullTitle);

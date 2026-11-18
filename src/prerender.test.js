@@ -57,7 +57,7 @@ describe('prerender output', () => {
   const html = toHtml(template, '/about', { title: 'About', description: 'About the practice.' });
 
   it('rewrites the title in the SEO component format', () => {
-    expect(html).toContain('<title>About — LeDuc Systems</title>');
+    expect(html).toContain('<title>About | LeDuc Systems</title>');
   });
 
   it('rewrites the canonical to the route, with the trailing slash GitHub Pages serves', () => {
@@ -66,7 +66,7 @@ describe('prerender output', () => {
 
   it('rewrites description and open graph tags', () => {
     expect(html).toContain('content="About the practice."');
-    expect(html).toContain('content="About — LeDuc Systems"');
+    expect(html).toContain('content="About | LeDuc Systems"');
     expect(html).toContain('content="https://leducsystems.com/about/"');
   });
 

@@ -406,7 +406,7 @@ function injectContent(html, routePath, data) {
 }
 
 function render(template, routePath, meta, data) {
-  const fullTitle = meta.fullTitle || `${meta.title} — ${SITE_NAME}`;
+  const fullTitle = meta.fullTitle || `${meta.title} | ${SITE_NAME}`;
   /* A route may declare a different canonical path when it exists only to
      redirect. Everything that points search engines at a page uses it. */
   /* GitHub Pages serves each prerendered route as a folder, so /about answers with a
