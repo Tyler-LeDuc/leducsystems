@@ -53,7 +53,7 @@ export const HOME = {
   eyebrow: 'LeDuc Systems LLC · Phoenix, Arizona',
   title: 'Small software that does one job properly.',
   lede:
-    'I build and sell focused software for problems with a deadline or a cost attached: Project, Visio and Access files you can’t open without the Microsoft app, copiers that stop scanning when Microsoft 365 drops basic auth, and files stranded when Publisher was retired. I also make browser games.',
+    'I build and sell focused software for problems with a deadline or a cost attached: Project, Visio, Access, Outlook, Apple Pages and WordPerfect files you can’t open without the app that made them, copiers that stop scanning when Microsoft 365 drops basic auth, and files stranded when Publisher was retired. I also make browser games.',
 };
 
 /* The products I'm actively selling, shown large on the home page.
@@ -62,15 +62,15 @@ export const FEATURED_PRODUCTS = [
   {
     slug: 'file-viewers',
     visual: 'viewer',
-    name: 'Project, Visio and Access viewers',
+    name: 'File viewers',
     category: 'Documents · Browser',
-    line: 'Opens Microsoft Project, Visio and Access files without the Microsoft apps, on a Mac, PC or Chromebook.',
+    line: 'Opens Project, Visio, Access, Primavera P6, Outlook, Apple Pages and WordPerfect files without the apps that made them, on a Mac, PC or Chromebook.',
     body: [
-      'Drop an .mpp plan, a .vsdx drawing or an .accdb database and you see it in the browser for free: the Gantt chart and tasks, every page of the drawing, or every table.',
-      'Exports to Excel, CSV and PDF are $19 once, or $7 for 24 hours. Files are read on my server and deleted as soon as they are read.',
+      'Drop an .mpp plan, a .vsdx drawing, an .accdb database, an .xer schedule, an Outlook .msg or .pst, a .pages document or a .wpd file and you see it in the browser for free.',
+      'Exports to Excel, Word, CSV and PDF are $19 once per viewer ($29 for Outlook mailboxes), or a 24-hour pass. P6, .msg and .pst files are read on your own device; the others are read on my server and deleted as soon as they are read.',
     ],
     facts: [
-      ['Price', 'Free to view; exports $19 once or $7 for 24 hours'],
+      ['Price', 'Free to view; exports $19 once per viewer ($29 for .pst), or a 24-hour pass'],
       ['Works on', 'Mac, Windows and Chromebook, nothing to install'],
       ['Refund', 'Full refund within 30 days if it doesn’t work for your file'],
     ],
@@ -221,6 +221,46 @@ export const MORE_PRODUCTS = [
     line: 'Opens Access .mdb and .accdb databases without Access, on a Mac, PC or Chromebook. Every table shows in the browser.',
     price: 'Free to view, $19 once for Excel and CSV export',
     href: '/tools/access-viewer/',
+  },
+  {
+    slug: 'xer-viewer',
+    name: 'XER Viewer',
+    category: 'Primavera P6',
+    line: 'Opens Primavera P6 .xer schedules without P6: WBS, Gantt chart, float and critical path, read in your browser.',
+    price: 'Free to view, $19 once for Excel, CSV and PDF export',
+    href: '/tools/xer-viewer/',
+  },
+  {
+    slug: 'msg-viewer',
+    name: 'MSG Viewer',
+    category: 'Outlook email',
+    line: 'Opens Outlook .msg emails and winmail.dat attachments without Outlook: the message and every attachment.',
+    price: 'Free to read, $19 once to save as PDF and .zip',
+    href: '/tools/msg-viewer/',
+  },
+  {
+    slug: 'pst-viewer',
+    name: 'PST Viewer',
+    category: 'Outlook mailboxes',
+    line: 'Opens Outlook .pst and .ost mailbox files without Outlook: folders, search, every message and attachment, read on your own computer.',
+    price: 'Free to read, $29 once to save as .eml, PDF and CSV',
+    href: '/tools/pst-viewer/',
+  },
+  {
+    slug: 'pages-viewer',
+    name: 'Pages Viewer',
+    category: 'Apple Pages',
+    line: 'Opens Apple Pages documents on Windows, Chromebook or Android without a Mac.',
+    price: 'Free to view, $19 once for Word and PDF downloads',
+    href: '/tools/pages-viewer/',
+  },
+  {
+    slug: 'wordperfect-viewer',
+    name: 'WordPerfect Viewer',
+    category: 'WordPerfect and Works',
+    line: 'Opens WordPerfect .wpd and Microsoft Works .wps documents without WordPerfect or Works.',
+    price: 'Free to view, $19 once for Word and PDF downloads',
+    href: '/tools/wordperfect-viewer/',
   },
   {
     slug: 'fax',
