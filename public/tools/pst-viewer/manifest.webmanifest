@@ -1,0 +1,29 @@
+{
+  "id": "/tools/pst-viewer/",
+  "name": "PST Viewer: Open Outlook .pst and .ost Files",
+  "short_name": "PST Viewer",
+  "description": "Open Outlook .pst and .ost mailboxes without Outlook. Browse folders, read messages and download attachments free, then save as .eml, PDF or CSV.",
+  "start_url": "/tools/pst-viewer/?source=pwa",
+  "scope": "/tools/",
+  "display": "standalone",
+  "background_color": "#FFFBF3",
+  "theme_color": "#185854",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["productivity", "business", "utilities"],
+  "icons": [
+    { "src": "/tools/pst-viewer/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/tools/pst-viewer/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/tools/pst-viewer/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "file_handlers": [
+    {
+      "action": "/tools/pst-viewer/?source=file",
+      "name": "Outlook mailbox",
+      "icons": [{ "src": "/tools/pst-viewer/icons/file-256.png", "sizes": "256x256", "type": "image/png" }],
+      "accept": { "application/vnd.ms-outlook": [".pst", ".ost"] },
+      "launch_type": "single-client"
+    }
+  ],
+  "launch_handler": { "client_mode": ["navigate-new", "auto"] }
+}
