@@ -53,7 +53,7 @@ export const HOME = {
   eyebrow: 'LeDuc Systems LLC · Phoenix, Arizona',
   title: 'Small software that does one job properly.',
   lede:
-    'I build and sell focused software for problems with a deadline or a cost attached: Project, Visio, Access, Outlook, Apple Pages and WordPerfect files you can’t open without the app that made them, copiers that stop scanning when Microsoft 365 drops basic auth, and files stranded when Publisher was retired. I also make browser games.',
+    'I build and sell focused software for problems with a deadline or a cost attached: Project, Visio, Access, Outlook, Apple Pages, Numbers and WordPerfect files you can’t open without the app that made them, copiers that stop scanning when Microsoft 365 drops basic auth, and files stranded when Publisher was retired. I also make browser games.',
 };
 
 /* The products I'm actively selling, shown large on the home page.
@@ -64,13 +64,13 @@ export const FEATURED_PRODUCTS = [
     visual: 'viewer',
     name: 'File viewers',
     category: 'Documents · Browser',
-    line: 'Opens Project, Visio, Access, Primavera P6, Outlook, Apple Pages and WordPerfect files without the apps that made them, on a Mac, PC or Chromebook.',
+    line: 'Opens Project, Visio, Access, Primavera P6, Outlook, Apple Pages, Numbers and WordPerfect files without the apps that made them, on a Mac, PC or Chromebook.',
     body: [
-      'Drop an .mpp plan, a .vsdx drawing, an .accdb database, an .xer schedule, an Outlook .msg or .pst, a .pages document or a .wpd file and you see it in the browser for free.',
-      'Exports to Excel, Word, CSV and PDF are $19 once per viewer ($29 for Outlook mailboxes), or a 24-hour pass. P6, .msg and .pst files are read on your own device; the others are read on my server and deleted as soon as they are read.',
+      'Drop an .mpp plan, a .vsdx drawing, an .accdb database, an .xer schedule, an Outlook .msg or .pst, a .pages document, a .numbers spreadsheet or a .wpd file and you see it in the browser for free.',
+      'Exports to Excel, Word, CSV and PDF are $19 once per viewer ($29 for Outlook mailboxes), a 24-hour pass, or $49 a year for every viewer. P6, .msg and .pst files are read on your own device; the others are read on my server and deleted as soon as they are read.',
     ],
     facts: [
-      ['Price', 'Free to view; exports $19 once per viewer ($29 for .pst), or a 24-hour pass'],
+      ['Price', 'Free to view; exports $19 once per viewer ($29 for .pst), a 24-hour pass, or $49 a year for all viewers'],
       ['Works on', 'Mac, Windows and Chromebook, nothing to install'],
       ['Refund', 'Full refund within 30 days if it doesn’t work for your file'],
     ],
@@ -253,6 +253,14 @@ export const MORE_PRODUCTS = [
     line: 'Opens Apple Pages documents on Windows, Chromebook or Android without a Mac.',
     price: 'Free to view, $19 once for Word and PDF downloads',
     href: '/tools/pages-viewer/',
+  },
+  {
+    slug: 'numbers-viewer',
+    name: 'Numbers Viewer',
+    category: 'Apple Numbers',
+    line: 'Opens Apple Numbers spreadsheets on Windows, Chromebook or Android without a Mac: every sheet and table.',
+    price: 'Free to view, $19 once for Excel and CSV downloads',
+    href: '/tools/numbers-viewer/',
   },
   {
     slug: 'wordperfect-viewer',
