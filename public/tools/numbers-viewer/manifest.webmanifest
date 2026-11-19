@@ -1,0 +1,29 @@
+{
+  "id": "/tools/numbers-viewer/",
+  "name": "Numbers Viewer: Open NUMBERS Files on Windows",
+  "short_name": "Numbers Viewer",
+  "description": "Open Apple Numbers spreadsheets on Windows, Android or Chromebook without a Mac. See every sheet and table free, then download Excel and CSV.",
+  "start_url": "/tools/numbers-viewer/?source=pwa",
+  "scope": "/tools/",
+  "display": "standalone",
+  "background_color": "#FFFBF3",
+  "theme_color": "#2E6B34",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["productivity", "business", "utilities"],
+  "icons": [
+    { "src": "/tools/numbers-viewer/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/tools/numbers-viewer/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/tools/numbers-viewer/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "file_handlers": [
+    {
+      "action": "/tools/numbers-viewer/?source=file",
+      "name": "Apple Numbers spreadsheet",
+      "icons": [{ "src": "/tools/numbers-viewer/icons/file-256.png", "sizes": "256x256", "type": "image/png" }],
+      "accept": { "application/vnd.apple.numbers": [".numbers"] },
+      "launch_type": "single-client"
+    }
+  ],
+  "launch_handler": { "client_mode": ["navigate-new", "auto"] }
+}
