@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>
+(function () {
+  var GA = 'G-VPCZV3J5CQ', KEY = 'ldsConsent', bar = null, configured = false;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('js', new Date());
+  function read() { try { return window.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { window.localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearGa() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (n.indexOf('_ga') === 0) {
+        ['', '; domain=.leducsystems.com', '; domain=leducsystems.com'].forEach(function (d) {
+          document.cookie = n + '=; Max-Age=0; path=/' + d;
+        });
+      }
+    });
+  }
+  function apply(v) {
+    if (v === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (!configured) {
+        configured = true;
+        gtag('config', GA);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+        document.head.appendChild(s);
+      }
+    } else {
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      clearGa();
+    }
+  }
+  function close() { if (bar) { bar.parentNode.removeChild(bar); bar = null; } }
+  function choose(v) { write(v); apply(v); close(); }
+  function open(focus) {
+    if (!bar) {
+      if (!document.getElementById('lds-consent-style')) {
+        var st = document.createElement('style');
+        st.id = 'lds-consent-style';
+        st.textContent = '.lds-consent{position:fixed;left:16px;bottom:16px;z-index:900;max-width:400px;box-sizing:border-box;padding:16px;background:#fff;color:#15130F;border:1px solid rgba(21,19,15,.22);border-radius:8px;box-shadow:0 6px 24px rgba(21,19,15,.12);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}'
+          + '.lds-consent p{margin:0 0 12px}.lds-consent a{color:#15130F;text-decoration:underline}'
+          + '.lds-consent__row{display:flex;gap:8px}.lds-consent button{flex:1;font:inherit;font-weight:500;min-height:44px;padding:8px 16px;border:1px solid #15130F;border-radius:4px;background:#fff;color:#15130F;cursor:pointer}'
+          + '.lds-consent button:hover{background:#EFEDE7}.lds-consent button:focus-visible,.lds-consent a:focus-visible{outline:2px solid #E8365F;outline-offset:2px}'
+          + '@media (max-width:480px){.lds-consent{left:0;right:0;bottom:0;max-width:none;border-radius:0;border-width:1px 0 0;padding:8px 12px;font-size:13px;line-height:1.4;display:flex;gap:10px;align-items:center}.lds-consent p{margin:0;flex:1}.lds-consent__row{flex-direction:column;gap:6px}.lds-consent button{flex:none;min-height:36px;padding:4px 14px}}';
+        document.head.appendChild(st);
+      }
+      bar = document.createElement('section');
+      bar.className = 'lds-consent';
+      bar.setAttribute('aria-label', 'Cookie choice');
+      bar.innerHTML = '<p>May I use Google Analytics cookies to count visits? They show me which pages get read. No ads, nothing sold. <a href="/privacy#cookies">Details</a></p>'
+        + '<div class="lds-consent__row"><button type="button" data-v="granted">Accept</button><button type="button" data-v="denied">Decline</button></div>';
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+        if (b) choose(b.getAttribute('data-v'));
+      });
+      bar.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.body.appendChild(bar);
+    }
+    if (focus) bar.querySelector('button').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-cookie-settings]') : null;
+    if (t) { e.preventDefault(); open(true); }
+  });
+  var saved = read();
+  if (saved === 'granted') apply(saved);
+  else if (saved !== 'denied') {
+    if (document.body) open(false);
+    else document.addEventListener('DOMContentLoaded', function () { open(false); });
+  }
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open a WordPerfect File Without WordPerfect: WPD and WPS Viewer</title>
+<meta name="description" content="Open WordPerfect .wpd and Microsoft Works .wps documents in your browser, on Windows, Mac or Chromebook. See every page free. Download Word (.docx) and PDF for $19 once.">
+<link rel="canonical" href="https://leducsystems.com/tools/wordperfect-viewer/">
+<meta property="og:title" content="Open a WordPerfect File Without WordPerfect: WPD and WPS Viewer">
+<meta property="og:description" content="Open WordPerfect .wpd and Microsoft Works .wps documents in your browser, on Windows, Mac or Chromebook. See every page free. Download Word (.docx) and PDF for $19 once.">
+<meta property="og:url" content="https://leducsystems.com/tools/wordperfect-viewer/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LeDuc Systems">
+<meta property="og:image" content="https://leducsystems.com/images/og-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/leduc-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/fonts/plex.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"WordPerfect Viewer","url":"https://leducsystems.com/tools/wordperfect-viewer/","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","offers":[{"@type":"Offer","name":"Viewing","price":"0","priceCurrency":"USD"},{"@type":"Offer","name":"Word and PDF download","price":"19","priceCurrency":"USD"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which files open?","acceptedAnswer":{"@type":"Answer","text":"WordPerfect documents (.wpd, and .wp, .wp5 or .wp6 from the DOS days) from WordPerfect 5 onward, including WordPerfect 6 through X9, which all save the same format. And Microsoft Works word processor documents (.wps). I have tested files in the WordPerfect 5.0, 5.1 and 6-or-later formats, and in the Works 3, 4, 2000 and 7 formats. Works spreadsheets (.wks) and databases (.wdb), Quattro Pro and WordPerfect Presentations files are not supported."}},{"@type":"Question","name":"Is it free to view?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every page is shown free, for any number of documents, with a light \"Preview\" mark across it. Only the downloads cost money: $19 once unlocks the Word file (.docx) and a clean PDF for every WordPerfect and Works document you open, or $7 for 24 hours."}},{"@type":"Question","name":"Will the Word file look exactly like the original?","acceptedAnswer":{"@type":"Answer","text":"Close, but not always identical. The document is converted by LibreOffice, an open source program that reads WordPerfect and Works files. Text, bold and italics, headings, paragraphs and page breaks come through. Fonts from the 1990s that your computer does not have are replaced with similar ones, so lines can break in different places. In very old files a few special characters (curly quotes, accents) can come out wrong, and some Works files show a stray line of format codes at the top. The preview shows you exactly what the download looks like before you pay."}},{"@type":"Question","name":"Are there free ways to open a .wpd file?","acceptedAnswer":{"@type":"Answer","text":"Yes, and they may be all you need. LibreOffice is free for Windows, Mac and Linux and opens both .wpd and .wps files. This viewer is for when you cannot install software (a work computer, a Chromebook, a phone) or just need to read one file now."}},{"@type":"Question","name":"What happens to my file?","acceptedAnswer":{"@type":"Answer","text":"It is sent over an encrypted connection to my server, converted there by a program, and deleted before the pages, the PDF and the Word file are sent back to you. Nothing is stored and I do not open it. The license key is the only thing kept, in your own browser."}},{"@type":"Question","name":"How many pages?","acceptedAnswer":{"@type":"Answer","text":"The first 30 pages are shown as pictures in the browser. The Word file and the PDF have every page. Files up to 40 MB."}},{"@type":"Question","name":"Can I install it?","acceptedAnswer":{"@type":"Answer","text":"Yes. In Chrome or Edge, use the install button in the address bar. On Windows and ChromeOS the installed app can then open .wpd and .wps files you double-click or choose with \"Open with\"."}},{"@type":"Question","name":"What if my file does not open?","acceptedAnswer":{"@type":"Answer","text":"Password-protected or damaged documents can't be read, and files from WordPerfect 4.2 or older may not open. If a file fails, email tyler@leducsystems.com and I'll look at it. If a download doesn't work for your file within 30 days of buying, I refund you in full."}},{"@type":"Question","name":"Is this made by Corel or Microsoft?","acceptedAnswer":{"@type":"Answer","text":"No. I'm an independent developer and this viewer isn't affiliated with Corel or Microsoft. WordPerfect is a trademark of Corel. Works and Word are trademarks of Microsoft."}}]}]}</script>
+<link rel="manifest" href="/tools/wordperfect-viewer/manifest.webmanifest">
+<meta name="theme-color" content="#3A2E8C">
+<link rel="apple-touch-icon" href="/tools/wordperfect-viewer/icons/icon-192.png">
+<style>@media (display-mode: standalone) { body .site-header, body nav.more, body .store-link { display: none; } body .hero { padding-top: 28px; } }</style>
+<script>if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('/tools/wordperfect-viewer/sw.js').catch(() => {}));</script>
+  <script type="module" crossorigin src="/tools/assets/wordperfect-viewer-ByO-edMc.js"></script>
+  <link rel="modulepreload" crossorigin href="/tools/assets/modulepreload-polyfill-B5Qt9EMX.js">
+  <link rel="modulepreload" crossorigin href="/tools/assets/zip-CEMz-pNR.js">
+  <link rel="modulepreload" crossorigin href="/tools/assets/visio-core-Qpg3VQsj.js">
+  <link rel="modulepreload" crossorigin href="/tools/assets/ext-intake-PEEjjlas.js">
+  <link rel="modulepreload" crossorigin href="/tools/assets/viewer-business-C9qv4Axn.js">
+  <link rel="stylesheet" crossorigin href="/tools/assets/style-qmsE5Zda.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+    <nav class="nav" aria-label="Primary">
+      <ul><li><a class="nav__link nav__link--active" href="/tools/">Products</a></li><li><a class="nav__link" href="/about/">About</a></li><li><a class="nav__link" href="/contact/">Contact</a></li></ul>
+    </nav>
+    <div class="nav__actions">
+      <a class="site-btn site-btn--primary site-btn--sm site-header__cta" href="/contact/">Get in touch</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav id="site-mobile-menu" class="mobile-menu" aria-label="Mobile">
+  <ul><li><a class="mobile-menu__link" href="/tools/" style="--menu-delay:60ms">Products</a></li><li><a class="mobile-menu__link" href="/about/" style="--menu-delay:105ms">About</a></li><li><a class="mobile-menu__link" href="/contact/" style="--menu-delay:150ms">Contact</a></li></ul>
+  <div class="mobile-menu__actions" style="--menu-delay:195ms">
+    <a class="site-btn site-btn--primary site-btn--lg" href="/contact/">Get in touch</a>
+    <a class="site-btn site-btn--ghost site-btn--lg" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+  </div>
+</nav>
+<script>
+(() => {
+  const b = document.querySelector('.menu-toggle'), m = document.getElementById('site-mobile-menu');
+  const set = (open) => {
+    b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    m.classList.toggle('mobile-menu--open', open); document.body.style.overflow = open ? 'hidden' : '';
+  };
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  matchMedia('(min-width: 861px)').addEventListener('change', (e) => { if (e.matches) set(false); });
+})();
+</script>
+<main id="main" tabindex="-1">
+  <section class="hero">
+    <h1>Open a WordPerfect file without WordPerfect</h1>
+    <p class="lede">An old .wpd file from WordPerfect, or a .wps file from Microsoft Works, and nothing on your computer opens it. Drop it here and read every page, free. Need to edit or print it? Download it as a Word file and a PDF.</p>
+  </section>
+
+  <section class="tool mv-tool" id="wpd" data-api="https://convert.leducsystems.com" data-price="$19" data-sample="/tools/wordperfect-viewer/sample-document.wpd" aria-label="WordPerfect Viewer">
+    <label class="drop" id="wv-drop">
+      <input type="file" id="wv-file" accept=".wpd,.wp,.wp4,.wp5,.wp6,.wp7,.wpt,.wps,application/vnd.wordperfect,application/vnd.ms-works" class="sr-only">
+      <span class="drop-title">Drop a .wpd or .wps file here</span>
+      <span class="drop-sub">or click to choose · every page free · $19 once for Word and PDF downloads · full refund within 30 days</span>
+    </label>
+    <p class="fi-sample">No file handy? <button class="link" type="button" id="wv-sample">Open a sample document</button> (a WordPerfect 5.1 report from the Apache Tika test files, Apache License 2.0).</p>
+    <p class="status" id="wv-status" role="status"></p>
+    <div class="result" id="wv-result" hidden></div>
+    <p class="fine">Your file is rendered on my server and deleted before the pages are sent back; nothing is kept. Payments go to LeDuc Systems LLC in Phoenix, Arizona, through Stripe. Questions: <a href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>.</p>
+  </section>
+
+  <section class="steps">
+    <div><b>1</b><p>Drop the WordPerfect (.wpd) or Microsoft Works (.wps) file.</p></div>
+    <div><b>2</b><p>See every page, free, on Windows, Mac, Chromebook or a phone.</p></div>
+    <div><b>3</b><p>Need to edit or print it? Download Word and PDF once for $19.</p></div>
+  </section>
+
+  <section class="faq">
+    <h2>Questions</h2>
+    <details><summary>Which files open?</summary><p>WordPerfect documents (.wpd, and .wp, .wp5 or .wp6 from the DOS days) from WordPerfect 5 onward, including WordPerfect 6 through X9, which all save the same format. And Microsoft Works word processor documents (.wps). I have tested files in the WordPerfect 5.0, 5.1 and 6-or-later formats, and in the Works 3, 4, 2000 and 7 formats. Works spreadsheets (.wks) and databases (.wdb), Quattro Pro and WordPerfect Presentations files are not supported.</p></details>
+    <details><summary>Is it free to view?</summary><p>Yes. Every page is shown free, for any number of documents, with a light &quot;Preview&quot; mark across it. Only the downloads cost money: $19 once unlocks the Word file (.docx) and a clean PDF for every WordPerfect and Works document you open, or $7 for 24 hours.</p></details>
+    <details><summary>Will the Word file look exactly like the original?</summary><p>Close, but not always identical. The document is converted by LibreOffice, an open source program that reads WordPerfect and Works files. Text, bold and italics, headings, paragraphs and page breaks come through. Fonts from the 1990s that your computer does not have are replaced with similar ones, so lines can break in different places. In very old files a few special characters (curly quotes, accents) can come out wrong, and some Works files show a stray line of format codes at the top. The preview shows you exactly what the download looks like before you pay.</p></details>
+    <details><summary>Are there free ways to open a .wpd file?</summary><p>Yes, and they may be all you need. LibreOffice is free for Windows, Mac and Linux and opens both .wpd and .wps files. This viewer is for when you cannot install software (a work computer, a Chromebook, a phone) or just need to read one file now.</p></details>
+    <details><summary>What happens to my file?</summary><p>It is sent over an encrypted connection to my server, converted there by a program, and deleted before the pages, the PDF and the Word file are sent back to you. Nothing is stored and I do not open it. The license key is the only thing kept, in your own browser.</p></details>
+    <details><summary>How many pages?</summary><p>The first 30 pages are shown as pictures in the browser. The Word file and the PDF have every page. Files up to 40 MB.</p></details>
+    <details><summary>Can I install it?</summary><p>Yes. In Chrome or Edge, use the install button in the address bar. On Windows and ChromeOS the installed app can then open .wpd and .wps files you double-click or choose with &quot;Open with&quot;.</p></details>
+    <details><summary>What if my file does not open?</summary><p>Password-protected or damaged documents can't be read, and files from WordPerfect 4.2 or older may not open. If a file fails, email tyler@leducsystems.com and I'll look at it. If a download doesn't work for your file within 30 days of buying, I refund you in full.</p></details>
+    <details><summary>Is this made by Corel or Microsoft?</summary><p>No. I'm an independent developer and this viewer isn't affiliated with Corel or Microsoft. WordPerfect is a trademark of Corel. Works and Word are trademarks of Microsoft.</p></details>
+  </section>
+
+  <nav class="more" aria-label="Guides">
+    <h2>Guides</h2>
+    <ul class="guides"><li><a href="/tools/open-wpd-file-without-wordperfect/">How to open a .wpd file without WordPerfect</a></li><li><a href="/tools/convert-wordperfect-to-word/">Convert a WordPerfect file to Word</a></li><li><a href="/tools/open-wps-works-file/">How to open a .wps file from Microsoft Works</a></li></ul>
+  </nav>
+<p class="fine">Not affiliated with Corel or Microsoft. WordPerfect is a trademark of Corel. Works and Word are trademarks of Microsoft. Documents are converted with LibreOffice (MPL 2.0). Payments are handled by Stripe.</p>
+</main>
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a class="brand" href="/" aria-label="LeDuc Systems, home"><img class="brand__logo" src="/leduc-logo.svg" alt="LeDuc Systems" width="172" height="30"></a>
+        <p class="site-footer__blurb">Focused software built and sold by Tyler LeDuc in Phoenix, Arizona.</p>
+        <a class="site-footer__link site-footer__email" href="mailto:tyler@leducsystems.com">tyler@leducsystems.com</a>
+        <a class="site-footer__link site-footer__email" href="tel:+16233205633">(623) 320-5633</a>
+      </div>
+      <nav class="site-footer__col" aria-labelledby="footer-products">
+        <h2 class="site-footer__title" id="footer-products">Products</h2>
+        <a class="site-footer__link" href="/tools/scan-to-email-microsoft-365/">Scan Relay</a>
+        <a class="site-footer__link" href="/tools/publisher-converter/">Publisher converter</a>
+        <a class="site-footer__link" href="/tools/visio-viewer/">Visio Viewer</a>
+        <a class="site-footer__link" href="/tools/mpp-viewer/">MPP Viewer</a>
+        <a class="site-footer__link" href="/tools/infopath-to-excel/">InfoPath to Excel</a>
+        <a class="site-footer__link" href="/tools/fire-to-iris-1099-converter/">FIRE to IRIS converter</a>
+        <a class="site-footer__link" href="/shopify/product-options/">Product Options for Shopify</a>
+        <a class="site-footer__link" href="/saguaro-hours/">Saguaro Hours for Jira</a>
+        <a class="site-footer__link" href="/tools/">All products</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-company">
+        <h2 class="site-footer__title" id="footer-company">Company</h2>
+        <a class="site-footer__link" href="/about/">About</a>
+        <a class="site-footer__link" href="/games/">Games</a>
+        <a class="site-footer__link" href="/services/claude-workflow-setup/">Claude workflow setup</a>
+        <a class="site-footer__link" href="/tools/ai-visibility-check/">AI visibility check</a>
+        <a class="site-footer__link" href="/contact/">Contact</a>
+        <a class="site-footer__link" href="/site-map/">Site map</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-elsewhere">
+        <h2 class="site-footer__title" id="footer-elsewhere">Elsewhere</h2>
+        <a class="site-footer__link" href="https://github.com/Tyler-LeDuc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="site-footer__link" href="https://raxeris.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a>
+      </nav>
+      <nav class="site-footer__col" aria-labelledby="footer-legal">
+        <h2 class="site-footer__title" id="footer-legal">Legal</h2>
+        <a class="site-footer__link" href="/privacy/">Privacy Policy</a>
+        <a class="site-footer__link" href="/terms/">Terms of Service</a>
+        <a class="site-footer__link" href="/refunds/">Refund Policy</a>
+        <button type="button" class="site-footer__link site-footer__button" data-cookie-settings>Cookie settings</button>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p>&copy; 2026 LeDuc Systems LLC, an Arizona limited liability company</p>
+      <p>Phoenix, Arizona</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

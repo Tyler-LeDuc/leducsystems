@@ -1,0 +1,83 @@
+{
+  "id": "/tools/wordperfect-viewer/",
+  "name": "WordPerfect Viewer: Open WPD and WPS Files",
+  "short_name": "WordPerfect Viewer",
+  "description": "Open WordPerfect (.wpd) and Microsoft Works (.wps) documents without WordPerfect or Works. See every page free, then download Word and PDF.",
+  "start_url": "/tools/wordperfect-viewer/?source=pwa",
+  "scope": "/tools/",
+  "display": "standalone",
+  "background_color": "#FFFBF3",
+  "theme_color": "#3A2E8C",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": [
+    "productivity",
+    "business",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "/tools/wordperfect-viewer/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/tools/wordperfect-viewer/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/tools/wordperfect-viewer/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/tools/wordperfect-viewer/?source=file",
+      "name": "WordPerfect document",
+      "icons": [
+        {
+          "src": "/tools/wordperfect-viewer/icons/file-256.png",
+          "sizes": "256x256",
+          "type": "image/png"
+        }
+      ],
+      "accept": {
+        "application/vnd.wordperfect": [
+          ".wpd",
+          ".wp",
+          ".wp5",
+          ".wp6"
+        ]
+      },
+      "launch_type": "multiple-clients"
+    },
+    {
+      "action": "/tools/wordperfect-viewer/?source=file",
+      "name": "Microsoft Works document",
+      "icons": [
+        {
+          "src": "/tools/wordperfect-viewer/icons/file-256.png",
+          "sizes": "256x256",
+          "type": "image/png"
+        }
+      ],
+      "accept": {
+        "application/vnd.ms-works": [
+          ".wps"
+        ]
+      },
+      "launch_type": "multiple-clients"
+    }
+  ],
+  "launch_handler": {
+    "client_mode": [
+      "navigate-new",
+      "auto"
+    ]
+  }
+}
