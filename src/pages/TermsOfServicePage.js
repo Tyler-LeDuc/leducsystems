@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import LegalDocument from '../components/LegalDocument';
 import { SITE } from '../data/site';
 
-const LAST_UPDATED = 'November 12, 2026';
+const LAST_UPDATED = 'November 19, 2026';
 
 const MAILTO = `mailto:${SITE.email}`;
 
@@ -72,6 +72,34 @@ const SECTIONS = [
           Don&rsquo;t publish, share or resell keys, and don&rsquo;t try to get around license
           checks, payment, or the limits on free use. The software itself stays mine; you get the
           right to use it, not ownership of it.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'software-licenses',
+    title: 'Software licenses',
+    content: (
+      <>
+        <p>
+          The file viewers (MPP, XER, Visio, Access, MSG, PST, Pages, Numbers and WordPerfect) sell
+          a one-time license: one payment, no subscription. Downloads keep working for as long as I
+          run this service, and for at least 2 years from your purchase. If I ever shut it down,
+          I&rsquo;ll email you 90 days&rsquo; notice first. A 24-hour pass and the Business license
+          run for the time stated when you buy them.
+        </p>
+        <p>
+          This applies to licenses bought before these terms were updated too: if you already
+          have a viewer license, it keeps working for at least 2 years from the date you bought
+          it, with the same 90 days&rsquo; notice.
+        </p>
+        <p>
+          If a license doesn&rsquo;t work for your files, I refund it in full within 30 days, as set
+          out in the{' '}
+          <Link className="link-underline" to="/refunds">
+            Refund Policy
+          </Link>
+          .
         </p>
       </>
     ),
