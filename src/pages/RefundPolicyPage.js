@@ -2,7 +2,7 @@ import React from 'react';
 import LegalDocument from '../components/LegalDocument';
 import { SITE } from '../data/site';
 
-const LAST_UPDATED = 'November 12, 2026';
+const LAST_UPDATED = 'November 19, 2026';
 
 const REFUND_MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent('Refund request')}`;
 
@@ -51,6 +51,32 @@ const SECTIONS = [
           </li>
         </ul>
         <p>Every converter shows a free preview of your own file before you pay.</p>
+      </>
+    ),
+  },
+  {
+    id: 'viewers',
+    title: 'File viewers',
+    content: (
+      <>
+        <ul className="list">
+          <li>
+            <strong>Viewer licenses and 24-hour passes</strong> (Project, Primavera P6, Visio,
+            Access, Outlook .msg and .pst, Apple Pages and Numbers, WordPerfect): if the download
+            doesn&rsquo;t work for your file, email me within 30 days of paying and I refund you in
+            full.
+          </li>
+          <li>
+            <strong>All Viewers plan ($49 a year):</strong> a full refund within 30 days of the first
+            payment or of a renewal. Cancel anytime from the &ldquo;Manage or cancel&rdquo; link; the
+            plan then runs to the end of the year you paid for.
+          </li>
+          <li>
+            <strong>Business license:</strong> a full refund within 30 days if it doesn&rsquo;t work
+            for your team&rsquo;s files.
+          </li>
+        </ul>
+        <p>Every viewer shows your own file free before you pay.</p>
       </>
     ),
   },
@@ -120,7 +146,7 @@ export default function RefundPolicyPage() {
       mark="C"
       title="Refund Policy"
       path="/refunds"
-      description="LeDuc Systems refunds: 30 days on the converters, Scan Relay, the 1099 tools and InfoPath to Excel."
+      description="LeDuc Systems refunds: 30 days on the file viewers, converters, Scan Relay, the 1099 tools and InfoPath to Excel."
       lastUpdated={LAST_UPDATED}
       summary={
         <>
