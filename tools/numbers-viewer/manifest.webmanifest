@@ -1,8 +1,8 @@
 {
   "id": "/tools/numbers-viewer/",
-  "name": "Numbers Viewer: Open NUMBERS Files on Windows",
-  "short_name": "Numbers Viewer",
-  "description": "Open Apple Numbers spreadsheets on Windows, Android or Chromebook without a Mac. See every sheet and table free, then download Excel and CSV.",
+  "name": "Sheet Opener for .numbers Files: Excel, CSV",
+  "short_name": "Sheet Opener",
+  "description": "Open .numbers spreadsheets on Windows, Android or Chromebook without a Mac. See every sheet and table free, then download Excel and CSV.",
   "start_url": "/tools/numbers-viewer/?source=pwa",
   "scope": "/tools/",
   "display": "standalone",

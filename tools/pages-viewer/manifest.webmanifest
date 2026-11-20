@@ -1,7 +1,7 @@
 {
   "id": "/tools/pages-viewer/",
-  "name": "Pages Viewer: Open PAGES Files on Windows",
-  "short_name": "Pages Viewer",
+  "name": "Doc Opener for .pages Files: Word and PDF",
+  "short_name": "Doc Opener",
   "description": "Open .pages documents on Windows, Android or Chromebook without a Mac. See every page free, then download Word and PDF.",
   "start_url": "/tools/pages-viewer/?source=pwa",
   "scope": "/tools/",
